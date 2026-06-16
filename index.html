@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="author" content="Henri Löhlein" />
+<meta name="description" content="Henri Löhlein — UX/UI Designer. Ich gestalte digitale Erfahrungen an der Schnittstelle von Psychologie und Design. Nudging, Persuasive Design, adaptive KI-Systeme." />
+<meta name="theme-color" content="#0a0a0f" />
+<title>Henri Löhlein — UX/UI Design</title>
+
+<!-- Domain: bei abweichender Domain nur die folgende Zeile anpassen -->
+<link rel="canonical" href="https://henriloehlein.de/" />
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+<meta property="og:title" content="Henri Löhlein — UX/UI Design" />
+<meta property="og:description" content="Digitale Erfahrungen an der Schnittstelle von Psychologie und Design." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://henriloehlein.de/" />
+<meta property="og:image" content="https://henriloehlein.de/assets/img/steady-dashboard.png" />
+<meta property="og:locale" content="de_DE" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<!-- ============ PRELOADER ============ -->
+<div class="preloader" id="preloader" aria-hidden="true">
+  <div class="preloader__inner">
+    <div class="preloader__name">
+      <span>H</span><span>e</span><span>n</span><span>r</span><span>i</span>
+      <span class="sp">&nbsp;</span>
+      <span>L</span><span>ö</span><span>h</span><span>l</span><span>e</span><span>i</span><span>n</span>
+    </div>
+    <div class="preloader__bar"><i></i></div>
+    <div class="preloader__meta">
+      <span data-i18n="pre.role">UX / UI Designer</span>
+      <span class="preloader__count" id="preCount">0</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CUSTOM CURSOR ============ -->
+<div class="cursor" id="cursor" aria-hidden="true"><span class="cursor__label" id="cursorLabel"></span></div>
+
+<!-- ============ GRADIENT FIELD (background) ============ -->
+<div class="field" aria-hidden="true">
+  <div class="field__blob field__blob--1"></div>
+  <div class="field__blob field__blob--2"></div>
+  <div class="field__blob field__blob--3"></div>
+  <div class="field__grain"></div>
+</div>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <a href="#top" class="nav__logo" data-cursor="Start">
+    <span class="nav__mark">HL</span>
+    <span class="nav__logoText">Henri Löhlein</span>
+  </a>
+  <nav class="nav__links" aria-label="Hauptnavigation">
+    <a href="#approach" class="nav__link" data-i18n="nav.approach">Ansatz</a>
+    <a href="#focus" class="nav__link" data-i18n="nav.focus">Fokus</a>
+    <a href="#work" class="nav__link" data-i18n="nav.work">Arbeiten</a>
+    <a href="#about" class="nav__link" data-i18n="nav.about">Über mich</a>
+    <a href="#contact" class="nav__link" data-i18n="nav.contact">Kontakt</a>
+  </nav>
+  <div class="nav__tools">
+    <button class="lang" id="langToggle" aria-label="Sprache wechseln">
+      <span class="lang__opt is-active" data-lang="de">DE</span>
+      <span class="lang__sep">/</span>
+      <span class="lang__opt" data-lang="en">EN</span>
+    </button>
+    <button class="themeBtn" id="themeToggle" aria-label="Theme wechseln" data-cursor="Theme">
+      <svg viewBox="0 0 24 24" class="themeBtn__icon themeBtn__icon--moon"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg viewBox="0 0 24 24" class="themeBtn__icon themeBtn__icon--sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+  </div>
+  <button class="burger" id="burger" aria-label="Menü"><i></i><i></i></button>
+</header>
+
+<main id="top">
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="hero">
+  <div class="hero__topline reveal">
+    <span class="hero__avail"><i></i><span data-i18n="hero.avail">Offen für Werkstudenten- & Junior-Rollen 2026</span></span>
+    <span class="hero__loc" data-i18n="hero.loc">Hochschule Ansbach · Deutschland</span>
+  </div>
+
+  <h1 class="hero__title">
+    <span class="line"><span class="word" data-i18n="hero.t1">Design</span></span>
+    <span class="line"><span class="word" data-i18n="hero.t2">an der Grenze</span></span>
+    <span class="line line--accent">
+      <span class="word rotator" id="rotator" aria-hidden="true"></span>
+      <span class="sr-only">zwischen Unterstützung und Manipulation</span>
+    </span>
+  </h1>
+
+  <div class="hero__base">
+    <p class="hero__lede reveal" data-i18n="hero.lede">
+      Ich bin <strong>Henri Löhlein</strong>, UX/UI&nbsp;Designer. Ich gestalte digitale
+      Erfahrungen, die <em>echte menschliche Bedürfnisse</em> aufgreifen — fundiert in
+      Psychologie, geschärft durch Empathie, getragen von echtem Interesse.
+    </p>
+    <a href="#work" class="hero__cta magnetic" data-cursor="Ansehen">
+      <span data-i18n="hero.cta">Arbeiten ansehen</span>
+      <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+
+  <div class="hero__scroll" aria-hidden="true">
+    <span data-i18n="hero.scroll">Scrollen</span>
+    <i></i>
+  </div>
+</section>
+
+<!-- ============ APPROACH / MANIFESTO ============ -->
+<section class="approach" id="approach">
+  <p class="sectionTag reveal"><span>01</span> <span data-i18n="tag.approach">Haltung</span></p>
+  <div class="approach__chain">
+    <p class="approach__line reveal" data-stagger>
+      <span data-i18n="chain.1a">Lösungen folgen</span> <b data-i18n="chain.1b">Bedürfnissen.</b>
+    </p>
+    <p class="approach__line reveal" data-stagger>
+      <span data-i18n="chain.2a">Bedürfnisse folgen</span> <b data-i18n="chain.2b">Empathie.</b>
+    </p>
+    <p class="approach__line reveal" data-stagger>
+      <span data-i18n="chain.3a">Und Empathie folgt</span> <b data-i18n="chain.3b">echtem Interesse.</b>
+    </p>
+  </div>
+  <p class="approach__note reveal" data-i18n="approach.note">
+    Gutes, zielgerichtetes Design entsteht nur, wenn Herausforderungen mit Empathie und
+    funktionalem Denken angegangen werden. Genau dort setze ich an.
+  </p>
+</section>
+
+<!-- ============ FOCUS / THEMES ============ -->
+<section class="focus" id="focus">
+  <header class="focus__head">
+    <p class="sectionTag reveal"><span>02</span> <span data-i18n="tag.focus">Worüber ich nachdenke</span></p>
+    <h2 class="focus__title reveal" data-i18n="focus.title">
+      Das Zusammenspiel von <em>Psychologie</em> und <em>Design.</em>
+    </h2>
+    <p class="focus__intro reveal" data-i18n="focus.intro">
+      Mich fasziniert, wie digitale Interaktionen Entscheidungen, Gewohnheiten und Emotionen
+      formen — und wo verantwortungsvolle Gestaltung die Grenze zwischen Unterstützung und
+      Manipulation zieht.
+    </p>
+  </header>
+
+  <div class="focus__grid">
+    <article class="fcard reveal" data-cursor="">
+      <span class="fcard__num">①</span>
+      <h3 data-i18n="focus.c1.t">Nudging</h3>
+      <p data-i18n="focus.c1.d">Verhalten beeinflussen, ohne Druck oder Zwang — zur richtigen Zeit, im richtigen Kontext.</p>
+    </article>
+    <article class="fcard reveal" data-cursor="">
+      <span class="fcard__num">②</span>
+      <h3 data-i18n="focus.c2.t">Dark Patterns</h3>
+      <p data-i18n="focus.c2.d">Die Mechanismen verstehen, die Nutzer gezielt gegen ihre Interessen lenken — um sie zu vermeiden.</p>
+    </article>
+    <article class="fcard reveal" data-cursor="">
+      <span class="fcard__num">③</span>
+      <h3 data-i18n="focus.c3.t">Persuasive Design</h3>
+      <p data-i18n="focus.c3.d">Modelle wie Fogg Behavior Model und Self-Determination Theory in echte Mechaniken übersetzen.</p>
+    </article>
+    <article class="fcard reveal" data-cursor="">
+      <span class="fcard__num">④</span>
+      <h3 data-i18n="focus.c4.t">Adaptive KI</h3>
+      <p data-i18n="focus.c4.d">Wie neue Technologien Wahrnehmung, Vertrauen und Interaktion mit der digitalen Welt prägen.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ============ WORK ============ -->
+<section class="work" id="work">
+  <header class="work__head">
+    <p class="sectionTag reveal"><span>03</span> <span data-i18n="tag.work">Ausgewählte Arbeiten</span></p>
+    <h2 class="work__title reveal" data-i18n="work.title">Projekte</h2>
+    <p class="work__hint reveal" data-i18n="work.hint">Tippe ein Projekt an für die vollständige Case Study.</p>
+  </header>
+
+  <ul class="projects" id="projects">
+
+    <li class="project" data-project="steady" data-cursor="Case Study">
+      <div class="project__index">01</div>
+      <div class="project__body">
+        <h3 class="project__name">steady</h3>
+        <p class="project__role" data-i18n="p.steady.role">Adaptives Planungs- & Organisationstool · Konzept, UX/UI, Prototyp</p>
+        <p class="project__tease" data-i18n="p.steady.tease">
+          Eine App, die fragt, <em>warum</em> Menschen scheitern — und psychologische
+          Mechaniken nutzt, um sie empathisch an ihren Routinen festhalten zu lassen.
+        </p>
+        <div class="project__tags">
+          <span>Behavioral Design</span><span>KI-Assistent</span><span>Self-Determination Theory</span><span>Card Sorting</span>
+        </div>
+      </div>
+      <div class="project__visual">
+        <div class="phone"><img src="assets/img/steady-dashboard.png" alt="steady Dashboard" loading="lazy" /></div>
+      </div>
+      <span class="project__open"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+    </li>
+
+    <li class="project" data-project="milo" data-cursor="Case Study">
+      <div class="project__index">02</div>
+      <div class="project__body">
+        <h3 class="project__name">Milo</h3>
+        <p class="project__role" data-i18n="p.milo.role">KI-Assistenz für ältere Menschen · Konzept, UX/UI, Prototyp</p>
+        <p class="project__tease" data-i18n="p.milo.tease">
+          Ein empathischer, transparenter Assistent, der digitale Hemmschwellen abbaut und
+          Selbstständigkeit im Umgang mit Technik stärkt.
+        </p>
+        <div class="project__tags">
+          <span>Accessibility</span><span>Trust & Control</span><span>Conversational UI</span><span>Inclusive Design</span>
+        </div>
+      </div>
+      <div class="project__visual">
+        <div class="phone"><img src="assets/img/milo-persona.png" alt="Milo Persona Inge" loading="lazy" /></div>
+      </div>
+      <span class="project__open"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+    </li>
+
+    <li class="project" data-project="cognify" data-cursor="Case Study">
+      <div class="project__index">03</div>
+      <div class="project__body">
+        <h3 class="project__name">Cognify</h3>
+        <p class="project__role" data-i18n="p.cognify.role">Augmented-Reality E-Learning Plattform · Konzept, UX/UI</p>
+        <p class="project__tease" data-i18n="p.cognify.tease">
+          Themen alltagsnah entdecken — mit AR-Darstellungen, Quizzes, durchdachter
+          Gamification und starkem Community-Aspekt.
+        </p>
+        <div class="project__tags">
+          <span>AR / Spatial</span><span>Gamification</span><span>Community</span><span>In Bearbeitung</span>
+        </div>
+      </div>
+      <div class="project__visual">
+        <div class="phone"><img src="assets/img/cognify-main.png" alt="Cognify Lernübersicht" loading="lazy" /></div>
+      </div>
+      <span class="project__open"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+    </li>
+
+    <li class="project" data-project="syntegon" data-cursor="Case Study">
+      <div class="project__index">04</div>
+      <div class="project__body">
+        <h3 class="project__name" data-i18n="p.syntegon.name">Bachelorarbeit · Syntegon</h3>
+        <p class="project__role" data-i18n="p.syntegon.role">Visualisierungssystem für die Pharmaproduktion · Research & Development</p>
+        <p class="project__tease" data-i18n="p.syntegon.tease">
+          Ein mobiles System, das komplexe Produktionsinformationen so visualisiert, dass
+          Operatoren sicher und handlungsleitend geführt werden.
+        </p>
+        <div class="project__tags">
+          <span>Industrial UX</span><span>Informationsarchitektur</span><span>Forschung</span><span>Interdisziplinär</span>
+        </div>
+      </div>
+      <div class="project__visual">
+        <div class="plate plate--syntegon"><span>R&amp;D</span></div>
+      </div>
+      <span class="project__open"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+    </li>
+
+    <li class="project" data-project="forwerts" data-cursor="Case Study">
+      <div class="project__index">05</div>
+      <div class="project__body">
+        <h3 class="project__name" data-i18n="p.forwerts.name">forwerts interactive</h3>
+        <p class="project__role" data-i18n="p.forwerts.role">Praxissemester UX Design · E-Commerce, Funnel-Optimierung</p>
+        <p class="project__tease" data-i18n="p.forwerts.tease">
+          Screen-Designs, Funnel-Flows, Icons und Infografiken im Online-Shop-Kontext —
+          mit nachweislich besseren Conversion- und Abbruchraten.
+        </p>
+        <div class="project__tags">
+          <span>E-Commerce</span><span>Conversion</span><span>Design-System</span><span>UX-Workshops</span>
+        </div>
+      </div>
+      <div class="project__visual">
+        <div class="plate plate--forwerts"><img src="assets/img/forwerts-1.png" alt="forwerts Arbeit" loading="lazy" /></div>
+      </div>
+      <span class="project__open"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+    </li>
+
+  </ul>
+</section>
+
+<!-- ============ PROCESS ============ -->
+<section class="process" id="process">
+  <p class="sectionTag reveal"><span>04</span> <span data-i18n="tag.process">Wie ich arbeite</span></p>
+  <ol class="process__list">
+    <li class="reveal"><span class="process__k">01</span><h4 data-i18n="proc.1t">Echtes Interesse</h4><p data-i18n="proc.1d">Persönliche Projekte beginnen mit Neugier auf das Problem, nicht mit der Lösung.</p></li>
+    <li class="reveal"><span class="process__k">02</span><h4 data-i18n="proc.2t">Research & Empathie</h4><p data-i18n="proc.2d">Personas, Journey Maps, Interviews und Card Sortings, um wirklich zu verstehen.</p></li>
+    <li class="reveal"><span class="process__k">03</span><h4 data-i18n="proc.3t">Psychologische Fundierung</h4><p data-i18n="proc.3d">Verhaltensmodelle werden zu konkreten, verantwortungsvollen Mechaniken.</p></li>
+    <li class="reveal"><span class="process__k">04</span><h4 data-i18n="proc.4t">Gestaltung & Prototyp</h4><p data-i18n="proc.4d">Modulare Systeme, klare Hierarchien, flüssige Interaktionen in Figma.</p></li>
+    <li class="reveal"><span class="process__k">05</span><h4 data-i18n="proc.5t">Evaluation & Iteration</h4><p data-i18n="proc.5d">Usability-Testing mit echten Menschen — und gezielte Überarbeitung.</p></li>
+  </ol>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="about" id="about">
+  <p class="sectionTag reveal"><span>05</span> <span data-i18n="tag.about">Über mich</span></p>
+  <div class="about__grid">
+    <div class="about__col reveal">
+      <h3 data-i18n="about.h1">Psychologie & Design</h3>
+      <p data-i18n="about.p1">
+        Mich fasziniert das Zusammenspiel von Psychologie und Design — besonders, wie digitale
+        Interaktionen Entscheidungen, Gewohnheiten und Emotionen formen. Mich interessiert das
+        Zusammenspiel subtiler Mechanismen wie Nudging, Dark Patterns oder Persuasive Design und
+        die Frage, wo verantwortungsvolle Gestaltung die Grenze zwischen Unterstützung und
+        Manipulation ziehen kann.
+      </p>
+    </div>
+    <div class="about__col reveal">
+      <h3 data-i18n="about.h2">Blick nach vorn</h3>
+      <p data-i18n="about.p2">
+        Ich möchte verstehen, inwiefern neue Technologien wie KI und adaptive Systeme unsere
+        Wahrnehmung, unser Vertrauen und unsere Interaktion mit der digitalen Welt nachhaltig
+        prägen werden — und wie man diese Bewegung gestalten kann. Ich gestalte digitale
+        Erfahrungen, die reale Probleme adressieren, fundiert in einem tiefen Verständnis dafür,
+        wie Nutzer denken, handeln und fühlen.
+      </p>
+    </div>
+  </div>
+
+  <div class="about__passions reveal">
+    <span class="about__passionsLabel" data-i18n="about.passions">Leidenschaften & Interessen</span>
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>Verhaltenspsychologie</span><span>·</span><span>Künstliche Intelligenz</span><span>·</span><span>Persuasive Design</span><span>·</span><span>Typografie</span><span>·</span><span>Prototyping</span><span>·</span><span>Mensch-Maschine-Interaktion</span><span>·</span><span>Ethik im Design</span><span>·</span><span>Gamification</span><span>·</span>
+        <span>Verhaltenspsychologie</span><span>·</span><span>Künstliche Intelligenz</span><span>·</span><span>Persuasive Design</span><span>·</span><span>Typografie</span><span>·</span><span>Prototyping</span><span>·</span><span>Mensch-Maschine-Interaktion</span><span>·</span><span>Ethik im Design</span><span>·</span><span>Gamification</span><span>·</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact" id="contact">
+  <p class="sectionTag reveal"><span>06</span> <span data-i18n="tag.contact">Kontakt</span></p>
+  <h2 class="contact__title reveal">
+    <span data-i18n="contact.t1">Lass uns etwas</span>
+    <em data-i18n="contact.t2">Durchdachtes</em>
+    <span data-i18n="contact.t3">bauen.</span>
+  </h2>
+  <div class="contact__links">
+    <a href="mailto:henriloehlein@gmail.com" class="contact__link magnetic" data-cursor="Mail">
+      <span class="contact__linkLabel">Mail</span>
+      <span class="contact__linkVal">henriloehlein@gmail.com</span>
+    </a>
+    <a href="https://linkedin.com/in/henriloehlein" target="_blank" rel="noopener" class="contact__link magnetic" data-cursor="Öffnen">
+      <span class="contact__linkLabel">LinkedIn</span>
+      <span class="contact__linkVal">in/henriloehlein</span>
+    </a>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer__row">
+    <span class="footer__name">Henri Löhlein</span>
+    <span class="footer__copy">© 2026 — <span data-i18n="footer.rights">Alle Rechte vorbehalten</span></span>
+  </div>
+  <div class="footer__row footer__row--meta">
+    <span data-i18n="footer.made">Konzipiert & gestaltet aus Ansbach</span>
+    <a href="#top" class="footer__top" data-cursor="Hoch">
+      <span data-i18n="footer.top">Nach oben</span>
+      <svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+    </a>
+  </div>
+</footer>
+
+<!-- ============ PROJECT MODAL ============ -->
+<div class="modal" id="modal" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="modal__scrim" data-close></div>
+  <div class="modal__panel">
+    <div class="modal__bar">
+      <span class="modal__barName" id="modalBarName"></span>
+      <button class="modal__close" data-close aria-label="Schließen" data-cursor="Schließen">
+        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="modal__progress"><i id="modalProgress"></i></div>
+    <div class="modal__content" id="modalContent" tabindex="-1"></div>
+  </div>
+</div>
+
+<!-- ============ CASE STUDY SOURCES (hidden, cloned into modal) ============ -->
+<div id="cases" hidden>
+
+  <!-- ===== STEADY ===== -->
+  <article data-case="steady">
+    <div class="cs__hero">
+      <div class="cs__heroText">
+        <span class="cs__kicker">Behavioral Design · 2025</span>
+        <h2 class="cs__title">steady</h2>
+        <p class="cs__sub">Adaptives Planungs- & Organisationstool</p>
+        <p class="cs__pitch"><em>steady</em> ist eine adaptive Planungs- und Organisations-App, die hinterfragt, <em>warum</em> Menschen scheitern — und <em>wie</em> man sie aktiv dabei unterstützt, an ihren Routinen und Zielen festzuhalten. Die Mechanismen basieren auf psychologischen Modellen und künstlicher Intelligenz, um Nutzende empathisch und nachhaltig zu begleiten.</p>
+      </div>
+      <div class="cs__heroMeta">
+        <dl>
+          <div><dt>Rolle</dt><dd>Konzept · UX/UI · Prototyp · Research</dd></div>
+          <div><dt>Methoden</dt><dd>Personas · Journey Map · Card Sorting · Usability-Testing</dd></div>
+          <div><dt>Grundlage</dt><dd>Self-Determination Theory · Fogg Behavior Model · Nudging</dd></div>
+          <div><dt>Tools</dt><dd>Figma</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="cs__shots cs__shots--2">
+      <figure class="shot shot--phone"><img src="assets/img/steady-dashboard.png" alt="steady Dashboard – Tagesablauf" /><figcaption>Dashboard — priorisierter Tagesablauf</figcaption></figure>
+      <figure class="shot shot--phone"><img src="assets/img/steady-onboarding.png" alt="steady Onboarding" /><figcaption>Onboarding — psychologische Profilbildung</figcaption></figure>
+    </div>
+
+    <section class="cs__sec">
+      <h3>Problemraum & Motivation</h3>
+      <p>Klassische Tools unterstützen Nutzende zwar bei der Festlegung ihrer Ziele und Aufgaben, aber nicht bei deren Verhalten. Menschen wissen durchaus, was sie tun sollten, scheitern jedoch daran, es konsequent und nachhaltig umzusetzen. Der Grund: mangelnde Empathie sowie fehlende Individualisierung und fehlendes Verständnis für Motivation und Frustration.</p>
+    </section>
+
+    <section class="cs__sec">
+      <h3>Psychologische Fundierung</h3>
+      <p>steady basiert auf verhaltenspsychologischen Prinzipien und Modellen, die erklären, warum Menschen handeln — und warum sie in bestimmten Momenten aufgeben. Modelle wie die <strong>Self-Determination Theory</strong> und das <strong>Fogg Behavior Model</strong> zeigen, dass selbstwirksames Verhalten nur entsteht, wenn Autonomie, Kompetenz und Auslöser zusammenkommen. Mechanismen aus dem <strong>Nudging</strong> verdeutlichen, dass Verhalten ohne Druck oder Zwang beeinflusst werden kann — solange die Intervention zur richtigen Zeit und im richtigen Kontext erfolgt. steady überträgt diese Erkenntnisse in adaptive Mechanismen, die motivieren, aktiv unterstützen und nachhaltig begleiten, ohne zu überfordern oder zu bevormunden.</p>
+    </section>
+
+    <section class="cs__sec">
+      <h3>User Research</h3>
+      <p>Für das Projekt wurden drei fiktive Personas ausgearbeitet, um ein möglichst breites Spektrum der Bedürfnisse und Herausforderungen der Nutzergruppe abzubilden. Eine davon ist <strong>Maria</strong> — eine berufstätige Mutter, die Struktur braucht, unter Alltagsdruck jedoch schnell frustriert ist.</p>
+      <figure class="shot"><img src="assets/img/steady-persona.png" alt="Persona Maria" /><figcaption>Persona — Maria</figcaption></figure>
+      <p>Die <strong>User Journey Map</strong> zeigt Marias emotionale Reise von Unsicherheit über Frust bis zum gewünschten Effekt der Nutzung und identifiziert kritische Momente, in denen Unterstützung nötig ist.</p>
+      <figure class="shot"><img src="assets/img/steady-journey.png" alt="User Journey Map Maria" /><figcaption>User Journey Map — kritische Momente</figcaption></figure>
+
+      <div class="cs__case">
+        <span class="cs__caseTag">Use Case — Maria nimmt Yoga in ihren Alltag auf</span>
+        <div class="cs__phase">
+          <h5>Zielerfassung & Planung</h5>
+          <p>Maria möchte Yoga in ihre Routinen aufnehmen und verstehen, was es mit ihr macht. Sie zweifelt noch an der Nachhaltigkeit. <b>Optimale Unterstützung:</b> Reflexionsfragen wie „Was sind deine größten Ängste?“ und späteres gemeinsames Reflektieren. Sie braucht viel emotionale Begleitung.</p>
+        </div>
+        <div class="cs__phase">
+          <h5>Umsetzung</h5>
+          <p>Yoga ist dreimal die Woche im Kalender. Ihr Alltag ist oft unplanbar — fällt sie aus dem Rhythmus, kommt Frust. <b>Optimale Unterstützung:</b> empathische Erinnerungen, Fortschritts-Visualisierung und leichtes Verfolgen der Routinen.</p>
+        </div>
+        <div class="cs__phase">
+          <h5>Rückschlag</h5>
+          <p>Sie ringt mit sich, der Alltagsdruck wirkt überwältigend; ein negativer innerer Monolog lähmt sie. <b>Optimale Unterstützung:</b> achtsame, begleitende Reaktionen, Reflexionsimpulse wie „Was würdest du einer Freundin raten?“ und Optionen, Ziele temporär zu pausieren, zu vereinfachen oder neu zu priorisieren.</p>
+        </div>
+      </div>
+      <p class="cs__pull">Adaptive Systeme müssen ein situativ angemessenes Gefühl von Empathie vermitteln — jene Balance zwischen Begleitung und Autonomie, in der eine Intervention als Unterstützung, nicht als Bevormundung wahrgenommen wird.</p>
+    </section>
+
+    <section class="cs__sec">
+      <h3>Designentscheidungen</h3>
+      <div class="cs__grid2">
+        <div><h5>Gestaltung</h5><p>Konsequent modularer Ansatz für Skalierbarkeit und eine einheitliche visuelle Sprache. Vertikales 8-px-Grid und 4-Spalten-Layout sichern konsistente Abstände und stabile Hierarchien. Warme Akzente (Rot, Gelb) für Zugewandtheit, Blau als Signal für Klarheit und Modernität. Gradients sind das visuelle Alleinstellungsmerkmal — in Elementen, Hintergründen und im Logo. Serifenlose Schrift und Outline-Icons reduzieren Komplexität und unterstützen die klare, luftige Optik.</p></div>
+        <div><h5>Systemlogik</h5><p>Drei zentrale Eintrags-Kategorien — Ziele, Kalendereinträge, Routinetasks — entstanden aus einem Card-Sorting und reduzieren kognitive Last. Teilziele beeinflussen den Fortschritt ihres Hauptziels; das System ermittelt ihn dynamisch und leitet Handlungsimpulse ab. Der Tagesablauf bildet das zentrale Ordnungsprinzip, in dem alle Einträge zusammenfließen.</p></div>
+        <div><h5>Interaktionsmechaniken</h5><p>Der Assistent ist die zentrale Interaktionseinheit. Statt starrer Overlays werden Interventionen über den Chat kommuniziert — nahbar und dialogisch. Proaktive Impulse entstehen über zeitverzögerte Trigger. Drag-and-Drop-Priorisierung, Fortschritts-Slider und Swipe-to-complete bieten direkte Bedienbarkeit; das Assistenten-Icon ist jederzeit unten rechts erreichbar.</p></div>
+        <div><h5>Psychologische Dimensionen</h5><p>Im Onboarding wählen Nutzende, was sie motiviert (Leistung, Routine, Belohnung), ihren Umgang mit Aufgaben (planvoll, flexibel, chaotisch) und ihren Begleitstil (sanft, disziplinierend, emotional, rational). Daraus ergibt sich der Nutzertyp — bei Maria „routiniert, planvoll, sanft unterstützt“. Sprache, Vorschläge und Funktionen passen sich adaptiv an, bleiben aber individualisierbar.</p></div>
+      </div>
+    </section>
+
+    <section class="cs__sec">
+      <h3>Evaluation</h3>
+      <p><b>Card Sorting vor dem Prototyping:</b> Ein kombiniertes geschlossenes und offenes Card-Sorting validierte Begriffe und Struktur. Im geschlossenen Teil ordneten Teilnehmende zentrale Begriffe vordefinierten Kategorien zu; im offenen Teil schlugen sie Alternativen vor. So entstanden präzise quantitative Daten zur Zuordnung und qualitative Einblicke über meine eigenen Annahmen hinaus.</p>
+      <p><b>Qualitatives Usability-Testing:</b> Nach dem Hi-Fi-Prototyping testeten acht sorgfältig ausgewählte Personen unterschiedlichen Alters und Erfahrungsgrades zehn Aufgaben, die alle Kernfunktionen abdeckten.</p>
+      <ul class="cs__bullets">
+        <li>Klares Layout, reduzierte Gestaltung und strukturierter Aufbau wurden als übersichtlich, modern und motivierend wahrgenommen — zentrale Projektziele.</li>
+        <li>Die meisten Aufgaben wurden problemlos bewältigt; der Assistent trug spürbar zur Orientierung bei.</li>
+        <li>Irritationen lagen an der Natur des Prototyps: nicht optimale Screen-Verbindungen, doppelte Klickflächen, ein bewusst überpräsenter Assistent.</li>
+        <li>Wertvolle Impulse für die Iteration: Voice-Interaktion, App-Verknüpfungen und gezielte Gamification.</li>
+      </ul>
+      <p><b>Iterative Überarbeitungen:</b> korrigierte Screen-Verbindungen, größerer „Close“-Button des Assistenten, neue Voice-Option per Mikrofon-Button, stabileres „Hinzufügen“-Overlay, Bestätigungsscreen nach dem Anlegen eines Hauptziels, visuell aufgewerteter Preview-Screen und Overlays, die sich nun auch per Klick außerhalb schließen lassen.</p>
+    </section>
+  </article>
+
+  <!-- ===== MILO ===== -->
+  <article data-case="milo">
+    <div class="cs__hero">
+      <div class="cs__heroText">
+        <span class="cs__kicker">Inclusive Design · 2025</span>
+        <h2 class="cs__title">Milo</h2>
+        <p class="cs__sub">KI-basierte Assistenz für ältere Menschen</p>
+        <p class="cs__pitch"><em>Milo</em> ist eine KI-basierte Assistenzanwendung für ältere Menschen, die den Zugang zu digitaler Technik vereinfacht und psychologische Hemmschwellen abbaut. Im Zentrum steht ein empathischer, transparenter und flexibel anpassbarer Assistent, der im digitalen Alltag begleitet und Selbstständigkeit stärkt — verständlich, ruhig und vertrauenswürdig.</p>
+      </div>
+      <div class="cs__heroMeta">
+        <dl>
+          <div><dt>Rolle</dt><dd>Konzept · UX/UI · Prototyp · Research</dd></div>
+          <div><dt>Methoden</dt><dd>Personas · Journey Maps · Use Cases · Usability-Testing</dd></div>
+          <div><dt>Fokus</dt><dd>Vertrauen · Kontrolle · Selbstwirksamkeit</dd></div>
+          <div><dt>Tools</dt><dd>Figma</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <section class="cs__sec">
+      <h3>Problemraum & Motivation</h3>
+      <p>Für viele ältere Menschen ist der Umgang mit digitalen Anwendungen weniger eine Frage der Bedienbarkeit als von <strong>Vertrauen, Sicherheit und Selbstwirksamkeit</strong>. Unsicherheit, Angst vor Fehlbedienung, unklare Interfaces und fehlende Transparenz führen dazu, dass digitale Angebote trotz ihres Nutzens gemieden werden. Milo soll den Erstkontakt mit digitaler Technik niedrigschwellig, nachvollziehbar und entlastend gestalten.</p>
+    </section>
+
+    <section class="cs__sec">
+      <h3>Psychologische Fundierung</h3>
+      <p>Milo basiert auf der Annahme, dass Nutzungsbarrieren bei älteren Menschen nicht nur technisch, sondern vor allem psychologisch geprägt sind. Aus der Recherche wurden drei zentrale Spannungsfelder abgeleitet: <strong>Überforderung</strong>, <strong>Misstrauen</strong> und <strong>fehlende Selbstwirksamkeit</strong>. Daraus folgt ein Ansatz, der nicht auf Druck, sondern auf Orientierung, Kontrolle und verständliche Begleitung setzt — durch klare Sprache, sichtbares Feedback, reduzierte Komplexität und jederzeit nachvollziehbare Entscheidungen.</p>
+    </section>
+
+    <section class="cs__sec">
+      <h3>User Research</h3>
+      <p>Drei fiktive Personas bilden die Bandbreite an Bedürfnissen, Haltungen und Nutzungssituationen ab. <strong>Inge</strong> steht für eine vorsichtige Nutzerin, die Technik offen gegenübersteht, aber schnell Unsicherheit empfindet — sie braucht eine einfache, sanfte und fehlerfreundliche Begleitung.</p>
+      <figure class="shot"><img src="assets/img/milo-persona.png" alt="Persona Inge" /><figcaption>Persona — Inge</figcaption></figure>
+      <p>Die User Journey Maps zeigen, wie sich Unsicherheit, Vertrauen, Frustration und Selbstvertrauen im Verlauf verändern — und machen sichtbar, wo Milo besonders unterstützend, erklärend oder entlastend wirken muss.</p>
+      <figure class="shot"><img src="assets/img/milo-journey.png" alt="User Journey Map Inge" /><figcaption>User Journey Map — Inge</figcaption></figure>
+
+      <div class="cs__case">
+        <span class="cs__caseTag">Use Case — Inge fragt erstmals nach dem Wetter</span>
+        <div class="cs__phase"><h5>Zielerfassung & Planung</h5><p>Inge will den Assistenten zum ersten Mal nutzen, ist aber unsicher, wie sie ihre Frage formulieren soll. <b>Optimale Unterstützung:</b> bereits im Onboarding vermitteln, wie man mit der KI interagiert — Starthilfe, bevor eine Hürde entsteht.</p></div>
+        <div class="cs__phase"><h5>Umsetzung</h5><p>Sie schreibt „Wie wird das Wetter morgen?“ und weiß nicht, woran sie den Erfolg erkennt. <b>Optimale Unterstützung:</b> Informationen visuell und semantisch klar darstellen; System-Nachrichten eindeutig als solche kennzeichnen.</p></div>
+        <div class="cs__phase"><h5>Rückschlag</h5><p>Verwirrende Rückmeldungen („Du musst zuerst deine Ortsangabe anpassen“) lassen sie sich ohnmächtig fühlen. <b>Optimale Unterstützung:</b> jederzeit Zugriff und Kontrolle, ein Mindestmaß an Selbstwirksamkeit und bei Unverständnis eine Weiterleitung ins Hilfecenter.</p></div>
+      </div>
+      <p class="cs__pull">Akzeptanz entsteht nicht durch Funktionsumfang, sondern durch das Gefühl von Kontrolle, Verlässlichkeit und verständlicher Unterstützung — orientiert an emotionalen und kognitiven Zuständen, nicht nur an technischen Abläufen.</p>
+    </section>
+
+    <section class="cs__sec">
+      <h3>Designentscheidungen</h3>
+      <div class="cs__grid2">
+        <div><h5>Gestaltung</h5><p>Ein ruhiges, barrierearmes System: 8-px-Grid, modulares Layout, große Typografie, deutliche Kontraste und eine warme Farbwelt. Buttons, Eingabefelder und Inhaltsbereiche sind klar getrennt; Schriftgrößen adaptiv gedacht.</p></div>
+        <div><h5>Branding</h5><p>Der Name <em>Milo</em> ist kurz, freundlich und leicht auszusprechen — Vertrauen ohne künstliche Technik-Anmutung. Nutzende können den Assistenten individuell benennen.</p></div>
+        <div><h5>Informationsstruktur</h5><p>Ein zentraler Assistent, ergänzt um vergangene Gespräche, Erinnerungen, Hilfe und Einstellungen. Inhalte werden automatisch oder konfigurierbar in vergangene Gespräche überführt, damit Nutzer den Überblick behalten, ohne selbst Ordnung schaffen zu müssen.</p></div>
+        <div><h5>Interaktion & Psychologie</h5><p>Nachrichten werden erst nach explizitem Senden abgeschickt, Ladezustände sichtbar gemacht, Schritte direkt im Interface erklärt. Im Onboarding wählen Nutzende Text, Sprache oder Touch. Bei sensiblen Themen erklärt Milo, warum Berechtigungen sinnvoll sind, bietet Alternativen und macht deutlich, dass alles jederzeit anpassbar ist.</p></div>
+      </div>
+    </section>
+
+    <section class="cs__sec">
+      <h3>Evaluation</h3>
+      <p>Ein qualitatives Usability-Testing mit fünf Personen aus der Zielgruppe — vor Ort und begleitet — umfasste zehn Aufgaben zu zentralen Nutzungsszenarien.</p>
+      <ul class="cs__bullets">
+        <li>Übersichtlichkeit, verständliche Menüführung und der ruhige Einstieg wurden besonders gelobt.</li>
+        <li>Die meisten fanden sich schnell zurecht und bedienten die Kernfunktionen intuitiv.</li>
+        <li>Iterationsbedarf: Zuordnung vergangener Gespräche klarer machen, Einstellungen verständlicher formulieren, Schriftgröße teils als zu groß empfunden.</li>
+      </ul>
+      <p>Auf dieser Basis wurden Interaktionen, Overlays und Kontraste angepasst sowie Einleitungssequenz und Eingabemuster verfeinert — stets mit dem Ziel, die Nutzung ruhig, nachvollziehbar und barrierearm zu halten.</p>
+    </section>
+
+    <section class="cs__sec">
+      <h3>Fazit</h3>
+      <p class="cs__pull">Milo zeigt: Eine digitale Assistenz für ältere Menschen funktioniert nicht über Komplexität, sondern über Klarheit, Vertrauen und Anpassbarkeit. Gute Gestaltung heißt hier, psychologische Hürden ernst zu nehmen und Menschen das Gefühl zu geben, Technik sicher und selbstbestimmt zu nutzen.</p>
+    </section>
+  </article>
+
+  <!-- ===== COGNIFY ===== -->
+  <article data-case="cognify">
+    <div class="cs__hero">
+      <div class="cs__heroText">
+        <span class="cs__kicker">AR E-Learning · In Bearbeitung</span>
+        <h2 class="cs__title">Cognify</h2>
+        <p class="cs__sub">Augmented-Reality E-Learning Plattform</p>
+        <p class="cs__pitch"><em>Cognify</em> ist eine universelle E-Learning-Plattform, mit der Menschen vielfältige Themengebiete in alltäglichen Lerneinheiten erforschen — und durch verschiedene Features nachhaltig zum Lernen motiviert werden.</p>
+      </div>
+      <div class="cs__heroMeta">
+        <dl>
+          <div><dt>Rolle</dt><dd>Konzept · UX/UI</dd></div>
+          <div><dt>Schwerpunkte</dt><dd>AR-Darstellung · Quizzes · Gamification · Community</dd></div>
+          <div><dt>Status</dt><dd>Case Study in Bearbeitung</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="cs__shots cs__shots--2">
+      <figure class="shot shot--phone"><img src="assets/img/cognify-main.png" alt="Cognify Lernübersicht" /><figcaption>Lernen fortsetzen — modulare Lerneinheiten</figcaption></figure>
+      <figure class="shot shot--phone"><img src="assets/img/cognify-ar.png" alt="Cognify AR Anatomie" /><figcaption>Augmented Reality — interaktive Inhalte</figcaption></figure>
+    </div>
+
+    <section class="cs__sec">
+      <h3>Vision</h3>
+      <p>Cognify ermöglicht es Menschen, neue Themen alltagsnah und flexibel zu entdecken. Nutzende gestalten sich Lerneinheiten individuell und erkunden Inhalte durch interaktive Elemente wie <strong>Augmented-Reality-Darstellungen</strong> — anschließend stellen sie ihr Wissen mit <strong>Quizzes</strong> auf die Probe. Durchdachte <strong>Gamification-Elemente</strong> und ein ausgeprägter <strong>Community-Aspekt</strong> sorgen für ein langfristig motivierendes Umfeld und eine kontinuierliche, intuitive Lernerfahrung.</p>
+    </section>
+
+    <section class="cs__sec">
+      <h3>Kontext & Rahmenbedingungen</h3>
+      <p>Die ausführliche Case Study zu Recherche, Konzeption und Evaluation befindet sich derzeit in Bearbeitung und wird hier ergänzt.</p>
+    </section>
+  </article>
+
+  <!-- ===== SYNTEGON ===== -->
+  <article data-case="syntegon">
+    <div class="cs__hero">
+      <div class="cs__heroText">
+        <span class="cs__kicker">Industrial UX · Bachelorarbeit</span>
+        <h2 class="cs__title">Syntegon</h2>
+        <p class="cs__sub">Visualisierungssystem für die Pharmaproduktion</p>
+        <p class="cs__pitch">Im Rahmen meiner Bachelorarbeit bei <strong>Syntegon</strong> arbeite ich im Bereich <strong>Research &amp; Development</strong> an der Konzeption und prototypischen Entwicklung eines mobilen Visualisierungssystems für die Pharmaproduktion. Die Arbeit verbindet wissenschaftliche Forschung, UX-Konzeption und industrielle Produktentwicklung in einem hochregulierten Umfeld.</p>
+      </div>
+      <div class="cs__heroMeta">
+        <dl>
+          <div><dt>Rolle</dt><dd>UX-Konzeption · Research &amp; Development</dd></div>
+          <div><dt>Methoden</dt><dd>Literaturrecherche · Experteninterviews · Prototyping</dd></div>
+          <div><dt>Tools</dt><dd>Figma · Claude / Generative AI · Miro</dd></div>
+          <div><dt>Kontext</dt><dd>Hochreguliertes Industrieumfeld</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <section class="cs__sec">
+      <h3>Forschungsfokus</h3>
+      <p class="cs__pull">Wie muss ein mobiles Visualisierungssystem konzipiert und aufgebaut sein, um relevante Prozessinformationen so darzustellen, dass Maschinenbediener Produktionszustände optimal erfassen und sicher handeln können?</p>
+      <p>Untersucht wird theoretisch und konzeptionell, wie Informationsarchitektur, visuelle Hierarchien, Entscheidungsunterstützung, Kontextsensitivität und industrielle Usability in einem produktionskritischen Umfeld optimal zusammenspielen.</p>
+    </section>
+
+    <section class="cs__sec">
+      <h3>Tätigkeiten</h3>
+      <div class="cs__grid2">
+        <div><h5>Konzeption des Systems</h5><p>Entwicklung der Systemlogik, Definition der Informations- und Navigationsstruktur, Konzeption visueller Darstellungsprinzipien sowie Aufbau erster Prototypen und Interaktionskonzepte. Ziel: komplexe industrielle Informationen verständlich, priorisiert und handlungsleitend aufbereiten.</p></div>
+        <div><h5>Wissenschaftliche Bearbeitung</h5><p>Literatur- und Technologierecherche, Analyse bestehender industrieller Visualisierungssysteme, Ableitung theoretischer Designprinzipien und Verknüpfung wissenschaftlicher Erkenntnisse mit realer Produktentwicklung.</p></div>
+        <div><h5>Interdisziplinäre Zusammenarbeit</h5><p>Regelmäßige Zusammenarbeit mit UX/Design, Mechanical Engineering, Pharma Engineering und Forschung &amp; Entwicklung — um technische, nutzerzentrierte und produktionstechnische Perspektiven früh einfließen zu lassen.</p></div>
+        <div><h5>Experteninterviews</h5><p>Gespräche mit Fachpersonen verschiedener Abteilungen, um operative Anforderungen zu verstehen, implizites Expertenwissen sichtbar zu machen und reale Nutzungskontexte zu integrieren.</p></div>
+      </div>
+    </section>
+
+    <section class="cs__sec">
+      <h3>Persönliches Learning</h3>
+      <p>Besonders spannend ist die Möglichkeit, an einem innovativen industriellen Produkt zu arbeiten und mit Menschen sehr unterschiedlicher Disziplinen zusammenzuwirken. Gerade der Austausch verschiedener Perspektiven zeigt, wie wichtig interdisziplinäres Denken für gute Produktentwicklung ist — besonders, wenn komplexe Systeme für reale Nutzer verständlich gemacht werden müssen.</p>
+      <p class="cs__hinweis">Hinweis — Aufgrund von Vertraulichkeit und Geheimhaltung können projektspezifische Inhalte nur eingeschränkt dargestellt werden.</p>
+    </section>
+  </article>
+
+  <!-- ===== FORWERTS ===== -->
+  <article data-case="forwerts">
+    <div class="cs__hero">
+      <div class="cs__heroText">
+        <span class="cs__kicker">E-Commerce UX · Praxissemester 2024 / 25</span>
+        <h2 class="cs__title">forwerts interactive</h2>
+        <p class="cs__sub">Praktisches Semester · User Experience Design</p>
+        <p class="cs__pitch">Praktikum bei der <strong>forwerts interactive GmbH</strong> in Heilbronn im Bereich User Experience Design — Mensch-Maschine-Interaktion im E-Commerce-Kontext, Funnel-Flows, Screen-Designs und Design-Strukturen in der Kundenkommunikation.</p>
+      </div>
+      <div class="cs__heroMeta">
+        <dl>
+          <div><dt>Rolle</dt><dd>UX Design · Praxissemester</dd></div>
+          <div><dt>Zeitraum</dt><dd>01.10.2024 – 01.03.2025</dd></div>
+          <div><dt>Kontext</dt><dd>Online-Shop &amp; Kunden-Center</dd></div>
+          <div><dt>Web</dt><dd><a href="https://www.forwerts.com/" target="_blank" rel="noopener">forwerts.com</a></dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="cs__shots cs__shots--2">
+      <figure class="shot"><img src="assets/img/forwerts-1.png" alt="forwerts Arbeit 1" /></figure>
+      <figure class="shot"><img src="assets/img/forwerts-2.png" alt="forwerts Arbeit 2" /></figure>
+    </div>
+
+    <section class="cs__sec">
+      <h3>Projekte & Tätigkeiten</h3>
+      <ul class="cs__bullets">
+        <li>Verständnis für die Mensch-Maschine-Interaktion im Online-Shop-Kontext.</li>
+        <li>Verständnis für die umfassende Präsentation im UX-Design in der Kundenkommunikation.</li>
+        <li>Arbeit in unterschiedlichen Themenfeldern und Shopbereichen der Kunden.</li>
+        <li>Ausarbeitung von Screen-Designs gemäß projektspezifischen Vorgaben und Abstimmungen im Oberflächenkonzept-Prozess.</li>
+        <li>Ideenfindung und Exploration für Funnel-Flows und Funktionalitäten samt grafischer Ausarbeitung und Textvorschlägen.</li>
+        <li>Erstellen von Icons, Infografiken und Badges im Online-Shop- und Kunden-Center-Kontext.</li>
+        <li>Mitarbeit und Aufbau einer Design-Struktur für einzelne Bereiche im Kunden-Center.</li>
+        <li>Mitarbeit an Konzeption und Vorbereitung interner UX-Workshops für Mitarbeitende von Partnerunternehmen — mit äußerst positivem Feedback.</li>
+      </ul>
+      <p class="cs__pull">Ausgearbeitete Funnel-Flow-Lösungen im Online-Shop- und Kunden-Center-Kontext trugen nachweislich zu verbesserten Conversion Rates und reduzierten Abbruchraten bei.</p>
+    </section>
+  </article>
+
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

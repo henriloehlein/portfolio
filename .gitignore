@@ -1,0 +1,14 @@
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+*~
+
+# Dependency / build artifacts (not used, but kept for hygiene)
+node_modules/
+.cache/
+.vercel/
+
+# Local env
+.env
+.env.local
