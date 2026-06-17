@@ -16,6 +16,7 @@
     'hero.lede':'I am Henri Löhlein, UX/UI designer. I am fascinated by the intersection of <em>psychology and technology</em>: how AI, LLMs and adaptive systems change the way people decide, trust and act. Curiosity drives me, and I am eager to see the possibilities that emerge next.',
     'hero.cta':'View work','hero.scroll':'Scroll','hero.bubbles':'Projects as bubbles, tap to open',
     'subnav.meta':'Bachelor candidate at Syntegon · Ansbach University',
+    'strip.role':'UX/UI Designer','strip.m1':'Bachelor candidate at Syntegon','strip.m2':'Ansbach University',
     'tag.approach':'Stance','tag.focus':'Interests','tag.work':'Selected work','tag.about':'About','tag.contact':'Contact',
     'chain.1a':'Solutions follow','chain.1b':'needs.','chain.2a':'Needs follow','chain.2b':'empathy.','chain.3a':'And empathy follows','chain.3b':'genuine interest.',
     'approach.note':'Purposeful design only emerges where challenges are met with empathy and functional thinking. That is exactly where my approach begins.',
@@ -305,6 +306,14 @@
     const bubbles = [];
     let openEl = null, paused = false;
 
+    // left/right "gutter" bands outside the centered content; bubbles roam here only
+    function bands() {
+      const vw = innerWidth, maxw = 1320;
+      const pad = Math.min(80, Math.max(20, vw * 0.05));
+      const bandW = Math.max(pad, (vw - maxw) / 2);
+      return { vw, bandW, leftInner: bandW, rightInner: vw - bandW };
+    }
+
     data.forEach((d, i) => {
       const el = document.createElement('div');
       el.className = 'bubble';
@@ -325,21 +334,25 @@
         '</div>';
       field.appendChild(el);
 
-      // varied sizes; drift speeds slow & gentle
-      const size = 56 + Math.round(Math.random() * 30);
+      // varied sizes; gentle drift
+      const size = 50 + Math.round(Math.random() * 28);
+      const bd = bands();
+      const onLeft = (i % 2 === 0);
+      const lo = onLeft ? -size * 0.3 : bd.rightInner;
+      const hi = onLeft ? (bd.leftInner - size) : (bd.vw - size * 0.7);
       const ang = Math.random() * Math.PI * 2;
-      const sp  = 0.10 + Math.random() * 0.12;
+      const sp  = 0.08 + Math.random() * 0.10;
       const b = {
         el, id: d.id, roleEl: d.roleEl, teaseEl: d.teaseEl,
         size,
-        x: Math.random() * innerWidth,
-        y: 80 + Math.random() * (innerHeight - 160),
+        x: lo + Math.random() * Math.max(1, hi - lo),
+        y: 40 + Math.random() * Math.max(40, innerHeight - size - 80),
         vx: Math.cos(ang) * sp,
         vy: Math.sin(ang) * sp,
         phase: Math.random() * Math.PI * 2,
         bob: 3 + Math.random() * 5,
         // each bubble carries its own "rest opacity" (varied transparency)
-        rest: 0.30 + Math.random() * 0.28
+        rest: 0.30 + Math.random() * 0.26
       };
       bubbles.push(b);
 
@@ -358,17 +371,24 @@
 
     function tick() {
       if (!paused) {
-        const w = innerWidth, h = innerHeight, t = performance.now() / 1000;
+        const h = innerHeight, t = performance.now() / 1000, bd = bands();
         bubbles.forEach(b => {
           if (b.el === openEl) return;
           b.x += b.vx;
           b.y += b.vy;
-          // wrap-around: leave one side, re-enter from the other
-          const m = b.size + 60;
-          if (b.x < -m) b.x = w + m;
-          else if (b.x > w + m) b.x = -m;
-          if (b.y < -m) b.y = h + m;
-          else if (b.y > h + m) b.y = -m;
+          // vertical: bounce within the viewport
+          if (b.y < 0) { b.y = 0; b.vy = Math.abs(b.vy); }
+          else if (b.y > h - b.size) { b.y = h - b.size; b.vy = -Math.abs(b.vy); }
+          // horizontal: stay in the side bands, never cross the centre content;
+          // exit the outer edge on one side -> re-enter from the other side
+          const center = b.x + b.size / 2;
+          if (center < bd.vw / 2) {            // left band
+            if (b.x + b.size > bd.leftInner) { b.x = bd.leftInner - b.size; b.vx = -Math.abs(b.vx); }
+            if (b.x + b.size < 0) b.x = bd.vw; // left out -> right in
+          } else {                              // right band
+            if (b.x < bd.rightInner) { b.x = bd.rightInner; b.vx = Math.abs(b.vx); }
+            if (b.x > bd.vw) b.x = -b.size;     // right out -> left in
+          }
           const bob = Math.sin(t * 0.55 + b.phase) * b.bob;
           b.el.style.transform = 'translate(' + b.x + 'px,' + (b.y + bob) + 'px)';
         });
