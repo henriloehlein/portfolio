@@ -173,19 +173,24 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 .approach__line b{font-weight:340;font-style:italic;color:var(--text);background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .approach__note{margin-top:clamp(34px,5vw,64px);max-width:60ch;font-size:clamp(16px,1.5vw,19px);color:var(--muted)}
 
-/* ---------- Focus ---------- */
+/* ---------- Interests / Focus (flip cards) ---------- */
 .focus__head{max-width:920px;margin-bottom:clamp(40px,6vw,72px)}
 .focus__title{font-family:var(--f-display);font-weight:360;font-size:clamp(30px,5vw,64px);line-height:1.05;letter-spacing:-.025em}
 .focus__title em{font-style:italic;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.focus__intro{margin-top:26px;font-size:clamp(16px,1.5vw,19px);color:var(--muted);max-width:62ch}
 .focus__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-.fcard{position:relative;padding:30px 26px 34px;border:1px solid var(--line);border-radius:18px;background:color-mix(in srgb,var(--surface) 60%,transparent);overflow:hidden;transition:border-color .4s,transform .4s var(--ease),background .4s}
-.fcard::before{content:"";position:absolute;inset:0;background:var(--grad-soft);opacity:0;transition:opacity .4s;z-index:-1}
-.fcard:hover{transform:translateY(-6px);border-color:transparent}
-.fcard:hover::before{opacity:.14}
-.fcard__num{font-family:var(--f-mono);font-size:22px;color:var(--warm-1);display:block;margin-bottom:60px}
-.fcard h3{font-size:21px;font-weight:600;letter-spacing:-.01em;margin-bottom:12px}
-.fcard p{font-size:14.5px;color:var(--muted);line-height:1.6}
+.fcard{perspective:1400px;min-height:262px;border-radius:18px;cursor:pointer;outline:none}
+.fcard__inner{position:relative;width:100%;min-height:262px;transition:transform .7s var(--ease);transform-style:preserve-3d}
+.fcard:hover .fcard__inner,.fcard:focus-visible .fcard__inner,.fcard.is-flipped .fcard__inner{transform:rotateY(180deg)}
+.fcard__face{position:absolute;inset:0;min-height:262px;border:1px solid var(--line);border-radius:18px;padding:28px 26px;display:flex;flex-direction:column;-webkit-backface-visibility:hidden;backface-visibility:hidden;overflow:hidden;background:color-mix(in srgb,var(--surface) 55%,transparent)}
+.fcard__front{justify-content:flex-end}
+.fcard__icon{position:absolute;top:-14px;right:-14px;width:124px;height:124px;fill:none;stroke:var(--text);stroke-width:1;stroke-linecap:round;stroke-linejoin:round;opacity:.12;transition:opacity .5s var(--ease),transform .7s var(--ease)}
+.fcard:hover .fcard__icon{opacity:.2;transform:scale(1.06) rotate(-4deg)}
+.fcard__num{font-family:var(--f-mono);font-size:13px;color:var(--warm-1);margin-bottom:10px}
+.fcard__front h3{font-family:var(--f-display);font-weight:420;font-size:clamp(22px,2vw,26px);letter-spacing:-.01em;line-height:1.08}
+.fcard__back{transform:rotateY(180deg);justify-content:center;border-color:transparent;background:var(--surface)}
+.fcard__back::before{content:"";position:absolute;inset:0;background:var(--grad-soft);opacity:.16}
+.fcard__back::after{content:"↩";position:absolute;top:18px;right:20px;font-size:14px;color:var(--text);opacity:.5}
+.fcard__back p{position:relative;z-index:1;font-size:15px;color:var(--text);line-height:1.62}
 
 /* ---------- Work / Projects ---------- */
 .work__head{margin-bottom:clamp(30px,4vw,50px)}
@@ -219,18 +224,13 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 .project:hover .project__open{opacity:1;transform:scale(1)}
 .project__open svg{width:16px;height:16px;fill:none;stroke:var(--text);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 
-/* ---------- Process ---------- */
-.process__list{list-style:none;counter-reset:p;display:grid;gap:0}
-.process__list li{display:grid;grid-template-columns:90px 1fr;gap:24px;padding:30px 0;border-top:1px solid var(--line);align-items:start}
-.process__list li:last-child{border-bottom:1px solid var(--line)}
-.process__k{font-family:var(--f-mono);font-size:13px;color:var(--warm-1);padding-top:6px}
-.process__list h4{font-family:var(--f-display);font-weight:400;font-size:clamp(22px,2.6vw,34px);letter-spacing:-.02em;margin-bottom:8px}
-.process__list p{color:var(--muted);font-size:15.5px;max-width:54ch}
-
 /* ---------- About ---------- */
 .about__grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,80px);margin-bottom:clamp(40px,6vw,70px)}
 .about__col h3{font-family:var(--f-mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--warm-1);margin-bottom:20px}
 .about__col p{font-size:clamp(17px,1.8vw,22px);line-height:1.6;color:var(--text);font-weight:300;letter-spacing:-.01em}
+.about__method{max-width:900px;margin:0 0 clamp(40px,6vw,70px)}
+.about__method h3{font-family:var(--f-mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--warm-1);margin-bottom:20px}
+.about__method p{font-size:clamp(17px,1.8vw,22px);line-height:1.6;color:var(--text);font-weight:300;letter-spacing:-.01em}
 .about__passionsLabel{display:block;font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
 .marquee{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:18px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
 .marquee__track{display:flex;gap:24px;white-space:nowrap;width:max-content;animation:marquee 38s linear infinite;font-family:var(--f-display);font-size:clamp(22px,3vw,40px);font-style:italic;font-weight:340}
@@ -343,5 +343,4 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
   .about__grid{grid-template-columns:1fr}
   .contact__links{grid-template-columns:1fr}
   .cs__shots--2,.cs__grid2{grid-template-columns:1fr}
-  .process__list li{grid-template-columns:54px 1fr;gap:14px}
 }

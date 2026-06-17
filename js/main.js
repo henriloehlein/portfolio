@@ -10,41 +10,36 @@
   /* ---------- i18n dictionary (EN overrides; DE lives in HTML) ---------- */
   const EN = {
     'pre.role':'UX / UI Designer',
-    'nav.approach':'Approach','nav.focus':'Focus','nav.work':'Work','nav.about':'About','nav.contact':'Contact',
+    'nav.approach':'Approach','nav.focus':'Interests','nav.work':'Work','nav.about':'About','nav.contact':'Contact',
     'hero.avail':'Open to working-student & junior roles 2026','hero.loc':'Ansbach University · Germany',
     'hero.t1':'Design','hero.t2':'on the edge',
-    'hero.lede':'I’m <strong>Henri Löhlein</strong>, a UX/UI designer. I craft digital experiences that address <em>real human needs</em> — grounded in psychology, sharpened by empathy, driven by genuine interest.',
+    'hero.lede':'Henri Löhlein, UX/UI designer. Crafts digital experiences that address <em>real human needs</em>: grounded in psychology, sharpened by empathy, carried by genuine interest.',
     'hero.cta':'View work','hero.scroll':'Scroll',
-    'tag.approach':'Stance','tag.focus':'What I think about','tag.work':'Selected work','tag.process':'How I work','tag.about':'About','tag.contact':'Contact',
+    'tag.approach':'Stance','tag.focus':'Interests','tag.work':'Selected work','tag.about':'About','tag.contact':'Contact',
     'chain.1a':'Solutions follow','chain.1b':'needs.','chain.2a':'Needs follow','chain.2b':'empathy.','chain.3a':'And empathy follows','chain.3b':'genuine interest.',
-    'approach.note':'Good, purposeful design only emerges when challenges are met with empathy and functional thinking. That’s exactly where I start.',
+    'approach.note':'Purposeful design only emerges where challenges are met with empathy and functional thinking. That is exactly where my approach begins.',
     'focus.title':'The interplay of <em>psychology</em> and <em>design.</em>',
-    'focus.intro':'I’m fascinated by how digital interactions shape decisions, habits and emotions — and where responsible design draws the line between support and manipulation.',
-    'focus.c1.t':'Nudging','focus.c1.d':'Influencing behaviour without pressure or force — at the right time, in the right context.',
-    'focus.c2.t':'Dark Patterns','focus.c2.d':'Understanding the mechanisms that steer users against their interests — in order to avoid them.',
+    'focus.c1.t':'Nudging','focus.c1.d':'Guiding behaviour without pressure or force, at the right time in the right context.',
+    'focus.c2.t':'Dark Patterns','focus.c2.d':'Mechanisms that steer users against their own interests. Understood in order to avoid them.',
     'focus.c3.t':'Persuasive Design','focus.c3.d':'Translating models like the Fogg Behavior Model and Self-Determination Theory into real mechanics.',
     'focus.c4.t':'Adaptive AI','focus.c4.d':'How new technologies shape perception, trust and our interaction with the digital world.',
-    'work.title':'Projects','work.hint':'Tap a project for the full case study.',
+    'work.title':'Work',
     'p.steady.role':'Adaptive planning & organisation tool · Concept, UX/UI, Prototype',
-    'p.steady.tease':'An app that asks <em>why</em> people fail — and uses psychological mechanics to help them stick to their routines with empathy.',
+    'p.steady.tease':'An app that asks <em>why</em> people fail, and uses psychological mechanics to help them stick to their routines with empathy.',
     'p.milo.role':'AI assistance for older adults · Concept, UX/UI, Prototype',
     'p.milo.tease':'An empathetic, transparent assistant that lowers digital barriers and strengthens independence with technology.',
     'p.cognify.role':'Augmented-reality e-learning platform · Concept, UX/UI',
-    'p.cognify.tease':'Explore topics in everyday life — with AR visualisations, quizzes, thoughtful gamification and a strong community aspect.',
+    'p.cognify.tease':'Discover topics close to everyday life, with AR visualisations, quizzes, thoughtful gamification and a strong community aspect.',
     'p.syntegon.name':'Bachelor Thesis · Syntegon','p.syntegon.role':'Visualisation system for pharma production · Research & Development',
     'p.syntegon.tease':'A mobile system that visualises complex production information so operators are guided safely and decisively.',
     'p.forwerts.name':'forwerts interactive','p.forwerts.role':'Internship semester UX Design · E-commerce, funnel optimisation',
-    'p.forwerts.tease':'Screen designs, funnel flows, icons and infographics in an online-shop context — with demonstrably better conversion and drop-off rates.',
-    'proc.1t':'Genuine interest','proc.1d':'Personal projects start with curiosity about the problem, not the solution.',
-    'proc.2t':'Research & empathy','proc.2d':'Personas, journey maps, interviews and card sorting to truly understand.',
-    'proc.3t':'Psychological grounding','proc.3d':'Behavioural models become concrete, responsible mechanics.',
-    'proc.4t':'Design & prototype','proc.4d':'Modular systems, clear hierarchies, fluid interactions in Figma.',
-    'proc.5t':'Evaluation & iteration','proc.5d':'Usability testing with real people — and targeted refinement.',
-    'about.h1':'Psychology & design','about.p1':'I’m fascinated by the interplay of psychology and design — especially how digital interactions shape decisions, habits and emotions. I’m interested in subtle mechanisms like nudging, dark patterns or persuasive design, and the question of where responsible design draws the line between support and manipulation.',
-    'about.h2':'Looking ahead','about.p2':'I want to understand how new technologies like AI and adaptive systems will lastingly shape our perception, trust and interaction with the digital world — and how to shape that movement. I design digital experiences that address real problems, grounded in a deep understanding of how users think, act and feel.',
+    'p.forwerts.tease':'Screen designs, funnel flows, icons and infographics in an online-shop context, with demonstrably better conversion and drop-off rates.',
+    'about.h1':'Psychology & design','about.p1':'I am fascinated by the interplay of psychology and design, especially how digital interactions shape decisions, habits and emotions. I am interested in subtle mechanisms like nudging, dark patterns or persuasive design, and the question of where responsible design can draw the line between support and manipulation.',
+    'about.h2':'Looking ahead','about.p2':'I want to understand how new technologies like AI and adaptive systems will lastingly shape our perception, our trust and our interaction with the digital world, and how this movement can be shaped. I design digital experiences that address real problems, grounded in a deep understanding of how users think, act and feel.',
+    'about.h3method':'Method','about.pmethod':'My projects begin with genuine interest in the problem, not with a finished solution. From research and empathy, such as personas, journey maps, interviews and card sortings, I derive psychologically grounded mechanics. They take shape in Figma as modular, clearly hierarchised systems and are sharpened in usability testing with real people.',
     'about.passions':'Passions & interests',
-    'contact.t1':'Let’s build something','contact.t2':'thoughtful','contact.t3':'together.',
-    'footer.rights':'All rights reserved','footer.made':'Conceived & designed from Ansbach','footer.top':'Back to top'
+    'contact.t1':'Open to projects that','contact.t2':'solve real','contact.t3':'problems.',
+    'footer.rights':'All rights reserved','footer.made':'Rothenburg ob der Tauber, Bavaria','footer.top':'Back to top'
   };
   const ENtags = {
     'Behavioral Design':'Behavioral Design','KI-Assistent':'AI Assistant','Card Sorting':'Card Sorting',
@@ -234,6 +229,17 @@
   $$('.nav__link').forEach(l => l.addEventListener('click', () => {
     links.classList.remove('is-open'); document.body.classList.remove('menu-open');
   }));
+
+  /* ---------- Interest flip-cards (tap toggle for touch / no-hover) ---------- */
+  $$('.fcard').forEach(c => {
+    c.addEventListener('click', () => c.classList.toggle('is-flipped'));
+    c.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        c.classList.toggle('is-flipped');
+      }
+    });
+  });
 
   /* ---------- Project modal ---------- */
   const modal = $('#modal');
