@@ -12,3 +12,8 @@ node_modules/
 # Local env
 .env
 .env.local
+
+# Private / source assets (kept local, not published on the public site)
+Lebenslauf_Henri_Loehlein.pdf
+*.pdf
+Bilder/

@@ -13,8 +13,9 @@
     'nav.approach':'Approach','nav.focus':'Interests','nav.work':'Work','nav.about':'About','nav.contact':'Contact',
     'hero.avail':'Open to working-student & junior roles 2026','hero.loc':'Ansbach University · Germany',
     'hero.t1':'Design','hero.t2':'on the edge',
-    'hero.lede':'Henri Löhlein, UX/UI designer. Crafts digital experiences that address <em>real human needs</em>: grounded in psychology, sharpened by empathy, carried by genuine interest.',
-    'hero.cta':'View work','hero.scroll':'Scroll',
+    'hero.lede':'I am Henri Löhlein, UX/UI designer. I am fascinated by the intersection of <em>psychology and technology</em>: how AI, LLMs and adaptive systems change the way people decide, trust and act. Curiosity drives me, and I am eager to see the possibilities that emerge next.',
+    'hero.cta':'View work','hero.scroll':'Scroll','hero.bubbles':'Projects as bubbles, tap to open',
+    'subnav.meta':'Bachelor candidate at Syntegon · Ansbach University',
     'tag.approach':'Stance','tag.focus':'Interests','tag.work':'Selected work','tag.about':'About','tag.contact':'Contact',
     'chain.1a':'Solutions follow','chain.1b':'needs.','chain.2a':'Needs follow','chain.2b':'empathy.','chain.3a':'And empathy follows','chain.3b':'genuine interest.',
     'approach.note':'Purposeful design only emerges where challenges are met with empathy and functional thinking. That is exactly where my approach begins.',
@@ -22,7 +23,11 @@
     'focus.c1.t':'Nudging','focus.c1.d':'Guiding behaviour without pressure or force, at the right time in the right context.',
     'focus.c2.t':'Dark Patterns','focus.c2.d':'Mechanisms that steer users against their own interests. Understood in order to avoid them.',
     'focus.c3.t':'Persuasive Design','focus.c3.d':'Translating models like the Fogg Behavior Model and Self-Determination Theory into real mechanics.',
-    'focus.c4.t':'Adaptive AI','focus.c4.d':'How new technologies shape perception, trust and our interaction with the digital world.',
+    'focus.c4.t':'Adaptive AI','focus.c4.d':'How LLMs, generative and adaptive systems shape perception and trust, and how these tools can be used within the design process itself.',
+    'focus.skills':'Skills & tools',
+    'sk.ai1':'AI-assisted prototyping','sk.ai2':'LLMs & generative AI','sk.interface':'Interface Design','sk.interaction':'Interaction Design',
+    'sk.research':'UX Research','sk.usability':'Usability Testing','sk.personas':'Personas & Journey Maps','sk.wireframe':'Wireframing & Prototyping',
+    'sk.dt':'Design Thinking','sk.concept':'Concept & App Design','sk.workshops':'UX Workshops','sk.team':'Interdisciplinary Teamwork',
     'work.title':'Work',
     'p.steady.role':'Adaptive planning & organisation tool · Concept, UX/UI, Prototype',
     'p.steady.tease':'An app that asks <em>why</em> people fail, and uses psychological mechanics to help them stick to their routines with empathy.',
@@ -61,6 +66,7 @@
       el.innerHTML = next === 'en' ? (EN[key] ?? DEstore.get(el)) : DEstore.get(el);
     });
     $$('.lang__opt').forEach(o => o.classList.toggle('is-active', o.dataset.lang === next));
+    document.dispatchEvent(new CustomEvent('hl:lang', { detail: next }));
     try { localStorage.setItem('hl-lang', next); } catch (e) {}
   }
 
@@ -118,10 +124,13 @@
 
   /* ---------- Nav scroll state + active link ---------- */
   const nav = $('#nav');
+  const subnav = $('#subnav');
+  const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 60;
   const sections = $$('main section[id]');
-  const navLinks = $$('.nav__link');
+  const navLinks = $$('.subnav__link');
   addEventListener('scroll', () => {
     nav.classList.toggle('is-stuck', scrollY > 30);
+    if (subnav) subnav.classList.toggle('is-stuck', subnav.getBoundingClientRect().top <= navH + 2);
   }, { passive: true });
 
   const spy = new IntersectionObserver(entries => {
@@ -219,17 +228,6 @@
   /* ---------- Language toggle ---------- */
   $('#langToggle') && $('#langToggle').addEventListener('click', () => applyLang(lang === 'de' ? 'en' : 'de'));
 
-  /* ---------- Mobile menu ---------- */
-  const burger = $('#burger');
-  const links = $('.nav__links');
-  burger && burger.addEventListener('click', () => {
-    const open = links.classList.toggle('is-open');
-    document.body.classList.toggle('menu-open', open);
-  });
-  $$('.nav__link').forEach(l => l.addEventListener('click', () => {
-    links.classList.remove('is-open'); document.body.classList.remove('menu-open');
-  }));
-
   /* ---------- Interest flip-cards (tap toggle for touch / no-hover) ---------- */
   $$('.fcard').forEach(c => {
     c.addEventListener('click', () => c.classList.toggle('is-flipped'));
@@ -276,6 +274,212 @@
     const max = mContent.scrollHeight - mContent.clientHeight;
     mProgress.style.width = (max > 0 ? (mContent.scrollTop / max) * 100 : 0) + '%';
   }, { passive: true });
+
+  /* ---------- Floating bubbles · viewport-wide drift ---------- */
+  (function initBubbles() {
+    const field = $('#bubbleField');
+    if (!field) return;
+    const covers = {
+      steady: 'assets/img/covers/steady.png',
+      milo: 'assets/img/covers/milo.png',
+      cognify: 'assets/img/covers/cognify.png',
+      syntegon: 'assets/img/covers/syntegon.jpg',
+      forwerts: 'assets/img/covers/forwerts.png'
+    };
+    const shortName = { steady: 'steady', milo: 'Milo', cognify: 'Cognify', syntegon: 'Syntegon', forwerts: 'forwerts' };
+
+    const data = $$('.project').map(p => ({
+      id: p.dataset.project,
+      name: shortName[p.dataset.project] || (p.querySelector('.project__name') || {}).textContent || '',
+      roleEl: p.querySelector('.project__role'),
+      teaseEl: p.querySelector('.project__tease'),
+      cover: covers[p.dataset.project]
+    })).filter(d => d.cover);
+    if (!data.length) return;
+
+    const scrim = document.createElement('div');
+    scrim.className = 'bubbleScrim';
+    document.body.appendChild(scrim);
+    scrim.addEventListener('click', close);
+
+    const bubbles = [];
+    let openEl = null, paused = false;
+
+    data.forEach((d, i) => {
+      const el = document.createElement('div');
+      el.className = 'bubble';
+      el.setAttribute('role', 'button');
+      el.setAttribute('tabindex', '0');
+      el.setAttribute('aria-label', d.name);
+      el.setAttribute('data-cursor', 'Öffnen');
+      el.innerHTML =
+        '<div class="bubble__media"><img src="' + d.cover + '" alt="" loading="lazy"></div>' +
+        '<div class="bubble__shade"></div>' +
+        '<div class="bubble__glass"></div>' +
+        '<div class="bubble__card">' +
+          '<p class="bubble__role"></p>' +
+          '<h3 class="bubble__cardName">' + d.name + '</h3>' +
+          '<p class="bubble__tease"></p>' +
+          '<button class="bubble__cta" type="button"><span></span>' +
+            '<svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></button>' +
+        '</div>';
+      field.appendChild(el);
+
+      // varied sizes; drift speeds slow & gentle
+      const size = 56 + Math.round(Math.random() * 30);
+      const ang = Math.random() * Math.PI * 2;
+      const sp  = 0.10 + Math.random() * 0.12;
+      const b = {
+        el, id: d.id, roleEl: d.roleEl, teaseEl: d.teaseEl,
+        size,
+        x: Math.random() * innerWidth,
+        y: 80 + Math.random() * (innerHeight - 160),
+        vx: Math.cos(ang) * sp,
+        vy: Math.sin(ang) * sp,
+        phase: Math.random() * Math.PI * 2,
+        bob: 3 + Math.random() * 5,
+        // each bubble carries its own "rest opacity" (varied transparency)
+        rest: 0.30 + Math.random() * 0.28
+      };
+      bubbles.push(b);
+
+      el.style.width = el.style.height = size + 'px';
+      el.style.opacity = b.rest.toFixed(2);
+
+      el.addEventListener('click', () => { if (!el.classList.contains('is-open')) open(b); });
+      el.addEventListener('keydown', e => {
+        if ((e.key === 'Enter' || e.key === ' ') && !el.classList.contains('is-open')) { e.preventDefault(); open(b); }
+      });
+      el.querySelector('.bubble__cta').addEventListener('click', e => {
+        e.stopPropagation();
+        const id = b.id; close(); openProject(id);
+      });
+    });
+
+    function tick() {
+      if (!paused) {
+        const w = innerWidth, h = innerHeight, t = performance.now() / 1000;
+        bubbles.forEach(b => {
+          if (b.el === openEl) return;
+          b.x += b.vx;
+          b.y += b.vy;
+          // wrap-around: leave one side, re-enter from the other
+          const m = b.size + 60;
+          if (b.x < -m) b.x = w + m;
+          else if (b.x > w + m) b.x = -m;
+          if (b.y < -m) b.y = h + m;
+          else if (b.y > h + m) b.y = -m;
+          const bob = Math.sin(t * 0.55 + b.phase) * b.bob;
+          b.el.style.transform = 'translate(' + b.x + 'px,' + (b.y + bob) + 'px)';
+        });
+      }
+      requestAnimationFrame(tick);
+    }
+    if (!reduce) requestAnimationFrame(tick);
+    // initial paint so they are positioned before the first frame
+    bubbles.forEach(b => { b.el.style.transform = 'translate(' + b.x + 'px,' + b.y + 'px)'; });
+
+    function open(b) {
+      if (openEl) return;
+      openEl = b.el; paused = true;
+      b.el.querySelector('.bubble__role').textContent = b.roleEl ? b.roleEl.textContent : '';
+      b.el.querySelector('.bubble__tease').innerHTML = b.teaseEl ? b.teaseEl.innerHTML : '';
+      b.el.querySelector('.bubble__cta span').textContent = (lang === 'en' ? 'Open case study' : 'Case Study öffnen');
+      scrim.classList.add('is-on');
+      const w = innerWidth, h = innerHeight;
+      const ow = Math.min(340, Math.max(280, w * 0.92));
+      const oh = Math.min(400, Math.max(330, h * 0.68));
+      b.el.style.transition = 'transform .6s var(--ease),width .55s var(--ease),height .55s var(--ease),border-radius .55s var(--ease),box-shadow .6s var(--ease),opacity .4s var(--ease)';
+      b.el.classList.add('is-open');
+      const tx = (w - ow) / 2, ty = (h - oh) / 2;
+      requestAnimationFrame(() => {
+        b.el.style.width = ow + 'px';
+        b.el.style.height = oh + 'px';
+        b.el.style.transform = 'translate(' + tx + 'px,' + ty + 'px)';
+      });
+    }
+
+    function close() {
+      if (!openEl) return;
+      const el = openEl, b = bubbles.find(x => x.el === el);
+      el.classList.remove('is-open');
+      scrim.classList.remove('is-on');
+      if (b) {
+        el.style.width = el.style.height = b.size + 'px';
+        el.style.opacity = b.rest.toFixed(2);
+        el.style.transform = 'translate(' + b.x + 'px,' + b.y + 'px)';
+      }
+      const done = () => {
+        el.style.transition = '';
+        el.removeEventListener('transitionend', done);
+        if (openEl === el) { openEl = null; paused = false; }
+      };
+      el.addEventListener('transitionend', done);
+      setTimeout(() => { if (openEl === el) done(); }, 750);
+    }
+
+    addEventListener('keydown', e => { if (e.key === 'Escape' && openEl) close(); });
+  })();
+
+  /* ---------- Skills orbit (CV skills float & bounce) ---------- */
+  (function initOrbit() {
+    const orbit = $('#orbit');
+    if (!orbit) return;
+    const chips = $$('.orbit__chip', orbit);
+    if (!chips.length) return;
+    orbit.classList.add('is-live');
+    const items = chips.map(el => ({ el, x: 0, y: 0, vx: 0, vy: 0, hw: 0, hh: 0, r: 0, placed: false }));
+    let cx = 0, cy = 0, aMax = 0, bMax = 0;
+
+    function measure() {
+      const w = orbit.clientWidth, h = orbit.clientHeight;
+      cx = w / 2; cy = h / 2;
+      items.forEach((it, i) => {
+        const rect = it.el.getBoundingClientRect();
+        it.hw = rect.width / 2; it.hh = rect.height / 2;
+        it.r = Math.hypot(it.hw, it.hh);
+        const a = w / 2 - it.hw - 6, b = h / 2 - it.hh - 6;
+        it.aMax = a; it.bMax = b;
+        if (!it.placed) {
+          const ang = (i / items.length) * Math.PI * 2 + Math.random() * 0.6;
+          const rr = 0.45 + Math.random() * 0.45;
+          it.x = cx + Math.cos(ang) * a * rr - it.hw;
+          it.y = cy + Math.sin(ang) * b * rr - it.hh;
+          const va = Math.random() * Math.PI * 2, sp = 0.14 + Math.random() * 0.18;
+          it.vx = Math.cos(va) * sp; it.vy = Math.sin(va) * sp;
+          it.placed = true;
+        }
+        it.el.style.transform = 'translate(' + it.x + 'px,' + it.y + 'px)';
+      });
+    }
+    measure();
+
+    if (!reduce) {
+      (function loop() {
+        items.forEach(it => {
+          it.x += it.vx; it.y += it.vy;
+          const ccx = it.x + it.hw, ccy = it.y + it.hh;
+          const dx = ccx - cx, dy = ccy - cy;
+          const a = it.aMax || 1, b = it.bMax || 1;
+          const norm = (dx * dx) / (a * a) + (dy * dy) / (b * b);
+          if (norm > 1) {
+            const gx = dx / (a * a), gy = dy / (b * b), gl = Math.hypot(gx, gy) || 1;
+            const nx = gx / gl, ny = gy / gl;
+            const dot = it.vx * nx + it.vy * ny;
+            it.vx -= 2 * dot * nx; it.vy -= 2 * dot * ny;
+            const s = 1 / Math.sqrt(norm);
+            it.x = cx + dx * s - it.hw; it.y = cy + dy * s - it.hh;
+          }
+          it.el.style.transform = 'translate(' + it.x + 'px,' + it.y + 'px)';
+        });
+        requestAnimationFrame(loop);
+      })();
+    }
+
+    let rT;
+    addEventListener('resize', () => { clearTimeout(rT); rT = setTimeout(measure, 200); }, { passive: true });
+    document.addEventListener('hl:lang', () => setTimeout(measure, 40));
+  })();
 
   /* ---------- Year safety + console sign ---------- */
   console.log('%cHenri Löhlein — UX/UI Design', 'font-size:14px;font-weight:600;color:#ff6b5e');
