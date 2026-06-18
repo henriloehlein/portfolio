@@ -75,7 +75,11 @@ Reihenfolge von oben:
 
 > Hinweis: Ein erster Anlauf für diese Aufgabe wurde begonnen und bewusst **per `git restore js/main.js` zurückgesetzt** (halbfertig/fehlerhaft), damit die Live-Seite funktionsfähig bleibt. Sauber von vorn beginnen. Der Site-Code (HTML/CSS/JS) ist live und unverändert auf Commit `1254731`; nur die Docs wurden danach aktualisiert.
 
-### TODO 1 — Blasen-Vorschau („Pop-up") überarbeiten  ▶ PRIORITÄT
+### TODO 1 — Blasen-Vorschau („Pop-up") überarbeiten  ✅ ERLEDIGT (18.06.2026, noch nicht committet/gepusht)
+**Umgesetzt:** Scrim jetzt klar dunkel (`rgba(8,8,12,.72)`) mit nur `blur(2px)` statt Vollscreen-Blur. Pop-up ist eine saubere Karte (420×500, an Viewport geclamped): oben Header-Banner mit Cover (obere 44 %), unten solides `--surface-2`-Panel (theme-aware) mit Kategorie-Kicker (`--warm-1`), Projektname, Nutzen-Zeile und Live-Tease aus dem DOM. Frei stehender Link „Zum ganzen Projekt · Case Study →" sitzt zentriert UNTER der Karte auf dem Scrim und öffnet `openProject(id)`. Kicker/Nutzen/Link sind DE/EN. `open()` hat jetzt zusätzlich einen `setTimeout(apply,60)`-Fallback, falls `requestAnimationFrame` gedrosselt ist. Verifiziert per `preview_eval` (DE+EN, computed styles); Screenshot scheitert wie dokumentiert am schwachen Renderer. **Noch zu tun: commit + push (Deploy).**
+
+<details><summary>Ursprüngliche Aufgabenbeschreibung</summary>
+
 **Problem:** Beim Klick auf eine Blase wird der ganze Screen trüb/geblurrt und das Pop-up selbst wirkt matschig/kontaktarm (Cover liegt vollflächig hinter dem Text, dazu `backdrop-filter:blur` auf dem Scrim).
 
 **Soll-Zustand:**
@@ -107,6 +111,8 @@ Reihenfolge von oben:
 - Den frei stehenden Link am besten als eigenes, einmaliges Element (wie der Scrim) an `document.body` hängen, beim Öffnen unter der zentrierten Karte positionieren (`top = (vh+oh)/2 + ~18px`, `left:50%`, `translateX(-50%)`), `z-index` über der Karte.
 - Neue i18n-Keys (Kategorie/Nutzen/Link-Label) im `EN`-Wörterbuch ergänzen bzw. per `lang` direkt setzen. `prefers-reduced-motion` respektieren.
 - Danach im Preview verifizieren (Desktop 1320 + ggf. Animationen einfrieren), keine Console-Errors, dann committen + pushen (Deploy).
+
+</details>
 
 ---
 

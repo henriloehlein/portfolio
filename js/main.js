@@ -288,6 +288,19 @@
       forwerts: 'assets/img/covers/forwerts.png'
     };
     const shortName = { steady: 'steady', milo: 'Milo', cognify: 'Cognify', syntegon: 'Syntegon', forwerts: 'forwerts' };
+    // per-project category kicker + benefit line (DE / EN)
+    const meta = {
+      steady:   { kicker: { de: 'Behavioral Design', en: 'Behavioral Design' },
+                  benefit: { de: 'Hält Menschen mit psychologischen Mechaniken an ihren Routinen.', en: 'Keeps people on track with psychology-based mechanics.' } },
+      milo:     { kicker: { de: 'Inclusive Design · KI', en: 'Inclusive Design · AI' },
+                  benefit: { de: 'KI-Assistenz für Senioren, mit Fokus auf Vertrauen und Zugänglichkeit.', en: 'AI assistance for seniors, focused on trust and accessibility.' } },
+      cognify:  { kicker: { de: 'AR E-Learning', en: 'AR E-Learning' },
+                  benefit: { de: 'Lernen mit Augmented Reality, Quizzes und Gamification.', en: 'Learning with augmented reality, quizzes and gamification.' } },
+      syntegon: { kicker: { de: 'Industrial UX · Bachelorarbeit', en: 'Industrial UX · Bachelor thesis' },
+                  benefit: { de: 'Visualisierung für die Pharmaproduktion, die Bediener sicher führt.', en: 'Pharma-production visualisation that guides operators safely.' } },
+      forwerts: { kicker: { de: 'E-Commerce UX · Praktikum', en: 'E-Commerce UX · Internship' },
+                  benefit: { de: 'Funnel- und Screen-Design mit nachweislich besserer Conversion.', en: 'Funnel and screen design with measurably better conversion.' } }
+    };
 
     const data = $$('.project').map(p => ({
       id: p.dataset.project,
@@ -302,6 +315,18 @@
     scrim.className = 'bubbleScrim';
     document.body.appendChild(scrim);
     scrim.addEventListener('click', close);
+
+    // free-standing "full project" link, floats below the open card on the scrim
+    const link = document.createElement('button');
+    link.type = 'button';
+    link.className = 'bubbleLink';
+    link.innerHTML = '<span></span><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg>';
+    document.body.appendChild(link);
+    let linkId = null;
+    link.addEventListener('click', e => {
+      e.stopPropagation();
+      const id = linkId; close(); if (id) openProject(id);
+    });
 
     const bubbles = [];
     let openEl = null, paused = false;
@@ -323,14 +348,12 @@
       el.setAttribute('data-cursor', 'Öffnen');
       el.innerHTML =
         '<div class="bubble__media"><img src="' + d.cover + '" alt="" loading="lazy"></div>' +
-        '<div class="bubble__shade"></div>' +
         '<div class="bubble__glass"></div>' +
         '<div class="bubble__card">' +
           '<p class="bubble__role"></p>' +
           '<h3 class="bubble__cardName">' + d.name + '</h3>' +
+          '<p class="bubble__benefit"></p>' +
           '<p class="bubble__tease"></p>' +
-          '<button class="bubble__cta" type="button"><span></span>' +
-            '<svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></button>' +
         '</div>';
       field.appendChild(el);
 
@@ -362,10 +385,6 @@
       el.addEventListener('click', () => { if (!el.classList.contains('is-open')) open(b); });
       el.addEventListener('keydown', e => {
         if ((e.key === 'Enter' || e.key === ' ') && !el.classList.contains('is-open')) { e.preventDefault(); open(b); }
-      });
-      el.querySelector('.bubble__cta').addEventListener('click', e => {
-        e.stopPropagation();
-        const id = b.id; close(); openProject(id);
       });
     });
 
@@ -402,21 +421,34 @@
     function open(b) {
       if (openEl) return;
       openEl = b.el; paused = true;
-      b.el.querySelector('.bubble__role').textContent = b.roleEl ? b.roleEl.textContent : '';
+      const m = meta[b.id] || {};
+      b.el.querySelector('.bubble__role').textContent =
+        m.kicker ? m.kicker[lang] || m.kicker.de : (b.roleEl ? b.roleEl.textContent : '');
+      b.el.querySelector('.bubble__benefit').textContent =
+        m.benefit ? m.benefit[lang] || m.benefit.de : '';
       b.el.querySelector('.bubble__tease').innerHTML = b.teaseEl ? b.teaseEl.innerHTML : '';
-      b.el.querySelector('.bubble__cta span').textContent = (lang === 'en' ? 'Open case study' : 'Case Study öffnen');
       scrim.classList.add('is-on');
       const w = innerWidth, h = innerHeight;
-      const ow = Math.min(340, Math.max(280, w * 0.92));
-      const oh = Math.min(400, Math.max(330, h * 0.68));
+      const ow = Math.min(420, Math.max(300, w * 0.92));
+      const oh = Math.min(500, Math.max(380, h * 0.82));
       b.el.style.transition = 'transform .6s var(--ease),width .55s var(--ease),height .55s var(--ease),border-radius .55s var(--ease),box-shadow .6s var(--ease),opacity .4s var(--ease)';
       b.el.classList.add('is-open');
       const tx = (w - ow) / 2, ty = (h - oh) / 2;
-      requestAnimationFrame(() => {
+      // float the "full project" link just below the card
+      linkId = b.id;
+      link.querySelector('span').textContent =
+        (lang === 'en' ? 'View full project · Case study' : 'Zum ganzen Projekt · Case Study');
+      link.style.top = ((h + oh) / 2 + 16) + 'px';
+      // expand on the next frame so the transition runs; idempotent setTimeout
+      // fallback ensures it still opens if rAF is throttled
+      const apply = () => {
         b.el.style.width = ow + 'px';
         b.el.style.height = oh + 'px';
         b.el.style.transform = 'translate(' + tx + 'px,' + ty + 'px)';
-      });
+        link.classList.add('is-on');
+      };
+      requestAnimationFrame(apply);
+      setTimeout(apply, 60);
     }
 
     function close() {
@@ -424,6 +456,8 @@
       const el = openEl, b = bubbles.find(x => x.el === el);
       el.classList.remove('is-open');
       scrim.classList.remove('is-on');
+      link.classList.remove('is-on');
+      linkId = null;
       if (b) {
         el.style.width = el.style.height = b.size + 'px';
         el.style.opacity = b.rest.toFixed(2);
