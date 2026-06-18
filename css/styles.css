@@ -229,25 +229,28 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
   opacity:.45;mix-blend-mode:screen;animation:irisSpin 14s linear infinite}
 .bubble__glass::after{content:"";position:absolute;top:14%;left:18%;width:24%;height:18%;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.88),transparent 70%);filter:blur(1px);opacity:.7;animation:sheen 6s ease-in-out infinite}
 
-/* expanded preview card — clean panel, not text-over-image */
-.bubble__card{position:absolute;left:0;right:0;bottom:0;padding:22px 22px 20px;text-align:left;opacity:0;transform:translateY(14px);pointer-events:none;transition:opacity .4s .14s var(--ease),transform .4s .14s var(--ease);z-index:3}
-.bubble__role{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--warm-1);margin-bottom:9px}
-.bubble__cardName{font-family:var(--f-display);font-size:clamp(24px,2.6vw,32px);font-weight:420;letter-spacing:-.02em;color:var(--text);line-height:1.02;margin-bottom:12px}
-.bubble__benefit{font-size:15px;line-height:1.45;color:var(--text);margin-bottom:12px}
-.bubble__tease{font-size:13px;line-height:1.55;color:var(--muted);margin:0}
-.bubble__tease em{font-style:italic;color:var(--text)}
-
-.bubble.is-open{opacity:1;z-index:120;border-radius:24px;background:var(--surface-2);box-shadow:0 50px 110px -24px rgba(0,0,0,.7),0 0 0 1px var(--line);cursor:default}
-.bubble.is-open .bubble__glass{opacity:0}
-.bubble.is-open .bubble__media{inset:0 0 56% 0}
-.bubble.is-open .bubble__card{top:44%;display:flex;flex-direction:column;opacity:1;transform:none;pointer-events:auto;padding:20px 24px 22px}
-
-.bubbleScrim{position:fixed;inset:0;z-index:110;background:rgba(8,8,12,.72);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);opacity:0;visibility:hidden;transition:opacity .45s var(--ease),visibility .45s;cursor:pointer}
+/* ---- preview popup (own element, fully opaque, separate from the bubbles) ---- */
+.bubbleScrim{position:fixed;inset:0;z-index:110;background:rgba(6,6,10,.86);opacity:0;visibility:hidden;transition:opacity .35s var(--ease),visibility .35s;cursor:pointer}
 .bubbleScrim.is-on{opacity:1;visibility:visible}
 
-/* free-standing link below the card (sits on the scrim, not inside the card) */
-.bubbleLink{position:fixed;z-index:130;left:50%;transform:translateX(-50%) translateY(6px);display:inline-flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:14px;letter-spacing:.02em;color:#fff;background:none;border:none;cursor:pointer;opacity:0;visibility:hidden;transition:opacity .4s .12s var(--ease),transform .4s .12s var(--ease),visibility .4s,color .3s;text-shadow:0 2px 14px rgba(0,0,0,.55)}
-.bubbleLink.is-on{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+/* stage centers the card + link; it lets clicks fall through to the scrim to close */
+.bubbleStage{position:fixed;inset:0;z-index:120;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:24px;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .35s var(--ease),visibility .35s}
+.bubbleStage.is-on{opacity:1;visibility:visible}
+
+.bubblePop{width:clamp(300px,92vw,420px);height:clamp(380px,82vh,500px);display:flex;flex-direction:column;background:var(--surface-2);border-radius:24px;overflow:hidden;box-shadow:0 50px 110px -24px rgba(0,0,0,.7),0 0 0 1px var(--line);pointer-events:auto;cursor:default;transform:scale(.94) translateY(8px);transition:transform .4s var(--ease)}
+.bubbleStage.is-on .bubblePop{transform:none}
+.bubblePop__media{flex:0 0 44%;overflow:hidden;background:var(--bg-2)}
+.bubblePop__media img{width:100%;height:100%;object-fit:cover;display:block}
+.bubblePop__body{flex:1 1 auto;display:flex;flex-direction:column;padding:20px 24px 22px;text-align:left;min-height:0}
+.bubblePop__kicker{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--warm-1);margin-bottom:9px}
+.bubblePop__name{font-family:var(--f-display);font-size:clamp(24px,2.6vw,32px);font-weight:420;letter-spacing:-.02em;color:var(--text);line-height:1.02;margin-bottom:12px}
+.bubblePop__benefit{font-size:15px;line-height:1.45;color:var(--text);margin-bottom:12px}
+.bubblePop__tease{font-size:13px;line-height:1.55;color:var(--muted);margin:0;overflow:hidden}
+.bubblePop__tease em{font-style:italic;color:var(--text)}
+
+/* free-standing link below the card */
+.bubbleLink{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:14px;letter-spacing:.02em;color:#fff;background:none;border:none;cursor:pointer;pointer-events:auto;text-shadow:0 2px 14px rgba(0,0,0,.55);transition:color .3s,transform .4s var(--ease);transform:translateY(6px)}
+.bubbleStage.is-on .bubbleLink{transform:none}
 .bubbleLink:hover{color:var(--warm-2)}
 .bubbleLink svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s}
 .bubbleLink:hover svg{transform:translate(3px,-3px)}

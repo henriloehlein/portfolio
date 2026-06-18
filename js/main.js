@@ -311,25 +311,46 @@
     })).filter(d => d.cover);
     if (!data.length) return;
 
+    // ---- dedicated preview popup (separate from the drifting bubbles) ----
     const scrim = document.createElement('div');
     scrim.className = 'bubbleScrim';
-    document.body.appendChild(scrim);
-    scrim.addEventListener('click', close);
 
-    // free-standing "full project" link, floats below the open card on the scrim
-    const link = document.createElement('button');
-    link.type = 'button';
-    link.className = 'bubbleLink';
-    link.innerHTML = '<span></span><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg>';
-    document.body.appendChild(link);
-    let linkId = null;
+    const stage = document.createElement('div');
+    stage.className = 'bubbleStage';
+    stage.innerHTML =
+      '<div class="bubblePop" role="dialog" aria-modal="true" aria-label="Projektvorschau">' +
+        '<div class="bubblePop__media"><img alt=""></div>' +
+        '<div class="bubblePop__body">' +
+          '<p class="bubblePop__kicker"></p>' +
+          '<h3 class="bubblePop__name"></h3>' +
+          '<p class="bubblePop__benefit"></p>' +
+          '<p class="bubblePop__tease"></p>' +
+        '</div>' +
+      '</div>' +
+      '<button type="button" class="bubbleLink"><span></span>' +
+        '<svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></button>';
+
+    document.body.appendChild(scrim);
+    document.body.appendChild(stage);
+
+    const pop      = stage.querySelector('.bubblePop');
+    const popImg   = stage.querySelector('.bubblePop__media img');
+    const popKick  = stage.querySelector('.bubblePop__kicker');
+    const popName  = stage.querySelector('.bubblePop__name');
+    const popBen   = stage.querySelector('.bubblePop__benefit');
+    const popTease = stage.querySelector('.bubblePop__tease');
+    const link     = stage.querySelector('.bubbleLink');
+
+    let openId = null;
+    scrim.addEventListener('click', close);
+    pop.addEventListener('click', e => e.stopPropagation());
     link.addEventListener('click', e => {
       e.stopPropagation();
-      const id = linkId; close(); if (id) openProject(id);
+      const id = openId; close(); if (id) openProject(id);
     });
 
     const bubbles = [];
-    let openEl = null, paused = false;
+    let paused = false;
 
     // left/right "gutter" bands outside the centered content; bubbles roam here only
     function bands() {
@@ -348,13 +369,7 @@
       el.setAttribute('data-cursor', 'Öffnen');
       el.innerHTML =
         '<div class="bubble__media"><img src="' + d.cover + '" alt="" loading="lazy"></div>' +
-        '<div class="bubble__glass"></div>' +
-        '<div class="bubble__card">' +
-          '<p class="bubble__role"></p>' +
-          '<h3 class="bubble__cardName">' + d.name + '</h3>' +
-          '<p class="bubble__benefit"></p>' +
-          '<p class="bubble__tease"></p>' +
-        '</div>';
+        '<div class="bubble__glass"></div>';
       field.appendChild(el);
 
       // varied sizes; gentle drift
@@ -366,7 +381,7 @@
       const ang = Math.random() * Math.PI * 2;
       const sp  = 0.08 + Math.random() * 0.10;
       const b = {
-        el, id: d.id, roleEl: d.roleEl, teaseEl: d.teaseEl,
+        el, id: d.id, name: d.name, roleEl: d.roleEl, teaseEl: d.teaseEl,
         size,
         x: lo + Math.random() * Math.max(1, hi - lo),
         y: 40 + Math.random() * Math.max(40, innerHeight - size - 80),
@@ -382,9 +397,9 @@
       el.style.width = el.style.height = size + 'px';
       el.style.opacity = b.rest.toFixed(2);
 
-      el.addEventListener('click', () => { if (!el.classList.contains('is-open')) open(b); });
+      el.addEventListener('click', () => open(b));
       el.addEventListener('keydown', e => {
-        if ((e.key === 'Enter' || e.key === ' ') && !el.classList.contains('is-open')) { e.preventDefault(); open(b); }
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(b); }
       });
     });
 
@@ -392,7 +407,6 @@
       if (!paused) {
         const h = innerHeight, t = performance.now() / 1000, bd = bands();
         bubbles.forEach(b => {
-          if (b.el === openEl) return;
           b.x += b.vx;
           b.y += b.vy;
           // vertical: bounce within the viewport
@@ -419,60 +433,31 @@
     bubbles.forEach(b => { b.el.style.transform = 'translate(' + b.x + 'px,' + b.y + 'px)'; });
 
     function open(b) {
-      if (openEl) return;
-      openEl = b.el; paused = true;
+      if (openId) return;
+      openId = b.id;
       const m = meta[b.id] || {};
-      b.el.querySelector('.bubble__role').textContent =
-        m.kicker ? m.kicker[lang] || m.kicker.de : (b.roleEl ? b.roleEl.textContent : '');
-      b.el.querySelector('.bubble__benefit').textContent =
-        m.benefit ? m.benefit[lang] || m.benefit.de : '';
-      b.el.querySelector('.bubble__tease').innerHTML = b.teaseEl ? b.teaseEl.innerHTML : '';
-      scrim.classList.add('is-on');
-      const w = innerWidth, h = innerHeight;
-      const ow = Math.min(420, Math.max(300, w * 0.92));
-      const oh = Math.min(500, Math.max(380, h * 0.82));
-      b.el.style.transition = 'transform .6s var(--ease),width .55s var(--ease),height .55s var(--ease),border-radius .55s var(--ease),box-shadow .6s var(--ease),opacity .4s var(--ease)';
-      b.el.classList.add('is-open');
-      const tx = (w - ow) / 2, ty = (h - oh) / 2;
-      // float the "full project" link just below the card
-      linkId = b.id;
+      const cover = covers[b.id];
+      if (popImg.getAttribute('src') !== cover) popImg.setAttribute('src', cover);
+      popKick.textContent  = m.kicker ? m.kicker[lang] || m.kicker.de : (b.roleEl ? b.roleEl.textContent : '');
+      popName.textContent  = b.name;
+      popBen.textContent   = m.benefit ? m.benefit[lang] || m.benefit.de : '';
+      popTease.innerHTML   = b.teaseEl ? b.teaseEl.innerHTML : '';
       link.querySelector('span').textContent =
         (lang === 'en' ? 'View full project · Case study' : 'Zum ganzen Projekt · Case Study');
-      link.style.top = ((h + oh) / 2 + 16) + 'px';
-      // expand on the next frame so the transition runs; idempotent setTimeout
-      // fallback ensures it still opens if rAF is throttled
-      const apply = () => {
-        b.el.style.width = ow + 'px';
-        b.el.style.height = oh + 'px';
-        b.el.style.transform = 'translate(' + tx + 'px,' + ty + 'px)';
-        link.classList.add('is-on');
-      };
-      requestAnimationFrame(apply);
-      setTimeout(apply, 60);
+      paused = true;
+      scrim.classList.add('is-on');
+      stage.classList.add('is-on');
     }
 
     function close() {
-      if (!openEl) return;
-      const el = openEl, b = bubbles.find(x => x.el === el);
-      el.classList.remove('is-open');
+      if (!openId) return;
+      openId = null;
       scrim.classList.remove('is-on');
-      link.classList.remove('is-on');
-      linkId = null;
-      if (b) {
-        el.style.width = el.style.height = b.size + 'px';
-        el.style.opacity = b.rest.toFixed(2);
-        el.style.transform = 'translate(' + b.x + 'px,' + b.y + 'px)';
-      }
-      const done = () => {
-        el.style.transition = '';
-        el.removeEventListener('transitionend', done);
-        if (openEl === el) { openEl = null; paused = false; }
-      };
-      el.addEventListener('transitionend', done);
-      setTimeout(() => { if (openEl === el) done(); }, 750);
+      stage.classList.remove('is-on');
+      paused = false;
     }
 
-    addEventListener('keydown', e => { if (e.key === 'Escape' && openEl) close(); });
+    addEventListener('keydown', e => { if (e.key === 'Escape' && openId) close(); });
   })();
 
   /* ---------- Skills orbit (CV skills float & bounce) ---------- */
