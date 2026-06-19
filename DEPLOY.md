@@ -5,13 +5,13 @@ Diese Seite ist **statisch** (kein Build). Sie liegt im öffentlichen Repo und w
 
 ## Setup (bereits eingerichtet)
 
-- **GitHub-User:** `occuraiin`
-- **Repo:** `henri-portfolio` (public)
-- **Remote:** `https://github.com/occuraiin/henri-portfolio.git`
+- **GitHub-User:** `henriloehlein`
+- **Repo:** `portfolio` (public)
+- **Remote:** `https://github.com/henriloehlein/portfolio.git`
 - **Branch:** `main`
-- **Live-URL:** <https://occuraiin.github.io/henri-portfolio/>
+- **Live-URL:** <https://henriloehlein.github.io/portfolio/>
 - **Tooling:** Henri nutzt sonst **GitHub Desktop** (keine Kommandozeile nötig). Git-Identität:
-  `occuraiin` / `henriloehlein@gmail.com`.
+  `henriloehlein` / `henriloehlein@gmail.com`.
 
 ## Update-Kreislauf (kein erneutes „Publishen")
 
@@ -51,4 +51,4 @@ In `.gitignore` ausgeschlossen (bleibt lokal, landet nicht auf der öffentlichen
 Falls eine eigene Domain gewünscht ist: in `index.html` die `canonical`- und `og:url`-Zeilen
 anpassen, in den GitHub-Pages-Einstellungen die Custom Domain eintragen und beim Domain-Anbieter
 die DNS-Einträge setzen (Apex `A`-Records auf die GitHub-Pages-IPs, `www` als `CNAME` auf
-`occuraiin.github.io`). HTTPS aktiviert GitHub Pages automatisch.
+`henriloehlein.github.io`). HTTPS aktiviert GitHub Pages automatisch.

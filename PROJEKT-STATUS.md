@@ -62,8 +62,8 @@ Reihenfolge von oben:
 ---
 
 ## 5 · DEPLOYMENT
-- **Weg:** GitHub + **GitHub Pages**. **User:** `occuraiin` · **Repo:** `henri-portfolio` (public) · **Branch:** `main`.
-- **Remote:** `https://github.com/occuraiin/henri-portfolio.git` · **Live:** **https://occuraiin.github.io/henri-portfolio/**
+- **Weg:** GitHub + **GitHub Pages**. **User:** `henriloehlein` · **Repo:** `portfolio` (public) · **Branch:** `main`.
+- **Remote:** `https://github.com/henriloehlein/portfolio.git` · **Live:** **https://henriloehlein.github.io/portfolio/**
 - **Push = Deploy:** Push auf `main` → Pages baut automatisch neu (~1 Min). Henri nutzt sonst **GitHub Desktop**.
 - **Letzter Feature-/Site-Commit:** `1254731` „Refine header: centered portrait + name, side covers, gutter-only bubbles" (gepusht, live). Danach folgen nur Doku-Updates (diese Datei, `README.md`, `DEPLOY.md`).
 - **Datenschutz:** `Lebenslauf_*.pdf` und `Bilder/` sind in `.gitignore` und werden **nicht** veröffentlicht. `assets/img/covers/` ist committet (von der Seite genutzt).
