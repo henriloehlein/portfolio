@@ -270,8 +270,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 /* ---------- Subnav · borderless, stretched across width ---------- */
 .subnav{position:sticky;top:var(--nav-h);z-index:90;max-width:var(--maxw);margin:0 auto}
 .subnav__edge{display:block;height:0}
-.subnav__inner{display:flex;margin:0 var(--pad);padding:14px 6px;transition:background .4s var(--ease),box-shadow .4s var(--ease)}
-.subnav.is-stuck .subnav__inner{background:color-mix(in srgb,var(--bg) 78%,transparent);backdrop-filter:blur(16px) saturate(140%);box-shadow:0 12px 30px -22px rgba(0,0,0,.7)}
+.subnav__inner{display:flex;margin:0 var(--pad);padding:14px 6px}
 .subnav__links{display:flex;flex:1;justify-content:space-between;align-items:center;gap:clamp(10px,2vw,28px)}
 .subnav__link{position:relative;font-family:var(--f-mono);font-size:clamp(14px,1.4vw,17px);letter-spacing:.01em;color:var(--muted);transition:color .35s;white-space:nowrap}
 .subnav__link:hover,.subnav__link.is-active{color:var(--text)}
