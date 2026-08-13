@@ -11,8 +11,46 @@
   --cool-2:#4d8dff;   /* blue   */
   --pink:#ff8fb1;
 
-  --grad: linear-gradient(110deg,#ff6b5e 0%,#ffb347 28%,#ff8fb1 52%,#6c5cef 78%,#4d8dff 100%);
-  --grad-soft: linear-gradient(120deg,#ff6b5e,#6c5cef);
+  /* extra bridge hues — violet links pink↔indigo (kills the muddy midpoint),
+     sky lifts the cool end, hot-coral sharpens the warm end. Stays in-signature. */
+  --violet:#b06cf0;
+  --sky:#5fd0ff;
+  --coral-hot:#ff5d7e;
+
+  --grad: linear-gradient(110deg,#ff6b5e 0%,#ffb347 24%,#ff8fb1 46%,#b06cf0 62%,#6c5cef 80%,#4d8dff 100%);
+  --grad-soft: linear-gradient(120deg,#ff6b5e,#b06cf0 55%,#6c5cef);
+
+  /* Heading gradients — one palette, distinct personalities.
+     Each big headline gets a deliberate character (ember/bloom/tide/flux/dusk),
+     richer multi-stop ramps + a violet bridge, so they read varied yet related. */
+  --grad-signature: linear-gradient(100deg,#ff6b5e 0%,#ffb347 13%,#ff8fb1 26%,#b06cf0 39%,#6c5cef 53%,#4d8dff 66%,#5fd0ff 77%,#ff8fb1 89%,#ff6b5e 100%); /* seamless loop */
+  --grad-flow: var(--grad-signature);
+  --grad-warm: linear-gradient(96deg,#ff5d7e 0%,#ff6b5e 34%,#ffa23d 74%,#ffc266 100%);  /* ember · empathy */
+  --grad-iris: linear-gradient(100deg,#ffb347 0%,#ff8fb1 38%,#b06cf0 70%,#6c5cef 100%); /* bloom · amber→violet→indigo */
+  --grad-cool: linear-gradient(96deg,#6c5cef 0%,#4d8dff 40%,#5fd0ff 72%,#9b8cff 100%);  /* tide · cool oceanic */
+  --grad-bold: linear-gradient(92deg,#ff8fb1 0%,#ff5d7e 30%,#ff6b5e 58%,#ffae4d 100%);  /* flux · energetic warm */
+  --grad-dusk: linear-gradient(100deg,#4d8dff 0%,#6c5cef 30%,#b06cf0 58%,#ff6b5e 100%); /* sunset · blue→violet→coral */
+
+  /* legacy aliases (kept so older selectors stay valid) */
+  --grad-1: var(--grad-flow);
+  --grad-2: var(--grad-warm);
+  --grad-3: var(--grad-cool);
+  --grad-4: var(--grad-dusk);
+  --grad-5: var(--grad-iris);
+
+  /* scroll-driven background tint (set live from JS) */
+  --bg-tint:#ff6b5e;
+
+  /* Heading colour is DERIVED from the live scroll tint, so every headline takes
+     the hue of the background at its scroll position. Horizontal ramp: hue on the
+     left resolves into clean near-text on the right — technical, not rainbow.
+     `--head-soft` is what the vivid end mixes toward (white on dark, ink on light). */
+  --head-soft:#ffffff;
+  --head-grad: linear-gradient(95deg,
+    color-mix(in srgb, var(--bg-tint) 88%, var(--head-soft)) 0%,
+    color-mix(in srgb, var(--bg-tint) 52%, var(--head-soft)) 34%,
+    color-mix(in srgb, var(--bg-tint) 22%, var(--text)) 100%);
+  --head-glow: color-mix(in srgb, var(--bg-tint) 26%, transparent);
 
   --ease:cubic-bezier(.16,1,.3,1);
   --ease-io:cubic-bezier(.65,.05,.36,1);
@@ -50,6 +88,7 @@
   --muted:#5f5b66;
   --muted-2:#8b8794;
   --shadow:0 30px 70px -28px rgba(60,40,30,.35);
+  --head-soft:#211a29;
   color-scheme:light;
 }
 
@@ -73,12 +112,71 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 
 /* ---------- Background field ---------- */
-.field{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-.field__blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.42;will-change:transform}
-.field__blob--1{width:34vw;height:34vw;max-width:560px;max-height:560px;background:radial-gradient(circle,var(--warm-1),transparent 62%);top:-8vw;left:-5vw}
-.field__blob--2{width:30vw;height:30vw;max-width:520px;max-height:520px;background:radial-gradient(circle,var(--cool-1),transparent 62%);bottom:-8vw;right:-4vw;opacity:.4}
-.field__blob--3{width:24vw;height:24vw;max-width:420px;max-height:420px;background:radial-gradient(circle,var(--pink),transparent 62%);top:40%;left:48%;opacity:.26}
-[data-theme="light"] .field__blob{opacity:.3;filter:blur(70px)}
+/* Layered for depth: a vertical base wash, a slowly-rotating aurora, drifting
+   colour blobs, a soft colour-pool mesh + vignette, the scroll tint and grain. */
+.field{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+  background:linear-gradient(180deg,
+    color-mix(in srgb,var(--cool-1) 7%,var(--bg)) 0%,
+    var(--bg) 34%,
+    var(--bg-2) 78%,
+    color-mix(in srgb,var(--warm-1) 6%,var(--bg-2)) 100%)}
+[data-theme="light"] .field{background:linear-gradient(180deg,
+    color-mix(in srgb,var(--cool-1) 7%,var(--bg)) 0%,
+    var(--bg) 38%,
+    var(--bg-2) 80%,
+    color-mix(in srgb,var(--warm-2) 9%,var(--bg-2)) 100%)}
+
+/* aurora — wide, heavily-blurred conic ribbons that drift + rotate very slowly
+   behind everything, giving the background organic glowing depth */
+.field__aurora{position:absolute;top:-25%;left:-25%;width:150%;height:150%;z-index:-2;
+  background:
+    conic-gradient(from 120deg at 32% 36%, transparent 0deg, color-mix(in srgb,var(--warm-1) 60%,transparent) 40deg, transparent 130deg),
+    conic-gradient(from 250deg at 70% 64%, transparent 0deg, color-mix(in srgb,var(--cool-1) 60%,transparent) 50deg, transparent 150deg),
+    conic-gradient(from 20deg at 60% 20%, transparent 0deg, color-mix(in srgb,var(--violet) 50%,transparent) 36deg, transparent 120deg);
+  filter:blur(90px) saturate(125%);opacity:.5;will-change:transform;
+  animation:auroraDrift 64s linear infinite}
+[data-theme="light"] .field__aurora{opacity:.34;filter:blur(100px) saturate(130%)}
+
+.field__blob{position:absolute;border-radius:50%;filter:blur(64px);opacity:.42;will-change:transform}
+.field__blob--1{width:34vw;height:34vw;max-width:560px;max-height:560px;background:radial-gradient(circle,var(--warm-1),transparent 62%);top:-8vw;left:-5vw;animation:blobA 38s ease-in-out infinite}
+.field__blob--2{width:30vw;height:30vw;max-width:520px;max-height:520px;background:radial-gradient(circle,var(--cool-1),transparent 62%);bottom:-8vw;right:-4vw;opacity:.4;animation:blobB 46s ease-in-out infinite}
+.field__blob--3{width:24vw;height:24vw;max-width:420px;max-height:420px;background:radial-gradient(circle,var(--pink),transparent 62%);top:40%;left:48%;opacity:.26;animation:blobC 52s ease-in-out infinite}
+.field__blob--4{width:21vw;height:21vw;max-width:380px;max-height:380px;background:radial-gradient(circle,var(--violet),transparent 64%);top:8%;right:14%;opacity:.22;animation:blobD 58s ease-in-out infinite}
+[data-theme="light"] .field__blob{opacity:.3;filter:blur(74px)}
+[data-theme="light"] .field__blob--4{opacity:.18}
+@keyframes auroraDrift{to{transform:rotate(360deg) scale(1.05)}}
+@keyframes blobA{0%,100%{transform:translate(0,0)}50%{transform:translate(6vw,4vw)}}
+@keyframes blobB{0%,100%{transform:translate(0,0)}50%{transform:translate(-5vw,-3vw)}}
+@keyframes blobC{0%,100%{transform:translate(0,0)}33%{transform:translate(-4vw,3vw)}66%{transform:translate(3vw,-4vw)}}
+@keyframes blobD{0%,100%{transform:translate(0,0)}50%{transform:translate(-4vw,5vw)}}
+@media (prefers-reduced-motion:reduce){.field__aurora,.field__blob{animation:none!important}}
+
+/* depth layer — soft colour pools, top studio light and a framing vignette
+   layered behind the blobs so the background reads dimensional, not flat */
+.field::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;
+  background:
+    radial-gradient(120% 58% at 50% -6%, color-mix(in srgb,#fff 8%,transparent), transparent 60%),
+    radial-gradient(40% 48% at 84% 14%, color-mix(in srgb,var(--warm-2) 26%,transparent), transparent 62%),
+    radial-gradient(46% 56% at 11% 70%, color-mix(in srgb,var(--cool-1) 28%,transparent), transparent 62%),
+    radial-gradient(34% 44% at 64% 92%, color-mix(in srgb,var(--violet) 20%,transparent), transparent 60%),
+    radial-gradient(30% 40% at 26% 22%, color-mix(in srgb,var(--pink) 16%,transparent), transparent 60%),
+    radial-gradient(140% 130% at 50% -16%, transparent 32%, rgba(0,0,0,.42) 78%, rgba(0,0,0,.72) 100%);
+  animation:meshBreathe 28s ease-in-out infinite}
+[data-theme="light"] .field::before{
+  background:
+    radial-gradient(120% 58% at 50% -6%, color-mix(in srgb,#fff 60%,transparent), transparent 60%),
+    radial-gradient(40% 48% at 84% 14%, color-mix(in srgb,var(--warm-2) 18%,transparent), transparent 62%),
+    radial-gradient(46% 56% at 11% 70%, color-mix(in srgb,var(--cool-1) 16%,transparent), transparent 62%),
+    radial-gradient(34% 44% at 64% 92%, color-mix(in srgb,var(--violet) 13%,transparent), transparent 60%),
+    radial-gradient(30% 40% at 26% 22%, color-mix(in srgb,var(--pink) 12%,transparent), transparent 60%),
+    radial-gradient(140% 130% at 50% -16%, transparent 40%, color-mix(in srgb,#6b5a4a 24%,transparent) 100%);}
+@keyframes meshBreathe{0%,100%{opacity:.9;transform:scale(1)}50%{opacity:1;transform:scale(1.04)}}
+@media (prefers-reduced-motion:reduce){.field::before{animation:none!important}}
+/* scroll-linked tint wash — hue follows the section headings (set from JS) */
+.field::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(110% 75% at 50% 0%, var(--bg-tint) 0%, transparent 62%);
+  opacity:.20;mix-blend-mode:screen;transition:background .3s linear}
+[data-theme="light"] .field::after{opacity:.26;mix-blend-mode:multiply}
 .field__grain{position:absolute;inset:0;opacity:.035;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size:100px 100px}
@@ -187,6 +285,11 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);max-width:var(--maxw);margin:0 auto}
 .sectionTag{display:flex;align-items:center;gap:12px;font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:34px}
 .sectionTag span:first-child{color:var(--warm-1)}
+/* per-section accent echoes the heading gradient + the scroll bg-tint */
+#focus .sectionTag span:first-child{color:var(--cool-1)}
+#work .sectionTag span:first-child{color:var(--pink)}
+#about .sectionTag span:first-child{color:var(--pink)}
+#contact .sectionTag span:first-child{color:var(--cool-2)}
 
 /* ---------- Reveal ---------- */
 .reveal{opacity:0;transform:translateY(34px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
@@ -203,7 +306,21 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 .hero__title .line:nth-child(2) .word{transition-delay:.08s}
 .hero__title .line:nth-child(3) .word{transition-delay:.16s}
 .line--accent{font-style:italic}
-.rotator{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;min-height:1em}
+/* shared gradient-text treatment — consistent technique, varied hue + motion per heading.
+   Two motion idioms keep it lively but calm: `pan/breathe` slides the colour ramp,
+   `angShift` tilts the gradient angle (smooth thanks to the @property below). */
+@property --ang{syntax:"<angle>";inherits:false;initial-value:96deg}
+.gradtext{-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;background-size:130% 100%;background-position:0% 50%}
+/* helper used on every gradient headline */
+.gtxt{-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+
+@keyframes gradPan{from{background-position:0% 50%}to{background-position:-200% 50%}}        /* seamless, for looping ramps */
+@keyframes gradBreathe{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}} /* ping-pong, no seam */
+@keyframes angShift{0%,100%{--ang:82deg}50%{--ang:116deg}}                                   /* living angle shimmer */
+
+.rotator{background:var(--head-grad);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;min-height:1em;
+  filter:drop-shadow(0 8px 28px var(--head-glow));
+  animation:gradBreathe 14s ease-in-out infinite}
 .hero__base{display:flex;flex-direction:column;align-items:flex-start;gap:24px;margin-top:clamp(26px,3.5vw,42px)}
 .hero__lede{max-width:54ch;margin-top:clamp(26px,3.5vw,42px);font-size:clamp(16px,1.5vw,20px);color:var(--muted);line-height:1.62}
 .hero__lede strong{color:var(--text);font-weight:600}
@@ -268,13 +385,15 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 .approach__chain{font-family:var(--f-display);font-weight:340;font-size:clamp(30px,6vw,82px);line-height:1.04;letter-spacing:-.03em}
 .approach__line{margin:.04em 0;color:var(--muted-2)}
 .approach__line span{color:var(--muted)}
-.approach__line b{font-weight:340;font-style:italic;color:var(--text);background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.approach__line b{font-weight:340;font-style:italic;color:var(--text);background:var(--head-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 4px 18px var(--head-glow))}
 .approach__note{margin-top:clamp(34px,5vw,64px);max-width:60ch;font-size:clamp(16px,1.5vw,19px);color:var(--muted)}
 
 /* ---------- Interests / Focus (flip cards) ---------- */
 .focus__head{max-width:920px;margin-bottom:clamp(40px,6vw,72px)}
 .focus__title{font-family:var(--f-display);font-weight:360;font-size:clamp(30px,5vw,64px);line-height:1.05;letter-spacing:-.025em}
-.focus__title em{font-style:italic;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.focus__title em{font-style:italic;background:var(--head-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 5px 22px var(--head-glow))}
 .focus__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
 .fcard{perspective:1400px;min-height:262px;border-radius:18px;cursor:pointer;outline:none}
 .fcard__inner{position:relative;width:100%;min-height:262px;transition:transform .7s var(--ease);transform-style:preserve-3d}
@@ -303,7 +422,9 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 
 /* ---------- Work / Projects ---------- */
 .work__head{margin-bottom:clamp(30px,4vw,50px)}
-.work__title{font-family:var(--f-display);font-weight:360;font-size:clamp(40px,8vw,110px);letter-spacing:-.035em;line-height:1}
+.work__title{font-family:var(--f-display);font-weight:360;font-size:clamp(40px,8vw,110px);letter-spacing:-.035em;line-height:1;
+  background:var(--head-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+  filter:drop-shadow(0 10px 38px var(--head-glow))}
 .work__hint{margin-top:16px;font-family:var(--f-mono);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-2)}
 .projects{list-style:none;border-top:1px solid var(--line)}
 .project{position:relative;display:grid;grid-template-columns:64px 1fr 300px;gap:34px;align-items:center;padding:40px 8px;border-bottom:1px solid var(--line);cursor:pointer;transition:padding .5s var(--ease)}
@@ -331,7 +452,7 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 .plate--logo{background:#fff;padding:clamp(20px,3vw,34px)}
 .plate--logo img{object-fit:contain;height:auto;max-height:100%}
 .plate--syntegon{background:linear-gradient(135deg,#1b2230,#0e1622);position:relative}
-.plate--syntegon span{font-family:var(--f-mono);font-size:42px;font-weight:600;letter-spacing:.04em;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.plate--syntegon span{font-family:var(--f-mono);font-size:42px;font-weight:600;letter-spacing:.04em;background:var(--grad-5);-webkit-background-clip:text;background-clip:text;color:transparent}
 .plate--syntegon::after{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:26px 26px;opacity:.5}
 .project__open{position:absolute;top:40px;right:8px;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;opacity:0;transform:scale(.8);transition:opacity .4s,transform .4s,background .3s}
 .project:hover .project__open{opacity:1;transform:scale(1)}
@@ -354,7 +475,8 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 /* ---------- Contact ---------- */
 .contact{text-align:left}
 .contact__title{font-family:var(--f-display);font-weight:360;font-size:clamp(40px,8.5vw,118px);line-height:1;letter-spacing:-.035em;margin-bottom:clamp(40px,6vw,70px)}
-.contact__title em{font-style:italic;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.contact__title em{font-style:italic;background:var(--head-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 8px 30px var(--head-glow))}
 .contact__links{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 .contact__link{display:flex;flex-direction:column;gap:10px;padding:34px;border:1px solid var(--line);border-radius:18px;transition:border-color .4s,transform .4s var(--ease),background .4s}
 .contact__link:hover{transform:translateY(-5px);border-color:var(--line-2);background:color-mix(in srgb,var(--surface) 60%,transparent)}
@@ -392,7 +514,13 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 /* case study internals */
 .cs__hero{display:grid;grid-template-columns:1.4fr 1fr;gap:44px;padding-bottom:46px;border-bottom:1px solid var(--line);margin-bottom:50px}
 .cs__kicker{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--warm-1)}
-.cs__title{font-family:var(--f-display);font-weight:380;font-size:clamp(44px,7vw,92px);letter-spacing:-.035em;line-height:1;margin:14px 0 6px}
+.cs__title{--cs-accent:#ff6b5e;font-family:var(--f-display);font-weight:380;font-size:clamp(44px,7vw,92px);letter-spacing:-.035em;line-height:1;margin:14px 0 6px;
+  background:linear-gradient(95deg, color-mix(in srgb,var(--cs-accent) 90%,var(--head-soft)) 0%, color-mix(in srgb,var(--cs-accent) 22%,var(--text)) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+  filter:drop-shadow(0 8px 26px color-mix(in srgb,var(--cs-accent) 24%,transparent))}
+[data-case="milo"] .cs__title{--cs-accent:#4d8dff}
+[data-case="cognify"] .cs__title{--cs-accent:#b06cf0}
+[data-case="syntegon"] .cs__title{--cs-accent:#6c5cef}
+[data-case="forwerts"] .cs__title{--cs-accent:#ff8fb1}
 .cs__sub{font-size:18px;color:var(--muted);margin-bottom:24px}
 .cs__pitch{font-size:clamp(16px,1.6vw,19px);line-height:1.6;color:var(--text);font-weight:300}
 .cs__pitch em{font-style:italic;color:var(--warm-1);font-weight:400}

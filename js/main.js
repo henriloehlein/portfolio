@@ -209,6 +209,36 @@
     }, { passive: true });
   }
 
+  /* ---------- Scroll-linked background tint (hue follows section headings) ---------- */
+  (function initBgTint() {
+    const root = document.documentElement;
+    const stops = [
+      { id: 'approach', c: [255, 107, 94] },  // coral  (matches grad-1)
+      { id: 'focus',    c: [108, 92, 239] },  // indigo (grad-3 cool end)
+      { id: 'work',     c: [77, 141, 255] },  // blue
+      { id: 'about',    c: [255, 143, 177] }, // pink
+      { id: 'contact',  c: [77, 141, 255] }   // blue   (grad-4 start)
+    ].map(s => ({ el: document.getElementById(s.id), c: s.c })).filter(s => s.el);
+    if (!stops.length) return;
+    const lerp = (a, b, t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
+    function apply() {
+      const mid = scrollY + innerHeight / 2;
+      const pts = stops
+        .map(s => { const r = s.el.getBoundingClientRect(); return { y: r.top + scrollY + r.height / 2, c: s.c }; })
+        .sort((a, b) => a.y - b.y);
+      let col;
+      if (mid <= pts[0].y) col = pts[0].c;
+      else if (mid >= pts[pts.length - 1].y) col = pts[pts.length - 1].c;
+      else for (let i = 0; i < pts.length - 1; i++) {
+        if (mid >= pts[i].y && mid <= pts[i + 1].y) { col = lerp(pts[i].c, pts[i + 1].c, (mid - pts[i].y) / (pts[i + 1].y - pts[i].y)); break; }
+      }
+      root.style.setProperty('--bg-tint', 'rgb(' + (col[0] | 0) + ',' + (col[1] | 0) + ',' + (col[2] | 0) + ')');
+    }
+    addEventListener('scroll', apply, { passive: true });
+    addEventListener('resize', apply, { passive: true });
+    apply();
+  })();
+
   /* ---------- Theme toggle ---------- */
   const themeBtn = $('#themeToggle');
   function setTheme(t) {
