@@ -9,6 +9,10 @@ node_modules/
 .cache/
 .vercel/
 
+# Installed Skill packages (regenerated via `npx skills experimental_install` from skills-lock.json)
+.agents/
+.claude/
+
 # Local env
 .env
 .env.local

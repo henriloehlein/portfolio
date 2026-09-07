@@ -1,5 +1,5 @@
 # Projekt-Status & Handoff — Henri Löhlein Portfolio
-_Stand: 17.06.2026. Diese Datei ist die „Übergabe", damit jede neue Session sofort mit vollem Kontext weiterarbeiten kann. Abschnitt 6 ist die Warteschlange: dort steht, was als Nächstes zu tun ist._
+_Stand: 07.09.2026. Diese Datei ist die „Übergabe", damit jede neue Session sofort mit vollem Kontext weiterarbeiten kann. Abschnitt 6 ist die Warteschlange: dort steht, was als Nächstes zu tun ist._
 
 ---
 
@@ -73,7 +73,49 @@ Reihenfolge von oben:
 
 ## 6 · WARTESCHLANGE — als Nächstes zu tun ⬅️
 
-> Hinweis: Ein erster Anlauf für diese Aufgabe wurde begonnen und bewusst **per `git restore js/main.js` zurückgesetzt** (halbfertig/fehlerhaft), damit die Live-Seite funktionsfähig bleibt. Sauber von vorn beginnen. Der Site-Code (HTML/CSS/JS) ist live und unverändert auf Commit `1254731`; nur die Docs wurden danach aktualisiert.
+> **Kontext (07.09.2026):** Henri bewirbt sich jetzt und will diese Seite dafür schnell in 2–3 gezielten Punkten nachschärfen, statt auf sein parallel begonnenes Astro-Redesign („Portfolio v3", eigener Ordner/eigenes Repo) zu warten — das bleibt bewusst pausiert, nicht aufgegeben. Die beiden folgenden TODOs sind aus einer Planungs-Session mit Sicht auf beide Repos entstanden und unten so konkret wie möglich vorbereitet.
+
+### TODO 2 — Signatur-Gradient dämpfen (Graustufen, reduzierte Deckkraft)
+**Problem:** Der bunte warm/cool-Gradient (Koralle → Amber → Pink → Violett → Blau) wirkt zu „vibe-coded"/generisch für Bewerbungszwecke.
+
+**Soll:** Nicht entfernen, sondern dämpfen — Richtung Graustufen/Schwarz-Weiß bei reduzierter Deckkraft (grob: halbtransparent), Struktur und Bewegung bleiben unangetastet.
+
+**Betroffene Stellen in `css/styles.css`:**
+- Gradient-Variablen Zeile 20–32: `--grad`, `--grad-soft`, `--grad-signature`, `--grad-warm`, `--grad-iris`, `--grad-cool`, `--grad-bold`, `--grad-dusk` — einige als eigene Custom Properties, einige mit festen Hex-Stops direkt in der Definition, beide Fälle einzeln anfassen.
+- `--head-grad` Zeile 49 (Überschriften-Verlauf).
+- Grundfarb-Tokens für die Hintergrund-Blobs: `--warm-1`, `--warm-2`, `--cool-1`, `--violet`, `--pink` (dort definiert, wo die übrigen Root-Variablen stehen — vermutlich nahe Zeile 20, verifizieren) plus deren Verwendung in `.field__blob--1..4` (Zeile 141–144) und den `conic-gradient`-Feldlinien (Zeile 133–135).
+- `.bubble__glass::before`-Ring (Zeile 343, `conic-gradient(from 0deg,#ff8fb1,#ffb347,#6c5cef,#4d8dff,#ff6b5e,#ff8fb1)`) — derselbe Regenbogen, eigener Fundort.
+- Beide Themes prüfen: dark-first (Standard) und `[data-theme="light"]` (eigene Verläufe ab Zeile 158–172).
+
+### TODO 3 — „Fähigkeiten & Werkzeuge": Orbit durch Marquee-Band ersetzen
+**Wunsch:** Eine ruhige, laufende Leiste wie beim Werkzeugband-Vorbild aus „Portfolio v3" statt der aktuellen Orbit-Verpackung.
+
+**Guter Befund:** Das passende Muster existiert in diesem Repo bereits — reines CSS, kein JS nötig:
+- `css/styles.css` Zeile 468–472: `.marquee` / `.marquee__track` / `@keyframes marquee` — Maskenausblendung an den Rändern, pausiert bei `:hover`, 38s linear endlos.
+- Schon im Einsatz bei „Leidenschaften & Interessen": `index.html` Zeile 399–405 (`<div class="marquee">…</div>`, Liste doppelt für nahtlosen Loop).
+
+**Umsetzung:** Denselben `.marquee`-Aufbau für den Abschnitt „Fähigkeiten & Werkzeuge" (`index.html` Zeile 235–237, aktuell `<div class="orbit" id="orbit">`) verwenden — Werkzeug-/Skill-Liste statt Interessen-Liste, Liste zwei- oder dreifach für den Loop (je nach Breite prüfen, ob zwei Durchläufe an breiten Screens reichen). Danach `.orbit`/`.orbit__chip`-Logik in `js/main.js` (ab Zeile ~497) entfernen, da nicht mehr gebraucht — Nettoersparnis an Code, keine neue Abhängigkeit.
+
+### TODO 4 — weitere Komponenten „aktualisieren und optimieren" (mit Henri klären)
+Henri wollte noch 1–2 weitere Komponenten überarbeiten, hat aber noch nicht benannt, welche konkret. Vor Umsetzung kurz nachfragen, sonst besteht Verzettelungsgefahr.
+
+### TODO 5 — Glas-Look aus „Portfolio v3" übernehmen (NACH TODO 2+3, eigene Iteration)
+**Nicht vor TODO 2+3 anfangen.** Henri will erst schnell bewerbungsfähig sein — das ist der Grund, warum er überhaupt hierher (statt v3 fertigzubauen) gewechselt ist. Dieser Punkt ist die zweite, bewusst spätere Iteration.
+
+**Wunsch:** Die Glas-Materialsprache aus v3 (`D:\Claude Apps\Portfolio v3\DESIGN.md`, Abschnitt „Elevation & Depth") wirkt hochwertig — mehrlagige, gestapelte Schatten (`--glass-edge` für aufliegende Flächen, `--glass-sunk` für eingelassene), `backdrop-filter: blur() saturate()`, ein feiner Weißverlauf pro Fläche. Diese Rezeptur übernehmen, **nicht** die Farbwelt oder Tokens von v3 (das bleibt eine andere, dark-first Identität mit eigenem Gradient).
+
+**Wie, um wirklich minimal-invasiv zu bleiben:**
+1. Die zwei Schatten-Rezepte als neue, zusätzliche Utility-Klassen in `css/styles.css` ergänzen (z. B. `.glass-edge`, `.glass-sunk`), ohne bestehende Klassen/Variablen anzufassen. Reiner Additiv-Schritt, nichts kann dadurch kaputtgehen.
+2. Eine einzelne, risikoarme Komponente als erste Probe umziehen (Vorschlag: die Nav-Pill oder eine Projekt-Card, nicht der Hero) — `backdrop-filter` + neue Schatten-Klasse drauf, alten Schatten raus.
+3. Screenshot verifizieren (Desktop + Mobil, beide Themes), erst dann committen.
+4. Nächste Komponente erst danach, nie mehrere gleichzeitig. Nach jeder Komponente ist die Seite wieder vollständig live-fähig — Henri kann jederzeit abbrechen, ohne einen Halbfertig-Zustand zu hinterlassen.
+5. Reihenfolge der Kandidaten (grob nach Risiko, niedrig zuerst): Nav-Pill → Projekt-Cards → Kontakt-Links → Header-Streifen. Hero zuletzt, falls überhaupt.
+
+---
+
+> Ursprüngliche TODO 1 (Blasen-Vorschau) ist erledigt und gepusht, Hinweis dazu blieb unten als Referenz stehen:
+>
+> Ein erster Anlauf für diese Aufgabe wurde begonnen und bewusst **per `git restore js/main.js` zurückgesetzt** (halbfertig/fehlerhaft), damit die Live-Seite funktionsfähig bleibt. Sauber von vorn beginnen. Der Site-Code (HTML/CSS/JS) ist live und unverändert auf Commit `1254731`; nur die Docs wurden danach aktualisiert.
 
 ### TODO 1 — Blasen-Vorschau („Pop-up") überarbeiten  ✅ ERLEDIGT & GEPUSHT (18.06.2026)
 **Umgesetzt (Neuaufbau):** Das Pop-up ist jetzt ein **eigenes, vollständig deckendes Element** statt der „aufgeblasenen" Blase. Grund für den Neuaufbau: die alte Morph-Lösung vererbte die Inline-`opacity` der Blase (~0.3–0.56) auf die Karte (Inline schlägt CSS-Klasse), darum war die Karte halbtransparent und der ganze Screen wirkte trüb. Neu: `.bubbleScrim` solid dunkel (`rgba(6,6,10,.86)`), **kein** `backdrop-filter` mehr. `.bubbleStage` (flex, zentriert) hält die Karte `.bubblePop` (420×500, geclamped; oben Cover-Banner 44 %, unten solides `--surface-2`-Panel mit Kicker `--warm-1`, Name, Nutzen-Zeile, Live-Tease) und darunter den frei stehenden Link `.bubbleLink` („Zum ganzen Projekt · Case Study →" → `openProject(id)`). Stage ist `pointer-events:none`, Klicks fallen auf den Scrim durch (schließt); Karte/Link `pointer-events:auto`. Blasen driften unverändert weiter, Klick öffnet nur noch das Pop-up. DE/EN für Kicker/Nutzen/Link. Verifiziert per `preview_eval` + Screenshot (dark+light): Karte `opacity:1`, Panel solide `--surface-2`, Scrim ohne Blur, keine Console-Errors.
