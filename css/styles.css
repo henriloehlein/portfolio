@@ -281,7 +281,7 @@ html.has-custom-cursor,html.has-custom-cursor *{cursor:none}
   opacity:0;transition:opacity .4s var(--ease),backdrop-filter .4s var(--ease)}
 /* Neutral hairline rim, no hue: a plain top-lit-to-dim white fade reads as light catching a glass
    edge without turning the pill into a colourful outline. */
-.subnav__link::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;padding:1px;
+.subnav__link::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;padding:.5px;
   background:linear-gradient(180deg,color-mix(in srgb,#fff 40%,transparent),color-mix(in srgb,#fff 6%,transparent));
   -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
   -webkit-mask-composite:xor;mask-composite:exclude;
