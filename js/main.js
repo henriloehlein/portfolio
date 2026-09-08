@@ -169,18 +169,24 @@
   const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 60;
   const sections = $$('main section[id]');
   const navLinks = $$('.subnav__link');
+  // Nothing reads as "active" while still in the first viewport. currentSectionId tracks whatever
+  // the IntersectionObserver last saw regardless of scroll position, applyActive gates it on scrollY
+  // so the link lights up the moment the visitor crosses that first screen, without waiting for the
+  // next section change to re-fire the observer.
+  let currentSectionId = null;
+  const applyActive = () => {
+    const useId = scrollY < innerHeight ? null : currentSectionId;
+    navLinks.forEach(l => l.classList.toggle('is-active', !!useId && l.getAttribute('href') === '#' + useId));
+  };
   addEventListener('scroll', () => {
     nav.classList.toggle('is-stuck', scrollY > 30);
     if (subnav) subnav.classList.toggle('is-stuck', subnav.getBoundingClientRect().top <= navH + 2);
+    applyActive();
   }, { passive: true });
 
   const spy = new IntersectionObserver(entries => {
-    entries.forEach(en => {
-      if (en.isIntersecting) {
-        const id = en.target.id;
-        navLinks.forEach(l => l.classList.toggle('is-active', l.getAttribute('href') === '#' + id));
-      }
-    });
+    entries.forEach(en => { if (en.isIntersecting) currentSectionId = en.target.id; });
+    applyActive();
   }, { rootMargin: '-45% 0px -50% 0px' });
   sections.forEach(s => spy.observe(s));
 
