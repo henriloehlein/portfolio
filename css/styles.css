@@ -4,42 +4,24 @@
    ========================================================= */
 
 /* ---------- Tokens ---------- */
+/* Signature is a single warm→cool arc (ember → slate), not a multi-hue rainbow.
+   --warm-1/--cool-1 are the two live poles: JS interpolates both, plus --bg-tint,
+   from ember at the top of the page to slate at the bottom as the user scrolls
+   (see initScrollGradient in main.js). --pink/--violet stay quiet neutral bridge
+   tones for the ambient blobs, they are not accent colours. */
 :root{
-  --warm-1:#ff6b5e;   /* coral  */
-  --warm-2:#ffb347;   /* amber  */
-  --cool-1:#6c5cef;   /* indigo */
-  --cool-2:#4d8dff;   /* blue   */
-  --pink:#ff8fb1;
+  --warm-1:#a9503f;   /* ember — pole A, top-of-page fallback (JS drifts this to slate on scroll) */
+  --warm-2:#c9a89a;   /* soft ember tint */
+  --cool-1:#5b5754;   /* neutral bridge — top-of-page fallback, JS drifts this toward slate-grey */
+  --cool-2:#7c8ba3;   /* soft slate tint */
+  --pink:#726d69;     /* neutral warm-grey bridge (ambient blob only) */
+  --violet:#403d3b;   /* neutral dark bridge (ambient blob only) */
 
-  /* extra bridge hues — violet links pink↔indigo (kills the muddy midpoint),
-     sky lifts the cool end, hot-coral sharpens the warm end. Stays in-signature. */
-  --violet:#b06cf0;
-  --sky:#5fd0ff;
-  --coral-hot:#ff5d7e;
+  --grad: linear-gradient(110deg,var(--warm-1),var(--cool-1));
+  --grad-soft: linear-gradient(120deg,var(--warm-1),var(--cool-1));
 
-  --grad: linear-gradient(110deg,#ff6b5e 0%,#ffb347 24%,#ff8fb1 46%,#b06cf0 62%,#6c5cef 80%,#4d8dff 100%);
-  --grad-soft: linear-gradient(120deg,#ff6b5e,#b06cf0 55%,#6c5cef);
-
-  /* Heading gradients — one palette, distinct personalities.
-     Each big headline gets a deliberate character (ember/bloom/tide/flux/dusk),
-     richer multi-stop ramps + a violet bridge, so they read varied yet related. */
-  --grad-signature: linear-gradient(100deg,#ff6b5e 0%,#ffb347 13%,#ff8fb1 26%,#b06cf0 39%,#6c5cef 53%,#4d8dff 66%,#5fd0ff 77%,#ff8fb1 89%,#ff6b5e 100%); /* seamless loop */
-  --grad-flow: var(--grad-signature);
-  --grad-warm: linear-gradient(96deg,#ff5d7e 0%,#ff6b5e 34%,#ffa23d 74%,#ffc266 100%);  /* ember · empathy */
-  --grad-iris: linear-gradient(100deg,#ffb347 0%,#ff8fb1 38%,#b06cf0 70%,#6c5cef 100%); /* bloom · amber→violet→indigo */
-  --grad-cool: linear-gradient(96deg,#6c5cef 0%,#4d8dff 40%,#5fd0ff 72%,#9b8cff 100%);  /* tide · cool oceanic */
-  --grad-bold: linear-gradient(92deg,#ff8fb1 0%,#ff5d7e 30%,#ff6b5e 58%,#ffae4d 100%);  /* flux · energetic warm */
-  --grad-dusk: linear-gradient(100deg,#4d8dff 0%,#6c5cef 30%,#b06cf0 58%,#ff6b5e 100%); /* sunset · blue→violet→coral */
-
-  /* legacy aliases (kept so older selectors stay valid) */
-  --grad-1: var(--grad-flow);
-  --grad-2: var(--grad-warm);
-  --grad-3: var(--grad-cool);
-  --grad-4: var(--grad-dusk);
-  --grad-5: var(--grad-iris);
-
-  /* scroll-driven background tint (set live from JS) */
-  --bg-tint:#ff6b5e;
+  /* scroll-driven background tint (set live from JS, mirrors --warm-1's blend) */
+  --bg-tint:#a9503f;
 
   /* Heading colour is DERIVED from the live scroll tint, so every headline takes
      the hue of the background at its scroll position. Horizontal ramp: hue on the
@@ -57,7 +39,7 @@
 
   --maxw:1320px;
   --pad:clamp(20px,5vw,80px);
-  --nav-h:60px;
+  --nav-h:20px; /* gap the sticky subnav keeps from the viewport's top edge once stuck */
 
   --f-display:'Fraunces',Georgia,serif;
   --f-sans:'Inter',system-ui,-apple-system,sans-serif;
@@ -195,17 +177,32 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 @keyframes preBar{to{width:100%}}
 .preloader__meta{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 
-/* ---------- Cursor ---------- */
-.cursor{position:fixed;top:0;left:0;width:14px;height:14px;border-radius:50%;background:var(--text);z-index:150;pointer-events:none;transform:translate(-50%,-50%);transition:width .3s var(--ease),height .3s var(--ease),background .3s,opacity .3s;mix-blend-mode:difference;display:grid;place-items:center}
-.cursor.is-hover{width:64px;height:64px;background:var(--text)}
-.cursor.is-label{width:84px;height:84px;background:var(--grad);mix-blend-mode:normal}
-.cursor__label{font-family:var(--f-mono);font-size:11px;font-weight:600;color:#0a0a0f;opacity:0;transform:scale(.6);transition:opacity .25s,transform .25s;text-align:center;line-height:1.1;padding:4px}
-.cursor.is-label .cursor__label{opacity:1;transform:scale(1)}
+/* ---------- Cursor · smooth spring-follow arrow (white), rotates to face travel ---------- */
+/* Position/rotation/scale are driven per-frame from JS (spring physics in initSmoothCursor),
+   this rule only owns the fade-in and the two interaction states. */
+.cursor{position:fixed;top:0;left:0;z-index:150;pointer-events:none;display:grid;place-items:center;opacity:0;transition:opacity .15s;will-change:transform}
+.cursor__arrow{display:block;filter:drop-shadow(0 2px 3px rgba(0,0,0,.35));transition:transform .3s var(--ease)}
+.cursor.is-hover .cursor__arrow{transform:scale(1.2)}
+.cursor.is-label .cursor__arrow{transform:scale(.85)}
+.cursor__label{position:absolute;top:100%;left:50%;margin-top:8px;white-space:nowrap;font-family:var(--f-mono);font-size:11px;font-weight:600;letter-spacing:.03em;color:var(--bg);background:#fff;border-radius:999px;padding:6px 13px;opacity:0;transform:translate(-50%,4px) scale(.85);transition:opacity .25s,transform .25s}
+.cursor.is-label .cursor__label{opacity:1;transform:translate(-50%,0) scale(1)}
 @media (hover:none),(max-width:860px){.cursor{display:none}}
+/* While the custom cursor is running, kill the native cursor everywhere (buttons/links ship their
+   own explicit cursor:pointer, and browsers hand-cursor <a> by default, so body{cursor:none} alone
+   doesn't reach them). Keeps the arrow the only pointer indicator, buttons keep their own hover state. */
+html.has-custom-cursor,html.has-custom-cursor *{cursor:none}
 
 /* ---------- Nav (minimal: only DE/EN + theme) ---------- */
-.nav{position:fixed;top:0;left:0;width:100%;z-index:100;display:flex;align-items:center;justify-content:flex-end;padding:16px var(--pad);transition:padding .4s var(--ease),background .4s,backdrop-filter .4s}
+/* Normal document flow on purpose, not fixed: this bar lives only at the very top of the page
+   and scrolls away with everything else once the user scrolls past it. It is not a persistent
+   sticky header. */
+.nav{position:relative;width:100%;z-index:100;display:flex;align-items:center;justify-content:flex-end;padding:16px var(--pad);transition:padding .4s var(--ease),background .4s,backdrop-filter .4s}
 .nav--minimal.is-stuck{padding:10px var(--pad)}
+/* Transparent blur only, no fill: softens whatever animated background sits behind the DE/EN
+   text without painting a solid or tinted panel. */
+.nav--minimal::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  backdrop-filter:blur(18px) saturate(140%);
+  border-bottom:1px solid var(--line)}
 .nav__tools{display:flex;align-items:center;gap:14px}
 .lang{display:flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:13px;color:var(--muted)}
 .lang__opt{transition:color .3s}
@@ -220,24 +217,10 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .burger i{width:20px;height:2px;background:var(--text);transition:transform .3s,opacity .3s}
 
 /* ---------- Header strip · full-width composition ---------- */
-.strip{position:relative;width:100%;margin-top:64px;padding:clamp(28px,4.5vw,52px) var(--pad);overflow:hidden;isolation:isolate}
-.strip__bg{position:absolute;inset:0;z-index:-2;background:linear-gradient(180deg,
-  transparent 0%,
-  color-mix(in srgb,#fff 8%,transparent) 15%,
-  color-mix(in srgb,#fff 13%,transparent) 50%,
-  color-mix(in srgb,#fff 8%,transparent) 85%,
-  transparent 100%);
-  backdrop-filter:blur(7px) saturate(120%);
-  border-top:1px solid color-mix(in srgb,#fff 10%,transparent);
-  border-bottom:1px solid color-mix(in srgb,#fff 8%,transparent)}
-[data-theme="light"] .strip__bg{background:linear-gradient(180deg,
-  transparent 0%,
-  color-mix(in srgb,#fff 72%,transparent) 15%,
-  color-mix(in srgb,#fff 88%,transparent) 50%,
-  color-mix(in srgb,#fff 72%,transparent) 85%,
-  transparent 100%);
-  border-top:1px solid color-mix(in srgb,#fff 72%,transparent);
-  border-bottom:1px solid color-mix(in srgb,#fff 50%,transparent)}
+.strip{position:relative;width:100%;padding:clamp(28px,4.5vw,52px) var(--pad);overflow:hidden;isolation:isolate}
+/* No panel here on purpose: portrait, name and covers stand directly on the page background,
+   no blur, no border. That treatment now lives on the header only, see .nav--minimal::before. */
+.strip__bg{position:absolute;inset:0;z-index:-2}
 .strip__inner{position:relative;max-width:var(--maxw);margin:0 auto;min-height:clamp(300px,30vw,376px);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:clamp(12px,2vw,28px)}
 
 /* center · portrait + name + affiliation */
@@ -270,10 +253,51 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 /* ---------- Subnav · borderless, stretched across width ---------- */
 .subnav{position:sticky;top:var(--nav-h);z-index:90;max-width:var(--maxw);margin:0 auto}
 .subnav__edge{display:block;height:0}
+/* No bar-wide shield any more: legibility now comes from each link's own always-on blur pill
+   (see .subnav__link::before), scoped to the word instead of the whole row. */
+.subnav__bg{display:none}
 .subnav__inner{display:flex;margin:0 var(--pad);padding:14px 6px}
 .subnav__links{display:flex;flex:1;justify-content:space-between;align-items:center;gap:clamp(10px,2vw,28px)}
-.subnav__link{position:relative;font-family:var(--f-mono);font-size:clamp(14px,1.4vw,17px);letter-spacing:.01em;color:var(--muted);transition:color .35s;white-space:nowrap}
-.subnav__link:hover,.subnav__link.is-active{color:var(--text)}
+.subnav__link{position:relative;font-family:var(--f-mono);font-size:clamp(14px,1.4vw,17px);letter-spacing:.01em;color:var(--muted);white-space:nowrap;
+  padding:8px 16px;margin:-8px 0;border-radius:999px;display:inline-block;
+  transition:color .35s,transform .45s var(--ease),letter-spacing .45s var(--ease),text-shadow .45s var(--ease)}
+/* Blur pill sits only behind the word itself (sized by the link's own padding box). The blur
+   itself is always on, at rest it has no fill/border so nothing is visible, just a softened
+   backdrop for legibility. Hover/active add a fill on top, that's the only thing that fades. */
+.subnav__link::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;
+  backdrop-filter:blur(14px) saturate(130%);
+  background:transparent;box-shadow:none;
+  transition:background .45s var(--ease),box-shadow .45s var(--ease)}
+/* Hover/active: liquid-glass pill (asymmetric glint top-left, cool pool bottom-right, real
+   offset shadow for lift) plus a chrome/silver shine sweep through the word itself. Resting
+   words keep the plain flat --muted colour above, no pill, no shine, nothing. */
+.subnav__link:hover,.subnav__link.is-active{
+  transform:scale(1.08);letter-spacing:.03em;
+  text-shadow:0 0 20px color-mix(in srgb,var(--warm-1) 35%,transparent);
+  --shiny-width:60px;
+  color:color-mix(in srgb,#fff 88%,transparent);
+  background-image:linear-gradient(90deg,transparent,#fff 55%,transparent);
+  background-size:var(--shiny-width) 100%;background-repeat:no-repeat;
+  background-position:calc(-100% - var(--shiny-width)) 0;
+  -webkit-background-clip:text;background-clip:text;
+  animation:shiny-text 2.4s infinite}
+[data-theme="light"] .subnav__link:hover,[data-theme="light"] .subnav__link.is-active{
+  background-image:linear-gradient(90deg,transparent,#000 55%,transparent)}
+@keyframes shiny-text{
+  0%,85%,100%{background-position:calc(-100% - var(--shiny-width)) 0}
+  35%,55%{background-position:calc(100% + var(--shiny-width)) 0}
+}
+.subnav__link:hover::before,.subnav__link.is-active::before{
+  background:
+    radial-gradient(65% 85% at 28% -15%,color-mix(in srgb,#fff 65%,transparent),transparent 60%),
+    radial-gradient(90% 110% at 75% 125%,color-mix(in srgb,var(--cool-1) 30%,transparent),transparent 70%),
+    linear-gradient(120deg,color-mix(in srgb,var(--warm-1) 16%,transparent),color-mix(in srgb,var(--cool-1) 16%,transparent)),
+    color-mix(in srgb,var(--surface) 38%,transparent);
+  backdrop-filter:blur(22px) saturate(180%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb,#fff 45%,transparent),
+    inset 0 -6px 10px -6px color-mix(in srgb,#000 35%,transparent),
+    0 10px 24px -12px color-mix(in srgb,var(--warm-1) 40%,transparent)}
 @media (max-width:620px){
   .subnav__inner{padding:12px 2px}
   .subnav__links{gap:6px;justify-content:space-between}
@@ -283,12 +307,8 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 /* ---------- Layout helpers ---------- */
 section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);max-width:var(--maxw);margin:0 auto}
 .sectionTag{display:flex;align-items:center;gap:12px;font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:34px}
+/* one accent for every section tag, it already follows the live scroll gradient via --warm-1 */
 .sectionTag span:first-child{color:var(--warm-1)}
-/* per-section accent echoes the heading gradient + the scroll bg-tint */
-#focus .sectionTag span:first-child{color:var(--cool-1)}
-#work .sectionTag span:first-child{color:var(--pink)}
-#about .sectionTag span:first-child{color:var(--pink)}
-#contact .sectionTag span:first-child{color:var(--cool-2)}
 
 /* ---------- Reveal ---------- */
 .reveal{opacity:0;transform:translateY(34px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
@@ -340,7 +360,7 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
   background:radial-gradient(circle at 32% 26%,rgba(255,255,255,.42),rgba(255,255,255,.04) 42%,rgba(255,255,255,0) 64%);
   box-shadow:inset 0 0 14px rgba(255,255,255,.18),inset 6px -8px 22px rgba(120,140,255,.16),inset -7px 5px 18px rgba(255,140,177,.12)}
 .bubble__glass::before{content:"";position:absolute;inset:0;border-radius:50%;padding:1.5px;
-  background:conic-gradient(from 0deg,#ff8fb1,#ffb347,#6c5cef,#4d8dff,#ff6b5e,#ff8fb1);
+  background:conic-gradient(from 0deg,var(--warm-1),var(--cool-1),var(--warm-1));
   -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;
   opacity:.45;mix-blend-mode:screen;animation:irisSpin 14s linear infinite}
 .bubble__glass::after{content:"";position:absolute;top:14%;left:18%;width:24%;height:18%;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.88),transparent 70%);filter:blur(1px);opacity:.7;animation:sheen 6s ease-in-out infinite}
@@ -451,7 +471,7 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 .plate--logo{background:#fff;padding:clamp(20px,3vw,34px)}
 .plate--logo img{object-fit:contain;height:auto;max-height:100%}
 .plate--syntegon{background:linear-gradient(135deg,#1b2230,#0e1622);position:relative}
-.plate--syntegon span{font-family:var(--f-mono);font-size:42px;font-weight:600;letter-spacing:.04em;background:var(--grad-5);-webkit-background-clip:text;background-clip:text;color:transparent}
+.plate--syntegon span{font-family:var(--f-mono);font-size:42px;font-weight:600;letter-spacing:.04em;background:linear-gradient(100deg,var(--warm-1),var(--cool-1));-webkit-background-clip:text;background-clip:text;color:transparent}
 .plate--syntegon::after{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:26px 26px;opacity:.5}
 .project__open{position:absolute;top:40px;right:8px;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;opacity:0;transform:scale(.8);transition:opacity .4s,transform .4s,background .3s}
 .project:hover .project__open{opacity:1;transform:scale(1)}
@@ -513,13 +533,13 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 /* case study internals */
 .cs__hero{display:grid;grid-template-columns:1.4fr 1fr;gap:44px;padding-bottom:46px;border-bottom:1px solid var(--line);margin-bottom:50px}
 .cs__kicker{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--warm-1)}
-.cs__title{--cs-accent:#ff6b5e;font-family:var(--f-display);font-weight:380;font-size:clamp(44px,7vw,92px);letter-spacing:-.035em;line-height:1;margin:14px 0 6px;
+.cs__title{--cs-accent:#a9503f;font-family:var(--f-display);font-weight:380;font-size:clamp(44px,7vw,92px);letter-spacing:-.035em;line-height:1;margin:14px 0 6px;
   background:linear-gradient(95deg, color-mix(in srgb,var(--cs-accent) 90%,var(--head-soft)) 0%, color-mix(in srgb,var(--cs-accent) 22%,var(--text)) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
   filter:drop-shadow(0 8px 26px color-mix(in srgb,var(--cs-accent) 24%,transparent))}
-[data-case="milo"] .cs__title{--cs-accent:#4d8dff}
-[data-case="cognify"] .cs__title{--cs-accent:#b06cf0}
-[data-case="syntegon"] .cs__title{--cs-accent:#6c5cef}
-[data-case="forwerts"] .cs__title{--cs-accent:#ff8fb1}
+[data-case="milo"] .cs__title{--cs-accent:#3f5a86}
+[data-case="cognify"] .cs__title{--cs-accent:#6b5f7e}
+[data-case="syntegon"] .cs__title{--cs-accent:#33456b}
+[data-case="forwerts"] .cs__title{--cs-accent:#b9704f}
 .cs__sub{font-size:18px;color:var(--muted);margin-bottom:24px}
 .cs__pitch{font-size:clamp(16px,1.6vw,19px);line-height:1.6;color:var(--text);font-weight:300}
 .cs__pitch em{font-style:italic;color:var(--warm-1);font-weight:400}

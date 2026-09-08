@@ -99,17 +99,57 @@
     startRotator();
   }
 
-  /* ---------- Custom cursor ---------- */
+  /* ---------- Custom cursor: smooth spring-follow arrow, rotates to face travel ---------- */
+  /* Port of MagicUI's SmoothCursor (position/rotation/scale as damped springs instead of a
+     Framer Motion useSpring) since this project has no build step / React runtime. */
   const cursor = $('#cursor');
   const cLabel = $('#cursorLabel');
-  if (cursor && matchMedia('(hover:hover)').matches) {
-    let cx = innerWidth / 2, cy = innerHeight / 2, tx = cx, ty = cy;
-    addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; }, { passive: true });
-    (function loop() {
-      cx += (tx - cx) * 0.2; cy += (ty - cy) * 0.2;
-      cursor.style.transform = `translate(${cx}px,${cy}px) translate(-50%,-50%)`;
+  if (cursor && !reduce && matchMedia('(any-hover:hover) and (any-pointer:fine)').matches) {
+    const spring = (stiffness, damping, mass, v0) => {
+      let value = v0, vel = 0, target = v0;
+      return { set: t => { target = t; }, tick: dt => {
+        const accel = (-stiffness * (value - target) - damping * vel) / mass;
+        vel += accel * dt; value += vel * dt; return value;
+      } };
+    };
+    const sx = spring(400, 45, 1, innerWidth / 2);
+    const sy = spring(400, 45, 1, innerHeight / 2);
+    const srot = spring(300, 60, 1, 0);
+    const sscale = spring(500, 35, 1, 1);
+
+    let lastPos = { x: innerWidth / 2, y: innerHeight / 2 }, lastTime = Date.now();
+    let prevAngle = 0, accRotation = 0, squishTimer = null;
+
+    addEventListener('pointermove', e => {
+      if (e.pointerType === 'touch') return;
+      cursor.style.opacity = '1';
+      const pos = { x: e.clientX, y: e.clientY };
+      const now = Date.now(), dt = now - lastTime || 1;
+      const vx = (pos.x - lastPos.x) / dt, vy = (pos.y - lastPos.y) / dt;
+      lastTime = now; lastPos = pos;
+      sx.set(pos.x); sy.set(pos.y);
+      if (Math.hypot(vx, vy) > 0.1) {
+        const angle = Math.atan2(vy, vx) * (180 / Math.PI) + 90;
+        let diff = angle - prevAngle;
+        if (diff > 180) diff -= 360; if (diff < -180) diff += 360;
+        accRotation += diff; prevAngle = angle;
+        srot.set(accRotation);
+        sscale.set(0.95);
+        clearTimeout(squishTimer);
+        squishTimer = setTimeout(() => sscale.set(1), 150);
+      }
+    }, { passive: true });
+
+    let last = performance.now();
+    (function loop(now) {
+      const dt = Math.min(0.032, (now - last) / 1000);
+      last = now;
+      const x = sx.tick(dt), y = sy.tick(dt), rot = srot.tick(dt), sc = sscale.tick(dt);
+      cursor.style.transform = `translate(${x}px,${y}px) translate(-50%,-50%) rotate(${rot}deg) scale(${sc})`;
       requestAnimationFrame(loop);
-    })();
+    })(last);
+
+    document.documentElement.classList.add('has-custom-cursor');
     const hoverSel = 'a,button,[data-cursor],.project,.fcard';
     document.addEventListener('mouseover', e => {
       const t = e.target.closest(hoverSel);
@@ -209,33 +249,32 @@
     }, { passive: true });
   }
 
-  /* ---------- Scroll-linked background tint (hue follows section headings) ---------- */
-  (function initBgTint() {
+  /* ---------- Scroll-linked signature gradient (ember -> slate across the whole page) ----------
+     One warm->cool arc for the entire scroll, not a different hue per section: --warm-1, --cool-1,
+     --pink and --violet (plus --bg-tint, which drives every --head-grad headline) all interpolate
+     together from the ember palette at the top to the slate palette at the bottom. The transition
+     is centred on the midpoint of the page and spread across most of the scroll distance (WIDTH),
+     so it reads as a slow drift rather than a jump. */
+  (function initScrollGradient() {
     const root = document.documentElement;
-    const stops = [
-      { id: 'approach', c: [255, 107, 94] },  // coral  (matches grad-1)
-      { id: 'focus',    c: [108, 92, 239] },  // indigo (grad-3 cool end)
-      { id: 'work',     c: [77, 141, 255] },  // blue
-      { id: 'about',    c: [255, 143, 177] }, // pink
-      { id: 'contact',  c: [77, 141, 255] }   // blue   (grad-4 start)
-    ].map(s => ({ el: document.getElementById(s.id), c: s.c })).filter(s => s.el);
-    if (!stops.length) return;
-    const lerp = (a, b, t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
+    const EMBER = { '--warm-1': [169, 80, 63], '--cool-1': [91, 87, 84], '--pink': [114, 109, 105], '--violet': [64, 61, 59] };
+    const SLATE = { '--warm-1': [63, 90, 134], '--cool-1': [92, 95, 102], '--pink': [109, 112, 121], '--violet': [60, 62, 68] };
+    const MID = 0.5, WIDTH = 0.8; // transition centred at 50% of scroll, spans ~80% of the scroll distance
+    const smooth = t => t * t * (3 - 2 * t);
+    const lerp = (a, b, t) => a.map((v, i) => Math.round(v + (b[i] - v) * t));
+    const toHex = c => '#' + c.map(v => Math.max(0, Math.min(255, v)).toString(16).padStart(2, '0')).join('');
+    let ticking = false;
     function apply() {
-      const mid = scrollY + innerHeight / 2;
-      const pts = stops
-        .map(s => { const r = s.el.getBoundingClientRect(); return { y: r.top + scrollY + r.height / 2, c: s.c }; })
-        .sort((a, b) => a.y - b.y);
-      let col;
-      if (mid <= pts[0].y) col = pts[0].c;
-      else if (mid >= pts[pts.length - 1].y) col = pts[pts.length - 1].c;
-      else for (let i = 0; i < pts.length - 1; i++) {
-        if (mid >= pts[i].y && mid <= pts[i + 1].y) { col = lerp(pts[i].c, pts[i + 1].c, (mid - pts[i].y) / (pts[i + 1].y - pts[i].y)); break; }
-      }
-      root.style.setProperty('--bg-tint', 'rgb(' + (col[0] | 0) + ',' + (col[1] | 0) + ',' + (col[2] | 0) + ')');
+      const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+      const p = Math.min(1, Math.max(0, scrollY / max));
+      const f = smooth(Math.min(1, Math.max(0, (p - (MID - WIDTH / 2)) / WIDTH)));
+      Object.keys(EMBER).forEach(k => root.style.setProperty(k, toHex(lerp(EMBER[k], SLATE[k], f))));
+      root.style.setProperty('--bg-tint', toHex(lerp(EMBER['--warm-1'], SLATE['--warm-1'], f)));
+      ticking = false;
     }
-    addEventListener('scroll', apply, { passive: true });
-    addEventListener('resize', apply, { passive: true });
+    function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(apply); } }
+    addEventListener('scroll', onScroll, { passive: true });
+    addEventListener('resize', onScroll, { passive: true });
     apply();
   })();
 
@@ -282,6 +321,7 @@
     const src = cases.querySelector(`[data-case="${id}"]`);
     if (!src) return;
     mContent.innerHTML = src.innerHTML;
+    mContent.setAttribute('data-case', id); // so [data-case="x"] .cs__title accent rules can match once moved
     const nameEl = src.querySelector('.cs__title');
     mBarName.textContent = nameEl ? nameEl.textContent : '';
     lastFocus = document.activeElement;

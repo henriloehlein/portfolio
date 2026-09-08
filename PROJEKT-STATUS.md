@@ -1,5 +1,5 @@
 # Projekt-Status & Handoff — Henri Löhlein Portfolio
-_Stand: 07.09.2026. Diese Datei ist die „Übergabe", damit jede neue Session sofort mit vollem Kontext weiterarbeiten kann. Abschnitt 6 ist die Warteschlange: dort steht, was als Nächstes zu tun ist._
+_Stand: 08.09.2026. Diese Datei ist die „Übergabe", damit jede neue Session sofort mit vollem Kontext weiterarbeiten kann. Änderungen laufen jetzt iterativ direkt im Gespräch mit Henri (ein Punkt pro Prompt), es gibt keine persistente To-do-Liste mehr._
 
 ---
 
@@ -50,7 +50,7 @@ Reihenfolge von oben:
 6. **Arbeiten** (`#work`): 5 Projekte mit Cover-Plates, Klick → Case-Study-Modal.
 7. **Über mich** (`#about`, inkl. Methode + Marquee) · **Kontakt** (`#contact`) · Footer.
 
-**Schwebende Blasen** (`#bubbleField`, fixed, viewport-weit): je eine pro Projekt mit Cover, treiben **nur in den linken/rechten Padding-Bändern** (nie über den mittigen Inhalt), wrappen horizontal (links raus → rechts rein), transparent mit Konturen-Shine, **auf Mobil (<760 px) ausgeblendet**. Klick → Vorschau-Karte (siehe Abschnitt 6 — wird gerade überarbeitet).
+**Schwebende Blasen** (`#bubbleField`, fixed, viewport-weit): je eine pro Projekt mit Cover, treiben **nur in den linken/rechten Padding-Bändern** (nie über den mittigen Inhalt), wrappen horizontal (links raus → rechts rein), transparent mit Konturen-Shine, **auf Mobil (<760 px) ausgeblendet**. Klick → Vorschau-Karte (Pop-up mit Cover-Banner + Panel, siehe `initBubbles()` in `js/main.js`).
 
 **Projekte/Case Studies:** steady, Milo (beide ausführlich), Cognify (in Bearbeitung), Syntegon-Bachelorarbeit (vertraulich, eingeschränkt), forwerts-Praktikum.
 
@@ -65,105 +65,18 @@ Reihenfolge von oben:
 - **Weg:** GitHub + **GitHub Pages**. **User:** `henriloehlein` · **Repo:** `portfolio` (public) · **Branch:** `main`.
 - **Remote:** `https://github.com/henriloehlein/portfolio.git` · **Live:** **https://henriloehlein.github.io/portfolio/**
 - **Push = Deploy:** Push auf `main` → Pages baut automatisch neu (~1 Min). Henri nutzt sonst **GitHub Desktop**.
-- **Letzter Feature-/Site-Commit:** `1254731` „Refine header: centered portrait + name, side covers, gutter-only bubbles" (gepusht, live). Danach folgen nur Doku-Updates (diese Datei, `README.md`, `DEPLOY.md`).
+- **Aktueller Stand:** `git log` ist die Quelle der Wahrheit für den letzten Commit, nicht diese Datei.
 - **Datenschutz:** `Lebenslauf_*.pdf` und `Bilder/` sind in `.gitignore` und werden **nicht** veröffentlicht. `assets/img/covers/` ist committet (von der Seite genutzt).
 - **Cache-Eigenheit:** Nach Deploy zeigt der Browser teils die alte Version (gecacht); hart neu laden oder `?v=` anhängen.
 
 ---
 
-## 6 · WARTESCHLANGE — als Nächstes zu tun ⬅️
-
-> **Kontext (07.09.2026):** Henri bewirbt sich jetzt und will diese Seite dafür schnell in 2–3 gezielten Punkten nachschärfen, statt auf sein parallel begonnenes Astro-Redesign („Portfolio v3", eigener Ordner/eigenes Repo) zu warten — das bleibt bewusst pausiert, nicht aufgegeben. Die beiden folgenden TODOs sind aus einer Planungs-Session mit Sicht auf beide Repos entstanden und unten so konkret wie möglich vorbereitet.
-
-### TODO 2 — Signatur-Gradient dämpfen (Graustufen, reduzierte Deckkraft)
-**Problem:** Der bunte warm/cool-Gradient (Koralle → Amber → Pink → Violett → Blau) wirkt zu „vibe-coded"/generisch für Bewerbungszwecke.
-
-**Soll:** Nicht entfernen, sondern dämpfen — Richtung Graustufen/Schwarz-Weiß bei reduzierter Deckkraft (grob: halbtransparent), Struktur und Bewegung bleiben unangetastet.
-
-**Betroffene Stellen in `css/styles.css`:**
-- Gradient-Variablen Zeile 20–32: `--grad`, `--grad-soft`, `--grad-signature`, `--grad-warm`, `--grad-iris`, `--grad-cool`, `--grad-bold`, `--grad-dusk` — einige als eigene Custom Properties, einige mit festen Hex-Stops direkt in der Definition, beide Fälle einzeln anfassen.
-- `--head-grad` Zeile 49 (Überschriften-Verlauf).
-- Grundfarb-Tokens für die Hintergrund-Blobs: `--warm-1`, `--warm-2`, `--cool-1`, `--violet`, `--pink` (dort definiert, wo die übrigen Root-Variablen stehen — vermutlich nahe Zeile 20, verifizieren) plus deren Verwendung in `.field__blob--1..4` (Zeile 141–144) und den `conic-gradient`-Feldlinien (Zeile 133–135).
-- `.bubble__glass::before`-Ring (Zeile 343, `conic-gradient(from 0deg,#ff8fb1,#ffb347,#6c5cef,#4d8dff,#ff6b5e,#ff8fb1)`) — derselbe Regenbogen, eigener Fundort.
-- Beide Themes prüfen: dark-first (Standard) und `[data-theme="light"]` (eigene Verläufe ab Zeile 158–172).
-
-### TODO 3 — „Fähigkeiten & Werkzeuge": Orbit durch Marquee-Band ersetzen
-**Wunsch:** Eine ruhige, laufende Leiste wie beim Werkzeugband-Vorbild aus „Portfolio v3" statt der aktuellen Orbit-Verpackung.
-
-**Guter Befund:** Das passende Muster existiert in diesem Repo bereits — reines CSS, kein JS nötig:
-- `css/styles.css` Zeile 468–472: `.marquee` / `.marquee__track` / `@keyframes marquee` — Maskenausblendung an den Rändern, pausiert bei `:hover`, 38s linear endlos.
-- Schon im Einsatz bei „Leidenschaften & Interessen": `index.html` Zeile 399–405 (`<div class="marquee">…</div>`, Liste doppelt für nahtlosen Loop).
-
-**Umsetzung:** Denselben `.marquee`-Aufbau für den Abschnitt „Fähigkeiten & Werkzeuge" (`index.html` Zeile 235–237, aktuell `<div class="orbit" id="orbit">`) verwenden — Werkzeug-/Skill-Liste statt Interessen-Liste, Liste zwei- oder dreifach für den Loop (je nach Breite prüfen, ob zwei Durchläufe an breiten Screens reichen). Danach `.orbit`/`.orbit__chip`-Logik in `js/main.js` (ab Zeile ~497) entfernen, da nicht mehr gebraucht — Nettoersparnis an Code, keine neue Abhängigkeit.
-
-### TODO 4 — weitere Komponenten „aktualisieren und optimieren" (mit Henri klären)
-Henri wollte noch 1–2 weitere Komponenten überarbeiten, hat aber noch nicht benannt, welche konkret. Vor Umsetzung kurz nachfragen, sonst besteht Verzettelungsgefahr.
-
-### TODO 5 — Glas-Look aus „Portfolio v3" übernehmen (NACH TODO 2+3, eigene Iteration)
-**Nicht vor TODO 2+3 anfangen.** Henri will erst schnell bewerbungsfähig sein — das ist der Grund, warum er überhaupt hierher (statt v3 fertigzubauen) gewechselt ist. Dieser Punkt ist die zweite, bewusst spätere Iteration.
-
-**Wunsch:** Die Glas-Materialsprache aus v3 (`D:\Claude Apps\Portfolio v3\DESIGN.md`, Abschnitt „Elevation & Depth") wirkt hochwertig — mehrlagige, gestapelte Schatten (`--glass-edge` für aufliegende Flächen, `--glass-sunk` für eingelassene), `backdrop-filter: blur() saturate()`, ein feiner Weißverlauf pro Fläche. Diese Rezeptur übernehmen, **nicht** die Farbwelt oder Tokens von v3 (das bleibt eine andere, dark-first Identität mit eigenem Gradient).
-
-**Wie, um wirklich minimal-invasiv zu bleiben:**
-1. Die zwei Schatten-Rezepte als neue, zusätzliche Utility-Klassen in `css/styles.css` ergänzen (z. B. `.glass-edge`, `.glass-sunk`), ohne bestehende Klassen/Variablen anzufassen. Reiner Additiv-Schritt, nichts kann dadurch kaputtgehen.
-2. Eine einzelne, risikoarme Komponente als erste Probe umziehen (Vorschlag: die Nav-Pill oder eine Projekt-Card, nicht der Hero) — `backdrop-filter` + neue Schatten-Klasse drauf, alten Schatten raus.
-3. Screenshot verifizieren (Desktop + Mobil, beide Themes), erst dann committen.
-4. Nächste Komponente erst danach, nie mehrere gleichzeitig. Nach jeder Komponente ist die Seite wieder vollständig live-fähig — Henri kann jederzeit abbrechen, ohne einen Halbfertig-Zustand zu hinterlassen.
-5. Reihenfolge der Kandidaten (grob nach Risiko, niedrig zuerst): Nav-Pill → Projekt-Cards → Kontakt-Links → Header-Streifen. Hero zuletzt, falls überhaupt.
-
----
-
-> Ursprüngliche TODO 1 (Blasen-Vorschau) ist erledigt und gepusht, Hinweis dazu blieb unten als Referenz stehen:
->
-> Ein erster Anlauf für diese Aufgabe wurde begonnen und bewusst **per `git restore js/main.js` zurückgesetzt** (halbfertig/fehlerhaft), damit die Live-Seite funktionsfähig bleibt. Sauber von vorn beginnen. Der Site-Code (HTML/CSS/JS) ist live und unverändert auf Commit `1254731`; nur die Docs wurden danach aktualisiert.
-
-### TODO 1 — Blasen-Vorschau („Pop-up") überarbeiten  ✅ ERLEDIGT & GEPUSHT (18.06.2026)
-**Umgesetzt (Neuaufbau):** Das Pop-up ist jetzt ein **eigenes, vollständig deckendes Element** statt der „aufgeblasenen" Blase. Grund für den Neuaufbau: die alte Morph-Lösung vererbte die Inline-`opacity` der Blase (~0.3–0.56) auf die Karte (Inline schlägt CSS-Klasse), darum war die Karte halbtransparent und der ganze Screen wirkte trüb. Neu: `.bubbleScrim` solid dunkel (`rgba(6,6,10,.86)`), **kein** `backdrop-filter` mehr. `.bubbleStage` (flex, zentriert) hält die Karte `.bubblePop` (420×500, geclamped; oben Cover-Banner 44 %, unten solides `--surface-2`-Panel mit Kicker `--warm-1`, Name, Nutzen-Zeile, Live-Tease) und darunter den frei stehenden Link `.bubbleLink` („Zum ganzen Projekt · Case Study →" → `openProject(id)`). Stage ist `pointer-events:none`, Klicks fallen auf den Scrim durch (schließt); Karte/Link `pointer-events:auto`. Blasen driften unverändert weiter, Klick öffnet nur noch das Pop-up. DE/EN für Kicker/Nutzen/Link. Verifiziert per `preview_eval` + Screenshot (dark+light): Karte `opacity:1`, Panel solide `--surface-2`, Scrim ohne Blur, keine Console-Errors.
-
-<details><summary>Ursprüngliche Aufgabenbeschreibung</summary>
-
-**Problem:** Beim Klick auf eine Blase wird der ganze Screen trüb/geblurrt und das Pop-up selbst wirkt matschig/kontaktarm (Cover liegt vollflächig hinter dem Text, dazu `backdrop-filter:blur` auf dem Scrim).
-
-**Soll-Zustand:**
-1. **Scrim entmatschen:** Hintergrund klar abdunkeln statt stark blurren (z. B. `rgba(8,8,12,.7)` mit höchstens `blur(2px)`), damit das Pop-up scharf „poppt".
-2. **Pop-up größer:** ca. `ow ≈ 420 px`, `oh ≈ 500 px` (statt 340×400). Clamps an Viewport behalten.
-3. **Pop-up-Layout neu (saubere Karte, nicht Text-über-Bild):**
-   - **Oben Header-Banner** mit dem **Cover-Screenshot** (ca. obere 44 %, `object-fit:cover`).
-   - **Unten solides Panel** (`var(--surface-2)`, theme-aware Textfarben, NICHT weiß) mit:
-     - kleine **Kategorie**-Kicker-Zeile (warm/`--warm-1`),
-     - **Projektname**,
-     - **Nutzen-Zeile** (prägnant, was das Projekt bringt, z. B. „KI für Senioren und Zugänglichkeit"),
-     - **kurze Zusammenfassung** (der bestehende `project__tease`-Text, sprachsynchron live aus dem DOM).
-4. **Frei stehender Link UNTER der Karte** (auf dem Scrim, zentriert, anklickbare Schrift — kein Button-Kasten im Pop-up), z. B. „**Zum ganzen Projekt · Case Study →**" → öffnet die vollständige Case Study (`openProject(id)`). DE/EN je nach `lang`.
-5. Schließen via Scrim-Klick / ESC bleibt.
-
-**Texte je Projekt (DE / EN), fertig zum Einsetzen:**
-
-| id | Kategorie (Kicker) | Nutzen-Zeile |
-|----|--------------------|--------------|
-| steady | Behavioral Design | DE: „Hält Menschen mit psychologischen Mechaniken an ihren Routinen." · EN: „Keeps people on track with psychology-based mechanics." |
-| milo | Inclusive Design · KI / AI | DE: „KI-Assistenz für Senioren, mit Fokus auf Vertrauen und Zugänglichkeit." · EN: „AI assistance for seniors, focused on trust and accessibility." |
-| cognify | AR E-Learning | DE: „Lernen mit Augmented Reality, Quizzes und Gamification." · EN: „Learning with augmented reality, quizzes and gamification." |
-| syntegon | Industrial UX · Bachelorarbeit / Bachelor thesis | DE: „Visualisierung für die Pharmaproduktion, die Bediener sicher führt." · EN: „Pharma-production visualisation that guides operators safely." |
-| forwerts | E-Commerce UX · Praktikum / Internship | DE: „Funnel- und Screen-Design mit nachweislich besserer Conversion." · EN: „Funnel and screen design with measurably better conversion." |
-
-**Implementierungs-Hinweise:**
-- Alles in `js/main.js` → `initBubbles()` (Funktionen `open(b)` / `close()`, Element-Template, Scrim) und in `css/styles.css` → `.bubble`, `.bubble.is-open`, `.bubble__*`, `.bubbleScrim`.
-- Blasen sind `<760px` per CSS `display:none` → Pop-up ist faktisch Desktop-only, kein Mobil-Sonderfall nötig.
-- Den frei stehenden Link am besten als eigenes, einmaliges Element (wie der Scrim) an `document.body` hängen, beim Öffnen unter der zentrierten Karte positionieren (`top = (vh+oh)/2 + ~18px`, `left:50%`, `translateX(-50%)`), `z-index` über der Karte.
-- Neue i18n-Keys (Kategorie/Nutzen/Link-Label) im `EN`-Wörterbuch ergänzen bzw. per `lang` direkt setzen. `prefers-reduced-motion` respektieren.
-- Danach im Preview verifizieren (Desktop 1320 + ggf. Animationen einfrieren), keine Console-Errors, dann committen + pushen (Deploy).
-
-</details>
-
----
-
-## 7 · Henris Anforderungen an Texte (gilt dauerhaft)
+## 6 · Henris Anforderungen an Texte (gilt dauerhaft)
 - **Keine Em-Dashes.** Stattdessen Komma, Punkt oder Doppelpunkt. (Gilt als AI-Tell.)
 - **Nie den Leser direkt ansprechen** (kein „du", kein „Lass uns", keine Imperative an Lesende). Über sich selbst in „Ich"-Form ist ok.
 - **Nicht generisch / keine Marketing-Floskeln** — konkret, spezifisch, editorial.
 - Große Titel dürfen für sich stehen (kein erklärender Satz unter jedem Kapitel).
 - **EN-Wörterbuch immer synchron halten:** Wird ein DE-Text mit `data-i18n` geändert, den passenden Key in `js/main.js` (`EN`) anpassen.
 
-## 8 · Notion-Quelle (Referenz)
+## 7 · Notion-Quelle (Referenz)
 Hauptseite „Henri Löhlein - UX/UI Design" (DE/EN), Datenbank „Meine Projekte", über den Notion-Connector erreichbar (Suche „Henri Löhlein UX/UI"). Englische Originalversionen der Projekte existieren dort ebenfalls.
