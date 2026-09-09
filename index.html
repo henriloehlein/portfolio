@@ -98,10 +98,9 @@
         </div>
       </div>
       <div class="strip__name">
-        <span class="strip__nameSm" data-i18n="strip.role">UX/UI Designer</span>
         <span class="strip__nameLg">Henri Löhlein</span>
-        <span class="strip__meta" data-i18n="strip.m1">Bachelorand bei Syntegon</span>
-        <span class="strip__meta" data-i18n="strip.m2">Hochschule Ansbach</span>
+        <span class="strip__meta strip__skills" id="typeSkills" aria-hidden="true"></span>
+        <span class="sr-only" id="typeSkillsSr"></span>
       </div>
     </div>
 
@@ -122,17 +121,245 @@
   <div class="subnav__bg" aria-hidden="true"></div>
   <div class="subnav__inner">
     <div class="subnav__links" id="subnavLinks">
-      <a href="#approach" class="subnav__link" data-i18n="nav.approach">Ansatz</a>
-      <a href="#focus" class="subnav__link" data-i18n="nav.focus">Interessen</a>
-      <a href="#work" class="subnav__link" data-i18n="nav.work">Arbeiten</a>
-      <a href="#about" class="subnav__link" data-i18n="nav.about">Über mich</a>
-      <a href="#contact" class="subnav__link" data-i18n="nav.contact">Kontakt</a>
+      <a href="#work" class="subnav__link magnetic" data-i18n="nav.work">Projekte</a>
+      <a href="#how" class="subnav__link magnetic" data-i18n="nav.how">Wie ich arbeite</a>
+      <a href="#about" class="subnav__link magnetic" data-i18n="nav.about">Über mich</a>
+      <a href="#contact" class="subnav__link magnetic" data-i18n="nav.contact">Kontakt</a>
     </div>
   </div>
 </nav>
 
-<!-- ============ OPENING · persönliche Vorstellung + Haltung ============ -->
-<section class="hero" id="approach">
+<!-- ============ PROJEKTE / CASE STUDIES ============ -->
+<section class="work" id="work">
+  <header class="work__head">
+    <p class="sectionTag reveal" data-split><span>01</span> <span data-i18n="tag.work">Case Studies</span></p>
+    <h2 class="work__title reveal" data-split data-i18n="work.title">Projekte</h2>
+  </header>
+
+  <ul class="projects" id="projects">
+
+    <li class="project" data-project="steady" data-cursor="Case Study">
+      <div class="project__index">01</div>
+      <div class="project__body">
+        <h3 class="project__name reveal" data-split>steady</h3>
+        <p class="project__role reveal" data-i18n="p.steady.role">Adaptives Planungs- & Organisationstool · Konzept, UX/UI, Prototyp</p>
+        <p class="project__tease reveal" data-i18n="p.steady.tease">
+          Eine App, die fragt, <em>warum</em> Menschen scheitern, und psychologische
+          Mechaniken nutzt, damit sie empathisch an ihren Routinen festhalten.
+        </p>
+        <div class="project__tags">
+          <span>Behavioral Design</span><span>KI-Assistent</span><span>Self-Determination Theory</span><span>Card Sorting</span>
+        </div>
+      </div>
+      <div class="project__visual">
+        <div class="plate plate--cover"><img src="assets/img/covers/steady.png" alt="steady App-Mockups" loading="lazy" /></div>
+      </div>
+      <span class="project__open"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+    </li>
+
+    <li class="project" data-project="milo" data-cursor="Case Study">
+      <div class="project__index">02</div>
+      <div class="project__body">
+        <h3 class="project__name reveal" data-split>Milo</h3>
+        <p class="project__role reveal" data-i18n="p.milo.role">KI-Assistenz für ältere Menschen · Konzept, UX/UI, Prototyp</p>
+        <p class="project__tease reveal" data-i18n="p.milo.tease">
+          Ein empathischer, transparenter Assistent, der digitale Hemmschwellen abbaut und
+          Selbstständigkeit im Umgang mit Technik stärkt.
+        </p>
+        <div class="project__tags">
+          <span>Accessibility</span><span>Trust & Control</span><span>Conversational UI</span><span>Inclusive Design</span>
+        </div>
+      </div>
+      <div class="project__visual">
+        <div class="plate plate--cover"><img src="assets/img/covers/milo.png" alt="Milo App-Mockups" loading="lazy" /></div>
+      </div>
+      <span class="project__open"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+    </li>
+
+    <li class="project" data-project="cognify" data-cursor="Case Study">
+      <div class="project__index">03</div>
+      <div class="project__body">
+        <h3 class="project__name reveal" data-split>Cognify</h3>
+        <p class="project__role reveal" data-i18n="p.cognify.role">Augmented-Reality E-Learning Plattform · Konzept, UX/UI</p>
+        <p class="project__tease reveal" data-i18n="p.cognify.tease">
+          Themen alltagsnah entdecken, mit AR-Darstellungen, Quizzes, durchdachter
+          Gamification und starkem Community-Aspekt.
+        </p>
+        <div class="project__tags">
+          <span>AR / Spatial</span><span>Gamification</span><span>Community</span><span>In Bearbeitung</span>
+        </div>
+      </div>
+      <div class="project__visual">
+        <div class="plate plate--cover"><img src="assets/img/covers/cognify.png" alt="Cognify Screens" loading="lazy" /></div>
+      </div>
+      <span class="project__open"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+    </li>
+
+    <li class="project" data-project="syntegon" data-cursor="Case Study">
+      <div class="project__index">04</div>
+      <div class="project__body">
+        <h3 class="project__name reveal" data-split data-i18n="p.syntegon.name">Bachelorarbeit · Syntegon</h3>
+        <p class="project__role reveal" data-i18n="p.syntegon.role">Visualisierungssystem für die Pharmaproduktion · Research & Development</p>
+        <p class="project__tease reveal" data-i18n="p.syntegon.tease">
+          Ein mobiles System, das komplexe Produktionsinformationen so visualisiert, dass
+          Operatoren sicher und handlungsleitend geführt werden.
+        </p>
+        <div class="project__tags">
+          <span>Industrial UX</span><span>Informationsarchitektur</span><span>Forschung</span><span>Interdisziplinär</span>
+        </div>
+      </div>
+      <div class="project__visual">
+        <div class="plate plate--cover plate--dark"><img src="assets/img/covers/syntegon.jpg" alt="Syntegon · SynTiso" loading="lazy" /></div>
+      </div>
+      <span class="project__open"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+    </li>
+
+    <li class="project" data-project="forwerts" data-cursor="Case Study">
+      <div class="project__index">05</div>
+      <div class="project__body">
+        <h3 class="project__name reveal" data-split data-i18n="p.forwerts.name">forwerts interactive</h3>
+        <p class="project__role reveal" data-i18n="p.forwerts.role">Praxissemester UX Design · E-Commerce, Funnel-Optimierung</p>
+        <p class="project__tease reveal" data-i18n="p.forwerts.tease">
+          Screen-Designs, Funnel-Flows, Icons und Infografiken im Online-Shop-Kontext,
+          mit nachweislich besseren Conversion- und Abbruchraten.
+        </p>
+        <div class="project__tags">
+          <span>E-Commerce</span><span>Conversion</span><span>Design-System</span><span>UX-Workshops</span>
+        </div>
+      </div>
+      <div class="project__visual">
+        <div class="plate plate--logo"><img src="assets/img/covers/forwerts.png" alt="forwerts interactive Logo" loading="lazy" /></div>
+      </div>
+      <span class="project__open"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+    </li>
+
+  </ul>
+</section>
+
+<!-- ============ WIE ICH ARBEITE (Werkzeugband + Haltung + Methode) ============ -->
+<section class="hero" id="how">
+  <p class="sectionTag reveal" data-split><span>02</span> <span data-i18n="tag.how">Wie ich arbeite</span></p>
+
+  <div class="toolband reveal">
+    <span class="sr-only">Werkzeuge: Figma, Adobe XD, Photoshop, Claude Code, v0, Dyad, GitHub</span>
+    <div class="toolband__sicht">
+      <ul class="toolband__track" aria-hidden="true">
+        <li class="toolband__item">
+          <svg viewBox="0 0 24 36" fill="currentColor" aria-hidden="true">
+            <path d="M12 0H6a6 6 0 0 0 0 12h6V0Z"/>
+            <path d="M12 0h6a6 6 0 0 1 0 12h-6V0Z" opacity=".88"/>
+            <path d="M12 12H6a6 6 0 0 0 0 12h6V12Z" opacity=".76"/>
+            <circle cx="18" cy="18" r="6" opacity=".92"/>
+            <path d="M6 24a6 6 0 1 0 6 6v-6H6Z" opacity=".64"/>
+          </svg>
+          <span>Figma</span>
+        </li>
+        <li class="toolband__item">
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <rect x="1.6" y="1.6" width="28.8" height="28.8" rx="8" fill="currentColor" opacity=".14"/>
+            <rect x="1.6" y="1.6" width="28.8" height="28.8" rx="8" fill="none" stroke="currentColor" stroke-width="2.1"/>
+            <text x="16" y="21.2" text-anchor="middle" font-family="'Space Grotesk',monospace" font-size="13.5" font-weight="700" fill="currentColor">Xd</text>
+          </svg>
+          <span>Adobe XD</span>
+        </li>
+        <li class="toolband__item">
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <rect x="1.6" y="1.6" width="28.8" height="28.8" rx="8" fill="currentColor" opacity=".14"/>
+            <rect x="1.6" y="1.6" width="28.8" height="28.8" rx="8" fill="none" stroke="currentColor" stroke-width="2.1"/>
+            <text x="16" y="21.2" text-anchor="middle" font-family="'Space Grotesk',monospace" font-size="13.5" font-weight="700" fill="currentColor">Ps</text>
+          </svg>
+          <span>Photoshop</span>
+        </li>
+        <li class="toolband__item">
+          <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+            <g transform="translate(16 16)">
+              <rect x="-1.7" y="-14" width="3.4" height="28" rx="1.7"/>
+              <rect x="-1.7" y="-14" width="3.4" height="28" rx="1.7" transform="rotate(45)"/>
+              <rect x="-1.7" y="-14" width="3.4" height="28" rx="1.7" transform="rotate(90)"/>
+              <rect x="-1.7" y="-14" width="3.4" height="28" rx="1.7" transform="rotate(135)"/>
+            </g>
+          </svg>
+          <span>Claude Code</span>
+        </li>
+        <li class="toolband__item">
+          <svg viewBox="0 0 32 28" fill="currentColor" aria-hidden="true"><path d="M16 3.4 30.4 25H1.6L16 3.4Z"/></svg>
+          <span>v0</span>
+        </li>
+        <li class="toolband__item">
+          <svg viewBox="0 0 34 24" fill="currentColor" aria-hidden="true">
+            <circle cx="12" cy="12" r="9.4" opacity=".92"/>
+            <circle cx="22" cy="12" r="9.4" opacity=".5"/>
+          </svg>
+          <span>Dyad</span>
+        </li>
+        <li class="toolband__item">
+          <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+            <path d="M10 9 5.5 3v8Z"/>
+            <path d="M22 9l4.5-6v8Z"/>
+            <circle cx="16" cy="17" r="10"/>
+          </svg>
+          <span>GitHub</span>
+        </li>
+        <li class="toolband__item" aria-hidden="true">
+          <svg viewBox="0 0 24 36" fill="currentColor" aria-hidden="true">
+            <path d="M12 0H6a6 6 0 0 0 0 12h6V0Z"/>
+            <path d="M12 0h6a6 6 0 0 1 0 12h-6V0Z" opacity=".88"/>
+            <path d="M12 12H6a6 6 0 0 0 0 12h6V12Z" opacity=".76"/>
+            <circle cx="18" cy="18" r="6" opacity=".92"/>
+            <path d="M6 24a6 6 0 1 0 6 6v-6H6Z" opacity=".64"/>
+          </svg>
+          <span>Figma</span>
+        </li>
+        <li class="toolband__item" aria-hidden="true">
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <rect x="1.6" y="1.6" width="28.8" height="28.8" rx="8" fill="currentColor" opacity=".14"/>
+            <rect x="1.6" y="1.6" width="28.8" height="28.8" rx="8" fill="none" stroke="currentColor" stroke-width="2.1"/>
+            <text x="16" y="21.2" text-anchor="middle" font-family="'Space Grotesk',monospace" font-size="13.5" font-weight="700" fill="currentColor">Xd</text>
+          </svg>
+          <span>Adobe XD</span>
+        </li>
+        <li class="toolband__item" aria-hidden="true">
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <rect x="1.6" y="1.6" width="28.8" height="28.8" rx="8" fill="currentColor" opacity=".14"/>
+            <rect x="1.6" y="1.6" width="28.8" height="28.8" rx="8" fill="none" stroke="currentColor" stroke-width="2.1"/>
+            <text x="16" y="21.2" text-anchor="middle" font-family="'Space Grotesk',monospace" font-size="13.5" font-weight="700" fill="currentColor">Ps</text>
+          </svg>
+          <span>Photoshop</span>
+        </li>
+        <li class="toolband__item" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+            <g transform="translate(16 16)">
+              <rect x="-1.7" y="-14" width="3.4" height="28" rx="1.7"/>
+              <rect x="-1.7" y="-14" width="3.4" height="28" rx="1.7" transform="rotate(45)"/>
+              <rect x="-1.7" y="-14" width="3.4" height="28" rx="1.7" transform="rotate(90)"/>
+              <rect x="-1.7" y="-14" width="3.4" height="28" rx="1.7" transform="rotate(135)"/>
+            </g>
+          </svg>
+          <span>Claude Code</span>
+        </li>
+        <li class="toolband__item" aria-hidden="true">
+          <svg viewBox="0 0 32 28" fill="currentColor" aria-hidden="true"><path d="M16 3.4 30.4 25H1.6L16 3.4Z"/></svg>
+          <span>v0</span>
+        </li>
+        <li class="toolband__item" aria-hidden="true">
+          <svg viewBox="0 0 34 24" fill="currentColor" aria-hidden="true">
+            <circle cx="12" cy="12" r="9.4" opacity=".92"/>
+            <circle cx="22" cy="12" r="9.4" opacity=".5"/>
+          </svg>
+          <span>Dyad</span>
+        </li>
+        <li class="toolband__item" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+            <path d="M10 9 5.5 3v8Z"/>
+            <path d="M22 9l4.5-6v8Z"/>
+            <circle cx="16" cy="17" r="10"/>
+          </svg>
+          <span>GitHub</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
   <div class="hero__text">
     <h1 class="hero__title">
       <span class="line"><span class="word" data-i18n="hero.t1">Design</span></span>
@@ -150,22 +377,28 @@
       fundierten Mechaniken, von der Research bis zum getesteten Prototyp.
     </p>
 
-    <a href="#work" class="hero__cta magnetic" data-cursor="Arbeiten">
-      <span data-i18n="hero.cta">Zu den Arbeiten</span>
-      <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    <a href="#contact" class="hero__cta" data-cursor="Kontakt">
+      <span class="hero__ctaInner">
+        <span class="hero__ctaDot" aria-hidden="true"></span>
+        <span class="hero__ctaLabel" data-i18n="hero.cta">Zum Kontakt</span>
+      </span>
+      <span class="hero__ctaReveal" aria-hidden="true">
+        <span data-i18n="hero.cta">Zum Kontakt</span>
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </span>
     </a>
   </div>
 
   <div class="approach">
-    <p class="sectionTag reveal"><span>01</span> <span data-i18n="tag.approach">Haltung</span></p>
+    <p class="sectionTag reveal" data-split><span>01</span> <span data-i18n="tag.approach">Haltung</span></p>
     <div class="approach__chain">
-      <p class="approach__line reveal" data-stagger>
+      <p class="approach__line reveal" data-split data-stagger>
         <span data-i18n="chain.1a">Lösungen folgen</span> <b data-i18n="chain.1b">Bedürfnissen.</b>
       </p>
-      <p class="approach__line reveal" data-stagger>
+      <p class="approach__line reveal" data-split data-stagger>
         <span data-i18n="chain.2a">Bedürfnisse folgen</span> <b data-i18n="chain.2b">Empathie.</b>
       </p>
-      <p class="approach__line reveal" data-stagger>
+      <p class="approach__line reveal" data-split data-stagger>
         <span data-i18n="chain.3a">Und Empathie folgt</span> <b data-i18n="chain.3b">echtem Interesse.</b>
       </p>
     </div>
@@ -174,13 +407,44 @@
       funktionalem Denken angegangen werden. Genau dort liegt mein Ansatz.
     </p>
   </div>
+
+  <div class="about__method reveal">
+    <h3 data-split data-i18n="about.h3method">Methode</h3>
+    <p data-i18n="about.pmethod">
+      Meine Projekte beginnen mit echtem Interesse am Problem, nicht mit einer fertigen Lösung.
+      Aus Research und Empathie, etwa Personas, Journey Maps, Interviews und Card Sortings, leite
+      ich psychologisch fundierte Mechaniken ab. Sie entstehen in Figma als modulare, klar
+      hierarchisierte Systeme und werden im Usability-Testing mit echten Menschen geschärft.
+    </p>
+  </div>
 </section>
 
-<!-- ============ INTERESTS / FOCUS ============ -->
-<section class="focus" id="focus">
+<!-- ============ ÜBER MICH (inkl. Interessen) ============ -->
+<section class="about" id="about">
+  <p class="sectionTag reveal" data-split><span>03</span> <span data-i18n="tag.about">Über mich</span></p>
+  <div class="about__grid">
+    <div class="about__col reveal">
+      <h3 data-split data-i18n="about.h1">Psychologie & Design</h3>
+      <p data-i18n="about.p1">
+        Digitale Interaktionen formen Entscheidungen, Gewohnheiten und Emotionen. Mich
+        interessieren die subtilen Mechanismen dahinter, Nudging, Dark Patterns, Persuasive
+        Design, und die Frage, wo verantwortungsvolle Gestaltung die Grenze zwischen
+        Unterstützung und Manipulation zieht.
+      </p>
+    </div>
+    <div class="about__col reveal">
+      <h3 data-split data-i18n="about.h2">Blick nach vorn</h3>
+      <p data-i18n="about.p2">
+        Neue Technologien wie KI und adaptive Systeme prägen Wahrnehmung, Vertrauen und
+        Interaktion. Ich will verstehen, wie, und diese Bewegung mitgestalten. Meine Arbeit
+        adressiert reale Probleme, fundiert in einem Verständnis dafür, wie Nutzer denken,
+        handeln und fühlen.
+      </p>
+    </div>
+  </div>
+
   <header class="focus__head">
-    <p class="sectionTag reveal"><span>02</span> <span data-i18n="tag.focus">Interessen</span></p>
-    <h2 class="focus__title reveal" data-i18n="focus.title">
+    <h2 class="focus__title reveal" data-split data-i18n="focus.title">
       Das Zusammenspiel von <em>Psychologie</em> und <em>Design.</em>
     </h2>
   </header>
@@ -191,7 +455,7 @@
         <div class="fcard__face fcard__front">
           <svg class="fcard__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="16" cy="12" r="4"/><path d="M3 12h7M7 8l4 4-4 4"/></svg>
           <span class="fcard__num">01</span>
-          <h3 data-i18n="focus.c1.t">Nudging</h3>
+          <h3 data-split data-i18n="focus.c1.t">Nudging</h3>
         </div>
         <div class="fcard__face fcard__back">
           <p data-i18n="focus.c1.d">Verhalten lenken ohne Druck oder Zwang, zur richtigen Zeit im richtigen Kontext.</p>
@@ -204,7 +468,7 @@
         <div class="fcard__face fcard__front">
           <svg class="fcard__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20C5 20 1 12 1 12a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><path d="M2 2l20 20"/></svg>
           <span class="fcard__num">02</span>
-          <h3 data-i18n="focus.c2.t">Dark Patterns</h3>
+          <h3 data-split data-i18n="focus.c2.t">Dark Patterns</h3>
         </div>
         <div class="fcard__face fcard__back">
           <p data-i18n="focus.c2.d">Mechanismen, die Nutzer gegen ihre eigenen Interessen lenken. Verstehen, um sie zu vermeiden.</p>
@@ -217,7 +481,7 @@
         <div class="fcard__face fcard__front">
           <svg class="fcard__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>
           <span class="fcard__num">03</span>
-          <h3 data-i18n="focus.c3.t">Persuasive Design</h3>
+          <h3 data-split data-i18n="focus.c3.t">Persuasive Design</h3>
         </div>
         <div class="fcard__face fcard__back">
           <p data-i18n="focus.c3.d">Modelle wie das Fogg Behavior Model und die Self-Determination Theory in echte Mechaniken übersetzen.</p>
@@ -230,7 +494,7 @@
         <div class="fcard__face fcard__front">
           <svg class="fcard__icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="1.5"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></svg>
           <span class="fcard__num">04</span>
-          <h3 data-i18n="focus.c4.t">Adaptive KI</h3>
+          <h3 data-split data-i18n="focus.c4.t">Adaptive KI</h3>
         </div>
         <div class="fcard__face fcard__back">
           <p data-i18n="focus.c4.d">Wie LLMs, generative und adaptive Systeme Wahrnehmung und Vertrauen prägen, und wie sich diese Werkzeuge im Designprozess selbst nutzen lassen.</p>
@@ -239,172 +503,8 @@
     </article>
   </div>
 
-  <div class="focus__skills reveal">
-    <span class="focus__skillsLabel" data-i18n="focus.skills">Fähigkeiten & Werkzeuge</span>
-    <div class="orbit" id="orbit" aria-label="Fähigkeiten und Werkzeuge">
-      <span class="orbit__chip is-ai" data-i18n="sk.ai1">KI-gestütztes Prototyping</span>
-      <span class="orbit__chip is-ai" data-i18n="sk.ai2">LLMs & generative KI</span>
-      <span class="orbit__chip" data-i18n="sk.interface">Interfacedesign</span>
-      <span class="orbit__chip" data-i18n="sk.interaction">Interaktionsdesign</span>
-      <span class="orbit__chip" data-i18n="sk.research">UX-Research</span>
-      <span class="orbit__chip" data-i18n="sk.usability">Usability Testing</span>
-      <span class="orbit__chip" data-i18n="sk.personas">Personas & Journey Maps</span>
-      <span class="orbit__chip" data-i18n="sk.wireframe">Wireframing & Prototyping</span>
-      <span class="orbit__chip" data-i18n="sk.dt">Design Thinking</span>
-      <span class="orbit__chip" data-i18n="sk.concept">Konzeption & App-Design</span>
-      <span class="orbit__chip" data-i18n="sk.workshops">UX-Workshops</span>
-      <span class="orbit__chip" data-i18n="sk.team">Interdisziplinäres Teamwork</span>
-      <span class="orbit__chip">Figma</span>
-      <span class="orbit__chip">Adobe Photoshop</span>
-      <span class="orbit__chip">Adobe XD</span>
-      <span class="orbit__chip">Miro</span>
-    </div>
-  </div>
-</section>
-
-<!-- ============ WORK ============ -->
-<section class="work" id="work">
-  <header class="work__head">
-    <p class="sectionTag reveal"><span>03</span> <span data-i18n="tag.work">Ausgewählte Arbeiten</span></p>
-    <h2 class="work__title reveal" data-i18n="work.title">Arbeiten</h2>
-  </header>
-
-  <ul class="projects" id="projects">
-
-    <li class="project" data-project="steady" data-cursor="Case Study">
-      <div class="project__index">01</div>
-      <div class="project__body">
-        <h3 class="project__name">steady</h3>
-        <p class="project__role" data-i18n="p.steady.role">Adaptives Planungs- & Organisationstool · Konzept, UX/UI, Prototyp</p>
-        <p class="project__tease" data-i18n="p.steady.tease">
-          Eine App, die fragt, <em>warum</em> Menschen scheitern, und psychologische
-          Mechaniken nutzt, damit sie empathisch an ihren Routinen festhalten.
-        </p>
-        <div class="project__tags">
-          <span>Behavioral Design</span><span>KI-Assistent</span><span>Self-Determination Theory</span><span>Card Sorting</span>
-        </div>
-      </div>
-      <div class="project__visual">
-        <div class="plate plate--cover"><img src="assets/img/covers/steady.png" alt="steady App-Mockups" loading="lazy" /></div>
-      </div>
-      <span class="project__open"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
-    </li>
-
-    <li class="project" data-project="milo" data-cursor="Case Study">
-      <div class="project__index">02</div>
-      <div class="project__body">
-        <h3 class="project__name">Milo</h3>
-        <p class="project__role" data-i18n="p.milo.role">KI-Assistenz für ältere Menschen · Konzept, UX/UI, Prototyp</p>
-        <p class="project__tease" data-i18n="p.milo.tease">
-          Ein empathischer, transparenter Assistent, der digitale Hemmschwellen abbaut und
-          Selbstständigkeit im Umgang mit Technik stärkt.
-        </p>
-        <div class="project__tags">
-          <span>Accessibility</span><span>Trust & Control</span><span>Conversational UI</span><span>Inclusive Design</span>
-        </div>
-      </div>
-      <div class="project__visual">
-        <div class="plate plate--cover"><img src="assets/img/covers/milo.png" alt="Milo App-Mockups" loading="lazy" /></div>
-      </div>
-      <span class="project__open"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
-    </li>
-
-    <li class="project" data-project="cognify" data-cursor="Case Study">
-      <div class="project__index">03</div>
-      <div class="project__body">
-        <h3 class="project__name">Cognify</h3>
-        <p class="project__role" data-i18n="p.cognify.role">Augmented-Reality E-Learning Plattform · Konzept, UX/UI</p>
-        <p class="project__tease" data-i18n="p.cognify.tease">
-          Themen alltagsnah entdecken, mit AR-Darstellungen, Quizzes, durchdachter
-          Gamification und starkem Community-Aspekt.
-        </p>
-        <div class="project__tags">
-          <span>AR / Spatial</span><span>Gamification</span><span>Community</span><span>In Bearbeitung</span>
-        </div>
-      </div>
-      <div class="project__visual">
-        <div class="plate plate--cover"><img src="assets/img/covers/cognify.png" alt="Cognify Screens" loading="lazy" /></div>
-      </div>
-      <span class="project__open"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
-    </li>
-
-    <li class="project" data-project="syntegon" data-cursor="Case Study">
-      <div class="project__index">04</div>
-      <div class="project__body">
-        <h3 class="project__name" data-i18n="p.syntegon.name">Bachelorarbeit · Syntegon</h3>
-        <p class="project__role" data-i18n="p.syntegon.role">Visualisierungssystem für die Pharmaproduktion · Research & Development</p>
-        <p class="project__tease" data-i18n="p.syntegon.tease">
-          Ein mobiles System, das komplexe Produktionsinformationen so visualisiert, dass
-          Operatoren sicher und handlungsleitend geführt werden.
-        </p>
-        <div class="project__tags">
-          <span>Industrial UX</span><span>Informationsarchitektur</span><span>Forschung</span><span>Interdisziplinär</span>
-        </div>
-      </div>
-      <div class="project__visual">
-        <div class="plate plate--cover plate--dark"><img src="assets/img/covers/syntegon.jpg" alt="Syntegon · SynTiso" loading="lazy" /></div>
-      </div>
-      <span class="project__open"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
-    </li>
-
-    <li class="project" data-project="forwerts" data-cursor="Case Study">
-      <div class="project__index">05</div>
-      <div class="project__body">
-        <h3 class="project__name" data-i18n="p.forwerts.name">forwerts interactive</h3>
-        <p class="project__role" data-i18n="p.forwerts.role">Praxissemester UX Design · E-Commerce, Funnel-Optimierung</p>
-        <p class="project__tease" data-i18n="p.forwerts.tease">
-          Screen-Designs, Funnel-Flows, Icons und Infografiken im Online-Shop-Kontext,
-          mit nachweislich besseren Conversion- und Abbruchraten.
-        </p>
-        <div class="project__tags">
-          <span>E-Commerce</span><span>Conversion</span><span>Design-System</span><span>UX-Workshops</span>
-        </div>
-      </div>
-      <div class="project__visual">
-        <div class="plate plate--logo"><img src="assets/img/covers/forwerts.png" alt="forwerts interactive Logo" loading="lazy" /></div>
-      </div>
-      <span class="project__open"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
-    </li>
-
-  </ul>
-</section>
-
-<!-- ============ ABOUT (inkl. Methode) ============ -->
-<section class="about" id="about">
-  <p class="sectionTag reveal"><span>04</span> <span data-i18n="tag.about">Über mich</span></p>
-  <div class="about__grid">
-    <div class="about__col reveal">
-      <h3 data-i18n="about.h1">Psychologie & Design</h3>
-      <p data-i18n="about.p1">
-        Digitale Interaktionen formen Entscheidungen, Gewohnheiten und Emotionen. Mich
-        interessieren die subtilen Mechanismen dahinter, Nudging, Dark Patterns, Persuasive
-        Design, und die Frage, wo verantwortungsvolle Gestaltung die Grenze zwischen
-        Unterstützung und Manipulation zieht.
-      </p>
-    </div>
-    <div class="about__col reveal">
-      <h3 data-i18n="about.h2">Blick nach vorn</h3>
-      <p data-i18n="about.p2">
-        Neue Technologien wie KI und adaptive Systeme prägen Wahrnehmung, Vertrauen und
-        Interaktion. Ich will verstehen, wie, und diese Bewegung mitgestalten. Meine Arbeit
-        adressiert reale Probleme, fundiert in einem Verständnis dafür, wie Nutzer denken,
-        handeln und fühlen.
-      </p>
-    </div>
-  </div>
-
-  <div class="about__method reveal">
-    <h3 data-i18n="about.h3method">Methode</h3>
-    <p data-i18n="about.pmethod">
-      Meine Projekte beginnen mit echtem Interesse am Problem, nicht mit einer fertigen Lösung.
-      Aus Research und Empathie, etwa Personas, Journey Maps, Interviews und Card Sortings, leite
-      ich psychologisch fundierte Mechaniken ab. Sie entstehen in Figma als modulare, klar
-      hierarchisierte Systeme und werden im Usability-Testing mit echten Menschen geschärft.
-    </p>
-  </div>
-
   <div class="about__passions reveal">
-    <span class="about__passionsLabel" data-i18n="about.passions">Leidenschaften & Interessen</span>
+    <span class="about__passionsLabel" data-split data-i18n="about.passions">Leidenschaften & Interessen</span>
     <div class="marquee" aria-hidden="true">
       <div class="marquee__track">
         <span>Verhaltenspsychologie</span><span>·</span><span>Künstliche Intelligenz</span><span>·</span><span>Persuasive Design</span><span>·</span><span>Typografie</span><span>·</span><span>Prototyping</span><span>·</span><span>Mensch-Maschine-Interaktion</span><span>·</span><span>Ethik im Design</span><span>·</span><span>Gamification</span><span>·</span>
@@ -416,8 +516,8 @@
 
 <!-- ============ CONTACT ============ -->
 <section class="contact" id="contact">
-  <p class="sectionTag reveal"><span>05</span> <span data-i18n="tag.contact">Kontakt</span></p>
-  <h2 class="contact__title reveal">
+  <p class="sectionTag reveal" data-split><span>04</span> <span data-i18n="tag.contact">Kontakt</span></p>
+  <h2 class="contact__title reveal" data-split>
     <span data-i18n="contact.t1">Offen für Projekte, die</span>
     <em data-i18n="contact.t2">echte Probleme</em>
     <span data-i18n="contact.t3">lösen.</span>

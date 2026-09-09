@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Projekte — Darstellungs-Varianten II</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --warm-1:#a9503f; --warm-2:#c9a89a; --cool-1:#5b5754; --cool-2:#7c8ba3;
+  --pink:#726d69; --violet:#403d3b;
+  --grad-soft:linear-gradient(120deg,var(--warm-1),var(--cool-1));
+  --ease:cubic-bezier(.16,1,.3,1);
+  --f-display:'Fraunces',Georgia,serif;
+  --f-sans:'Inter',system-ui,-apple-system,sans-serif;
+  --f-mono:'Space Grotesk','Inter',sans-serif;
+  --bg:#0a0a0f; --bg-2:#101018; --surface:#15151f; --surface-2:#1c1c28;
+  --line:rgba(255,255,255,.10); --line-2:rgba(255,255,255,.18);
+  --text:#ECECF2; --muted:#9b9bac; --muted-2:#6e6e80;
+  --ok:#7fb6a0; --pending:#e0b070;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--f-sans);-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.6}
+img{display:block;max-width:100%}
+
+.field{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--cool-1) 7%,var(--bg)) 0%,var(--bg) 34%,var(--bg-2) 78%,color-mix(in srgb,var(--warm-1) 6%,var(--bg-2)) 100%)}
+.field__aurora{position:absolute;top:-25%;left:-25%;width:150%;height:150%;z-index:-2;
+  background:
+    conic-gradient(from 120deg at 32% 36%, transparent 0deg, color-mix(in srgb,var(--warm-1) 55%,transparent) 40deg, transparent 130deg),
+    conic-gradient(from 250deg at 70% 64%, transparent 0deg, color-mix(in srgb,var(--cool-1) 55%,transparent) 50deg, transparent 150deg);
+  filter:blur(90px) saturate(120%);opacity:.45;animation:auroraDrift 64s linear infinite}
+@keyframes auroraDrift{to{transform:rotate(360deg) scale(1.05)}}
+@media (prefers-reduced-motion:reduce){.field__aurora{animation:none!important}}
+
+main,header,footer.doc{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding-left:32px;padding-right:32px}
+header{padding-top:56px}
+header p.kicker{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--warm-2);margin:0 0 14px}
+header h1{font-family:var(--f-display);font-weight:340;font-size:clamp(28px,4vw,42px);letter-spacing:-.02em;margin:0 0 16px;line-height:1.08;text-wrap:balance}
+header p.lede{font-size:16px;color:var(--muted);max-width:70ch;margin:0 0 10px}
+header a.back{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:12px;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:1px}
+header a.back:hover{color:var(--text);border-color:var(--line-2)}
+
+nav.jump{position:sticky;top:16px;z-index:20;display:flex;flex-wrap:wrap;gap:8px;margin:32px 0 0;padding:10px 0;
+  background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(10px)}
+nav.jump a{font-family:var(--f-mono);font-size:12px;color:var(--muted);text-decoration:none;padding:7px 14px;border-radius:999px;border:1px solid var(--line);transition:color .2s,border-color .2s}
+nav.jump a:hover{color:var(--text);border-color:var(--line-2)}
+
+section.variant{margin-top:100px;scroll-margin-top:64px}
+section.variant:first-of-type{margin-top:52px}
+.variant__label{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--warm-2);display:block;margin-bottom:10px}
+.variant h2{font-family:var(--f-display);font-weight:480;font-size:clamp(22px,2.6vw,30px);margin:0 0 12px;letter-spacing:-.015em}
+.variant p.desc{font-size:14.5px;line-height:1.65;color:var(--muted);max-width:76ch;margin:0 0 8px}
+.variant p.desc b{color:var(--text);font-weight:600}
+.variant p.cite{font-family:var(--f-mono);font-size:11.5px;color:var(--muted-2);margin:14px 0 34px;letter-spacing:.02em}
+.variant p.cite b{color:var(--warm-2)}
+.variant p.note{font-size:12.5px;color:var(--muted-2);font-style:italic;margin:16px 0 0;max-width:70ch}
+
+/* ================================================================
+   VARIANTE D — Live-Vorschau
+   Eine ruhige Namensliste links, eine einzige große Bühne rechts, die
+   beim Hover/Fokus überblendet. Genau ein bewegtes Element gleich-
+   zeitig (P1), keine zehn Bilder auf einmal im Blick.
+   ================================================================ */
+.live{display:grid;grid-template-columns:minmax(260px,360px) 1fr;gap:56px;align-items:start}
+.live__list{list-style:none;margin:0;padding:0}
+.live__btn{all:unset;display:block;width:100%;cursor:pointer;padding:20px 0 20px 20px;border-top:1px solid var(--line);position:relative;transition:padding .4s var(--ease)}
+.live__list li:last-child .live__btn{border-bottom:1px solid var(--line)}
+.live__btn::before{content:"";position:absolute;left:0;top:50%;translate:0 -50%;width:2px;height:0;background:var(--warm-2);transition:height .4s var(--ease)}
+.live__btn:hover,.live__btn:focus-visible{padding-left:28px}
+.live__btn:hover::before,.live__btn:focus-visible::before,.live__btn.is-active::before{height:64%}
+.live__idx{font-family:var(--f-mono);font-size:11.5px;color:var(--muted-2);display:block;margin-bottom:6px}
+.live__name{font-family:var(--f-display);font-weight:420;font-size:clamp(22px,2.4vw,28px);letter-spacing:-.015em;color:var(--muted);transition:color .35s}
+.live__btn:hover .live__name,.live__btn:focus-visible .live__name,.live__btn.is-active .live__name{color:var(--text)}
+.live__role{display:block;font-size:12px;color:var(--muted-2);margin-top:4px;max-width:30ch}
+
+.live__stage{position:sticky;top:100px}
+.live__frame{position:relative;border-radius:24px;overflow:hidden;background:var(--surface);aspect-ratio:16/11;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.05),0 40px 90px -30px rgba(0,0,0,.8)}
+.live__frame::after{content:"";position:absolute;inset:0 0 auto 0;height:1px;z-index:3;
+  background:linear-gradient(to right,transparent 8%,rgba(255,255,255,.55) 50%,transparent 92%);opacity:.7}
+.live__slide{position:absolute;inset:0;opacity:0;transition:opacity .5s var(--ease)}
+.live__slide.is-shown{opacity:1;z-index:2}
+.live__slide img{width:100%;height:100%;object-fit:cover}
+.live__slide.is-logo{background:#fff;display:grid;place-items:center}
+.live__slide.is-logo img{width:auto;height:auto;max-width:44%;max-height:40%;object-fit:contain}
+.live__slide.is-dark{background:linear-gradient(135deg,#1b2230,#0e1622)}
+.live__caption{margin-top:22px}
+.live__tease{font-size:14.5px;color:var(--muted);max-width:52ch;margin:0 0 12px}
+.live__tags{display:flex;flex-wrap:wrap;gap:8px}
+.live__tags span{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.03em;color:var(--muted);padding:5px 11px;border:1px solid var(--line);border-radius:50px}
+@media (max-width:820px){.live{grid-template-columns:1fr}.live__stage{position:relative;top:0}}
+
+/* ================================================================
+   VARIANTE E — Systemkarte
+   Leiht sich bewusst die eigene dl-Metazeile aus den Case-Study-
+   Modals (cs__heroMeta) statt eines neuen Karten-Templates: gleiche
+   Spec-Sheet-Logik, nur schon in der Übersicht sichtbar. Kleiner
+   Radius auf dem Bild (Kontrast zu A–D, P9), Status als Indikator
+   statt als Adjektiv im Fließtext.
+   ================================================================ */
+.sysgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.syscard{border:1px solid var(--line);border-radius:14px;padding:24px;background:color-mix(in srgb,var(--surface) 60%,transparent)}
+.syscard__top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:16px}
+.syscard__id{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;color:var(--muted-2)}
+.syscard__name{font-family:var(--f-display);font-weight:460;font-size:22px;letter-spacing:-.01em;margin:6px 0 0}
+.syscard__status{display:flex;align-items:center;gap:7px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);white-space:nowrap;padding-top:2px}
+.syscard__dot{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px color-mix(in srgb,var(--ok) 20%,transparent)}
+.syscard__status.is-pending .syscard__dot{background:var(--pending);box-shadow:0 0 0 3px color-mix(in srgb,var(--pending) 20%,transparent)}
+.syscard__media{border-radius:8px;overflow:hidden;aspect-ratio:16/9;background:var(--bg-2);margin-bottom:18px}
+.syscard__media img{width:100%;height:100%;object-fit:cover}
+.syscard__media.is-logo{background:#fff;display:grid;place-items:center}
+.syscard__media.is-logo img{width:auto;height:auto;max-width:50%;max-height:46%;object-fit:contain}
+.syscard__media.is-dark{background:linear-gradient(135deg,#1b2230,#0e1622)}
+.syscard__dl{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px;border-top:1px solid var(--line);padding-top:16px;margin:0}
+.syscard__dl div{display:flex;flex-direction:column;gap:4px}
+.syscard__dl dt{font-family:var(--f-mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted-2)}
+.syscard__dl dd{font-size:13px;color:var(--text);margin:0}
+@media (max-width:820px){.sysgrid{grid-template-columns:1fr}}
+
+/* ================================================================
+   VARIANTE F — Prozess-Schnitt
+   Übernimmt wörtlich die Dreiteilung, die in deiner Astro-Version
+   (localhost:4321) schon als Link „Problem, Ansatz, Ergebnis" steht,
+   und macht daraus die eigentliche Layout-Struktur statt nur ein
+   Label. Bild erscheint erst im dritten Feld, als Auflösung, nicht
+   als Aufmacher. Texte hier sind aus den bestehenden Case Studies
+   destilliert, zur Content-Feinarbeit kommen wir separat.
+   ================================================================ */
+.flow{display:flex;flex-direction:column;gap:64px}
+.fitem__head{display:flex;align-items:baseline;gap:16px;margin-bottom:20px}
+.fitem__num{font-family:var(--f-mono);font-size:12px;color:var(--muted-2)}
+.fitem__name{font-family:var(--f-display);font-weight:460;font-size:clamp(22px,2.6vw,30px);letter-spacing:-.015em}
+.fitem__role{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;margin-left:auto;text-align:right}
+.triptych{display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:0;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.tpanel{padding:26px 24px;position:relative;display:flex;flex-direction:column;gap:10px}
+.tpanel + .tpanel{border-left:1px solid var(--line)}
+.tpanel__step{font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--warm-2)}
+.tpanel__text{font-size:13.5px;color:var(--muted);margin:0}
+.tpanel--result{padding:0;background:var(--bg-2)}
+.tpanel--result .tpanel__step{position:absolute;top:16px;left:18px;z-index:2;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.5)}
+.tpanel--result .tpanel__media{aspect-ratio:16/12;overflow:hidden}
+.tpanel--result .tpanel__media img{width:100%;height:100%;object-fit:cover}
+.tpanel--result .tpanel__media.is-logo{background:#fff;display:grid;place-items:center}
+.tpanel--result .tpanel__media.is-logo img{width:auto;height:auto;max-width:48%;max-height:44%;object-fit:contain}
+.tpanel--result .tpanel__media.is-dark{background:linear-gradient(135deg,#1b2230,#0e1622)}
+.tpanel--result .tpanel__text{padding:14px 20px 18px;color:var(--text);font-size:13px}
+@media (max-width:820px){.triptych{grid-template-columns:1fr}.tpanel + .tpanel{border-left:none;border-top:1px solid var(--line)}.fitem__head{flex-wrap:wrap}.fitem__role{margin-left:0;text-align:left}}
+
+footer.doc{margin:120px auto 60px;font-family:var(--f-mono);font-size:11.5px;color:var(--muted-2)}
+</style>
+</head>
+<body>
+
+<div class="field" aria-hidden="true"><div class="field__aurora"></div></div>
+
+<header>
+  <a class="back" href="projekte-preview.html">← Zurück zu Varianten A – C</a>
+  <p class="kicker" style="margin-top:22px">Vergleichs-Sandbox, Teil 2 · nicht live</p>
+  <h1>Drei weitere, mutigere Wege</h1>
+  <p class="lede">Diese drei gehen über Liste und Raster hinaus. Alle drei bleiben bei genau einem Fokus-Element pro Blick, keiner zeigt mehr als eine bewegte Fläche gleichzeitig, aber jede erzählt die Projekte auf eine andere Art: durch Interaktion, durch Struktur wie ein technisches Datenblatt, oder durch den Denkprozess selbst.</p>
+</header>
+
+<nav class="jump">
+  <a href="#d">Variante D · Live-Vorschau</a>
+  <a href="#e">Variante E · Systemkarte</a>
+  <a href="#f">Variante F · Prozess-Schnitt</a>
+</nav>
+
+<main>
+
+  <!-- ============ VARIANTE D ============ -->
+  <section class="variant" id="d">
+    <span class="variant__label">Variante D</span>
+    <h2>Live-Vorschau</h2>
+    <p class="desc">Links steht nur eine ruhige Namensliste, nichts Bewegtes. Rechts eine einzige große Bühne, die beim Hovern oder Tabben durch die Liste überblendet, statt zehn Bilder gleichzeitig zu zeigen. Das ist das Muster großer Agentur-Portfolios: es wirkt technisch aufwendiger, ohne den Blick zu zerstreuen, weil zu jedem Zeitpunkt exakt ein Bild da ist.</p>
+    <p class="cite">Belegt in <b>P1</b> (ein Fokus-Element pro Viewport, hier radikal umgesetzt: buchstäblich ein Bild), <b>R2</b> (Glare-Kante auf der Bühne) · funktioniert per Hover <b>und</b> Tastatur-Fokus, kein Touch-Nachteil, weil Tap ebenfalls auswählt</p>
+
+    <div class="live">
+      <ul class="live__list" id="liveList">
+        <li><button class="live__btn is-active" data-target="0"><span class="live__idx">01</span><span class="live__name">steady</span><span class="live__role">Adaptives Planungs- &amp; Organisationstool</span></button></li>
+        <li><button class="live__btn" data-target="1"><span class="live__idx">02</span><span class="live__name">Milo</span><span class="live__role">KI-Assistenz für ältere Menschen</span></button></li>
+        <li><button class="live__btn" data-target="2"><span class="live__idx">03</span><span class="live__name">Cognify</span><span class="live__role">AR E-Learning Plattform</span></button></li>
+        <li><button class="live__btn" data-target="3"><span class="live__idx">04</span><span class="live__name">Bachelorarbeit · Syntegon</span><span class="live__role">Visualisierungssystem Pharmaproduktion</span></button></li>
+        <li><button class="live__btn" data-target="4"><span class="live__idx">05</span><span class="live__name">forwerts interactive</span><span class="live__role">E-Commerce, Funnel-Optimierung</span></button></li>
+      </ul>
+
+      <div class="live__stage">
+        <div class="live__frame" id="liveFrame">
+          <div class="live__slide is-shown" data-slide="0"><img src="assets/img/covers/steady.png" alt="steady App-Mockups"></div>
+          <div class="live__slide" data-slide="1"><img src="assets/img/covers/milo.png" alt="Milo App-Mockups"></div>
+          <div class="live__slide" data-slide="2"><img src="assets/img/covers/cognify.png" alt="Cognify Screens"></div>
+          <div class="live__slide is-dark" data-slide="3"><img src="assets/img/covers/syntegon.jpg" alt="Syntegon · SynTiso"></div>
+          <div class="live__slide is-logo" data-slide="4"><img src="assets/img/covers/forwerts.png" alt="forwerts interactive Logo"></div>
+        </div>
+        <div class="live__caption">
+          <p class="live__tease" id="liveTease">Eine App, die fragt, warum Menschen scheitern, und psychologische Mechaniken nutzt, damit sie empathisch an ihren Routinen festhalten.</p>
+          <div class="live__tags" id="liveTags"><span>Behavioral Design</span><span>KI-Assistent</span><span>Self-Determination Theory</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ VARIANTE E ============ -->
+  <section class="variant" id="e">
+    <span class="variant__label">Variante E</span>
+    <h2>Systemkarte</h2>
+    <p class="desc">Statt eines neuen Karten-Templates leiht sich das hier <b>deine eigene Meta-Zeile aus den Case-Study-Modals</b> (die <code>&lt;dl&gt;</code> mit Rolle/Methoden/Tools). Genau diese Spec-Sheet-Logik steht schon eine Ebene tiefer, hier taucht sie eine Ebene höher wieder auf, damit Übersicht und Case Study sich lesen wie derselbe Bericht. Der Status steht als Indikator-Punkt, nicht als Adjektiv im Satz, ein bewusstes Leihgut aus deinem eigenen Feld: Statusanzeigen in HMI-Oberflächen zeigen Zustand über Form und Farbe, nicht über einen Textblock.</p>
+    <p class="cite">Belegt in <b>P13</b> (dieselben drei Informationsschichten wie die Referenzen), <b>P4</b> (Hierarchie über Deckkraft) · kleiner Bild-Radius bewusst im Kontrast zu A/B/C/D, Konsequenz aus <b>P9</b></p>
+
+    <div class="sysgrid">
+      <article class="syscard">
+        <div class="syscard__top">
+          <div><span class="syscard__id">PRJ-01</span><h3 class="syscard__name">steady</h3></div>
+          <span class="syscard__status"><span class="syscard__dot"></span>Abgeschlossen</span>
+        </div>
+        <div class="syscard__media"><img src="assets/img/covers/steady.png" alt="steady App-Mockups"></div>
+        <dl class="syscard__dl">
+          <div><dt>Rolle</dt><dd>Konzept · UX/UI · Prototyp</dd></div>
+          <div><dt>Fokus</dt><dd>Behavioral Design · KI-Assistent</dd></div>
+          <div><dt>Grundlage</dt><dd>Fogg Behavior Model · SDT</dd></div>
+          <div><dt>Jahr</dt><dd>2025</dd></div>
+        </dl>
+      </article>
+
+      <article class="syscard">
+        <div class="syscard__top">
+          <div><span class="syscard__id">PRJ-02</span><h3 class="syscard__name">Milo</h3></div>
+          <span class="syscard__status"><span class="syscard__dot"></span>Abgeschlossen</span>
+        </div>
+        <div class="syscard__media"><img src="assets/img/covers/milo.png" alt="Milo App-Mockups"></div>
+        <dl class="syscard__dl">
+          <div><dt>Rolle</dt><dd>Konzept · UX/UI · Prototyp</dd></div>
+          <div><dt>Fokus</dt><dd>Accessibility · Trust &amp; Control</dd></div>
+          <div><dt>Methode</dt><dd>Personas · Journeys · Testing</dd></div>
+          <div><dt>Jahr</dt><dd>2025</dd></div>
+        </dl>
+      </article>
+
+      <article class="syscard">
+        <div class="syscard__top">
+          <div><span class="syscard__id">PRJ-03</span><h3 class="syscard__name">Cognify</h3></div>
+          <span class="syscard__status is-pending"><span class="syscard__dot"></span>In Bearbeitung</span>
+        </div>
+        <div class="syscard__media"><img src="assets/img/covers/cognify.png" alt="Cognify Screens"></div>
+        <dl class="syscard__dl">
+          <div><dt>Rolle</dt><dd>Konzept · UX/UI</dd></div>
+          <div><dt>Fokus</dt><dd>AR / Spatial · Gamification</dd></div>
+          <div><dt>Status</dt><dd>Case Study folgt</dd></div>
+          <div><dt>Jahr</dt><dd>laufend</dd></div>
+        </dl>
+      </article>
+
+      <article class="syscard">
+        <div class="syscard__top">
+          <div><span class="syscard__id">PRJ-04</span><h3 class="syscard__name">Bachelorarbeit · Syntegon</h3></div>
+          <span class="syscard__status is-pending"><span class="syscard__dot"></span>Laufend</span>
+        </div>
+        <div class="syscard__media is-dark"><img src="assets/img/covers/syntegon.jpg" alt="Syntegon · SynTiso"></div>
+        <dl class="syscard__dl">
+          <div><dt>Rolle</dt><dd>Research &amp; Development</dd></div>
+          <div><dt>Fokus</dt><dd>Industrial UX · IA</dd></div>
+          <div><dt>Kontext</dt><dd>Hochreguliert · vertraulich</dd></div>
+          <div><dt>Zeitraum</dt><dd>03/2026 – 07/2026</dd></div>
+        </dl>
+      </article>
+
+      <article class="syscard" style="grid-column:1 / -1">
+        <div class="syscard__top">
+          <div><span class="syscard__id">PRJ-05</span><h3 class="syscard__name">forwerts interactive</h3></div>
+          <span class="syscard__status"><span class="syscard__dot"></span>Abgeschlossen</span>
+        </div>
+        <div class="syscard__media is-logo" style="aspect-ratio:21/6"><img src="assets/img/covers/forwerts.png" alt="forwerts interactive Logo"></div>
+        <dl class="syscard__dl" style="grid-template-columns:repeat(4,1fr)">
+          <div><dt>Rolle</dt><dd>UX Design · Praxissemester</dd></div>
+          <div><dt>Fokus</dt><dd>E-Commerce · Conversion</dd></div>
+          <div><dt>Kontext</dt><dd>Online-Shop &amp; Kunden-Center</dd></div>
+          <div><dt>Zeitraum</dt><dd>10/2024 – 03/2025</dd></div>
+        </dl>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ VARIANTE F ============ -->
+  <section class="variant" id="f">
+    <span class="variant__label">Variante F</span>
+    <h2>Prozess-Schnitt</h2>
+    <p class="desc">Drei Felder, <b>Problem → Mechanismus → Ergebnis</b>, genau die Formel, die in deiner anderen Version schon als Link „Problem, Ansatz, Ergebnis" steht, hier aber als tatsächliche Struktur statt als Button. Das Bild erscheint erst im dritten Feld, als Auflösung, nachdem man weiß, wofür es steht, statt als erstes Aufmerksamkeit zu ziehen, bevor der Kontext da ist.</p>
+    <p class="cite">Belegt in <b>P13</b>, Struktur-Prinzip „Structure is information": die Dreiteilung <b>ist</b> deine Arbeitsweise, keine Dekoration</p>
+    <p class="note">Die Feldtexte hier sind aus den bestehenden Case-Study-Absätzen destilliert, als Platzhalter für die Struktur. Die endgültige Formulierung klären wir separat, wenn wir zu den Inhalten kommen.</p>
+
+    <div class="flow">
+      <article class="fitem">
+        <div class="fitem__head"><span class="fitem__num">01</span><h3 class="fitem__name">steady</h3><span class="fitem__role">Behavioral Design · 2025</span></div>
+        <div class="triptych">
+          <div class="tpanel"><span class="tpanel__step">Problem</span><p class="tpanel__text">Menschen wissen, was sie tun sollten, scheitern aber daran, es dauerhaft umzusetzen.</p></div>
+          <div class="tpanel"><span class="tpanel__step">Mechanismus</span><p class="tpanel__text">Adaptive Impulse nach Fogg Behavior Model und Self-Determination Theory, ohne Druck oder Zwang.</p></div>
+          <div class="tpanel tpanel--result"><span class="tpanel__step">Ergebnis</span><div class="tpanel__media"><img src="assets/img/covers/steady.png" alt="steady App-Mockups"></div><p class="tpanel__text">Acht Testpersonen, verständliches Onboarding, ein spürbar orientierender Assistent.</p></div>
+        </div>
+      </article>
+
+      <article class="fitem">
+        <div class="fitem__head"><span class="fitem__num">02</span><h3 class="fitem__name">Milo</h3><span class="fitem__role">Inclusive Design · 2025</span></div>
+        <div class="triptych">
+          <div class="tpanel"><span class="tpanel__step">Problem</span><p class="tpanel__text">Unsicherheit und Angst vor Fehlbedienung halten ältere Menschen von digitalen Angeboten fern.</p></div>
+          <div class="tpanel"><span class="tpanel__step">Mechanismus</span><p class="tpanel__text">Orientierung, Kontrolle und verständliche Sprache statt zusätzlichem Funktionsumfang.</p></div>
+          <div class="tpanel tpanel--result"><span class="tpanel__step">Ergebnis</span><div class="tpanel__media"><img src="assets/img/covers/milo.png" alt="Milo App-Mockups"></div><p class="tpanel__text">Fünf Testpersonen fanden sich schnell zurecht, der ruhige Einstieg wurde besonders gelobt.</p></div>
+        </div>
+      </article>
+
+      <article class="fitem">
+        <div class="fitem__head"><span class="fitem__num">03</span><h3 class="fitem__name">Cognify</h3><span class="fitem__role">AR E-Learning · in Bearbeitung</span></div>
+        <div class="triptych">
+          <div class="tpanel"><span class="tpanel__step">Problem</span><p class="tpanel__text">Lerninhalte bleiben abstrakt, wenn sie nur eine weitere Seite zum Lesen sind.</p></div>
+          <div class="tpanel"><span class="tpanel__step">Mechanismus</span><p class="tpanel__text">Augmented Reality gibt Lernstoff einen Ort im Raum, ergänzt um Quizzes und Gamification.</p></div>
+          <div class="tpanel tpanel--result"><span class="tpanel__step">Ergebnis</span><div class="tpanel__media"><img src="assets/img/covers/cognify.png" alt="Cognify Screens"></div><p class="tpanel__text">Case Study in Bearbeitung, erste interaktive Prototypen bereits im Test.</p></div>
+        </div>
+      </article>
+
+      <article class="fitem">
+        <div class="fitem__head"><span class="fitem__num">04</span><h3 class="fitem__name">Bachelorarbeit · Syntegon</h3><span class="fitem__role">Industrial UX · laufend</span></div>
+        <div class="triptych">
+          <div class="tpanel"><span class="tpanel__step">Problem</span><p class="tpanel__text">Unklare Prozessinformationen kosten in der Pharmaproduktion Zeit und Sicherheit.</p></div>
+          <div class="tpanel"><span class="tpanel__step">Mechanismus</span><p class="tpanel__text">Ein Visualisierungssystem, das Informationsarchitektur und industrielle Usability zusammenbringt.</p></div>
+          <div class="tpanel tpanel--result"><span class="tpanel__step">Ergebnis</span><div class="tpanel__media is-dark"><img src="assets/img/covers/syntegon.jpg" alt="Syntegon · SynTiso"></div><p class="tpanel__text">Laufende Bachelorarbeit bei Syntegon, Ergebnisse derzeit vertraulich.</p></div>
+        </div>
+      </article>
+
+      <article class="fitem">
+        <div class="fitem__head"><span class="fitem__num">05</span><h3 class="fitem__name">forwerts interactive</h3><span class="fitem__role">E-Commerce UX · 2024/25</span></div>
+        <div class="triptych">
+          <div class="tpanel"><span class="tpanel__step">Problem</span><p class="tpanel__text">Reibung im Funnel kostet Conversions, bevor eine Bestellung abgeschlossen ist.</p></div>
+          <div class="tpanel"><span class="tpanel__step">Mechanismus</span><p class="tpanel__text">Screen-Designs und Funnel-Flows, abgestimmt in UX-Workshops mit Partnerunternehmen.</p></div>
+          <div class="tpanel tpanel--result"><span class="tpanel__step">Ergebnis</span><div class="tpanel__media is-logo"><img src="assets/img/covers/forwerts.png" alt="forwerts interactive Logo"></div><p class="tpanel__text">Nachweislich bessere Conversion- und Abbruchraten im Online-Shop-Kontext.</p></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+</main>
+
+<footer class="doc">projekte-preview2.html · Vergleichs-Sandbox, kein Teil der Live-Seite · Stand 09.09.2026</footer>
+
+<script>
+(function(){
+  var frame = document.getElementById('liveFrame');
+  var tease = document.getElementById('liveTease');
+  var tagsEl = document.getElementById('liveTags');
+  var buttons = document.querySelectorAll('.live__btn');
+  var data = [
+    { tease:'Eine App, die fragt, warum Menschen scheitern, und psychologische Mechaniken nutzt, damit sie empathisch an ihren Routinen festhalten.', tags:['Behavioral Design','KI-Assistent','Self-Determination Theory'] },
+    { tease:'Ein empathischer, transparenter Assistent, der digitale Hemmschwellen abbaut und Selbstständigkeit im Umgang mit Technik stärkt.', tags:['Accessibility','Trust & Control','Conversational UI'] },
+    { tease:'Themen alltagsnah entdecken, mit AR-Darstellungen, Quizzes, durchdachter Gamification und starkem Community-Aspekt.', tags:['AR / Spatial','Gamification','In Bearbeitung'] },
+    { tease:'Ein mobiles System, das komplexe Produktionsinformationen so visualisiert, dass Operatoren sicher und handlungsleitend geführt werden.', tags:['Industrial UX','Informationsarchitektur','Forschung'] },
+    { tease:'Screen-Designs, Funnel-Flows, Icons und Infografiken im Online-Shop-Kontext, mit nachweislich besseren Conversion- und Abbruchraten.', tags:['E-Commerce','Conversion','Design-System'] }
+  ];
+  function show(i){
+    buttons.forEach(function(b){ b.classList.toggle('is-active', b.dataset.target === String(i)); });
+    frame.querySelectorAll('.live__slide').forEach(function(s){ s.classList.toggle('is-shown', s.dataset.slide === String(i)); });
+    tease.textContent = data[i].tease;
+    tagsEl.innerHTML = data[i].tags.map(function(t){ return '<span>'+t+'</span>'; }).join('');
+  }
+  buttons.forEach(function(btn){
+    var i = btn.dataset.target;
+    btn.addEventListener('mouseenter', function(){ show(i); });
+    btn.addEventListener('focus', function(){ show(i); });
+    btn.addEventListener('click', function(){ show(i); });
+  });
+})();
+</script>
+
+</body>
+</html>

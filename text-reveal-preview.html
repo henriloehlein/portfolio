@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Wort-Reveal — Gezielt vs. Überall</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,340;9..144,500&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0f; --bg-2:#101018;
+    --surface:#15151f; --surface-2:#1c1c28;
+    --line:rgba(255,255,255,.10);
+    --text:#ECECF2; --muted:#9b9bac;
+    --warm-1:#a9503f; --cool-1:#5b5754; --pink:#726d69; --violet:#403d3b;
+    --ease:cubic-bezier(.16,1,.3,1);
+    --f-display:'Fraunces',Georgia,serif;
+    --f-sans:'Inter',system-ui,-apple-system,sans-serif;
+    --f-mono:'Space Grotesk',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:var(--f-sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+  .field{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+    background:linear-gradient(180deg,
+      color-mix(in srgb,var(--cool-1) 7%,var(--bg)) 0%, var(--bg) 34%,
+      var(--bg-2) 78%, color-mix(in srgb,var(--warm-1) 6%,var(--bg-2)) 100%)}
+  .field__aurora{position:absolute;top:-25%;left:-25%;width:150%;height:150%;z-index:-2;
+    background:
+      conic-gradient(from 120deg at 32% 36%, transparent 0deg, color-mix(in srgb,var(--warm-1) 70%,transparent) 40deg, transparent 130deg),
+      conic-gradient(from 250deg at 70% 64%, transparent 0deg, color-mix(in srgb,var(--cool-1) 70%,transparent) 50deg, transparent 150deg),
+      conic-gradient(from 20deg at 60% 20%, transparent 0deg, color-mix(in srgb,var(--violet) 60%,transparent) 36deg, transparent 120deg);
+    filter:blur(90px) saturate(140%);opacity:.6;animation:auroraDrift 64s linear infinite}
+  .field__blob{position:absolute;border-radius:50%;filter:blur(64px);opacity:.4}
+  .field__blob--1{width:34vw;height:34vw;max-width:560px;max-height:560px;background:radial-gradient(circle,var(--warm-1),transparent 62%);top:2vw;left:8vw;animation:blobA 38s ease-in-out infinite}
+  .field__blob--2{width:30vw;height:30vw;max-width:520px;max-height:520px;background:radial-gradient(circle,var(--cool-1),transparent 62%);top:78vh;right:6vw;opacity:.36;animation:blobB 46s ease-in-out infinite}
+  @keyframes auroraDrift{to{transform:rotate(360deg) scale(1.05)}}
+  @keyframes blobA{0%,100%{transform:translate(0,0)}50%{transform:translate(6vw,4vw)}}
+  @keyframes blobB{0%,100%{transform:translate(0,0)}50%{transform:translate(-5vw,-3vw)}}
+  @media (prefers-reduced-motion:reduce){.field__aurora,.field__blob{animation:none!important}}
+
+  header{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:64px 32px 0}
+  header p.kicker{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--warm-1);margin:0 0 14px}
+  header h1{font-family:var(--f-display);font-weight:340;font-size:clamp(28px,4vw,42px);letter-spacing:-.02em;margin:0 0 16px;line-height:1.1}
+  header p.lede{font-size:15.5px;line-height:1.65;color:var(--muted);max-width:66ch;margin:0}
+
+  main{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:0 32px 50vh}
+
+  .variant{margin-top:150px;padding-top:34px;border-top:1px solid var(--line)}
+  .variant:first-of-type{margin-top:80px}
+  .variant__eyebrow{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px}
+  .variant__num{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;color:var(--muted)}
+  .variant__desc{font-size:14px;line-height:1.6;color:var(--muted);max-width:60ch;margin:0 0 40px}
+  .variant__desc b{color:var(--text);font-weight:600}
+
+  .replay{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);
+    background:color-mix(in srgb,var(--surface) 40%,transparent);border:1px solid var(--line);border-radius:999px;
+    padding:8px 16px;cursor:pointer;transition:color .3s,border-color .3s;flex:none}
+  .replay:hover{color:var(--text);border-color:color-mix(in srgb,#fff 24%,transparent)}
+
+  .demo-h{font-family:var(--f-display);font-weight:440;font-size:clamp(26px,3.6vw,40px);letter-spacing:-.02em;line-height:1.15;margin:0 0 26px}
+  .demo-p{font-size:clamp(16px,1.6vw,19px);line-height:1.62;color:var(--muted);max-width:62ch;margin:0}
+  .demo-p em{font-style:italic;color:var(--text)}
+
+  /* ===== Mechanik 1 — Wort-Blur-In: jedes Wort startet unscharf/verschoben/unsichtbar,
+     löst sich zeitversetzt in scharf/an-Ort/sichtbar auf. Für Überschriften gedacht. ===== */
+  .bw{display:inline-block;opacity:0;filter:blur(11px);transform:translateY(38%);
+    transition:opacity .6s var(--ease),filter .6s var(--ease),transform .6s var(--ease);
+    transition-delay:calc(var(--i) * 38ms)}
+  .is-in .bw{opacity:1;filter:blur(0);transform:translateY(0)}
+
+  /* ===== Mechanik 2 — die aktuelle Seiten-Rezeptur: ein Block, Fade + leichtes Hochrutschen,
+     keine Aufteilung in Wörter. Das ist exakt .reveal aus css/styles.css. ===== */
+  .simple-reveal{opacity:0;transform:translateY(34px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+  .is-in.simple-reveal{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<div class="field" aria-hidden="true">
+  <div class="field__aurora"></div>
+  <div class="field__blob field__blob--1"></div>
+  <div class="field__blob field__blob--2"></div>
+</div>
+
+<header>
+  <p class="kicker">Sandbox · lebt nur hier, nicht im Live-Repo</p>
+  <h1>Wort-für-Wort-Blur-In: gezielt bei Überschriften vs. überall</h1>
+  <p class="lede">Beide Varianten unten nutzen dieselbe Technik wie MagicUIs „Text Animate": Text wird in Wörter zerlegt, jedes startet unscharf, leicht verschoben und unsichtbar, und löst sich zeitversetzt auf, sobald der Block ins Bild scrollt. Kein Framer Motion nötig, reines CSS + derselbe IntersectionObserver, den die Seite schon für <code>.reveal</code> nutzt. Scroll runter, jede Variante spielt automatisch beim Eintreten ab, oder per Knopf erneut.</p>
+</header>
+
+<main>
+
+  <section class="variant" id="va">
+    <div class="variant__eyebrow">
+      <span class="variant__num">Variante A · Gezielt (empfohlen)</span>
+      <button class="replay" data-target="#va-demo" type="button">↻ Erneut abspielen</button>
+    </div>
+    <p class="variant__desc">Die Überschrift bekommt den Wort-Blur-In, <b>der Fließtext darunter bleibt beim aktuellen, schnelleren Fade+Rise</b> (ein Block, keine Wortaufteilung). Liest sich sofort, ohne auf die Animation zu warten.</p>
+    <div id="va-demo" class="reveal-demo">
+      <h2 class="demo-h" data-split>Das Zusammenspiel von Psychologie und Design.</h2>
+      <p class="demo-p simple-reveal">Ich bin Henri Löhlein, UX/UI&nbsp;Designer. Ich arbeite an der Schnittstelle von <em>Psychologie und Technologie</em>: wie KI, LLMs und adaptive Systeme verändern, wie Menschen entscheiden, vertrauen und handeln. Mein Fokus liegt auf psychologisch fundierten Mechaniken, von der Research bis zum getesteten Prototyp.</p>
+    </div>
+  </section>
+
+  <section class="variant" id="vb">
+    <div class="variant__eyebrow">
+      <span class="variant__num">Variante B · Überall</span>
+      <button class="replay" data-target="#vb-demo" type="button">↻ Erneut abspielen</button>
+    </div>
+    <p class="variant__desc">Dieselbe Überschrift, aber <b>der Fließtext bekommt denselben Wort-Blur-In wie die Überschrift</b>. Bei 46 Wörtern braucht das komplette Auflösen spürbar länger, man liest den Anfang schon, während das Ende noch unscharf ist.</p>
+    <div id="vb-demo" class="reveal-demo">
+      <h2 class="demo-h" data-split>Das Zusammenspiel von Psychologie und Design.</h2>
+      <p class="demo-p" data-split>Ich bin Henri Löhlein, UX/UI Designer. Ich arbeite an der Schnittstelle von Psychologie und Technologie: wie KI, LLMs und adaptive Systeme verändern, wie Menschen entscheiden, vertrauen und handeln. Mein Fokus liegt auf psychologisch fundierten Mechaniken, von der Research bis zum getesteten Prototyp.</p>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  function splitWords(el){
+    const words = el.textContent.trim().split(/\s+/);
+    el.innerHTML = words.map((w,i) => `<span class="bw" style="--i:${i}">${w}</span>`).join(' ');
+  }
+  document.querySelectorAll('[data-split]').forEach(splitWords);
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(en => { if (en.isIntersecting) en.target.classList.add('is-in'); });
+  }, { rootMargin: '0px 0px -10% 0px', threshold: 0.2 });
+  document.querySelectorAll('.reveal-demo').forEach(el => io.observe(el));
+
+  document.querySelectorAll('.replay').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = document.querySelector(btn.dataset.target);
+      target.classList.remove('is-in');
+      void target.offsetWidth;
+      requestAnimationFrame(() => requestAnimationFrame(() => target.classList.add('is-in')));
+    });
+  });
+</script>
+
+</body>
+</html>

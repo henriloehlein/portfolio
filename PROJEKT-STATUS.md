@@ -40,15 +40,18 @@ portfolio/
 
 **Cover (assets/img/covers/):** Saubere, web-taugliche Kopien aus `Bilder/`. Wer ein Cover austauschen will, legt es unter exakt diesen Namen ab. `forwerts.png` ist ein Logo (wird `object-fit:contain` auf weißem Grund dargestellt), `syntegon.jpg` ist das SynTiso-Branding.
 
-## 3 · Seitenaufbau (aktueller Stand)
+## 3 · Seitenaufbau (aktueller Stand, seit 08.09.2026-Umbau)
 Reihenfolge von oben:
 1. **Top-Bar** (fixed, minimal): nur **DE/EN** + **Theme-Toggle**. Kein Logo.
 2. **Header-Streifen** (`.strip`, volle Breite, leicht transparent-weißer Horizontalstreifen mit Blur): **Porträt mittig** (neutral, ohne Gradient-Tint, `brightness .9`, dezenter Ring), **Cover-Bilder links & rechts** verteilt (`.strip__aside--left/right`, ab ≤920 px ausgeblendet), darunter zentriert untereinander: „UX/UI Designer / Henri Löhlein / Bachelorand bei Syntegon / Hochschule Ansbach".
-3. **Subnav** (`.subnav`, sticky, randlos): Sektionslinks **horizontal über die volle Breite gestreckt** (`space-between`), größere ruhige Wörter, keine Card/kein Rand; nur im `is-stuck`-Zustand zarter Blur-Hintergrund.
-4. **Opening** (`#approach`, kombiniert): kinetischer Titel „Design / an der Grenze / [Rotator]" + **persönliche Vorstellung** (KI/LLMs/adaptive Systeme + Neugier auf die Zukunft) + CTA, danach **Haltung** (Manifesto-Kette + Note). Intro und Haltung sind bewusst in einer Sektion zusammengeführt.
-5. **Interessen** (`#focus`): 4 Flip-Cards (Nudging, Dark Patterns, Persuasive Design, Adaptive KI) + **Skills-Orbit** (`#orbit`): 16 CV-Begriffe, schweben/prallen in einer Ellipse, randlos, alle grau (keine Sonderfarbe mehr).
-6. **Arbeiten** (`#work`): 5 Projekte mit Cover-Plates, Klick → Case-Study-Modal.
-7. **Über mich** (`#about`, inkl. Methode + Marquee) · **Kontakt** (`#contact`) · Footer.
+3. **Subnav** (`.subnav`, sticky, randlos): jetzt **4 Punkte** (vorher 5) — Projekte / Wie ich arbeite / Über mich / Kontakt.
+4. **Projekte / Case Studies** (`#work`, Sektionstag „01"): 5 Projekte mit Cover-Plates, Klick → Case-Study-Modal. Steht jetzt bewusst als Erstes, noch vor der großen Titelzeile, damit Reviewer in den ersten Sekunden Arbeit statt Text sehen.
+5. **Wie ich arbeite** (`#how`, Sektionstag „02", `class="hero"`): **Werkzeugband** (`.toolband`, neue Komponente, Variante „Klare Kontur" aus `werkzeugband-preview.html`: dünner heller Rahmen statt Schlagschatten-Kasten, flacher Fond, Marquee mit Figma/Adobe XD/Photoshop/Claude Code/v0/Dyad/GitHub) steht als Erstes in der Sektion, danach der kinetische Titel „Design / an der Grenze / [Rotator]" + Vorstellung + CTA (führt jetzt zu `#contact`, nicht mehr zu `#work`), danach **Haltung** (Manifesto-Kette + Note, eigener kleiner Tag „01 Haltung"), zuletzt **Methode** (aus dem alten About hierher verschoben, da inhaltlich „wie ich arbeite" statt „wer ich bin").
+6. **Über mich** (`#about`, Sektionstag „03", inkl. Interessen): die beiden Intro-Spalten (Psychologie & Design / Blick nach vorn), danach die **4 Interessen-Flip-Cards** (Nudging, Dark Patterns, Persuasive Design, Adaptive KI, vorher eigene Sektion `#focus`), danach die Passions-Marquee.
+   - **Gelöscht:** die alte „Fähigkeiten & Werkzeuge"-Komponente (Skills-Orbit, `#orbit`, 16 schwebende CV-Begriffe) ist komplett entfernt (HTML, CSS `.orbit*`/`.focus__skills`, JS `initOrbit`). **TODO:** Henri möchte demnächst einen neuen „Skills"-Baustein ergänzen (Ort/Form noch offen, vermutlich wieder in `#how` oder `#about`).
+7. **Kontakt** (`#contact`, Sektionstag „04") · Footer.
+
+Nebenbei gefixt: `finish()` in `main.js` suchte bisher `$('#hero')`, das es nie gab (die Hero-Sektion hieß `#approach`) — der Titel-Reveal (`.hero.is-ready .word`) lief dadurch nie automatisch, siehe die alte Workaround-Notiz unten. Zeigt jetzt korrekt auf `#how`.
 
 **Schwebende Blasen** (`#bubbleField`, fixed, viewport-weit): je eine pro Projekt mit Cover, treiben **nur in den linken/rechten Padding-Bändern** (nie über den mittigen Inhalt), wrappen horizontal (links raus → rechts rein), transparent mit Konturen-Shine, **auf Mobil (<760 px) ausgeblendet**. Klick → Vorschau-Karte (Pop-up mit Cover-Banner + Panel, siehe `initBubbles()` in `js/main.js`).
 

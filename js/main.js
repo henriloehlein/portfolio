@@ -10,14 +10,13 @@
   /* ---------- i18n dictionary (EN overrides; DE lives in HTML) ---------- */
   const EN = {
     'pre.role':'UX / UI Designer',
-    'nav.approach':'Approach','nav.focus':'Interests','nav.work':'Work','nav.about':'About','nav.contact':'Contact',
+    'nav.work':'Projects','nav.how':'How I work','nav.about':'About','nav.contact':'Contact',
     'hero.avail':'Open to working-student & junior roles 2026','hero.loc':'Ansbach University · Germany',
     'hero.t1':'Design','hero.t2':'on the edge',
     'hero.lede':'I am Henri Löhlein, UX/UI designer. I work at the intersection of <em>psychology and technology</em>: how AI, LLMs and adaptive systems change the way people decide, trust and act. My focus is psychology-based mechanics, from research to a tested prototype.',
-    'hero.cta':'View work','hero.scroll':'Scroll','hero.bubbles':'Projects as bubbles, tap to open',
+    'hero.cta':'Get in touch','hero.scroll':'Scroll','hero.bubbles':'Projects as bubbles, tap to open',
     'subnav.meta':'Bachelor candidate at Syntegon · Ansbach University',
-    'strip.role':'UX/UI Designer','strip.m1':'Bachelor candidate at Syntegon','strip.m2':'Ansbach University',
-    'tag.approach':'Stance','tag.focus':'Interests','tag.work':'Selected work','tag.about':'About','tag.contact':'Contact',
+    'tag.approach':'Stance','tag.how':'How I work','tag.work':'Case studies','tag.about':'About','tag.contact':'Contact',
     'chain.1a':'Solutions follow','chain.1b':'needs.','chain.2a':'Needs follow','chain.2b':'empathy.','chain.3a':'And empathy follows','chain.3b':'genuine interest.',
     'approach.note':'Purposeful design only emerges where challenges are met with empathy and functional thinking. That is exactly where my approach begins.',
     'focus.title':'The interplay of <em>psychology</em> and <em>design.</em>',
@@ -25,11 +24,7 @@
     'focus.c2.t':'Dark Patterns','focus.c2.d':'Mechanisms that steer users against their own interests. Understood in order to avoid them.',
     'focus.c3.t':'Persuasive Design','focus.c3.d':'Translating models like the Fogg Behavior Model and Self-Determination Theory into real mechanics.',
     'focus.c4.t':'Adaptive AI','focus.c4.d':'How LLMs, generative and adaptive systems shape perception and trust, and how these tools can be used within the design process itself.',
-    'focus.skills':'Skills & tools',
-    'sk.ai1':'AI-assisted prototyping','sk.ai2':'LLMs & generative AI','sk.interface':'Interface Design','sk.interaction':'Interaction Design',
-    'sk.research':'UX Research','sk.usability':'Usability Testing','sk.personas':'Personas & Journey Maps','sk.wireframe':'Wireframing & Prototyping',
-    'sk.dt':'Design Thinking','sk.concept':'Concept & App Design','sk.workshops':'UX Workshops','sk.team':'Interdisciplinary Teamwork',
-    'work.title':'Work',
+    'work.title':'Projects',
     'p.steady.role':'Adaptive planning & organisation tool · Concept, UX/UI, Prototype',
     'p.steady.tease':'An app that asks <em>why</em> people fail, and uses psychological mechanics to help them stick to their routines with empathy.',
     'p.milo.role':'AI assistance for older adults · Concept, UX/UI, Prototype',
@@ -58,6 +53,23 @@
   const DEstore = new Map();
   let lang = 'de';
 
+  /* ---------- Strip skills line: two phrases loop in an endless type -> hold -> delete ->
+     type cycle (MagicUI TypingAnimation's "words + loop" pattern), not part of the data-i18n
+     system since the text is revealed/removed character by character rather than swapped as
+     one block. Second phrase brings the Syntegon/forwerts/Ansbach affiliation back, just
+     rotating through instead of sitting permanently under the name. */
+  const STRIP_WORDS = {
+    de: [
+      { text: 'User Experience Design · Interfacedesign · User Research · Interaktionsdesign', hold: 4200 },
+      { text: 'Hochschule Ansbach · Syntegon · forwerts', hold: 3000 }
+    ],
+    en: [
+      { text: 'User Experience Design · Interface Design · User Research · Interaction Design', hold: 4200 },
+      { text: 'Ansbach University · Syntegon · forwerts', hold: 3000 }
+    ]
+  };
+  let stripGen = 0; // bumped on every (re)start so a stale language's timer chain stops itself
+
   function applyLang(next) {
     lang = next;
     document.documentElement.lang = next;
@@ -67,8 +79,67 @@
       el.innerHTML = next === 'en' ? (EN[key] ?? DEstore.get(el)) : DEstore.get(el);
     });
     $$('.lang__opt').forEach(o => o.classList.toggle('is-active', o.dataset.lang === next));
+    startStripType();
     document.dispatchEvent(new CustomEvent('hl:lang', { detail: next }));
     try { localStorage.setItem('hl-lang', next); } catch (e) {}
+  }
+
+  /* Endless type -> hold -> delete -> next-phrase loop into `el`, behind a blinking caret that
+     never fades since the element is mid-animation for as long as the loop runs. `myGen` is
+     captured once and re-checked before every scheduled step, so switching language (which
+     calls this again with a new generation) cleanly kills the previous chain instead of both
+     racing into the same element. */
+  function typeLoop(el, words, typeSpeed, deleteSpeed) {
+    if (!el) return;
+    const myGen = ++stripGen;
+    if (reduce) { el.textContent = words[0].text; return; }
+    // .typeText and .typeCursor share one inline wrapper (not two flex siblings of #typeSkills),
+    // so the caret sits directly after the last character in the text flow and wraps onto the
+    // last line with it, instead of floating beside the whole centered multi-line block.
+    el.innerHTML = '<span class="typeLine"><span class="typeText"></span><span class="typeCursor">|</span></span>';
+    const textEl = el.querySelector('.typeText');
+    let wi = 0;
+    function typeWord(cb) {
+      const full = words[wi].text;
+      let i = 0;
+      (function tick() {
+        if (myGen !== stripGen) return;
+        textEl.textContent = full.slice(0, i);
+        i++;
+        if (i <= full.length) setTimeout(tick, typeSpeed); else cb();
+      })();
+    }
+    function deleteWord(cb) {
+      const full = textEl.textContent;
+      let i = full.length;
+      (function tick() {
+        if (myGen !== stripGen) return;
+        i--;
+        textEl.textContent = full.slice(0, i);
+        if (i > 0) setTimeout(tick, deleteSpeed); else cb();
+      })();
+    }
+    function cycle() {
+      if (myGen !== stripGen) return;
+      typeWord(() => {
+        if (myGen !== stripGen) return;
+        setTimeout(() => {
+          if (myGen !== stripGen) return;
+          deleteWord(() => {
+            if (myGen !== stripGen) return;
+            wi = (wi + 1) % words.length;
+            setTimeout(cycle, 260);
+          });
+        }, words[wi].hold);
+      });
+    }
+    setTimeout(cycle, 300);
+  }
+  function startStripType() {
+    const words = STRIP_WORDS[lang] || STRIP_WORDS.de;
+    const skillsSr = $('#typeSkillsSr');
+    if (skillsSr) skillsSr.textContent = words.map(w => w.text).join('. ');
+    typeLoop($('#typeSkills'), words, 26, 16);
   }
 
   /* ---------- Preloader ---------- */
@@ -94,9 +165,10 @@
     if (counter) counter.textContent = '100';
     pre && pre.classList.add('is-done');
     document.body.classList.add('loaded');
-    const hero = $('#hero');
+    const hero = $('#how');
     hero && hero.classList.add('is-ready');
     startRotator();
+    startStripType();
   }
 
   /* ---------- Custom cursor: smooth spring-follow arrow, rotates to face travel ---------- */
@@ -190,12 +262,52 @@
   }, { rootMargin: '-45% 0px -50% 0px' });
   sections.forEach(s => spy.observe(s));
 
+  /* ---------- Word-Blur-In (gezielt: Überschriften/kurze Zeilen, siehe [data-split] im HTML) ----------
+     Läuft rekursiv durch Text-Knoten, lässt verschachtelte <em>/<b> (Gradient-Wörter) unangetastet
+     stehen und umhüllt jedes Wort mit einem .bw-Span; --i treibt die gestaffelte Verzögerung in
+     css/styles.css. approach__line nutzt zusätzlich data-stagger: der Basis-Index versetzt die
+     drei Zeilen zueinander, obendrauf zur bestehenden transitionDelay-Staffelung des Blocks unten. */
+  function splitWords(root, base) {
+    let i = base || 0;
+    (function walk(node) {
+      if (node.nodeType === 3) {
+        const parts = node.textContent.split(/(\s+)/);
+        const frag = document.createDocumentFragment();
+        parts.forEach(part => {
+          if (part === '') return;
+          if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+          const span = document.createElement('span');
+          span.className = 'bw';
+          span.style.setProperty('--i', i++);
+          span.textContent = part;
+          frag.appendChild(span);
+        });
+        node.replaceWith(frag);
+      } else if (node.nodeType === 1) {
+        [...node.childNodes].forEach(walk);
+      }
+    })(root);
+    return i;
+  }
+  function splitAll() {
+    $$('[data-split]').forEach(el => {
+      let base = 0;
+      if (el.hasAttribute('data-stagger') && el.parentElement) {
+        base = $$('[data-stagger]', el.parentElement).indexOf(el) * 5;
+      }
+      splitWords(el, base);
+    });
+  }
+  splitAll();
+  // data-i18n-Elemente ersetzen ihr innerHTML komplett beim Sprachwechsel und würden die
+  // .bw-Spans dabei mit wegwerfen, also nach jedem hl:lang neu splitten.
+  document.addEventListener('hl:lang', splitAll);
+
   /* ---------- Reveal on scroll ---------- */
   const revObs = new IntersectionObserver((entries, obs) => {
     entries.forEach(en => {
       if (en.isIntersecting) {
-        const items = en.target.matches('[data-stagger]') ? [en.target] : [en.target];
-        items.forEach(el => el.classList.add('is-in'));
+        en.target.classList.add('is-in');
         obs.unobserve(en.target);
       }
     });
@@ -234,11 +346,18 @@
   /* ---------- Magnetic buttons ---------- */
   if (matchMedia('(hover:hover)').matches && !reduce) {
     $$('.magnetic').forEach(el => {
+      // Subnav pills get a stronger pull than other magnetic elements (contact links), and carry
+      // their own scale along so the mousemove-driven inline transform doesn't wipe out the
+      // hover/is-active zoom from CSS (inline style always beats the stylesheet rule).
+      const isNavPill = el.classList.contains('subnav__link');
+      const pullX = isNavPill ? 0.4 : 0.25;
+      const pullY = isNavPill ? 0.5 : 0.35;
       el.addEventListener('mousemove', e => {
         const r = el.getBoundingClientRect();
         const mx = e.clientX - r.left - r.width / 2;
         const my = e.clientY - r.top - r.height / 2;
-        el.style.transform = `translate(${mx * 0.25}px,${my * 0.35}px)`;
+        const scale = isNavPill ? 1.08 : 1;
+        el.style.transform = `translate(${mx * pullX}px,${my * pullY}px) scale(${scale})`;
       });
       el.addEventListener('mouseleave', () => { el.style.transform = ''; });
     });
@@ -534,66 +653,6 @@
     }
 
     addEventListener('keydown', e => { if (e.key === 'Escape' && openId) close(); });
-  })();
-
-  /* ---------- Skills orbit (CV skills float & bounce) ---------- */
-  (function initOrbit() {
-    const orbit = $('#orbit');
-    if (!orbit) return;
-    const chips = $$('.orbit__chip', orbit);
-    if (!chips.length) return;
-    orbit.classList.add('is-live');
-    const items = chips.map(el => ({ el, x: 0, y: 0, vx: 0, vy: 0, hw: 0, hh: 0, r: 0, placed: false }));
-    let cx = 0, cy = 0, aMax = 0, bMax = 0;
-
-    function measure() {
-      const w = orbit.clientWidth, h = orbit.clientHeight;
-      cx = w / 2; cy = h / 2;
-      items.forEach((it, i) => {
-        const rect = it.el.getBoundingClientRect();
-        it.hw = rect.width / 2; it.hh = rect.height / 2;
-        it.r = Math.hypot(it.hw, it.hh);
-        const a = w / 2 - it.hw - 6, b = h / 2 - it.hh - 6;
-        it.aMax = a; it.bMax = b;
-        if (!it.placed) {
-          const ang = (i / items.length) * Math.PI * 2 + Math.random() * 0.6;
-          const rr = 0.45 + Math.random() * 0.45;
-          it.x = cx + Math.cos(ang) * a * rr - it.hw;
-          it.y = cy + Math.sin(ang) * b * rr - it.hh;
-          const va = Math.random() * Math.PI * 2, sp = 0.14 + Math.random() * 0.18;
-          it.vx = Math.cos(va) * sp; it.vy = Math.sin(va) * sp;
-          it.placed = true;
-        }
-        it.el.style.transform = 'translate(' + it.x + 'px,' + it.y + 'px)';
-      });
-    }
-    measure();
-
-    if (!reduce) {
-      (function loop() {
-        items.forEach(it => {
-          it.x += it.vx; it.y += it.vy;
-          const ccx = it.x + it.hw, ccy = it.y + it.hh;
-          const dx = ccx - cx, dy = ccy - cy;
-          const a = it.aMax || 1, b = it.bMax || 1;
-          const norm = (dx * dx) / (a * a) + (dy * dy) / (b * b);
-          if (norm > 1) {
-            const gx = dx / (a * a), gy = dy / (b * b), gl = Math.hypot(gx, gy) || 1;
-            const nx = gx / gl, ny = gy / gl;
-            const dot = it.vx * nx + it.vy * ny;
-            it.vx -= 2 * dot * nx; it.vy -= 2 * dot * ny;
-            const s = 1 / Math.sqrt(norm);
-            it.x = cx + dx * s - it.hw; it.y = cy + dy * s - it.hh;
-          }
-          it.el.style.transform = 'translate(' + it.x + 'px,' + it.y + 'px)';
-        });
-        requestAnimationFrame(loop);
-      })();
-    }
-
-    let rT;
-    addEventListener('resize', () => { clearTimeout(rT); rT = setTimeout(measure, 200); }, { passive: true });
-    document.addEventListener('hl:lang', () => setTimeout(measure, 40));
   })();
 
   /* ---------- Year safety + console sign ---------- */

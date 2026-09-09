@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Projekte — Denkprozess-Varianten</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --warm-1:#a9503f; --warm-2:#c9a89a; --cool-1:#5b5754;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --f-display:'Fraunces',Georgia,serif;
+  --f-sans:'Inter',system-ui,-apple-system,sans-serif;
+  --f-mono:'Space Grotesk','Inter',sans-serif;
+  --bg:#0a0a0f; --bg-2:#101018; --surface:#15151f;
+  --line:rgba(255,255,255,.10); --line-2:rgba(255,255,255,.18);
+  --text:#ECECF2; --muted:#9b9bac; --muted-2:#6e6e80;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--f-sans);-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.6}
+img{display:block;max-width:100%}
+
+.field{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--cool-1) 7%,var(--bg)) 0%,var(--bg) 34%,var(--bg-2) 78%,color-mix(in srgb,var(--warm-1) 6%,var(--bg-2)) 100%)}
+.field__aurora{position:absolute;top:-25%;left:-25%;width:150%;height:150%;z-index:-2;
+  background:conic-gradient(from 120deg at 32% 36%, transparent 0deg, color-mix(in srgb,var(--warm-1) 55%,transparent) 40deg, transparent 130deg),
+              conic-gradient(from 250deg at 70% 64%, transparent 0deg, color-mix(in srgb,var(--cool-1) 55%,transparent) 50deg, transparent 150deg);
+  filter:blur(90px) saturate(120%);opacity:.4;animation:auroraDrift 64s linear infinite}
+@keyframes auroraDrift{to{transform:rotate(360deg) scale(1.05)}}
+@media (prefers-reduced-motion:reduce){.field__aurora{animation:none!important}}
+
+main,header,footer.doc{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding-left:32px;padding-right:32px}
+header{padding-top:56px}
+header p.kicker{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--warm-2);margin:0 0 14px}
+header h1{font-family:var(--f-display);font-weight:340;font-size:clamp(28px,4vw,42px);letter-spacing:-.02em;margin:0 0 16px;line-height:1.08;text-wrap:balance}
+header p.lede{font-size:16px;color:var(--muted);max-width:74ch;margin:0 0 10px}
+header a.back{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:12px;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:1px}
+header a.back:hover{color:var(--text);border-color:var(--line-2)}
+
+nav.jump{position:sticky;top:16px;z-index:20;display:flex;flex-wrap:wrap;gap:8px;margin:32px 0 0;padding:10px 0;
+  background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(10px)}
+nav.jump a{font-family:var(--f-mono);font-size:12px;color:var(--muted);text-decoration:none;padding:7px 14px;border-radius:999px;border:1px solid var(--line);transition:color .2s,border-color .2s}
+nav.jump a:hover{color:var(--text);border-color:var(--line-2)}
+
+section.variant{margin-top:108px;scroll-margin-top:64px}
+section.variant:first-of-type{margin-top:52px}
+.variant__label{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--warm-2);display:block;margin-bottom:10px}
+.variant h2{font-family:var(--f-display);font-weight:480;font-size:clamp(22px,2.6vw,30px);margin:0 0 12px;letter-spacing:-.015em}
+.variant p.desc{font-size:14.5px;line-height:1.65;color:var(--muted);max-width:78ch;margin:0 0 8px}
+.variant p.desc b{color:var(--text);font-weight:600}
+.variant p.cite{font-family:var(--f-mono);font-size:11.5px;color:var(--muted-2);margin:14px 0 40px;letter-spacing:.02em}
+.variant p.cite b{color:var(--warm-2)}
+
+/* ===== shared: project head + big image, identical to Fokus-Stapel (Stand 1, Variante C) ===== */
+.stack{display:flex;flex-direction:column;gap:96px}
+.sitem__head{display:flex;align-items:baseline;gap:20px;margin-bottom:22px}
+.sitem__num{font-family:var(--f-display);font-weight:300;font-size:clamp(36px,4.6vw,58px);color:var(--muted-2);opacity:.45;line-height:1;letter-spacing:-.02em}
+.sitem__titlewrap{flex:1;min-width:200px}
+.sitem__name{font-family:var(--f-display);font-weight:460;font-size:clamp(28px,3.8vw,46px);letter-spacing:-.02em;line-height:1;margin:0 0 8px}
+.sitem__role{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.03em;color:var(--muted);text-transform:uppercase}
+.sitem__media{position:relative;border-radius:36px;overflow:hidden;background:var(--surface);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.05),0 10px 24px -10px rgba(0,0,0,.5),0 60px 120px -40px rgba(0,0,0,.85);
+  aspect-ratio:21/10}
+.sitem__media::after{content:"";position:absolute;inset:0 0 auto 0;height:1.5px;z-index:2;
+  background:linear-gradient(to right,transparent 6%,rgba(255,255,255,.9) 50%,transparent 94%);opacity:.7}
+.sitem__media img{width:100%;height:100%;object-fit:cover}
+.sitem__media.is-logo{background:#fff;display:grid;place-items:center}
+.sitem__media.is-logo img{width:auto;height:auto;max-width:46%;max-height:44%;object-fit:contain}
+.sitem__media.is-dark{background:linear-gradient(135deg,#1b2230,#0e1622)}
+@media (max-width:760px){.sitem__media{aspect-ratio:4/3}}
+
+footer.doc{margin:120px auto 60px;font-family:var(--f-mono);font-size:11.5px;color:var(--muted-2)}
+
+/* ================================================================
+   VARIANTE 1 — Randspalte
+   ================================================================ */
+.v1foot{display:grid;grid-template-columns:148px 1fr;margin-top:28px;border-top:1px solid var(--line)}
+.v1foot > .v1label{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-2);padding:19px 20px 19px 0;border-bottom:1px solid var(--line)}
+.v1foot > .v1text{font-size:14px;color:var(--text);margin:0;padding:19px 0;border-bottom:1px solid var(--line);max-width:60ch}
+.v1foot > :nth-last-child(-n+2){border-bottom:none}
+@media (max-width:640px){.v1foot{grid-template-columns:1fr}.v1foot > .v1label{padding:16px 0 4px;border-bottom:none}.v1foot > .v1text{padding:0 0 16px}}
+
+/* ================================================================
+   VARIANTE 2 — Prozess-Typografie
+   ================================================================ */
+.v2foot{display:flex;flex-direction:column;margin-top:30px}
+.v2block{display:flex;gap:22px;align-items:flex-start;padding:24px 0;border-top:1px solid var(--line)}
+.v2num{font-family:var(--f-display);font-weight:300;font-size:60px;line-height:.75;color:var(--muted-2);opacity:.32;flex:none;width:52px;user-select:none}
+.v2label{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--warm-2);display:block;margin-bottom:6px}
+.v2text{font-size:14.5px;color:var(--text);margin:0;max-width:58ch}
+@media (max-width:640px){.v2num{font-size:44px;width:40px}}
+
+/* ================================================================
+   VARIANTE 3 — Fährtensymbole
+   ================================================================ */
+.v3foot{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:32px;padding-top:28px;border-top:1px solid var(--line)}
+.v3item{display:flex;flex-direction:column;gap:12px}
+.v3icon{width:25px;height:25px;color:var(--warm-2);flex:none}
+.v3label{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-2)}
+.v3text{font-size:13.5px;color:var(--text);margin:0}
+@media (max-width:700px){.v3foot{grid-template-columns:1fr;gap:22px}}
+
+/* ================================================================
+   VARIANTE 4 — Fließtext
+   ================================================================ */
+.v4foot{margin-top:26px;padding-top:24px;border-top:1px solid var(--line)}
+.v4text{font-family:var(--f-display);font-style:italic;font-weight:340;font-size:clamp(16px,1.7vw,19px);line-height:1.55;color:color-mix(in srgb,var(--text) 86%,transparent);max-width:66ch;margin:0}
+</style>
+</head>
+<body>
+
+<div class="field" aria-hidden="true"><div class="field__aurora"></div></div>
+
+<header>
+  <a class="back" href="projekte-preview3.html">← Zurück zu Varianten G – I</a>
+  <p class="kicker" style="margin-top:22px">Vergleichs-Sandbox, Teil 4 · nicht live</p>
+  <h1>Fokus-Stapel, vier Wege für den Denkprozess</h1>
+  <p class="lede">Kopf und Bild bleiben exakt wie in Variante C aus Stand 1. Entfernt sind die drei Tag-Pills und die kursive Teaser-Zeile unter dem Bild. An deren Stelle steht jetzt dein Problemstellung/Aufgabe/Ansatz-Gedanke, viermal unterschiedlich gelöst: einmal über Layout, einmal über Typografie, einmal über drei eigene Icons im Stil deiner bestehenden Interessens-Karten, einmal ganz ohne Struktur, nur als geschriebener Satz. Keine Statuspunkte, keine durchnummerierten „Schritt 1/2/3"-Etiketten, das war der berechtigte Einwand.</p>
+</header>
+
+<nav class="jump">
+  <a href="#v1">1 · Randspalte</a>
+  <a href="#v2">2 · Prozess-Typografie</a>
+  <a href="#v3">3 · Fährtensymbole</a>
+  <a href="#v4">4 · Fließtext</a>
+</nav>
+
+<main>
+
+  <!-- ============ VARIANTE 1 ============ -->
+  <section class="variant" id="v1">
+    <span class="variant__label">Variante 1</span>
+    <h2>Randspalte</h2>
+    <p class="desc">Ganz klassisch: eine schmale Label-Spalte links, der Fließtext rechts, wie eine Randnotiz in einem gedruckten Report. Keine Icons, keine Farbe außer Text, nur Ausrichtung und Hairlines. Am nächsten an dem, was in seriösen Case-Study-Dokumenten oder Geschäftsberichten steht.</p>
+    <p class="cite">Keine Statuspunkte, kein Icon, reine Typografie und Ausrichtung als Gestaltungsmittel</p>
+
+    <div class="stack">
+      <article class="sitem">
+        <div class="sitem__head"><span class="sitem__num">01</span><div class="sitem__titlewrap"><h3 class="sitem__name">steady</h3><span class="sitem__role">Adaptives Planungs- &amp; Organisationstool</span></div></div>
+        <div class="sitem__media"><img src="assets/img/covers/steady.png" alt="steady App-Mockups"></div>
+        <div class="v1foot">
+          <span class="v1label">Problemstellung</span><p class="v1text">Menschen wissen, was sie tun sollten, scheitern aber daran, es dauerhaft umzusetzen.</p>
+          <span class="v1label">Aufgabe</span><p class="v1text">Ein Planungswerkzeug entwickeln, das nicht nur Aufgaben verwaltet, sondern beim Dranbleiben unterstützt.</p>
+          <span class="v1label">Ansatz</span><p class="v1text">Adaptive Impulse nach Fogg Behavior Model und Self-Determination Theory, empathisch statt fordernd.</p>
+        </div>
+      </article>
+
+      <article class="sitem">
+        <div class="sitem__head"><span class="sitem__num">02</span><div class="sitem__titlewrap"><h3 class="sitem__name">Milo</h3><span class="sitem__role">KI-Assistenz für ältere Menschen</span></div></div>
+        <div class="sitem__media"><img src="assets/img/covers/milo.png" alt="Milo App-Mockups"></div>
+        <div class="v1foot">
+          <span class="v1label">Problemstellung</span><p class="v1text">Unsicherheit und Angst vor Fehlbedienung halten ältere Menschen von digitalen Angeboten fern.</p>
+          <span class="v1label">Aufgabe</span><p class="v1text">Einen KI-Assistenten konzipieren, der den Einstieg in digitale Technik niedrigschwellig macht.</p>
+          <span class="v1label">Ansatz</span><p class="v1text">Orientierung, Kontrolle und verständliche Sprache statt zusätzlichem Funktionsumfang.</p>
+        </div>
+      </article>
+
+      <article class="sitem">
+        <div class="sitem__head"><span class="sitem__num">03</span><div class="sitem__titlewrap"><h3 class="sitem__name">Cognify</h3><span class="sitem__role">AR E-Learning Plattform</span></div></div>
+        <div class="sitem__media"><img src="assets/img/covers/cognify.png" alt="Cognify Screens"></div>
+        <div class="v1foot">
+          <span class="v1label">Problemstellung</span><p class="v1text">Lerninhalte bleiben abstrakt, wenn sie nur eine weitere Seite zum Lesen sind.</p>
+          <span class="v1label">Aufgabe</span><p class="v1text">Eine E-Learning-Plattform entwerfen, die Themen einen Ort im Alltag gibt.</p>
+          <span class="v1label">Ansatz</span><p class="v1text">Augmented Reality, Quizzes und Gamification verbinden Lernstoff mit realem Raum.</p>
+        </div>
+      </article>
+
+      <article class="sitem">
+        <div class="sitem__head"><span class="sitem__num">04</span><div class="sitem__titlewrap"><h3 class="sitem__name">Bachelorarbeit · Syntegon</h3><span class="sitem__role">Visualisierungssystem Pharmaproduktion</span></div></div>
+        <div class="sitem__media is-dark"><img src="assets/img/covers/syntegon.jpg" alt="Syntegon · SynTiso"></div>
+        <div class="v1foot">
+          <span class="v1label">Problemstellung</span><p class="v1text">Hochregulierte Industrie mit fatalem Schadenspotenzial bei menschlichen Fehlern.</p>
+          <span class="v1label">Aufgabe</span><p class="v1text">Konzeption und Prototyping eines Visualisierungssystems für die fehlerfreie Bestückung von Pharmamaschinen in Rüstprozessen.</p>
+          <span class="v1label">Ansatz</span><p class="v1text">Informationsarchitektur und industrielle Usability verbinden Prozesswissen mit dem, was Operatoren in Echtzeit sehen müssen.</p>
+        </div>
+      </article>
+
+      <article class="sitem">
+        <div class="sitem__head"><span class="sitem__num">05</span><div class="sitem__titlewrap"><h3 class="sitem__name">forwerts interactive</h3><span class="sitem__role">E-Commerce, Funnel-Optimierung</span></div></div>
+        <div class="sitem__media is-logo"><img src="assets/img/covers/forwerts.png" alt="forwerts interactive Logo"></div>
+        <div class="v1foot">
+          <span class="v1label">Problemstellung</span><p class="v1text">Reibung im Funnel kostet Conversions, bevor eine Bestellung abgeschlossen ist.</p>
+          <span class="v1label">Aufgabe</span><p class="v1text">Screen-Designs und Funnel-Flows für den Online-Shop- und Kunden-Center-Kontext entwickeln.</p>
+          <span class="v1label">Ansatz</span><p class="v1text">Klare Nutzerführung und Variantenvergleich, abgestimmt in UX-Workshops mit Partnerunternehmen.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ VARIANTE 2 ============ -->
+  <section class="variant" id="v2">
+    <span class="variant__label">Variante 2</span>
+    <h2>Prozess-Typografie</h2>
+    <p class="desc">Statt Icons oder Punkten übernimmt eine große, transparente Ziffer die Rolle des Wegweisers, reine Typografie als Gestaltungsmittel, wie in einem Designer-Prozessbuch. Kein „Schritt 1", nur die Zahl selbst, leise im Hintergrund.</p>
+    <p class="cite">Sequenz über Schriftgröße statt über Farbe oder Symbol, keine Statuspunkte</p>
+
+    <div class="stack">
+      <article class="sitem">
+        <div class="sitem__head"><span class="sitem__num">01</span><div class="sitem__titlewrap"><h3 class="sitem__name">steady</h3><span class="sitem__role">Adaptives Planungs- &amp; Organisationstool</span></div></div>
+        <div class="sitem__media"><img src="assets/img/covers/steady.png" alt="steady App-Mockups"></div>
+        <div class="v2foot">
+          <div class="v2block"><span class="v2num">1</span><div><span class="v2label">Problemstellung</span><p class="v2text">Menschen wissen, was sie tun sollten, scheitern aber daran, es dauerhaft umzusetzen.</p></div></div>
+          <div class="v2block"><span class="v2num">2</span><div><span class="v2label">Aufgabe</span><p class="v2text">Ein Planungswerkzeug entwickeln, das nicht nur Aufgaben verwaltet, sondern beim Dranbleiben unterstützt.</p></div></div>
+          <div class="v2block"><span class="v2num">3</span><div><span class="v2label">Ansatz</span><p class="v2text">Adaptive Impulse nach Fogg Behavior Model und Self-Determination Theory, empathisch statt fordernd.</p></div></div>
+        </div>
+      </article>
+
+      <article class="sitem">
+        <div class="sitem__head"><span class="sitem__num">02</span><div class="sitem__titlewrap"><h3 class="sitem__name">Milo</h3><span class="sitem__role">KI-Assistenz für ältere Menschen</span></div></div>
+        <div class="sitem__media"><img src="assets/img/covers/milo.png" alt="Milo App-Mockups"></div>
+        <div class="v2foot">
+          <div class="v2block"><span class="v2num">1</span><div><span class="v2label">Problemstellung</span><p class="v2text">Unsicherheit und Angst vor Fehlbedienung halten ältere Menschen von digitalen Angeboten fern.</p></div></div>
+          <div class="v2block"><span class="v2num">2</span><div><span class="v2label">Aufgabe</span><p class="v2text">Einen KI-Assistenten konzipieren, der den Einstieg in digitale Technik niedrigschwellig macht.</p></div></div>
+          <div class="v2block"><span class="v2num">3</span><div><span class="v2label">Ansatz</span><p class="v2text">Orientierung, Kontrolle und verständliche Sprache statt zusätzlichem Funktionsumfang.</p></div></div>
+        </div>
+      </article>
+
+      <article class="sitem">
+        <div class="sitem__head"><span class="sitem__num">03</span><div class="sitem__titlewrap"><h3 class="sitem__name">Cognify</h3><span class="sitem__role">AR E-Learning Plattform</span></div></div>
+        <div class="sitem__media"><img src="assets/img/covers/cognify.png" alt="Cognify Screens"></div>
+        <div class="v2foot">
+          <div class="v2block"><span class="v2num">1</span><div><span class="v2label">Problemstellung</span><p class="v2text">Lerninhalte bleiben abstrakt, wenn sie nur eine weitere Seite zum Lesen sind.</p></div></div>
+          <div class="v2block"><span class="v2num">2</span><div><span class="v2label">Aufgabe</span><p class="v2text">Eine E-Learning-Plattform entwerfen, die Themen einen Ort im Alltag gibt.</p></div></div>
+          <div class="v2block"><span class="v2num">3</span><div><span class="v2label">Ansatz</span><p class="v2text">Augmented Reality, Quizzes und Gamification verbinden Lernstoff mit realem Raum.</p></div></div>
+        </div>
+      </article>
+
+      <article class="sitem">
+        <div class="sitem__head"><span class="sitem__num">04</span><div class="sitem__titlewrap"><h3 class="sitem__name">Bachelorarbeit · Syntegon</h3><span class="sitem__role">Visualisierungssystem Pharmaproduktion</span></div></div>
+        <div class="sitem__media is-dark"><img src="assets/img/covers/syntegon.jpg" alt="Syntegon · SynTiso"></div>
+        <div class="v2foot">
+          <div class="v2block"><span class="v2num">1</span><div><span class="v2label">Problemstellung</span><p class="v2text">Hochregulierte Industrie mit fatalem Schadenspotenzial bei menschlichen Fehlern.</p></div></div>
+          <div class="v2block"><span class="v2num">2</span><div><span class="v2label">Aufgabe</span><p class="v2text">Konzeption und Prototyping eines Visualisierungssystems für die fehlerfreie Bestückung von Pharmamaschinen in Rüstprozessen.</p></div></div>
+          <div class="v2block"><span class="v2num">3</span><div><span class="v2label">Ansatz</span><p class="v2text">Informationsarchitektur und industrielle Usability verbinden Prozesswissen mit dem, was Operatoren in Echtzeit sehen müssen.</p></div></div>
+        </div>
+      </article>
+
+      <article class="sitem">
+        <div class="sitem__head"><span class="sitem__num">05</span><div class="sitem__titlewrap"><h3 class="sitem__name">forwerts interactive</h3><span class="sitem__role">E-Commerce, Funnel-Optimierung</span></div></div>
+        <div class="sitem__media is-logo"><img src="assets/img/covers/forwerts.png" alt="forwerts interactive Logo"></div>
+        <div class="v2foot">
+          <div class="v2block"><span class="v2num">1</span><div><span class="v2label">Problemstellung</span><p class="v2text">Reibung im Funnel kostet Conversions, bevor eine Bestellung abgeschlossen ist.</p></div></div>
+          <div class="v2block"><span class="v2num">2</span><div><span class="v2label">Aufgabe</span><p class="v2text">Screen-Designs und Funnel-Flows für den Online-Shop- und Kunden-Center-Kontext entwickeln.</p></div></div>
+          <div class="v2block"><span class="v2num">3</span><div><span class="v2label">Ansatz</span><p class="v2text">Klare Nutzerführung und Variantenvergleich, abgestimmt in UX-Workshops mit Partnerunternehmen.</p></div></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ VARIANTE 3 ============ -->
+  <section class="variant" id="v3">
+    <span class="variant__label">Variante 3</span>
+    <h2>Fährtensymbole</h2>
+    <p class="desc">Drei eigene Icons, im exakt selben Strich wie die vier Interessens-Karten in „Über mich" (24-px-Raster, ein Stroke, keine Füllung): ein Fadenkreuz für die Problemstellung, eine Wimpelflagge für die gesetzte Aufgabe, zwei sich überschneidende Kreise für den Ansatz, der immer zwei Dinge zusammenbringt. Keine Bibliotheks-Icons, keine Statuspunkte, sondern dieselbe handgezeichnete Sprache, die auf der Seite schon existiert.</p>
+    <p class="cite">Icon-Sprache 1:1 aus <code>.fcard__icon</code> in <code>css/styles.css</code> übernommen, keine neue Bibliothek, keine Farbcodierung nach Zustand</p>
+
+    <div class="stack">
+      <article class="sitem">
+        <div class="sitem__head"><span class="sitem__num">01</span><div class="sitem__titlewrap"><h3 class="sitem__name">steady</h3><span class="sitem__role">Adaptives Planungs- &amp; Organisationstool</span></div></div>
+        <div class="sitem__media"><img src="assets/img/covers/steady.png" alt="steady App-Mockups"></div>
+        <div class="v3foot">
+          <div class="v3item"><svg class="v3icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="7"/><path d="M12 5v3M12 16v3M5 12h3M16 12h3"/></svg><span class="v3label">Problemstellung</span><p class="v3text">Menschen wissen, was sie tun sollten, scheitern aber daran, es dauerhaft umzusetzen.</p></div>
+          <div class="v3item"><svg class="v3icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 21V4"/><path d="M6 5h12l-4 4 4 4H6"/></svg><span class="v3label">Aufgabe</span><p class="v3text">Ein Planungswerkzeug, das beim Dranbleiben unterstützt, nicht nur Aufgaben verwaltet.</p></div>
+          <div class="v3item"><svg class="v3icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="12" r="6"/><circle cx="15" cy="12" r="6"/></svg><span class="v3label">Ansatz</span><p class="v3text">Fogg Behavior Model und Self-Determination Theory, empathisch statt fordernd.</p></div>
+        </div>
+      </article>
+
+      <article class="sitem">
+        <div class="sitem__head"><span class="sitem__num">02</span><div class="sitem__titlewrap"><h3 class="sitem__name">Milo</h3><span class="sitem__role">KI-Assistenz für ältere Menschen</span></div></div>
+        <div class="sitem__media"><img src="assets/img/covers/milo.png" alt="Milo App-Mockups"></div>
+        <div class="v3foot">
+          <div class="v3item"><svg class="v3icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="7"/><path d="M12 5v3M12 16v3M5 12h3M16 12h3"/></svg><span class="v3label">Problemstellung</span><p class="v3text">Unsicherheit und Angst vor Fehlbedienung halten ältere Menschen fern.</p></div>
+          <div class="v3item"><svg class="v3icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 21V4"/><path d="M6 5h12l-4 4 4 4H6"/></svg><span class="v3label">Aufgabe</span><p class="v3text">Ein Assistent, der den Einstieg in digitale Technik niedrigschwellig macht.</p></div>
+          <div class="v3item"><svg class="v3icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="12" r="6"/><circle cx="15" cy="12" r="6"/></svg><span class="v3label">Ansatz</span><p class="v3text">Orientierung und Kontrolle statt zusätzlichem Funktionsumfang.</p></div>
+        </div>
+      </article>
+
+      <article class="sitem">
+        <div class="sitem__head"><span class="sitem__num">03</span><div class="sitem__titlewrap"><h3 class="sitem__name">Cognify</h3><span class="sitem__role">AR E-Learning Plattform</span></div></div>
+        <div class="sitem__media"><img src="assets/img/covers/cognify.png" alt="Cognify Screens"></div>
+        <div class="v3foot">
+          <div class="v3item"><svg class="v3icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="7"/><path d="M12 5v3M12 16v3M5 12h3M16 12h3"/></svg><span class="v3label">Problemstellung</span><p class="v3text">Lerninhalte bleiben abstrakt als bloße Seite zum Lesen.</p></div>
+          <div class="v3item"><svg class="v3icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 21V4"/><path d="M6 5h12l-4 4 4 4H6"/></svg><span class="v3label">Aufgabe</span><p class="v3text">Themen einen tatsächlichen Ort im Alltag geben.</p></div>
+          <div class="v3item"><svg class="v3icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="12" r="6"/><circle cx="15" cy="12" r="6"/></svg><span class="v3label">Ansatz</span><p class="v3text">Augmented Reality, Quizzes und Gamification verbunden.</p></div>
+        </div>
+      </article>
+
+      <article class="sitem">
+        <div class="sitem__head"><span class="sitem__num">04</span><div class="sitem__titlewrap"><h3 class="sitem__name">Bachelorarbeit · Syntegon</h3><span class="sitem__role">Visualisierungssystem Pharmaproduktion</span></div></div>
+        <div class="sitem__media is-dark"><img src="assets/img/covers/syntegon.jpg" alt="Syntegon · SynTiso"></div>
+        <div class="v3foot">
+          <div class="v3item"><svg class="v3icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="7"/><path d="M12 5v3M12 16v3M5 12h3M16 12h3"/></svg><span class="v3label">Problemstellung</span><p class="v3text">Hochregulierte Industrie mit fatalem Schadenspotenzial bei Fehlern.</p></div>
+          <div class="v3item"><svg class="v3icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 21V4"/><path d="M6 5h12l-4 4 4 4H6"/></svg><span class="v3label">Aufgabe</span><p class="v3text">Visualisierungssystem für die fehlerfreie Bestückung in Rüstprozessen.</p></div>
+          <div class="v3item"><svg class="v3icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="12" r="6"/><circle cx="15" cy="12" r="6"/></svg><span class="v3label">Ansatz</span><p class="v3text">Informationsarchitektur und industrielle Usability verbunden.</p></div>
+        </div>
+      </article>
+
+      <article class="sitem">
+        <div class="sitem__head"><span class="sitem__num">05</span><div class="sitem__titlewrap"><h3 class="sitem__name">forwerts interactive</h3><span class="sitem__role">E-Commerce, Funnel-Optimierung</span></div></div>
+        <div class="sitem__media is-logo"><img src="assets/img/covers/forwerts.png" alt="forwerts interactive Logo"></div>
+        <div class="v3foot">
+          <div class="v3item"><svg class="v3icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="7"/><path d="M12 5v3M12 16v3M5 12h3M16 12h3"/></svg><span class="v3label">Problemstellung</span><p class="v3text">Reibung im Funnel kostet Conversions vor dem Abschluss.</p></div>
+          <div class="v3item"><svg class="v3icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 21V4"/><path d="M6 5h12l-4 4 4 4H6"/></svg><span class="v3label">Aufgabe</span><p class="v3text">Screen-Designs und Funnel-Flows für Shop und Kunden-Center.</p></div>
+          <div class="v3item"><svg class="v3icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="12" r="6"/><circle cx="15" cy="12" r="6"/></svg><span class="v3label">Ansatz</span><p class="v3text">Nutzerführung und Variantenvergleich aus UX-Workshops.</p></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ VARIANTE 4 ============ -->
+  <section class="variant" id="v4">
+    <span class="variant__label">Variante 4</span>
+    <h2>Fließtext</h2>
+    <p class="desc">Keine Struktur, kein Label, nur ein geschriebener Satz unter dem Bild, wie eine Wandbeschriftung im Museum. Problemstellung, Aufgabe und Ansatz sind hier keine Kategorien mehr, sondern zu einem Gedanken verwoben. Am ruhigsten, am textlichsten, am wenigsten „designed".</p>
+    <p class="cite">Reines Fließtext-Statement, keine Chunking-Struktur, kein Icon, keine Farbe außer Text</p>
+
+    <div class="stack">
+      <article class="sitem">
+        <div class="sitem__head"><span class="sitem__num">01</span><div class="sitem__titlewrap"><h3 class="sitem__name">steady</h3><span class="sitem__role">Adaptives Planungs- &amp; Organisationstool</span></div></div>
+        <div class="sitem__media"><img src="assets/img/covers/steady.png" alt="steady App-Mockups"></div>
+        <div class="v4foot"><p class="v4text">Menschen wissen oft, was sie tun sollten, scheitern aber daran, es dauerhaft umzusetzen. steady entstand als Planungswerkzeug, das genau dort ansetzt: mit adaptiven Impulsen nach dem Fogg Behavior Model und der Self-Determination Theory, empathisch statt fordernd.</p></div>
+      </article>
+
+      <article class="sitem">
+        <div class="sitem__head"><span class="sitem__num">02</span><div class="sitem__titlewrap"><h3 class="sitem__name">Milo</h3><span class="sitem__role">KI-Assistenz für ältere Menschen</span></div></div>
+        <div class="sitem__media"><img src="assets/img/covers/milo.png" alt="Milo App-Mockups"></div>
+        <div class="v4foot"><p class="v4text">Unsicherheit und die Angst vor Fehlbedienung halten viele ältere Menschen von digitalen Angeboten fern. Milo begegnet dem mit einem Assistenten, der Orientierung, Kontrolle und verständliche Sprache in den Mittelpunkt stellt, statt mit zusätzlichem Funktionsumfang zu überfordern.</p></div>
+      </article>
+
+      <article class="sitem">
+        <div class="sitem__head"><span class="sitem__num">03</span><div class="sitem__titlewrap"><h3 class="sitem__name">Cognify</h3><span class="sitem__role">AR E-Learning Plattform</span></div></div>
+        <div class="sitem__media"><img src="assets/img/covers/cognify.png" alt="Cognify Screens"></div>
+        <div class="v4foot"><p class="v4text">Lerninhalte bleiben abstrakt, wenn sie nur eine weitere Seite zum Lesen sind. Cognify verbindet Augmented Reality, Quizzes und Gamification, um Lernstoff einen tatsächlichen Ort im Alltag zu geben.</p></div>
+      </article>
+
+      <article class="sitem">
+        <div class="sitem__head"><span class="sitem__num">04</span><div class="sitem__titlewrap"><h3 class="sitem__name">Bachelorarbeit · Syntegon</h3><span class="sitem__role">Visualisierungssystem Pharmaproduktion</span></div></div>
+        <div class="sitem__media is-dark"><img src="assets/img/covers/syntegon.jpg" alt="Syntegon · SynTiso"></div>
+        <div class="v4foot"><p class="v4text">Eine hochregulierte Industrie mit fatalem Schadenspotenzial bei menschlichen Fehlern verlangt nach einem Visualisierungssystem für die fehlerfreie Bestückung von Pharmamaschinen in Rüstprozessen. Der Ansatz verbindet Informationsarchitektur und industrielle Usability mit dem, was Operatoren in Echtzeit sehen müssen.</p></div>
+      </article>
+
+      <article class="sitem">
+        <div class="sitem__head"><span class="sitem__num">05</span><div class="sitem__titlewrap"><h3 class="sitem__name">forwerts interactive</h3><span class="sitem__role">E-Commerce, Funnel-Optimierung</span></div></div>
+        <div class="sitem__media is-logo"><img src="assets/img/covers/forwerts.png" alt="forwerts interactive Logo"></div>
+        <div class="v4foot"><p class="v4text">Reibung im Funnel kostet Conversions, bevor eine Bestellung abgeschlossen ist. Für forwerts interactive entstanden Screen-Designs und Funnel-Flows mit klarer Nutzerführung, abgestimmt in UX-Workshops mit den Partnerunternehmen.</p></div>
+      </article>
+    </div>
+  </section>
+
+</main>
+
+<footer class="doc">projekte-preview4.html · Vergleichs-Sandbox, kein Teil der Live-Seite · Stand 09.09.2026</footer>
+
+</body>
+</html>
