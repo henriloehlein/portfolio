@@ -21,3 +21,14 @@ node_modules/
 Lebenslauf_Henri_Loehlein.pdf
 *.pdf
 Bilder/
+
+# Internal working docs (kept local, not published on the public repo —
+# contain name/personal notes not meant to surface when someone googles Henri)
+README.md
+DEPLOY.md
+PROJEKT-STATUS.md
+REFERENZEN.md
+CLAUDE.md
+
+# Dev/experiment preview pages (not part of the live site, not for public repo)
+*preview*
