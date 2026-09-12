@@ -1,6 +1,10 @@
 /* =========================================================
    Henri Löhlein — Portfolio
    Design system · dark-first · warm/cool gradient signature
+
+   Glass surfaces (subnav pill, toolband, modal bar, bubble popup rim) share
+   one --glass-blur/--glass-sat recipe. Elevation runs on a 3-step shadow
+   scale (--shadow-sm/md, plus the pre-existing --shadow as the "lg" tier).
    ========================================================= */
 
 /* ---------- Tokens ---------- */
@@ -44,6 +48,11 @@
   --f-display:'Fraunces',Georgia,serif;
   --f-sans:'Inter',system-ui,-apple-system,sans-serif;
   --f-mono:'Space Grotesk','Inter',sans-serif;
+
+  /* One glass recipe for every translucent surface (subnav pill, toolband, modal
+     bar, bubble popup rim) instead of each picking its own blur/saturation. */
+  --glass-blur:18px;
+  --glass-sat:175%;
 }
 
 [data-theme="dark"]{
@@ -56,6 +65,10 @@
   --text:#ECECF2;
   --muted:#9b9bac;
   --muted-2:#6e6e80;
+  /* 3-step elevation scale: sm (chips/cards at rest) / md (portrait, lifted cards)
+     / (the pre-existing) --shadow as the "lg" tier (phones, plates, the biggest pop) */
+  --shadow-sm:0 10px 24px -14px rgba(0,0,0,.5);
+  --shadow-md:0 20px 50px -18px rgba(0,0,0,.6);
   --shadow:0 30px 80px -20px rgba(0,0,0,.7);
   color-scheme:dark;
 }
@@ -69,6 +82,8 @@
   --text:#16141a;
   --muted:#5f5b66;
   --muted-2:#8b8794;
+  --shadow-sm:0 10px 20px -14px rgba(60,40,30,.24);
+  --shadow-md:0 20px 44px -20px rgba(60,40,30,.3);
   --shadow:0 30px 70px -28px rgba(60,40,30,.35);
   --head-soft:#211a29;
   color-scheme:light;
@@ -85,6 +100,7 @@ body{
   line-height:1.6;
   overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
   transition:background .6s var(--ease),color .6s var(--ease);
 }
 a{color:inherit;text-decoration:none}
@@ -92,6 +108,10 @@ img{display:block;max-width:100%}
 button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 ::selection{background:var(--warm-1);color:#fff}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+/* Short/medium body copy avoids ugly one-word widows; long prose or code would be
+   the exception, but nothing on this page runs long enough to need excluding. */
+p{text-wrap:pretty}
+h1,h2,h3{text-wrap:balance}
 
 /* ---------- Background field ---------- */
 /* Layered for depth: a vertical base wash, a slowly-rotating aurora, drifting
@@ -176,6 +196,9 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .preloader__bar i{display:block;height:100%;width:0;background:var(--grad);animation:preBar 1.6s var(--ease) forwards}
 @keyframes preBar{to{width:100%}}
 .preloader__meta{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+/* counter climbs 0 → 100: without tabular-nums each extra digit re-centers the
+   whole line as it appears, a visible micro-jump on every render frame */
+.preloader__count{font-variant-numeric:tabular-nums}
 
 /* ---------- Cursor · smooth spring-follow arrow (white), rotates to face travel ---------- */
 /* Position/rotation/scale are driven per-frame from JS (spring physics in initSmoothCursor),
@@ -199,11 +222,15 @@ html.has-custom-cursor,html.has-custom-cursor *{cursor:none}
 .nav{position:relative;width:100%;z-index:100;display:flex;align-items:center;justify-content:flex-end;padding:16px var(--pad);transition:padding .4s var(--ease)}
 .nav--minimal.is-stuck{padding:10px var(--pad)}
 .nav__tools{display:flex;align-items:center;gap:14px}
-.lang{display:flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+/* Tap target: was bare text with no padding (~20px tall). Padding + a hover chip
+   bring it to a real ~40px hit area without changing the resting look. */
+.lang{display:flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:13px;color:var(--muted);padding:11px 12px;border-radius:999px;transition:background .3s,color .3s}
+.lang:hover{background:color-mix(in srgb,var(--text) 7%,transparent)}
 .lang__opt{transition:color .3s}
 .lang__opt.is-active{color:var(--text)}
 .lang__sep{color:var(--muted-2)}
-.themeBtn{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;transition:border-color .3s,transform .3s}
+/* 38px → 44px: previously just under the 40px minimum tap-target guidance */
+.themeBtn{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;transition:border-color .3s,transform .3s}
 .themeBtn:hover{border-color:var(--line-2);transform:rotate(15deg)}
 .themeBtn__icon{width:18px;height:18px;fill:none;stroke:var(--text);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 [data-theme="dark"] .themeBtn__icon--sun{display:none}
@@ -221,7 +248,7 @@ html.has-custom-cursor,html.has-custom-cursor *{cursor:none}
 /* center · portrait + name + affiliation */
 .strip__center{display:flex;flex-direction:column;align-items:center;gap:clamp(14px,1.6vw,20px);z-index:2}
 .strip__portrait{position:relative;width:clamp(150px,16vw,208px);aspect-ratio:1}
-.strip__portraitFrame{position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden;box-shadow:0 26px 58px -22px rgba(0,0,0,.55);outline:1px solid color-mix(in srgb,var(--text) 12%,transparent);outline-offset:6px}
+.strip__portraitFrame{position:relative;width:100%;height:100%;border-radius:50%;overflow:hidden;box-shadow:var(--shadow-md);outline:1px solid color-mix(in srgb,var(--text) 12%,transparent);outline-offset:6px}
 .strip__portraitFrame img{width:100%;height:100%;object-fit:cover;filter:brightness(.9) contrast(1.03)}
 .strip__name{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}
 .strip__nameLg{font-family:var(--f-display);font-weight:400;font-size:clamp(24px,2.6vw,34px);line-height:1.04;letter-spacing:-.02em;color:var(--text)}
@@ -241,7 +268,7 @@ html.has-custom-cursor,html.has-custom-cursor *{cursor:none}
 
 /* sides · scattered project covers */
 .strip__aside{position:relative;height:clamp(210px,23vw,290px);align-self:center}
-.strip__cover{position:absolute;border-radius:14px;overflow:hidden;border:1px solid color-mix(in srgb,#fff 12%,transparent);box-shadow:0 18px 42px -16px rgba(0,0,0,.5);background:#0a0a0f}
+.strip__cover{position:absolute;border-radius:14px;overflow:hidden;border:1px solid color-mix(in srgb,#fff 12%,transparent);box-shadow:var(--shadow-sm);background:#0a0a0f}
 .strip__cover img{width:100%;height:100%;object-fit:cover;display:block}
 .sc-steady{width:62%;aspect-ratio:4/3;right:1%;top:3%;transform:rotate(-7deg)}
 .sc-milo{width:58%;aspect-ratio:4/3;left:1%;bottom:3%;transform:rotate(5deg);z-index:2}
@@ -270,7 +297,9 @@ html.has-custom-cursor,html.has-custom-cursor *{cursor:none}
    idle word never smudges whatever text or image scrolls behind it, only hover/active turn the
    filter on. Rim (::after): a hairline conic gradient masked down to just the outline (same
    content-box/border-box xor trick as .bubble__glass::before), so the edge reads as an actual lit
-   rim, not another soft fill. Both fade by opacity, not by animating the gradients themselves. */
+   rim, not another soft fill. Both fade by opacity, not by animating the gradients themselves.
+   Blur/saturation now come from the shared --glass-blur/--glass-sat pair (see toolband/modal bar/
+   bubblePop below) instead of a value picked just for this element. */
 .subnav__link::before{content:"";position:absolute;inset:0;z-index:-2;border-radius:inherit;pointer-events:none;
   backdrop-filter:blur(0) saturate(100%);-webkit-backdrop-filter:blur(0) saturate(100%);
   background:
@@ -291,7 +320,7 @@ html.has-custom-cursor,html.has-custom-cursor *{cursor:none}
   -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
   -webkit-mask-composite:xor;mask-composite:exclude;
   opacity:0;transition:opacity .4s var(--ease)}
-.subnav__link:hover::before,.subnav__link.is-active::before{backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);opacity:1}
+.subnav__link:hover::before,.subnav__link.is-active::before{backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-sat));-webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-sat));opacity:1}
 .subnav__link:hover::after,.subnav__link.is-active::after{opacity:.5}
 /* Chrome/silver shine sweep through the word itself, tokenised so it reads white-on-dark and
    near-black-on-light. Resting words keep the plain flat --muted colour, no pill, no shine. */
@@ -399,8 +428,8 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 /* ---------- Floating bubbles · viewport-wide drifting ---------- */
 .bubbles{position:fixed;inset:0;z-index:50;pointer-events:none;overflow:visible}
 @media (max-width:760px){.bubbles{display:none}}
-.bubble{position:fixed;top:0;left:0;width:84px;height:84px;border-radius:50%;overflow:hidden;cursor:pointer;background:color-mix(in srgb,var(--surface) 30%,transparent);pointer-events:auto;opacity:.42;transition:opacity .5s var(--ease),box-shadow .4s var(--ease);will-change:transform;box-shadow:0 0 0 1px rgba(255,255,255,.16),0 0 16px 1px rgba(255,255,255,.22),0 10px 24px -10px rgba(0,0,0,.4)}
-.bubble:hover{opacity:.92;box-shadow:0 0 0 1px rgba(255,255,255,.32),0 0 26px 3px rgba(255,255,255,.34),0 14px 30px -10px rgba(0,0,0,.45)}
+.bubble{position:fixed;top:0;left:0;width:84px;height:84px;border-radius:50%;overflow:hidden;cursor:pointer;background:color-mix(in srgb,var(--surface) 30%,transparent);pointer-events:auto;opacity:.42;transition:opacity .5s var(--ease),box-shadow .4s var(--ease);will-change:transform;box-shadow:0 0 0 1px rgba(255,255,255,.16),0 0 16px 1px rgba(255,255,255,.22),var(--shadow-sm)}
+.bubble:hover{opacity:.92;box-shadow:0 0 0 1px rgba(255,255,255,.32),0 0 26px 3px rgba(255,255,255,.34),var(--shadow-md)}
 .bubble__media{position:absolute;inset:0}
 .bubble__media img{width:100%;height:100%;object-fit:cover}
 .bubble__glass{position:absolute;inset:0;border-radius:inherit;pointer-events:none;
@@ -420,8 +449,17 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 .bubbleStage{position:fixed;inset:0;z-index:120;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:24px;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .35s var(--ease),visibility .35s}
 .bubbleStage.is-on{opacity:1;visibility:visible}
 
-.bubblePop{width:clamp(300px,92vw,420px);height:clamp(380px,82vh,500px);display:flex;flex-direction:column;background:var(--surface-2);border-radius:24px;overflow:hidden;box-shadow:0 50px 110px -24px rgba(0,0,0,.7),0 0 0 1px var(--line);pointer-events:auto;cursor:default;transform:scale(.94) translateY(8px);transition:transform .4s var(--ease)}
-.bubbleStage.is-on .bubblePop{transform:none}
+/* The popup sits over an 86%-opaque scrim, so real backdrop-filter would blur near-solid black —
+   no glass to see. Instead it borrows the *rim* half of the site's glass recipe (hairline top-lit
+   border via the same content-box/border-box mask as .subnav__link::after) so it still reads as
+   part of the same glass family, without a blur that would do nothing. isolation:isolate keeps the
+   rim's blend mode from leaking onto the scrim behind it. */
+.bubblePop{position:relative;isolation:isolate;width:clamp(300px,92vw,420px);height:clamp(380px,82vh,500px);display:flex;flex-direction:column;background:var(--surface-2);border-radius:24px;overflow:hidden;box-shadow:var(--shadow),0 0 0 1px var(--line);pointer-events:auto;cursor:default;transform:scale(.94) translateY(8px);transition:transform .3s var(--ease)}
+.bubblePop::before{content:"";position:absolute;inset:0;z-index:2;border-radius:inherit;pointer-events:none;padding:1px;
+  background:linear-gradient(165deg,color-mix(in srgb,#fff 38%,transparent),color-mix(in srgb,#fff 4%,transparent) 40%,transparent 70%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude}
+.bubbleStage.is-on .bubblePop{transform:none;transition:transform .45s var(--ease)}
 .bubblePop__media{flex:0 0 44%;overflow:hidden;background:var(--bg-2)}
 .bubblePop__media img{width:100%;height:100%;object-fit:cover;display:block}
 .bubblePop__body{flex:1 1 auto;display:flex;flex-direction:column;padding:20px 24px 22px;text-align:left;min-height:0}
@@ -453,9 +491,10 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
    Same width as the rest of the section's content (no full-bleed), open at both sides through a
    single mask-image that fades the *entire* surface (glass + border + shadow + icons together, not
    just the marquee content) into the page at each edge, so it reads as an open channel rather than
-   a framed card, without spilling past the page's own margins. */
+   a framed card, without spilling past the page's own margins. Blur/saturation: shared
+   --glass-blur/--glass-sat, same recipe as the subnav pill and modal bar. */
 .toolband{position:relative;isolation:isolate;
-  backdrop-filter:blur(14px) saturate(170%);-webkit-backdrop-filter:blur(14px) saturate(170%);
+  backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-sat));-webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-sat));
   background:
     linear-gradient(180deg,color-mix(in srgb,#fff 7%,transparent),transparent 65%),
     color-mix(in srgb,var(--surface) 12%,transparent);
@@ -505,9 +544,12 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
   filter:drop-shadow(0 5px 22px var(--head-glow))}
 .focus__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
 .fcard{perspective:1400px;min-height:262px;border-radius:18px;cursor:pointer;outline:none}
+/* Keyboard focus needs its own visible ring: the flip on :focus-visible (below) tells you
+   *something* happened, not *which* card has focus. Mouse clicks stay ring-free. */
+.fcard:focus-visible{outline:2px solid var(--warm-1);outline-offset:6px;border-radius:22px}
 .fcard__inner{position:relative;width:100%;min-height:262px;transition:transform .7s var(--ease);transform-style:preserve-3d}
 .fcard:hover .fcard__inner,.fcard:focus-visible .fcard__inner,.fcard.is-flipped .fcard__inner{transform:rotateY(180deg)}
-.fcard__face{position:absolute;inset:0;min-height:262px;border:1px solid var(--line);border-radius:18px;padding:28px 26px;display:flex;flex-direction:column;-webkit-backface-visibility:hidden;backface-visibility:hidden;overflow:hidden;background:color-mix(in srgb,var(--surface) 55%,transparent)}
+.fcard__face{position:absolute;inset:0;min-height:262px;border:1px solid var(--line);border-radius:18px;padding:28px 26px;display:flex;flex-direction:column;-webkit-backface-visibility:hidden;backface-visibility:hidden;overflow:hidden;background:color-mix(in srgb,var(--surface) 55%,transparent);box-shadow:var(--shadow-sm)}
 .fcard__front{justify-content:flex-end}
 .fcard__icon{position:absolute;top:-14px;right:-14px;width:124px;height:124px;fill:none;stroke:var(--text);stroke-width:1;stroke-linecap:round;stroke-linejoin:round;opacity:.12;transition:opacity .5s var(--ease),transform .7s var(--ease)}
 .fcard:hover .fcard__icon{opacity:.2;transform:scale(1.06) rotate(-4deg)}
@@ -577,8 +619,10 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 .contact__title em{font-style:italic;background:var(--head-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
   filter:drop-shadow(0 8px 30px var(--head-glow))}
 .contact__links{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.contact__link{display:flex;flex-direction:column;gap:10px;padding:34px;border:1px solid var(--line);border-radius:18px;transition:border-color .4s,transform .4s var(--ease),background .4s}
-.contact__link:hover{transform:translateY(-5px);border-color:var(--line-2);background:color-mix(in srgb,var(--surface) 60%,transparent)}
+/* Everything else on the page carries elevation (plates, cards, popups); these two links were the
+   one flat exception (border only). Resting shadow + a stronger one on hover matches the lift. */
+.contact__link{display:flex;flex-direction:column;gap:10px;padding:34px;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-sm);transition:border-color .4s,transform .4s var(--ease),background .4s,box-shadow .4s var(--ease)}
+.contact__link:hover{transform:translateY(-5px);border-color:var(--line-2);background:color-mix(in srgb,var(--surface) 60%,transparent);box-shadow:var(--shadow-md)}
 .contact__linkLabel{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .contact__linkVal{font-family:var(--f-display);font-size:clamp(22px,3vw,38px);font-weight:380;letter-spacing:-.02em}
 
@@ -588,7 +632,7 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 .footer__row--meta{margin-top:18px;font-family:var(--f-mono);font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted-2)}
 .footer__name{font-family:var(--f-display);font-size:24px;font-weight:400}
 .footer__copy{font-family:var(--f-mono);font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
-.footer__top{display:inline-flex;align-items:center;gap:8px;transition:color .3s}
+.footer__top{display:inline-flex;align-items:center;gap:8px;padding:10px 4px;transition:color .3s}
 .footer__top:hover{color:var(--text)}
 .footer__top svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 
@@ -597,9 +641,12 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 .modal.is-open{visibility:visible;pointer-events:auto}
 .modal__scrim{position:absolute;inset:0;background:rgba(0,0,0,.6);opacity:0;backdrop-filter:blur(4px);transition:opacity .5s var(--ease)}
 .modal.is-open .modal__scrim{opacity:1}
-.modal__panel{position:absolute;top:0;right:0;height:100%;width:min(960px,94vw);background:var(--bg-2);border-left:1px solid var(--line);box-shadow:-30px 0 80px rgba(0,0,0,.5);transform:translateX(100%);transition:transform .65s var(--ease);display:flex;flex-direction:column}
-.modal.is-open .modal__panel{transform:none}
-.modal__bar{display:flex;align-items:center;justify-content:space-between;padding:18px clamp(22px,4vw,52px);border-bottom:1px solid var(--line);flex-shrink:0;background:color-mix(in srgb,var(--bg-2) 80%,transparent);backdrop-filter:blur(10px)}
+/* Base rule = closing speed (class removed, so this is what applies); .is-open below overrides
+   it to a slower, fuller entrance. Same technique used on .bubblePop — no JS involved, the
+   cascade just resolves to a different transition depending on which rule is more specific. */
+.modal__panel{position:absolute;top:0;right:0;height:100%;width:min(960px,94vw);background:var(--bg-2);border-left:1px solid var(--line);box-shadow:-30px 0 80px rgba(0,0,0,.5);transform:translateX(100%);transition:transform .45s var(--ease);display:flex;flex-direction:column}
+.modal.is-open .modal__panel{transform:none;transition:transform .65s var(--ease)}
+.modal__bar{display:flex;align-items:center;justify-content:space-between;padding:18px clamp(22px,4vw,52px);border-bottom:1px solid var(--line);flex-shrink:0;background:color-mix(in srgb,var(--bg-2) 80%,transparent);backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-sat));-webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-sat))}
 .modal__barName{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 .modal__close{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;transition:background .3s,border-color .3s,transform .3s}
 .modal__close:hover{background:var(--warm-1);border-color:var(--warm-1);transform:rotate(90deg)}
@@ -609,6 +656,9 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 .modal__progress i{display:block;height:100%;width:0;background:var(--grad)}
 .modal__content{overflow-y:auto;padding:clamp(30px,5vw,68px);scroll-behavior:smooth}
 .modal__content:focus{outline:none}
+/* JS moves focus here on open (mContent.focus()) so a keyboard/AT user knows where they landed —
+   outline:none with no replacement made that landing invisible. */
+.modal__content:focus-visible{outline:2px solid var(--warm-1);outline-offset:-3px}
 
 /* case study internals */
 .cs__hero{display:grid;grid-template-columns:1.4fr 1fr;gap:44px;padding-bottom:46px;border-bottom:1px solid var(--line);margin-bottom:50px}
