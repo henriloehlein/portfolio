@@ -2,9 +2,9 @@
    Henri Löhlein — Portfolio
    Design system · dark-first · warm/cool gradient signature
 
-   Glass surfaces (subnav pill, toolband, modal bar, bubble popup rim) share
-   one --glass-blur/--glass-sat recipe. Elevation runs on a 3-step shadow
-   scale (--shadow-sm/md, plus the pre-existing --shadow as the "lg" tier).
+   Glass surfaces (subnav pill, toolband, modal bar) share one --glass-blur/
+   --glass-sat recipe. Elevation runs on a 3-step shadow scale (--shadow-sm/md,
+   plus the pre-existing --shadow as the "lg" tier).
    ========================================================= */
 
 /* ---------- Tokens ---------- */
@@ -50,7 +50,7 @@
   --f-mono:'Space Grotesk','Inter',sans-serif;
 
   /* One glass recipe for every translucent surface (subnav pill, toolband, modal
-     bar, bubble popup rim) instead of each picking its own blur/saturation. */
+     bar) instead of each picking its own blur/saturation. */
   --glass-blur:18px;
   --glass-sat:175%;
 }
@@ -295,11 +295,11 @@ html.has-custom-cursor,html.has-custom-cursor *{cursor:none}
   transition:color .35s,transform .7s cubic-bezier(.22,1,.36,.98),letter-spacing .45s var(--ease),text-shadow .45s var(--ease)}
 /* Glass body (::before): backdrop-filter sits at blur(0)/no saturation at rest, a true no-op, so an
    idle word never smudges whatever text or image scrolls behind it, only hover/active turn the
-   filter on. Rim (::after): a hairline conic gradient masked down to just the outline (same
-   content-box/border-box xor trick as .bubble__glass::before), so the edge reads as an actual lit
-   rim, not another soft fill. Both fade by opacity, not by animating the gradients themselves.
-   Blur/saturation now come from the shared --glass-blur/--glass-sat pair (see toolband/modal bar/
-   bubblePop below) instead of a value picked just for this element. */
+   filter on. Rim (::after): a hairline conic gradient masked down to just the outline (content-box/
+   border-box xor trick), so the edge reads as an actual lit rim, not another soft fill. Both fade by
+   opacity, not by animating the gradients themselves. Blur/saturation come from the shared
+   --glass-blur/--glass-sat pair (see toolband/modal bar below) instead of a value picked just for
+   this element. */
 .subnav__link::before{content:"";position:absolute;inset:0;z-index:-2;border-radius:inherit;pointer-events:none;
   backdrop-filter:blur(0) saturate(100%);-webkit-backdrop-filter:blur(0) saturate(100%);
   background:
@@ -425,64 +425,6 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 .hero__cta:hover .hero__ctaDot{transform:scale(60)}
 .hero__cta:hover .hero__ctaLabel{transform:translateX(20px);opacity:0}
 .hero__cta:hover .hero__ctaReveal{transform:translateX(0);opacity:1}
-/* ---------- Floating bubbles · viewport-wide drifting ---------- */
-.bubbles{position:fixed;inset:0;z-index:50;pointer-events:none;overflow:visible}
-@media (max-width:760px){.bubbles{display:none}}
-.bubble{position:fixed;top:0;left:0;width:84px;height:84px;border-radius:50%;overflow:hidden;cursor:pointer;background:color-mix(in srgb,var(--surface) 30%,transparent);pointer-events:auto;opacity:.42;transition:opacity .5s var(--ease),box-shadow .4s var(--ease);will-change:transform;box-shadow:0 0 0 1px rgba(255,255,255,.16),0 0 16px 1px rgba(255,255,255,.22),var(--shadow-sm)}
-.bubble:hover{opacity:.92;box-shadow:0 0 0 1px rgba(255,255,255,.32),0 0 26px 3px rgba(255,255,255,.34),var(--shadow-md)}
-.bubble__media{position:absolute;inset:0}
-.bubble__media img{width:100%;height:100%;object-fit:cover}
-.bubble__glass{position:absolute;inset:0;border-radius:inherit;pointer-events:none;
-  background:radial-gradient(circle at 32% 26%,rgba(255,255,255,.42),rgba(255,255,255,.04) 42%,rgba(255,255,255,0) 64%);
-  box-shadow:inset 0 0 14px rgba(255,255,255,.18),inset 6px -8px 22px rgba(120,140,255,.16),inset -7px 5px 18px rgba(255,140,177,.12)}
-.bubble__glass::before{content:"";position:absolute;inset:0;border-radius:50%;padding:1.5px;
-  background:conic-gradient(from 0deg,var(--warm-1),var(--cool-1),var(--warm-1));
-  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;
-  opacity:.45;mix-blend-mode:screen;animation:irisSpin 14s linear infinite}
-.bubble__glass::after{content:"";position:absolute;top:14%;left:18%;width:24%;height:18%;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.88),transparent 70%);filter:blur(1px);opacity:.7;animation:sheen 6s ease-in-out infinite}
-
-/* ---- preview popup (own element, fully opaque, separate from the bubbles) ---- */
-.bubbleScrim{position:fixed;inset:0;z-index:110;background:rgba(6,6,10,.86);opacity:0;visibility:hidden;transition:opacity .35s var(--ease),visibility .35s;cursor:pointer}
-.bubbleScrim.is-on{opacity:1;visibility:visible}
-
-/* stage centers the card + link; it lets clicks fall through to the scrim to close */
-.bubbleStage{position:fixed;inset:0;z-index:120;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:24px;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .35s var(--ease),visibility .35s}
-.bubbleStage.is-on{opacity:1;visibility:visible}
-
-/* The popup sits over an 86%-opaque scrim, so real backdrop-filter would blur near-solid black —
-   no glass to see. Instead it borrows the *rim* half of the site's glass recipe (hairline top-lit
-   border via the same content-box/border-box mask as .subnav__link::after) so it still reads as
-   part of the same glass family, without a blur that would do nothing. isolation:isolate keeps the
-   rim's blend mode from leaking onto the scrim behind it. */
-.bubblePop{position:relative;isolation:isolate;width:clamp(300px,92vw,420px);height:clamp(380px,82vh,500px);display:flex;flex-direction:column;background:var(--surface-2);border-radius:24px;overflow:hidden;box-shadow:var(--shadow),0 0 0 1px var(--line);pointer-events:auto;cursor:default;transform:scale(.94) translateY(8px);transition:transform .3s var(--ease)}
-.bubblePop::before{content:"";position:absolute;inset:0;z-index:2;border-radius:inherit;pointer-events:none;padding:1px;
-  background:linear-gradient(165deg,color-mix(in srgb,#fff 38%,transparent),color-mix(in srgb,#fff 4%,transparent) 40%,transparent 70%);
-  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-  -webkit-mask-composite:xor;mask-composite:exclude}
-.bubbleStage.is-on .bubblePop{transform:none;transition:transform .45s var(--ease)}
-.bubblePop__media{flex:0 0 44%;overflow:hidden;background:var(--bg-2)}
-.bubblePop__media img{width:100%;height:100%;object-fit:cover;display:block}
-.bubblePop__body{flex:1 1 auto;display:flex;flex-direction:column;padding:20px 24px 22px;text-align:left;min-height:0}
-.bubblePop__kicker{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--warm-1);margin-bottom:9px}
-.bubblePop__name{font-family:var(--f-display);font-size:clamp(24px,2.6vw,32px);font-weight:420;letter-spacing:-.02em;color:var(--text);line-height:1.02;margin-bottom:12px}
-.bubblePop__benefit{font-size:15px;line-height:1.45;color:var(--text);margin-bottom:12px}
-.bubblePop__tease{font-size:13px;line-height:1.55;color:var(--muted);margin:0;overflow:hidden}
-.bubblePop__tease em{font-style:italic;color:var(--text)}
-
-/* free-standing link below the card */
-.bubbleLink{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:14px;letter-spacing:.02em;color:#fff;background:none;border:none;cursor:pointer;pointer-events:auto;text-shadow:0 2px 14px rgba(0,0,0,.55);transition:color .3s,transform .4s var(--ease);transform:translateY(6px)}
-.bubbleStage.is-on .bubbleLink{transform:none}
-.bubbleLink:hover{color:var(--warm-2)}
-.bubbleLink svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s}
-.bubbleLink:hover svg{transform:translate(3px,-3px)}
-
-@keyframes sheen{0%,100%{opacity:.7}50%{opacity:.32}}
-@keyframes irisSpin{to{transform:rotate(360deg)}}
-
-@media (prefers-reduced-motion:reduce){
-  .bubble{animation:none!important}
-  .bubble__glass::before,.bubble__glass::after{animation:none!important}
-}
 
 /* ---------- Toolband · quiet glass band, tools in a slow marquee ---------- */
 /* Same glass DNA as .subnav__link (blur+saturate, hairline rim, soft outer lift), tuned flatter
@@ -642,8 +584,8 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 .modal__scrim{position:absolute;inset:0;background:rgba(0,0,0,.6);opacity:0;backdrop-filter:blur(4px);transition:opacity .5s var(--ease)}
 .modal.is-open .modal__scrim{opacity:1}
 /* Base rule = closing speed (class removed, so this is what applies); .is-open below overrides
-   it to a slower, fuller entrance. Same technique used on .bubblePop — no JS involved, the
-   cascade just resolves to a different transition depending on which rule is more specific. */
+   it to a slower, fuller entrance. No JS involved, the cascade just resolves to a different
+   transition depending on which rule is more specific. */
 .modal__panel{position:absolute;top:0;right:0;height:100%;width:min(960px,94vw);background:var(--bg-2);border-left:1px solid var(--line);box-shadow:-30px 0 80px rgba(0,0,0,.5);transform:translateX(100%);transition:transform .45s var(--ease);display:flex;flex-direction:column}
 .modal.is-open .modal__panel{transform:none;transition:transform .65s var(--ease)}
 .modal__bar{display:flex;align-items:center;justify-content:space-between;padding:18px clamp(22px,4vw,52px);border-bottom:1px solid var(--line);flex-shrink:0;background:color-mix(in srgb,var(--bg-2) 80%,transparent);backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-sat));-webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-sat))}
