@@ -11,6 +11,13 @@ Oder gezielt eine Stelle ansehen: `git show <hash>:<pfad>` mit dem Hash aus dem 
 
 ---
 
+## Header-Strip (Portrait-Bühne mit Projekt-Covern)
+- **Entfernt:** 2026-09-18
+- **Letzter Stand vor Entfernung:** Commit `e1199f6`
+- **War:** `section.strip#strip` (HTML) unter der Top-Bar: großes rundes Portrait (bis 208 px), Name, Typing-Zeile, links/rechts fünf schräg gestreute Projekt-Cover (`.strip__aside`, `.strip__cover`, `.sc-steady` … `.sc-forwerts`). CSS-Block „Header strip · full-width composition" (`.strip*`). Kein eigenes JS; die Typing-Zeile (`typeLoop`/`startStripType` in `js/main.js`) lebt weiter, jetzt in der Navleiste (`.nav__skills`).
+- **Fundstelle für vollen Code:** `git show e1199f6:index.html` (Abschnitt „HEADER STRIP"), `git show e1199f6:css/styles.css` (Block „Header strip").
+- **Warum entfernt:** Header sollte dezenter und flacher werden. Portrait (36 px), Name und Typing-Zeile sind in die Top-Bar links gewandert (`.nav__id`), die Subnav rückt direkt darunter: Subnav-Unterkante bei ~125 px statt ~586 px auf 1440 px Breite, der Projekte-Titel steht damit im ersten Viewport.
+
 ## Schwebende Blasen (Bubbles)
 - **Entfernt:** 2026-09-13
 - **Letzter Stand vor Entfernung:** Commit `4cc8b13`

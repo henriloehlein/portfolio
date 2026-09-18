@@ -4,15 +4,15 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="author" content="Henri Löhlein" />
-<meta name="description" content="Henri Löhlein, UX/UI Designer. Digitale Erfahrungen an der Schnittstelle von Psychologie und Design. Nudging, Persuasive Design, adaptive KI-Systeme." />
+<meta name="description" content="Henri Löhlein, UX/UI & Product Designer. Digitale Erfahrungen an der Schnittstelle von Psychologie und Design. Nudging, Persuasive Design, adaptive KI-Systeme." />
 <meta name="theme-color" content="#0a0a0f" />
-<title>Henri Löhlein — UX/UI Design</title>
+<title>Henri Löhlein — UX/UI & Product Design</title>
 
 <!-- Domain: bei abweichender Domain nur die folgende Zeile anpassen -->
 <link rel="canonical" href="https://henriloehlein.de/" />
 <link rel="icon" type="image/svg+xml" href="favicon.svg" />
 
-<meta property="og:title" content="Henri Löhlein — UX/UI Design" />
+<meta property="og:title" content="Henri Löhlein — UX/UI & Product Design" />
 <meta property="og:description" content="Digitale Erfahrungen an der Schnittstelle von Psychologie und Design." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://henriloehlein.de/" />
@@ -38,7 +38,7 @@
     </div>
     <div class="preloader__bar"><i></i></div>
     <div class="preloader__meta">
-      <span data-i18n="pre.role">UX / UI Designer</span>
+      <span data-i18n="pre.role">UX / UI & Product Designer</span>
       <span class="preloader__count" id="preCount">0</span>
     </div>
   </div>
@@ -63,8 +63,14 @@
   <div class="field__grain"></div>
 </div>
 
-<!-- ============ TOP BAR · only DE/EN + theme ============ -->
+<!-- ============ TOP BAR · identity left (portrait + name + typing line), DE/EN + theme right ============ -->
 <header class="nav nav--minimal" id="nav">
+  <div class="nav__id">
+    <div class="nav__portrait"><img src="assets/img/covers/portrait.jpg" alt="Henri Löhlein" /></div>
+    <span class="nav__name">Henri Löhlein</span>
+    <span class="nav__skills" id="typeSkills" aria-hidden="true"></span>
+    <span class="sr-only" id="typeSkillsSr"></span>
+  </div>
   <div class="nav__tools">
     <button class="lang" id="langToggle" aria-label="Sprache wechseln">
       <span class="lang__opt is-active" data-lang="de">DE</span>
@@ -77,38 +83,6 @@
     </button>
   </div>
 </header>
-
-<!-- ============ HEADER STRIP · full-width composition (portrait + covers) ============ -->
-<section class="strip" id="strip" aria-label="Portrait und Projekte">
-  <div class="strip__bg" aria-hidden="true"></div>
-  <div class="strip__inner">
-
-    <div class="strip__aside strip__aside--left" aria-hidden="true">
-      <figure class="strip__cover sc-steady"><img src="assets/img/covers/steady.png" alt="" loading="lazy"></figure>
-      <figure class="strip__cover sc-milo"><img src="assets/img/covers/milo.png" alt="" loading="lazy"></figure>
-    </div>
-
-    <div class="strip__center">
-      <div class="strip__portrait">
-        <div class="strip__portraitFrame">
-          <img src="assets/img/covers/portrait.jpg" alt="Henri Löhlein" />
-        </div>
-      </div>
-      <div class="strip__name">
-        <span class="strip__nameLg">Henri Löhlein</span>
-        <span class="strip__meta strip__skills" id="typeSkills" aria-hidden="true"></span>
-        <span class="sr-only" id="typeSkillsSr"></span>
-      </div>
-    </div>
-
-    <div class="strip__aside strip__aside--right" aria-hidden="true">
-      <figure class="strip__cover sc-cognify"><img src="assets/img/covers/cognify.png" alt="" loading="lazy"></figure>
-      <figure class="strip__cover sc-syntegon"><img src="assets/img/covers/syntegon.jpg" alt="" loading="lazy"></figure>
-      <figure class="strip__cover sc-forwerts"><img src="assets/img/covers/forwerts.png" alt="" loading="lazy"></figure>
-    </div>
-
-  </div>
-</section>
 
 <main id="top">
 
@@ -368,7 +342,7 @@
     </h1>
 
     <p class="hero__lede reveal" data-i18n="hero.lede">
-      Ich bin Henri Löhlein, UX/UI&nbsp;Designer. Ich arbeite an der Schnittstelle von
+      Ich bin Henri Löhlein, UX/UI &amp; Product&nbsp;Designer. Ich arbeite an der Schnittstelle von
       <em>Psychologie und Technologie</em>: wie KI, LLMs und adaptive Systeme verändern, wie
       Menschen entscheiden, vertrauen und handeln. Mein Fokus liegt auf psychologisch
       fundierten Mechaniken, von der Research bis zum getesteten Prototyp.

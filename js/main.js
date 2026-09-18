@@ -9,11 +9,11 @@
 
   /* ---------- i18n dictionary (EN overrides; DE lives in HTML) ---------- */
   const EN = {
-    'pre.role':'UX / UI Designer',
+    'pre.role':'UX / UI & Product Designer',
     'nav.work':'Projects','nav.how':'How I work','nav.about':'About','nav.contact':'Contact',
     'hero.avail':'Open to working-student & junior roles 2026','hero.loc':'Ansbach University · Germany',
     'hero.t1':'Design','hero.t2':'on the edge',
-    'hero.lede':'I am Henri Löhlein, UX/UI designer. I work at the intersection of <em>psychology and technology</em>: how AI, LLMs and adaptive systems change the way people decide, trust and act. My focus is psychology-based mechanics, from research to a tested prototype.',
+    'hero.lede':'I am Henri Löhlein, UX/UI & product designer. I work at the intersection of <em>psychology and technology</em>: how AI, LLMs and adaptive systems change the way people decide, trust and act. My focus is psychology-based mechanics, from research to a tested prototype.',
     'hero.cta':'Get in touch','hero.scroll':'Scroll',
     'subnav.meta':'Bachelor candidate at Syntegon · Ansbach University',
     'tag.approach':'Stance','tag.how':'How I work','tag.work':'Case studies','tag.about':'About','tag.contact':'Contact',
@@ -53,18 +53,18 @@
   const DEstore = new Map();
   let lang = 'de';
 
-  /* ---------- Strip skills line: two phrases loop in an endless type -> hold -> delete ->
+  /* ---------- Nav skills line: two phrases loop in an endless type -> hold -> delete ->
      type cycle (MagicUI TypingAnimation's "words + loop" pattern), not part of the data-i18n
      system since the text is revealed/removed character by character rather than swapped as
      one block. Second phrase brings the Syntegon/forwerts/Ansbach affiliation back, just
-     rotating through instead of sitting permanently under the name. */
+     rotating through instead of sitting permanently next to the name. */
   const STRIP_WORDS = {
     de: [
-      { text: 'User Experience Design · Interfacedesign · User Research · Interaktionsdesign', hold: 4200 },
+      { text: 'User Experience Design · Product Design · Interfacedesign · User Research · Interaktionsdesign', hold: 4200 },
       { text: 'Hochschule Ansbach · Syntegon · forwerts', hold: 3000 }
     ],
     en: [
-      { text: 'User Experience Design · Interface Design · User Research · Interaction Design', hold: 4200 },
+      { text: 'User Experience Design · Product Design · Interface Design · User Research · Interaction Design', hold: 4200 },
       { text: 'Ansbach University · Syntegon · forwerts', hold: 3000 }
     ]
   };
