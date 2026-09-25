@@ -1,0 +1,120 @@
+/* Werkzeugband, unverändert aus Commit 3282087 (css/styles.css, Block Toolband) */
+.toolband{position:relative;isolation:isolate;
+  backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-sat));-webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-sat));
+  background:
+    linear-gradient(180deg,color-mix(in srgb,#fff 7%,transparent),transparent 65%),
+    color-mix(in srgb,var(--surface) 12%,transparent);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb,#fff 16%,transparent),
+    0 10px 22px -16px rgba(0,0,0,.3);
+  mask-image:linear-gradient(to right,transparent,#000 10%,#000 90%,transparent);
+  -webkit-mask-image:linear-gradient(to right,transparent,#000 10%,#000 90%,transparent)}
+.toolband::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;opacity:.5;
+  background:linear-gradient(115deg,transparent 35%,color-mix(in srgb,#fff 22%,transparent) 48%,transparent 62%);
+  background-size:220% 100%;background-repeat:no-repeat;background-position:130% 0;
+  animation:toolbandSheen 9s ease-in-out infinite}
+.toolband:hover::after,.toolband:focus-within::after{animation-play-state:paused}
+@keyframes toolbandSheen{0%,60%,100%{background-position:130% 0}80%{background-position:-30% 0}}
+.toolband__sicht{position:relative;overflow:hidden;padding:44px 0}
+.toolband__track{list-style:none;display:flex;width:max-content;align-items:center;gap:84px;padding:0 clamp(28px,6vw,90px);
+  animation:toolbandRun 42s linear infinite}
+.toolband:hover .toolband__track,.toolband:focus-within .toolband__track{animation-play-state:paused}
+@keyframes toolbandRun{to{transform:translateX(-50%)}}
+.toolband__item{display:flex;align-items:center;flex:none;gap:20px}
+.toolband__item svg{flex:none;display:block;width:42px;height:42px}
+.toolband__item span{font-family:var(--f-mono);font-size:23px;font-weight:500;white-space:nowrap;color:var(--text)}
+@media (prefers-reduced-motion:reduce){
+  .toolband__track{animation:none!important;flex-wrap:wrap;width:100%!important;justify-content:center}
+  .toolband::after{animation:none!important}
+}
+@media (max-width:620px){
+  .toolband__sicht{padding:30px 0}
+  .toolband__track{gap:50px;padding:0 22px}
+  .toolband__item svg{width:29px;height:29px}
+  .toolband__item span{font-size:17px}
+}
+
+
+/* =========================================================
+   Preview · neue Komponenten (Intro kompakt, Wie ich arbeite, Werkzeugband, Profil)
+   Wird nur von preview-neu.html geladen. Nach Freigabe in styles.css übernehmen.
+   ========================================================= */
+
+/* ---------- Intro: kompakt ---------- */
+/* Vorher: 3 Zeilen H1 bei 58px + 5 Zeilen Lede + Fakten-Leiste, der Text füllte den ganzen ersten
+   Viewport. Jetzt: H1 in 2 Zeilen, Lede in 2 Zeilen, Aktionen. Verfügbarkeit steht bereits in der
+   Navleiste und im Kontaktblock, die Fakten-Leiste entfällt. */
+.intro{padding-top:clamp(22px,3vw,36px);padding-bottom:clamp(18px,2.6vw,32px)}
+.intro__title{max-width:none;font-size:clamp(28px,3.25vw,46px);line-height:1.1;letter-spacing:-.028em}
+.intro__lede{max-width:68ch;margin-top:clamp(16px,2vw,22px);font-size:clamp(15.5px,1.25vw,17.5px);line-height:1.6}
+.intro__actions{margin-top:clamp(20px,2.4vw,28px);gap:20px}
+.intro .cta{padding:14px 24px}
+.intro + .work{padding-top:clamp(36px,5vw,64px)}
+
+/* ---------- Wie ich arbeite ---------- */
+.how{padding-bottom:clamp(30px,4vw,60px)}
+.phases{list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(28px,3.4vw,52px)}
+.phase{position:relative;padding-top:26px;transition-delay:calc(var(--n,0) * 90ms)}
+/* Die Linie über jeder Spalte zeichnet sich beim Einblenden von links nach rechts: die Reihenfolge
+   der Schritte ist der Inhalt, deshalb versetzt sie sich pro Spalte. Ein kurzer Akzentstrich
+   markiert den Anfang jedes Schritts. */
+.phase::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,var(--warm-1) 0 28px,var(--line-2) 28px);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform 1.2s var(--ease) calc(var(--n,0) * 130ms)}
+.phase.is-in::before{transform:none}
+.phase__name{font-family:var(--f-display);font-weight:380;font-size:clamp(28px,2.7vw,38px);letter-spacing:-.025em;line-height:1.05}
+.phase__lead{margin-top:14px;font-size:15.5px;line-height:1.55;color:var(--muted);max-width:32ch}
+.proofs{margin-top:clamp(24px,2.8vw,34px);display:grid;gap:20px}
+.proofs dt{font-size:14px;font-weight:500;line-height:1.4;color:var(--text)}
+.proofs dd{margin-top:4px;font-size:14.5px;line-height:1.5;color:var(--muted)}
+/* Belege sind echte Links in die Case Studies (öffnen dasselbe Panel wie die Projektzeilen). */
+.proof{font:inherit;font-weight:500;color:var(--text);padding:0;border-bottom:1px solid var(--line-2);transition:border-color .3s var(--ease),color .3s}
+.proof:hover{border-color:var(--warm-1)}
+.proof:focus-visible{outline:2px solid var(--warm-1);outline-offset:3px;border-radius:2px}
+.how .toolband{margin-top:clamp(56px,7vw,96px)}
+@media (max-width:1040px){
+  .phases{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:clamp(40px,6vw,56px)}
+}
+@media (max-width:620px){
+  .phases{grid-template-columns:1fr}
+  .phase__lead{max-width:none}
+}
+
+/* ---------- Werkzeugband: reduced motion zeigt nur die erste Hälfte ---------- */
+@media (prefers-reduced-motion:reduce){
+  .toolband__item[aria-hidden="true"]{display:none}
+}
+
+/* ---------- Profil: Foto + Stationen ---------- */
+.how + .profile{padding-top:clamp(40px,6vw,84px)}
+.profile{padding-bottom:clamp(70px,9vw,130px)}
+.profile__layout{display:grid;grid-template-columns:minmax(200px,300px) minmax(0,1fr);gap:clamp(36px,6vw,104px);align-items:start}
+.profile__photo{border-radius:16px;overflow:hidden;aspect-ratio:4/5;border:1px solid var(--line);box-shadow:var(--shadow-md);background:var(--surface)}
+.profile__photo img{width:100%;height:100%;object-fit:cover;object-position:50% 24%;filter:brightness(.94) contrast(1.03)}
+.profile__facts{margin-top:clamp(28px,3.5vw,42px);display:grid;gap:14px}
+.profile__facts div{display:grid;grid-template-columns:150px 1fr;gap:18px}
+.profile__facts dt{font-family:var(--f-mono);font-size:12.5px;letter-spacing:.04em;color:var(--muted);padding-top:2px}
+.profile__facts dd{font-size:15.5px;line-height:1.5;color:var(--text)}
+@media (max-width:760px){
+  .profile__layout{grid-template-columns:1fr}
+  .profile__photo{max-width:260px}
+  .profile__facts div{grid-template-columns:1fr;gap:2px}
+}
+
+/* ---------- Werkzeugband: Titel darüber ---------- */
+/* Ruhige Zwischenüberschrift in der Display-Schrift, deutlich kleiner als die Phasennamen, damit das
+   Band als Teil von "Wie ich arbeite" gelesen wird und nicht als eigene Sektion. */
+.how .toolband{margin-top:0}
+.toolband__title{margin:clamp(64px,8vw,112px) 0 clamp(18px,2vw,24px);font-family:var(--f-display);font-weight:380;
+  font-size:clamp(21px,1.9vw,26px);letter-spacing:-.02em;line-height:1.2;color:var(--text)}
+
+/* ---------- Projekt-Tags: Klartext statt Pillen ---------- */
+.project__tags{gap:4px 18px}
+.project__tags span{padding:0;border:0;border-radius:0;font-size:11.5px}
+
+/* ---------- Profil: Interessen als Randnotiz ---------- */
+/* Abgesetzt von den organisatorischen Fakten, gleiche Typo, kein eigener Block: wer weiterliest,
+   findet es, im Scan fällt es nicht auf. */
+.profile__facts .profile__interests{margin-top:6px;padding-top:20px;border-top:1px solid var(--line)}
+.profile__interests dd{color:var(--muted);max-width:52ch}

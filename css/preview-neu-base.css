@@ -1,0 +1,528 @@
+/* =========================================================
+   Henri Löhlein — Portfolio
+   Design system · dark-first · warm/cool gradient signature
+
+   Glass surfaces (subnav pill, modal bar) share one --glass-blur/
+   --glass-sat recipe. Elevation runs on a 3-step shadow scale (--shadow-sm/md,
+   plus the pre-existing --shadow as the "lg" tier).
+   ========================================================= */
+
+/* ---------- Tokens ---------- */
+/* Signature is a single warm→cool arc (ember → slate), not a multi-hue rainbow.
+   --warm-1/--cool-1 are the two live poles: JS interpolates both, plus --bg-tint,
+   from ember at the top of the page to slate at the bottom as the user scrolls
+   (see initScrollGradient in main.js). --pink/--violet stay quiet neutral bridge
+   tones for the ambient blobs, they are not accent colours. */
+:root{
+  --warm-1:#a9503f;   /* ember — pole A, top-of-page fallback (JS drifts this to slate on scroll) */
+  --warm-2:#c9a89a;   /* soft ember tint */
+  --cool-1:#5b5754;   /* neutral bridge — top-of-page fallback, JS drifts this toward slate-grey */
+  --cool-2:#7c8ba3;   /* soft slate tint */
+  --pink:#726d69;     /* neutral warm-grey bridge (ambient blob only) */
+  --violet:#403d3b;   /* neutral dark bridge (ambient blob only) */
+
+  --grad: linear-gradient(110deg,var(--warm-1),var(--cool-1));
+  --grad-soft: linear-gradient(120deg,var(--warm-1),var(--cool-1));
+
+  /* scroll-driven background tint (set live from JS, mirrors --warm-1's blend) */
+  --bg-tint:#a9503f;
+
+  /* Heading colour is DERIVED from the live scroll tint, so every headline takes
+     the hue of the background at its scroll position. Horizontal ramp: hue on the
+     left resolves into clean near-text on the right — technical, not rainbow.
+     `--head-soft` is what the vivid end mixes toward (white on dark, ink on light). */
+  --head-soft:#ffffff;
+  --head-grad: linear-gradient(95deg,
+    color-mix(in srgb, var(--bg-tint) 88%, var(--head-soft)) 0%,
+    color-mix(in srgb, var(--bg-tint) 52%, var(--head-soft)) 34%,
+    color-mix(in srgb, var(--bg-tint) 22%, var(--text)) 100%);
+  --head-glow: color-mix(in srgb, var(--bg-tint) 26%, transparent);
+
+  --ease:cubic-bezier(.16,1,.3,1);
+  --ease-io:cubic-bezier(.65,.05,.36,1);
+
+  --maxw:1320px;
+  --pad:clamp(20px,5vw,80px);
+  --nav-h:20px; /* gap the sticky subnav keeps from the viewport's top edge once stuck */
+
+  --f-display:'Fraunces',Georgia,serif;
+  --f-sans:'Inter',system-ui,-apple-system,sans-serif;
+  --f-mono:'Space Grotesk','Inter',sans-serif;
+
+  /* One glass recipe for every translucent surface (subnav pill, modal
+     bar) instead of each picking its own blur/saturation. */
+  --glass-blur:18px;
+  --glass-sat:175%;
+}
+
+[data-theme="dark"]{
+  --bg:#0a0a0f;
+  --bg-2:#101018;
+  --surface:#15151f;
+  --surface-2:#1c1c28;
+  --line:rgba(255,255,255,.10);
+  --line-2:rgba(255,255,255,.16);
+  --text:#ECECF2;
+  --muted:#9b9bac;
+  --muted-2:#6e6e80;
+  /* 3-step elevation scale: sm (chips/cards at rest) / md (portrait, lifted cards)
+     / (the pre-existing) --shadow as the "lg" tier (phones, plates, the biggest pop) */
+  --shadow-sm:0 10px 24px -14px rgba(0,0,0,.5);
+  --shadow-md:0 20px 50px -18px rgba(0,0,0,.6);
+  --shadow:0 30px 80px -20px rgba(0,0,0,.7);
+  color-scheme:dark;
+}
+[data-theme="light"]{
+  --bg:#f6f4f1;
+  --bg-2:#efece7;
+  --surface:#ffffff;
+  --surface-2:#f3f0ec;
+  --line:rgba(20,16,12,.12);
+  --line-2:rgba(20,16,12,.20);
+  --text:#16141a;
+  --muted:#5f5b66;
+  --muted-2:#8b8794;
+  --shadow-sm:0 10px 20px -14px rgba(60,40,30,.24);
+  --shadow-md:0 20px 44px -20px rgba(60,40,30,.3);
+  --shadow:0 30px 70px -28px rgba(60,40,30,.35);
+  --head-soft:#211a29;
+  color-scheme:light;
+}
+
+/* ---------- Reset ---------- */
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+body{
+  font-family:var(--f-sans);
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  transition:background .6s var(--ease),color .6s var(--ease);
+}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+::selection{background:var(--warm-1);color:#fff}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+/* Short/medium body copy avoids ugly one-word widows; long prose or code would be
+   the exception, but nothing on this page runs long enough to need excluding. */
+p{text-wrap:pretty}
+h1,h2,h3{text-wrap:balance}
+
+/* ---------- Background field ---------- */
+/* Layered for depth: a vertical base wash, a slowly-rotating aurora, drifting
+   colour blobs, a soft colour-pool mesh + vignette, the scroll tint and grain. */
+.field{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+  background:linear-gradient(180deg,
+    color-mix(in srgb,var(--cool-1) 7%,var(--bg)) 0%,
+    var(--bg) 34%,
+    var(--bg-2) 78%,
+    color-mix(in srgb,var(--warm-1) 6%,var(--bg-2)) 100%)}
+[data-theme="light"] .field{background:linear-gradient(180deg,
+    color-mix(in srgb,var(--cool-1) 7%,var(--bg)) 0%,
+    var(--bg) 38%,
+    var(--bg-2) 80%,
+    color-mix(in srgb,var(--warm-2) 9%,var(--bg-2)) 100%)}
+
+/* aurora — wide, heavily-blurred conic ribbons that drift + rotate very slowly
+   behind everything, giving the background organic glowing depth */
+.field__aurora{position:absolute;top:-25%;left:-25%;width:150%;height:150%;z-index:-2;
+  background:
+    conic-gradient(from 120deg at 32% 36%, transparent 0deg, color-mix(in srgb,var(--warm-1) 60%,transparent) 40deg, transparent 130deg),
+    conic-gradient(from 250deg at 70% 64%, transparent 0deg, color-mix(in srgb,var(--cool-1) 60%,transparent) 50deg, transparent 150deg),
+    conic-gradient(from 20deg at 60% 20%, transparent 0deg, color-mix(in srgb,var(--violet) 50%,transparent) 36deg, transparent 120deg);
+  filter:blur(90px) saturate(125%);opacity:.5;will-change:transform;
+  animation:auroraDrift 64s linear infinite}
+[data-theme="light"] .field__aurora{opacity:.34;filter:blur(100px) saturate(130%)}
+
+.field__blob{position:absolute;border-radius:50%;filter:blur(64px);opacity:.42;will-change:transform}
+.field__blob--1{width:34vw;height:34vw;max-width:560px;max-height:560px;background:radial-gradient(circle,var(--warm-1),transparent 62%);top:-8vw;left:-5vw;animation:blobA 38s ease-in-out infinite}
+.field__blob--2{width:30vw;height:30vw;max-width:520px;max-height:520px;background:radial-gradient(circle,var(--cool-1),transparent 62%);bottom:-8vw;right:-4vw;opacity:.4;animation:blobB 46s ease-in-out infinite}
+.field__blob--3{width:24vw;height:24vw;max-width:420px;max-height:420px;background:radial-gradient(circle,var(--pink),transparent 62%);top:40%;left:48%;opacity:.26;animation:blobC 52s ease-in-out infinite}
+.field__blob--4{width:21vw;height:21vw;max-width:380px;max-height:380px;background:radial-gradient(circle,var(--violet),transparent 64%);top:8%;right:14%;opacity:.22;animation:blobD 58s ease-in-out infinite}
+[data-theme="light"] .field__blob{opacity:.3;filter:blur(74px)}
+[data-theme="light"] .field__blob--4{opacity:.18}
+@keyframes auroraDrift{to{transform:rotate(360deg) scale(1.05)}}
+@keyframes blobA{0%,100%{transform:translate(0,0)}50%{transform:translate(6vw,4vw)}}
+@keyframes blobB{0%,100%{transform:translate(0,0)}50%{transform:translate(-5vw,-3vw)}}
+@keyframes blobC{0%,100%{transform:translate(0,0)}33%{transform:translate(-4vw,3vw)}66%{transform:translate(3vw,-4vw)}}
+@keyframes blobD{0%,100%{transform:translate(0,0)}50%{transform:translate(-4vw,5vw)}}
+@media (prefers-reduced-motion:reduce){.field__aurora,.field__blob{animation:none!important}}
+
+/* depth layer — soft colour pools, top studio light and a framing vignette
+   layered behind the blobs so the background reads dimensional, not flat */
+.field::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;
+  background:
+    radial-gradient(120% 58% at 50% -6%, color-mix(in srgb,#fff 8%,transparent), transparent 60%),
+    radial-gradient(40% 48% at 84% 14%, color-mix(in srgb,var(--warm-2) 26%,transparent), transparent 62%),
+    radial-gradient(46% 56% at 11% 70%, color-mix(in srgb,var(--cool-1) 28%,transparent), transparent 62%),
+    radial-gradient(34% 44% at 64% 92%, color-mix(in srgb,var(--violet) 20%,transparent), transparent 60%),
+    radial-gradient(30% 40% at 26% 22%, color-mix(in srgb,var(--pink) 16%,transparent), transparent 60%),
+    radial-gradient(140% 130% at 50% -16%, transparent 32%, rgba(0,0,0,.42) 78%, rgba(0,0,0,.72) 100%);
+  animation:meshBreathe 28s ease-in-out infinite}
+[data-theme="light"] .field::before{
+  background:
+    radial-gradient(120% 58% at 50% -6%, color-mix(in srgb,#fff 60%,transparent), transparent 60%),
+    radial-gradient(40% 48% at 84% 14%, color-mix(in srgb,var(--warm-2) 18%,transparent), transparent 62%),
+    radial-gradient(46% 56% at 11% 70%, color-mix(in srgb,var(--cool-1) 16%,transparent), transparent 62%),
+    radial-gradient(34% 44% at 64% 92%, color-mix(in srgb,var(--violet) 13%,transparent), transparent 60%),
+    radial-gradient(30% 40% at 26% 22%, color-mix(in srgb,var(--pink) 12%,transparent), transparent 60%),
+    radial-gradient(140% 130% at 50% -16%, transparent 40%, color-mix(in srgb,#6b5a4a 24%,transparent) 100%);}
+@keyframes meshBreathe{0%,100%{opacity:.9;transform:scale(1)}50%{opacity:1;transform:scale(1.04)}}
+@media (prefers-reduced-motion:reduce){.field::before{animation:none!important}}
+/* scroll-linked tint wash — hue follows the section headings (set from JS) */
+.field::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(110% 75% at 50% 0%, var(--bg-tint) 0%, transparent 62%);
+  opacity:.20;mix-blend-mode:screen;transition:background .3s linear}
+[data-theme="light"] .field::after{opacity:.26;mix-blend-mode:multiply}
+.field__grain{position:absolute;inset:0;opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:100px 100px}
+
+/* ---------- Cursor · smooth spring-follow arrow (white), rotates to face travel ---------- */
+/* Position/rotation/scale are driven per-frame from JS (spring physics in initSmoothCursor),
+   this rule only owns the fade-in and the hover state. No text labels: the arrow alone. */
+.cursor{position:fixed;top:0;left:0;z-index:150;pointer-events:none;display:grid;place-items:center;opacity:0;transition:opacity .15s;will-change:transform}
+.cursor__arrow{display:block;filter:drop-shadow(0 2px 3px rgba(0,0,0,.35));transition:transform .3s var(--ease)}
+.cursor.is-hover .cursor__arrow{transform:scale(1.2)}
+@media (hover:none),(max-width:860px){.cursor{display:none}}
+/* While the custom cursor is running, kill the native cursor everywhere (buttons/links ship their
+   own explicit cursor:pointer, and browsers hand-cursor <a> by default, so body{cursor:none} alone
+   doesn't reach them). Keeps the arrow the only pointer indicator, buttons keep their own hover state. */
+html.has-custom-cursor,html.has-custom-cursor *{cursor:none}
+
+/* ---------- Nav (identity left: portrait + name + role/availability · tools right: DE/EN + theme) ---------- */
+/* Normal document flow on purpose, not fixed: this bar lives only at the very top of the page
+   and scrolls away with everything else once the user scrolls past it. It is not a persistent
+   sticky header. */
+.nav{position:relative;width:100%;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:16px var(--pad);transition:padding .4s var(--ease)}
+.nav--minimal.is-stuck{padding:10px var(--pad)}
+.nav__id{display:flex;align-items:center;gap:12px;flex:1 1 auto;min-width:0}
+.nav__portrait{width:36px;aspect-ratio:1;flex:none;border-radius:50%;overflow:hidden;outline:1px solid color-mix(in srgb,var(--text) 12%,transparent);outline-offset:2px}
+.nav__portrait img{width:100%;height:100%;object-fit:cover;filter:brightness(.9) contrast(1.03)}
+.nav__name{font-family:var(--f-display);font-weight:400;font-size:17px;letter-spacing:-.01em;color:var(--text);white-space:nowrap}
+/* Static one-liner (role + availability). Never wraps; on narrower viewports the overflowing
+   tail fades out under the mask instead of pushing the tools or breaking the line. */
+.nav__line{display:flex;align-items:center;flex:1 1 auto;min-width:0;font-family:var(--f-mono);font-size:12.5px;line-height:1.4;letter-spacing:.04em;color:var(--muted);white-space:nowrap;overflow:hidden;
+  -webkit-mask-image:linear-gradient(to right,#000 calc(100% - 40px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 40px),transparent)}
+.nav__line::before{content:"";flex:none;width:1px;height:12px;background:var(--line-2);margin-right:12px}
+@media (max-width:760px){.nav__line{display:none}}
+.nav__tools{display:flex;align-items:center;gap:14px;flex:none}
+/* Tap target: was bare text with no padding (~20px tall). Padding + a hover chip
+   bring it to a real ~40px hit area without changing the resting look. */
+.lang{display:flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:13px;color:var(--muted);padding:11px 12px;border-radius:999px;transition:background .3s,color .3s}
+.lang:hover{background:color-mix(in srgb,var(--text) 7%,transparent)}
+.lang__opt{transition:color .3s}
+.lang__opt.is-active{color:var(--text)}
+.lang__sep{color:var(--muted-2)}
+/* 38px → 44px: previously just under the 40px minimum tap-target guidance */
+.themeBtn{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;transition:border-color .3s,transform .3s}
+.themeBtn:hover{border-color:var(--line-2);transform:rotate(15deg)}
+.themeBtn__icon{width:18px;height:18px;fill:none;stroke:var(--text);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+[data-theme="dark"] .themeBtn__icon--sun{display:none}
+[data-theme="light"] .themeBtn__icon--moon{display:none}
+
+/* ---------- Subnav · borderless, stretched across width ---------- */
+.subnav{position:sticky;top:var(--nav-h);z-index:90;max-width:var(--maxw);margin:0 auto}
+/* No bar-wide shield: legibility comes from each link's own glass pill (see .subnav__link::before/
+   ::after), scoped to the word itself, and it only exists on hover/active. */
+.subnav__inner{display:flex;margin:0 var(--pad);padding:14px 6px}
+.subnav__links{display:flex;flex:1;justify-content:space-between;align-items:center;gap:clamp(10px,2vw,28px)}
+.subnav__link{position:relative;font-family:var(--f-mono);font-size:clamp(14px,1.4vw,17px);letter-spacing:.01em;color:var(--muted);white-space:nowrap;
+  padding:8px 16px;margin:-8px 0;border-radius:999px;display:inline-block;
+  transition:color .35s,transform .7s cubic-bezier(.22,1,.36,.98),letter-spacing .45s var(--ease),text-shadow .45s var(--ease)}
+/* Glass body (::before): backdrop-filter sits at blur(0)/no saturation at rest, a true no-op, so an
+   idle word never smudges whatever text or image scrolls behind it, only hover/active turn the
+   filter on. Rim (::after): a hairline conic gradient masked down to just the outline (content-box/
+   border-box xor trick), so the edge reads as an actual lit rim, not another soft fill. Both fade by
+   opacity, not by animating the gradients themselves. Blur/saturation come from the shared
+   --glass-blur/--glass-sat pair (see the modal bar below) instead of a value picked just for
+   this element. */
+.subnav__link::before{content:"";position:absolute;inset:0;z-index:-2;border-radius:inherit;pointer-events:none;
+  backdrop-filter:blur(0) saturate(100%);-webkit-backdrop-filter:blur(0) saturate(100%);
+  background:
+    radial-gradient(65% 85% at 26% -20%,color-mix(in srgb,#fff 70%,transparent),transparent 55%),
+    radial-gradient(90% 110% at 80% 130%,color-mix(in srgb,var(--cool-1) 32%,transparent),transparent 70%),
+    linear-gradient(120deg,color-mix(in srgb,var(--warm-1) 14%,transparent),color-mix(in srgb,var(--cool-1) 14%,transparent)),
+    color-mix(in srgb,var(--surface) 55%,transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb,#fff 55%,transparent),
+    inset 0 -8px 12px -8px color-mix(in srgb,#000 40%,transparent),
+    0 12px 28px -14px color-mix(in srgb,var(--warm-1) 45%,transparent),
+    0 2px 6px -2px rgba(0,0,0,.28);
+  opacity:0;transition:opacity .4s var(--ease),backdrop-filter .4s var(--ease)}
+/* Neutral hairline rim, no hue: a plain top-lit-to-dim white fade reads as light catching a glass
+   edge without turning the pill into a colourful outline. */
+.subnav__link::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;padding:.5px;
+  background:linear-gradient(180deg,color-mix(in srgb,#fff 40%,transparent),color-mix(in srgb,#fff 6%,transparent));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  opacity:0;transition:opacity .4s var(--ease)}
+.subnav__link:hover::before,.subnav__link.is-active::before{backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-sat));-webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-sat));opacity:1}
+.subnav__link:hover::after,.subnav__link.is-active::after{opacity:.5}
+/* Chrome/silver shine sweep through the word itself, tokenised so it reads white-on-dark and
+   near-black-on-light. Resting words keep the plain flat --muted colour, no pill, no shine. */
+.subnav__link:hover,.subnav__link.is-active{
+  letter-spacing:.03em;
+  text-shadow:0 0 20px color-mix(in srgb,var(--warm-1) 35%,transparent);
+  --shiny-width:60px;
+  color:color-mix(in srgb,var(--text) 88%,transparent);
+  background-image:linear-gradient(90deg,transparent,var(--text) 55%,transparent);
+  background-size:var(--shiny-width) 100%;background-repeat:no-repeat;
+  background-position:calc(-100% - var(--shiny-width)) 0;
+  -webkit-background-clip:text;background-clip:text;
+  animation:shiny-text 2.4s infinite}
+.subnav__link:hover,.subnav__link.is-active{transform:scale(1.08)}
+@keyframes shiny-text{
+  0%,85%,100%{background-position:calc(-100% - var(--shiny-width)) 0}
+  35%,55%{background-position:calc(100% + var(--shiny-width)) 0}
+}
+@media (max-width:620px){
+  .subnav__inner{padding:12px 2px}
+  .subnav__links{gap:6px;justify-content:space-between}
+  .subnav__link{font-size:12.5px}
+}
+
+/* ---------- Layout helpers ---------- */
+section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);max-width:var(--maxw);margin:0 auto}
+.sectionTag{display:flex;align-items:center;gap:12px;font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:34px}
+/* one accent for every section tag, it already follows the live scroll gradient via --warm-1 */
+.sectionTag span:first-child{color:var(--warm-1)}
+
+/* ---------- Reveal ---------- */
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.reveal.is-in{opacity:1;transform:none}
+
+/* ---------- Wort-Blur-In (MagicUI "Text Animate", Preset blurInUp) ----------
+   Gezielt auf Überschriften/kurze Zeilen ([data-split] in js/main.js), nicht auf Fließtext:
+   lange Absätze bleiben beim reinen .reveal-Fade+Rise, sonst wartet man auf die Animation statt
+   zu lesen. Layert sich über den Block: der zieht wie gewohnt hoch, seine Wörter schärfen sich
+   dabei nach. */
+.bw{display:inline-block;opacity:0;filter:blur(10px);transform:translateY(20px);
+  transition:opacity .4s var(--ease),filter .32s var(--ease),transform .32s var(--ease);
+  transition-delay:calc(var(--i) * 36ms)}
+.is-in .bw{opacity:1;filter:blur(0);transform:translateY(0)}
+/* Gradient-Text (em in .intro__title/.contact__title) clippt seinen
+   Farbverlauf über background-clip:text, das vererbt sich nicht von selbst. Jedes Wort braucht
+   das explizit, sonst rendert -webkit-text-fill-color:transparent ohne eigenes Gradient und das
+   Wort verschwindet. Für Wörter ohne Gradient-Elternteil ist das ein harmloses No-op. */
+.bw{background:inherit;-webkit-background-clip:inherit;background-clip:inherit;-webkit-text-fill-color:inherit}
+
+/* ---------- Intro · who, what, available from when. Facts, no manifesto. ---------- */
+/* Sits right under the subnav, so tighter top padding than a regular section; the projects
+   section that follows keeps its normal spacing, the intro just closes a little earlier. */
+.intro{padding-top:clamp(28px,4vw,48px);padding-bottom:clamp(30px,4vw,56px)}
+.intro__title{max-width:26ch;font-family:var(--f-display);font-weight:380;font-size:clamp(30px,4.1vw,58px);line-height:1.06;letter-spacing:-.03em}
+.intro__title em{font-style:italic;background:var(--head-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 6px 24px var(--head-glow))}
+.intro__lede{max-width:64ch;margin-top:clamp(22px,3vw,34px);font-size:clamp(16px,1.5vw,19px);color:var(--muted);line-height:1.62}
+.intro__lede strong{color:var(--text);font-weight:600}
+/* Three key facts in a row: label above, value below, hairline between the columns. */
+.intro__facts{display:grid;grid-template-columns:repeat(3,auto);justify-content:start;gap:clamp(22px,4vw,56px);margin-top:clamp(26px,3.5vw,40px);padding-top:clamp(20px,2.5vw,28px);border-top:1px solid var(--line)}
+.intro__facts div{display:flex;flex-direction:column;gap:6px}
+.intro__facts dt{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2)}
+.intro__facts dd{font-size:15px;color:var(--text)}
+.intro__actions{display:flex;align-items:center;flex-wrap:wrap;gap:22px;margin-top:clamp(26px,3vw,36px)}
+.intro__secondary{display:inline-flex;align-items:center;gap:7px;font-family:var(--f-mono);font-size:14px;color:var(--muted);padding:12px 4px;transition:color .3s}
+.intro__secondary:hover{color:var(--text)}
+.intro__secondary svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:620px){
+  .intro__facts{grid-template-columns:1fr;gap:16px}
+}
+/* Interactive hover button (MagicUI mechanic, ported to our tokens): the dot previews the
+   signature gradient at rest, then balloons in place on hover, clipped by overflow:hidden, to
+   become the pill's new fill. The resting label slides out right and fades as the dot grows;
+   a second, absolutely-positioned label + arrow slides in from the right to replace it. Dot and
+   label are independent siblings (not nested) so the dot expands from its own centre instead of
+   travelling with the label. */
+.cta{position:relative;overflow:hidden;display:inline-flex;align-items:center;
+  padding:16px 26px;border-radius:50px;background:var(--text);white-space:nowrap}
+.cta__inner{display:inline-flex;align-items:center;gap:11px}
+.cta__dot{width:9px;height:9px;border-radius:50%;flex:none;background:var(--grad);
+  transition:transform .6s var(--ease)}
+.cta__label{color:var(--bg);font-weight:600;font-size:15px;
+  transition:transform .5s var(--ease),opacity .35s var(--ease)}
+.cta__reveal{position:absolute;inset:0;z-index:1;display:inline-flex;align-items:center;
+  justify-content:center;gap:11px;color:#fff;font-weight:600;font-size:15px;
+  opacity:0;transform:translateX(20px);pointer-events:none;
+  transition:transform .5s var(--ease),opacity .4s var(--ease)}
+.cta__reveal svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.cta:hover .cta__dot{transform:scale(60)}
+.cta:hover .cta__label{transform:translateX(20px);opacity:0}
+.cta:hover .cta__reveal{transform:translateX(0);opacity:1}
+
+/* ---------- Work / Projects ---------- */
+.work__head{margin-bottom:clamp(30px,4vw,50px)}
+.work__title{font-family:var(--f-display);font-weight:360;font-size:clamp(40px,8vw,110px);letter-spacing:-.035em;line-height:1;
+  background:var(--head-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+  filter:drop-shadow(0 10px 38px var(--head-glow))}
+.work__hint{margin-top:16px;font-family:var(--f-mono);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-2)}
+.projects{list-style:none;border-top:1px solid var(--line)}
+.project{position:relative;display:grid;grid-template-columns:64px 1fr 300px;gap:34px;align-items:center;padding:40px 8px;border-bottom:1px solid var(--line);cursor:pointer;transition:padding .5s var(--ease)}
+.project::after{content:"";position:absolute;inset:0;background:var(--grad-soft);opacity:0;z-index:-1;transition:opacity .5s;border-radius:14px}
+/* Rows are role="button": keyboard focus needs a visible ring, mouse clicks stay ring-free. */
+.project:focus-visible{outline:2px solid var(--warm-1);outline-offset:4px;border-radius:14px}
+.project:focus-visible::after{opacity:.07}
+.project:focus-visible .project__open{opacity:1;transform:scale(1)}
+.project:hover{padding-left:26px;padding-right:26px}
+.project:hover::after{opacity:.07}
+.project__index{font-family:var(--f-mono);font-size:14px;color:var(--muted-2)}
+.project__name{font-family:var(--f-display);font-weight:380;font-size:clamp(30px,4.4vw,58px);letter-spacing:-.025em;line-height:1;margin-bottom:12px;transition:transform .5s var(--ease)}
+.project:hover .project__name{transform:translateX(8px)}
+.project__role{font-family:var(--f-mono);font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--warm-1);margin-bottom:14px}
+.project__tease{font-size:15.5px;color:var(--muted);max-width:52ch;line-height:1.6}
+.project__tease em{font-style:italic;color:var(--text)}
+.project__tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.project__tags span{font-family:var(--f-mono);font-size:11px;letter-spacing:.03em;color:var(--muted);padding:5px 11px;border:1px solid var(--line);border-radius:50px}
+.project__visual{justify-self:end;width:100%;max-width:300px;height:210px;display:grid;place-items:center;overflow:hidden}
+.phone{width:118px;border-radius:22px;overflow:hidden;border:5px solid #14141c;box-shadow:var(--shadow);transform:translateY(6px) rotate(-3deg);transition:transform .6s var(--ease)}
+[data-theme="light"] .phone{border-color:#26242c}
+.project:hover .phone{transform:translateY(0) rotate(0)}
+.phone img{width:100%;display:block}
+.plate{width:100%;height:200px;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);display:grid;place-items:center;transition:transform .6s var(--ease)}
+.project:hover .plate{transform:translateY(-4px)}
+.plate img{width:100%;height:100%;object-fit:cover}
+.plate--cover{padding:0;background:var(--surface)}
+.plate--dark{background:#0b1018}
+.plate--logo{background:#fff;padding:clamp(20px,3vw,34px)}
+.plate--logo img{object-fit:contain;height:auto;max-height:100%}
+.plate--syntegon{background:linear-gradient(135deg,#1b2230,#0e1622);position:relative}
+.plate--syntegon span{font-family:var(--f-mono);font-size:42px;font-weight:600;letter-spacing:.04em;background:linear-gradient(100deg,var(--warm-1),var(--cool-1));-webkit-background-clip:text;background-clip:text;color:transparent}
+.plate--syntegon::after{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:26px 26px;opacity:.5}
+.project__open{position:absolute;top:40px;right:8px;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;opacity:0;transform:scale(.8);transition:opacity .4s,transform .4s,background .3s}
+.project:hover .project__open{opacity:1;transform:scale(1)}
+.project__open svg{width:16px;height:16px;fill:none;stroke:var(--text);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------- Profile · stations timeline, focus, methods/tools/languages as chips ---------- */
+.profile__grid{display:grid;grid-template-columns:1.25fr 1fr;gap:clamp(34px,6vw,90px)}
+.profile__col h3{font-family:var(--f-mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--warm-1);margin-bottom:18px}
+.profile__col h3+h3,.profile__col ul+h3,.profile__col ol+h3,.profile__col p+h3{margin-top:clamp(30px,4vw,44px)}
+.profile__text{font-size:clamp(16px,1.5vw,19px);line-height:1.62;color:var(--text);font-weight:300;letter-spacing:-.005em;max-width:58ch}
+/* Timeline: date column left, title + one-line detail right, hairline between rows. */
+.timeline{list-style:none;border-top:1px solid var(--line)}
+.timeline li{display:grid;grid-template-columns:150px 1fr;gap:18px;padding:18px 0;border-bottom:1px solid var(--line)}
+.timeline__when{font-family:var(--f-mono);font-size:12.5px;letter-spacing:.04em;color:var(--muted);padding-top:3px;white-space:nowrap}
+.timeline__what{display:flex;flex-direction:column;gap:5px}
+.timeline__what b{font-weight:500;font-size:clamp(16px,1.4vw,18px);letter-spacing:-.01em;color:var(--text);line-height:1.35}
+.timeline__what span{font-size:14.5px;color:var(--muted);line-height:1.5}
+/* Chips reuse the project-tag look so the page has one pill style, not two. */
+.chips{list-style:none;display:flex;flex-wrap:wrap;gap:8px}
+.chips li{font-family:var(--f-mono);font-size:12px;letter-spacing:.03em;color:var(--text);padding:7px 13px;border:1px solid var(--line);border-radius:50px;background:color-mix(in srgb,var(--surface) 40%,transparent)}
+
+/* ---------- Contact ---------- */
+.contact{text-align:left}
+.contact__title{font-family:var(--f-display);font-weight:360;font-size:clamp(40px,8.5vw,118px);line-height:1;letter-spacing:-.035em;margin-bottom:clamp(18px,2.5vw,28px)}
+.contact__title em{font-style:italic;background:var(--head-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 8px 30px var(--head-glow))}
+.contact__sub{font-family:var(--f-mono);font-size:clamp(13px,1.2vw,15px);letter-spacing:.03em;color:var(--muted);margin-bottom:clamp(36px,5vw,60px)}
+.contact__links{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+/* Everything else on the page carries elevation (plates, cards, popups); these two links were the
+   one flat exception (border only). Resting shadow + a stronger one on hover matches the lift. */
+.contact__link{display:flex;flex-direction:column;gap:10px;padding:34px;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-sm);transition:border-color .4s,transform .4s var(--ease),background .4s,box-shadow .4s var(--ease)}
+.contact__link:hover{transform:translateY(-5px);border-color:var(--line-2);background:color-mix(in srgb,var(--surface) 60%,transparent);box-shadow:var(--shadow-md)}
+.contact__linkLabel{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.contact__linkVal{font-family:var(--f-display);font-size:clamp(22px,3vw,38px);font-weight:380;letter-spacing:-.02em}
+
+/* ---------- Footer ---------- */
+.footer{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto;padding:40px var(--pad) 50px;border-top:1px solid var(--line)}
+.footer__row{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.footer__row--meta{margin-top:18px;font-family:var(--f-mono);font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted-2)}
+.footer__name{font-family:var(--f-display);font-size:24px;font-weight:400}
+.footer__copy{font-family:var(--f-mono);font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.footer__top{display:inline-flex;align-items:center;gap:8px;padding:10px 4px;transition:color .3s}
+.footer__top:hover{color:var(--text)}
+.footer__top svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------- Modal / Case study ---------- */
+.modal{position:fixed;inset:0;z-index:120;visibility:hidden;pointer-events:none}
+.modal.is-open{visibility:visible;pointer-events:auto}
+.modal__scrim{position:absolute;inset:0;background:rgba(0,0,0,.6);opacity:0;backdrop-filter:blur(4px);transition:opacity .5s var(--ease)}
+.modal.is-open .modal__scrim{opacity:1}
+/* Base rule = closing speed (class removed, so this is what applies); .is-open below overrides
+   it to a slower, fuller entrance. No JS involved, the cascade just resolves to a different
+   transition depending on which rule is more specific. */
+.modal__panel{position:absolute;top:0;right:0;height:100%;width:min(960px,94vw);background:var(--bg-2);border-left:1px solid var(--line);box-shadow:-30px 0 80px rgba(0,0,0,.5);transform:translateX(100%);transition:transform .45s var(--ease);display:flex;flex-direction:column}
+.modal.is-open .modal__panel{transform:none;transition:transform .65s var(--ease)}
+.modal__bar{display:flex;align-items:center;justify-content:space-between;padding:18px clamp(22px,4vw,52px);border-bottom:1px solid var(--line);flex-shrink:0;background:color-mix(in srgb,var(--bg-2) 80%,transparent);backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-sat));-webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-sat))}
+.modal__barName{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.modal__close{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;transition:background .3s,border-color .3s,transform .3s}
+.modal__close:hover{background:var(--warm-1);border-color:var(--warm-1);transform:rotate(90deg)}
+.modal__close:hover svg{stroke:#0a0a0f}
+.modal__close svg{width:18px;height:18px;fill:none;stroke:var(--text);stroke-width:1.8;stroke-linecap:round}
+.modal__progress{height:2px;background:var(--line);flex-shrink:0}
+.modal__progress i{display:block;height:100%;width:0;background:var(--grad)}
+.modal__content{overflow-y:auto;padding:clamp(30px,5vw,68px);scroll-behavior:smooth}
+.modal__content:focus{outline:none}
+/* JS moves focus here on open (mContent.focus()) so a keyboard/AT user knows where they landed —
+   outline:none with no replacement made that landing invisible. */
+.modal__content:focus-visible{outline:2px solid var(--warm-1);outline-offset:-3px}
+
+/* case study internals */
+.cs__hero{display:grid;grid-template-columns:1.4fr 1fr;gap:44px;padding-bottom:46px;border-bottom:1px solid var(--line);margin-bottom:50px}
+.cs__kicker{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--warm-1)}
+.cs__title{--cs-accent:#a9503f;font-family:var(--f-display);font-weight:380;font-size:clamp(44px,7vw,92px);letter-spacing:-.035em;line-height:1;margin:14px 0 6px;
+  background:linear-gradient(95deg, color-mix(in srgb,var(--cs-accent) 90%,var(--head-soft)) 0%, color-mix(in srgb,var(--cs-accent) 22%,var(--text)) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+  filter:drop-shadow(0 8px 26px color-mix(in srgb,var(--cs-accent) 24%,transparent))}
+[data-case="milo"] .cs__title{--cs-accent:#3f5a86}
+[data-case="cognify"] .cs__title{--cs-accent:#6b5f7e}
+[data-case="syntegon"] .cs__title{--cs-accent:#33456b}
+[data-case="forwerts"] .cs__title{--cs-accent:#b9704f}
+.cs__sub{font-size:18px;color:var(--muted);margin-bottom:24px}
+.cs__pitch{font-size:clamp(16px,1.6vw,19px);line-height:1.6;color:var(--text);font-weight:300}
+.cs__pitch em{font-style:italic;color:var(--warm-1);font-weight:400}
+.cs__heroMeta dl{display:grid;gap:18px}
+.cs__heroMeta dt{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted-2);margin-bottom:5px}
+.cs__heroMeta dd{font-size:14.5px;color:var(--text)}
+.cs__heroMeta a{border-bottom:1px solid var(--warm-1);color:var(--warm-1)}
+.cs__shots{display:grid;gap:18px;margin-bottom:50px}
+.cs__shots--2{grid-template-columns:1fr 1fr}
+.shot{border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--surface)}
+.shot img{width:100%;display:block}
+.shot--phone{display:grid;place-items:center;padding:24px;background:linear-gradient(160deg,var(--surface),var(--surface-2))}
+.shot--phone img{width:auto;max-height:520px;border-radius:20px;border:5px solid #14141c;box-shadow:var(--shadow)}
+.shot figcaption{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.04em;color:var(--muted);padding:12px 16px;border-top:1px solid var(--line)}
+.shot--phone figcaption{border-top:none;text-align:center}
+.cs__sec{margin-bottom:48px}
+.cs__sec>h3{font-family:var(--f-mono);font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--warm-1);margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.cs__sec p{font-size:16px;line-height:1.7;color:var(--muted);margin-bottom:16px;max-width:74ch}
+.cs__sec p strong{color:var(--text);font-weight:600}
+.cs__sec figure.shot{margin:24px 0}
+.cs__grid2{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+.cs__grid2 h5,.cs__phase h5{font-size:16px;font-weight:600;margin-bottom:8px;letter-spacing:-.01em}
+.cs__grid2 p{margin-bottom:0}
+.cs__case{margin:26px 0;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.cs__caseTag{display:block;font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--text);padding:16px 22px;background:var(--surface);border-bottom:1px solid var(--line)}
+.cs__phase{padding:20px 22px;border-bottom:1px solid var(--line)}
+.cs__phase:last-child{border-bottom:none}
+.cs__phase p{margin-bottom:0;font-size:15px}
+.cs__phase b{color:var(--text)}
+.cs__pull{font-family:var(--f-display)!important;font-style:italic;font-size:clamp(20px,2.4vw,30px)!important;line-height:1.4!important;color:var(--text)!important;padding-left:24px;border-left:2px solid var(--warm-1);margin:26px 0;font-weight:340;max-width:none!important}
+.cs__bullets{list-style:none;display:grid;gap:12px;margin:8px 0 18px}
+.cs__bullets li{position:relative;padding-left:24px;font-size:15.5px;color:var(--muted);line-height:1.6;max-width:74ch}
+.cs__bullets li::before{content:"";position:absolute;left:0;top:10px;width:8px;height:8px;border-radius:50%;background:var(--grad)}
+.cs__hinweis{font-size:14px!important;color:var(--muted-2)!important;border:1px dashed var(--line);border-radius:12px;padding:16px 18px;font-style:italic}
+
+/* ---------- Responsive ---------- */
+@media (max-width:1040px){
+  .profile__grid{grid-template-columns:1fr}
+  .project{grid-template-columns:48px 1fr 200px;gap:22px}
+  .project__visual{height:170px}
+  .phone{width:92px}
+  .cs__hero{grid-template-columns:1fr;gap:28px}
+}
+@media (max-width:760px){
+  .subnav__inner{gap:9px;border-radius:16px;padding:11px 16px}
+  .timeline li{grid-template-columns:1fr;gap:6px;padding:16px 0}
+  .project{grid-template-columns:1fr;gap:18px}
+  .project__index{position:absolute;top:32px;right:8px}
+  .project__visual{justify-self:start;max-width:100%;height:auto;margin-top:6px}
+  .phone{width:120px;transform:none}
+  .plate{height:160px}
+  .project__open{display:none}
+  .contact__links{grid-template-columns:1fr}
+  .cs__shots--2,.cs__grid2{grid-template-columns:1fr}
+}
