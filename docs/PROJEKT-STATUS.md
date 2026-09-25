@@ -7,10 +7,10 @@ _Stand: 25.09.2026. Diese Datei ist der Einstieg für jede neue Session und für
 ## 1 · Schnellstart
 
 1. **Repo-Wurzel** ist der Ordner, in dem `index.html` liegt. Der Pfad ist auf jedem Gerät anders, deshalb steht hier keiner.
-2. **Zu Beginn einer Session sagen:** „Lies zuerst `docs/PROJEKT-STATUS.md`."
-3. **Vor jeder Design- oder Textarbeit** die Skills `taste-skill:taste-skill` und `taste-skill:redesign-skill` aufrufen. Sie laufen nicht automatisch.
+2. **Einstieg:** `AGENTS.md` für Codex und `CLAUDE.md` für Claude Code verweisen auf diese Datei. Beim Start im Repo ist kein zusätzlicher Hinweis nötig.
+3. **Skills:** Den zur Aufgabe passenden Skill wählen. Codex findet lokale Skills unter `.agents/skills/`, Claude Code unter `.claude/skills/`. Die Skills können passend zur Aufgabe automatisch gewählt werden; ähnliche Design-Skills nicht pauschal zusammen laden. Beide Skill-Ordner sind Git-ignoriert und müssen auf jedem Gerät lokal vorhanden sein. `make-interfaces-feel-better` fehlt im versionierten `skills-lock.json`; Codex kann seine Kopie bei Bedarf aus dem lokalen Claude-Ordner übernehmen.
 4. **Lokale Vorschau:** statischer Server auf den Projektordner, dann `…/preview-neu.html` aufrufen. Die Konfiguration liegt in `.claude/launch.json` (nicht versioniert, gerätespezifisch).
-5. **Zwei Geräte:** vor dem Arbeiten `git pull`, nach dem Arbeiten committen und pushen. Nur so sieht das jeweils andere Gerät den Stand.
+5. **Zwei Geräte:** Git-Status und Remote-Stand prüfen. Änderungen erst nach Sichtung lokaler Arbeit pullen. Commit und Push synchronisieren die Geräte und veröffentlichen auf `main`; nur nach Henris entsprechendem Auftrag.
 
 ## 2 · Was live ist
 
@@ -23,6 +23,7 @@ _Stand: 25.09.2026. Diese Datei ist der Einstieg für jede neue Session und für
 Ein Redesign, das zuerst in einer Preview entsteht und die Live-Dateien unangetastet lässt.
 
 - **Dateien:** `preview-neu.html` mit `css/preview-neu-base.css` (Basis-Design-System), `css/preview-neu.css` (neue Komponenten), `js/preview-neu-main.js` (Basis-Interaktionen) und `js/preview-neu.js` (Preview-Logik und englische Texte).
+- **Sichtbarkeit:** Die Preview liegt getrackt auf `main` und ist über ihre direkte GitHub-Pages-URL öffentlich erreichbar. `noindex` erschwert die Aufnahme in Suchmaschinen, schützt die Datei aber nicht vor Zugriff.
 - **Struktur der Preview:** Navleiste mit Identität, Subnav, kompaktes Intro, Projekte, „Wie ich arbeite" mit vier Phasen und Werkzeugband, Profil mit Stationen und Fakten, Kontakt, Footer.
 - **Inhaltliche Linie:** keine studentischen Labels. Kein „Praxissemester", „Bachelorarbeit", „Hochschulprojekt". Stattdessen Firma und Disziplin, etwa „Syntegon, Research & Development" oder „Konzeptprojekt". Die Abschlussnote steht nur einmal, in der Ausbildungszeile der Stationen.
 - **Ergänzt:** Titel „Tools, mit denen ich arbeite" über dem Werkzeugband, Miro im Band, Interessen als Randnotiz im Profil (KI, Psychologie im Design, neue Interaktionsformen).
@@ -45,7 +46,7 @@ Am 18.09.2026 gab es eine erste Umbau-Iteration, die nie committet wurde. Sie is
 - **Lesende nie direkt ansprechen.** Über sich selbst in der Ich-Form ist in Ordnung.
 - **Konkret statt generisch.** Keine Marketing-Floskeln.
 - Große Titel dürfen für sich stehen, kein erklärender Satz unter jedem Kapitel.
-- **Englische Fassung synchron halten:** Wird ein deutscher Text mit `data-i18n` geändert, gehört der Schlüssel in `js/main.js` (Objekt `EN`) angepasst. In der Preview liegen die englischen Texte stattdessen in `js/preview-neu.js` unter `data-i18n-p`.
+- **Englische Fassung synchron halten:** Für `data-i18n` stehen die englischen Schlüssel live in `js/main.js`, in der Preview in `js/preview-neu-main.js`. Zusätzliche Preview-Texte mit `data-i18n-p` stehen in `js/preview-neu.js`.
 
 ## 7 · Quellen
 

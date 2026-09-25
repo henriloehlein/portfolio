@@ -10,8 +10,7 @@ Diese Seite ist **statisch** (kein Build). Sie liegt im öffentlichen Repo und w
 - **Remote:** `https://github.com/henriloehlein/portfolio.git`
 - **Branch:** `main`
 - **Live-URL:** <https://henriloehlein.github.io/portfolio/>
-- **Tooling:** Henri nutzt sonst **GitHub Desktop** (keine Kommandozeile nötig). Git-Identität:
-  `henriloehlein` / `henriloehlein@gmail.com`.
+- **Tooling:** Henri nutzt auch **GitHub Desktop** (keine Kommandozeile nötig).
 
 ## Update-Kreislauf (kein erneutes „Publishen")
 
@@ -23,14 +22,9 @@ Mit GitHub Desktop:
 2. **Push origin**.
 3. Nach ~1 Minute ist die Seite aktualisiert.
 
-Auf der Kommandozeile:
-
-```powershell
-cd "D:\Claude Apps\Portfolio Website 16-06\portfolio"
-git add -A
-git commit -m "Update Portfolio"
-git push origin main
-```
+Auf der Kommandozeile in der Repo-Wurzel zuerst `git status --short` prüfen, dann nur die
+gewünschten Pfade mit `git add -- DATEI` aufnehmen und mit `git diff --cached` kontrollieren.
+Anschließend committen und `git push origin main` ausführen.
 
 ## Was NICHT veröffentlicht wird
 
@@ -46,9 +40,8 @@ In `.gitignore` ausgeschlossen (bleibt lokal, landet nicht auf der öffentlichen
   URL mit `?v=2` aufrufen.
 - `.nojekyll` liegt im Repo und schaltet die Jekyll-Verarbeitung auf GitHub Pages ab.
 
-## Eigene Domain (optional, später)
+## Eigene Domain und Hetzner (später)
 
-Falls eine eigene Domain gewünscht ist: in `index.html` die `canonical`- und `og:url`-Zeilen
-anpassen, in den GitHub-Pages-Einstellungen die Custom Domain eintragen und beim Domain-Anbieter
-die DNS-Einträge setzen (Apex `A`-Records auf die GitHub-Pages-IPs, `www` als `CNAME` auf
-`henriloehlein.github.io`). HTTPS aktiviert GitHub Pages automatisch.
+GitHub Pages bleibt während der Iteration der Host. Für die spätere Veröffentlichung über eine
+eigene URL bei Hetzner werden Hosting, DNS und HTTPS separat eingerichtet. Dann müssen auch
+`canonical`, `og:url` und `og:image` in der aktiven Seite auf die tatsächlich genutzte Domain zeigen.

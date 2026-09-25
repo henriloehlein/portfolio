@@ -2,15 +2,17 @@
 
 ## Source of truth
 - This directory is the website and Git repository root. The site uses static HTML, CSS and JavaScript without a build step or framework.
-- Start with `docs/PROJEKT-STATUS.md`. Read `CLAUDE.md` before changes, and consult `docs/REFERENZEN.md` for visual or CSS work.
+- Start with `docs/PROJEKT-STATUS.md`. Read `CLAUDE.md` before changes. For visual or CSS work, consult only the relevant sections of `docs/REFERENZEN.md`.
 - `index.html`, `css/styles.css` and `js/main.js` are the live site. The current redesign is `preview-neu.html` with its own CSS and JavaScript. Keep live files unchanged until Henri approves moving the preview into them.
+- Inspect the files for the requested surface. Read `docs/KOMPONENTEN-ARCHIV.md` only when a removed component or its history matters.
 
 ## Careful changes
-- Inspect Git status and pull before starting work on either device. Preserve existing changes. After authorized work, commit and push so the other device receives it.
-- Make the smallest coherent change that fulfils the request. Use skills selectively; follow the project's static stack and existing visual direction over generic skill defaults.
-- Keep German and English copy in sync. Live strings use `data-i18n` and the `EN` dictionary in `js/main.js`; preview strings use `data-i18n-p` and `js/preview-neu.js`.
+- Inspect Git status and compare the remote before substantial work on either device. Pull when needed after accounting for local changes. Preserve existing work; commit and push only when Henri asks to sync or publish.
+- Make the smallest coherent change that fulfils the request. Choose one relevant primary skill for a design task and add another only for a distinct need. Skills can be selected automatically; Henri does not have to invoke them on every task. Follow the project's static stack and existing visual direction over generic skill defaults.
+- `.agents/` and `.claude/` are ignored by Git and remain device-local. `skills-lock.json` records sources but does not activate skills by itself. `make-interfaces-feel-better` is not in that lock; if its Codex copy is missing but `.claude/skills/make-interfaces-feel-better/SKILL.md` exists, copy that file to `.agents/skills/make-interfaces-feel-better/SKILL.md` before using it.
+- Keep German and English copy in sync. Live `data-i18n` strings use the `EN` dictionary in `js/main.js`. The redesign preview has shared `data-i18n` strings in `js/preview-neu-main.js` and new `data-i18n-p` strings in `js/preview-neu.js`.
 - Preserve privacy. Never track CV PDFs, the raw `Bilder/` folder, environment files or other private source material. `AGENTS.md`, `CLAUDE.md`, `README.md` and `docs/` are intended to be tracked.
-- Do not commit, push, publish or change hosting without Henri's explicit request. GitHub Pages is the current host.
+- Do not publish or change hosting without Henri's explicit request. A push to `main` publishes the tracked preview file on GitHub Pages too; its `noindex` tag does not make it private.
 - Start a static preview from this directory on an available port. For visual changes, inspect relevant desktop and mobile widths when browser preview is available.
 
 ## Keep guidance current

@@ -10,9 +10,10 @@ Statisches UX/UI-Portfolio mit HTML, CSS und JavaScript, ohne Build-Schritt oder
 - `css/liquid-glass.css` enthält optionale Glas-Bausteine und ist nicht in `styles.css` eingebunden.
 
 ## Arbeitsweise
-- Vor dem Arbeiten `git pull`; nach autorisierten Änderungen committen und pushen, damit beide Geräte denselben Stand haben.
+- Vor größeren Änderungen Git-Status und Remote-Stand prüfen; nur nach Sichtung lokaler Änderungen pullen. Commit und Push erfolgen, wenn Henri die Synchronisierung oder Veröffentlichung beauftragt. Ein Push auf `main` veröffentlicht die getrackte Preview-Datei ebenfalls auf GitHub Pages.
+- Skills passend zur Aufgabe auswählen. Die lokalen Skills stehen für Codex unter `.agents/skills/` und für Claude Code unter `.claude/skills/`; nicht pauschal mehrere ähnliche Design-Skills laden.
 - Für lokale Vorschauen einen statischen Server aus der Repo-Wurzel auf einem verfügbaren Port starten. Die aktuelle Arbeit unter `/preview-neu.html` öffnen.
-- Bei Änderungen an deutschen `data-i18n`-Texten die englischen Einträge in `js/main.js` synchron halten. In der Preview gehören englische `data-i18n-p`-Texte in `js/preview-neu.js`.
+- Bei Änderungen an deutschen `data-i18n`-Texten die englischen Einträge in der zugehörigen JS-Datei synchron halten: live in `js/main.js`, Preview in `js/preview-neu-main.js`. Die zusätzlichen `data-i18n-p`-Texte der Preview stehen in `js/preview-neu.js`.
 - Die Textregeln und die Trennung von Live-Seite und Preview stehen in `docs/PROJEKT-STATUS.md`.
 
 ## Datenschutz

@@ -22,3 +22,6 @@ node_modules/
 Lebenslauf_Henri_Loehlein.pdf
 *.pdf
 Bilder/
+
+# Older local HTML experiments; the tracked preview-neu.html remains available
+*-preview*.html
