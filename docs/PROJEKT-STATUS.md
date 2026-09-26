@@ -7,6 +7,7 @@ _Stand: 26.09.2026. Einstieg für Claude Code, Codex und beide Geräte._
 - Arbeitsbasis: `index.html`, `css/styles.css`, `js/main.js`. Statisches HTML/CSS/JavaScript, kein Build-Schritt.
 - Lokale Vorschau: statischen Server aus der Repo-Wurzel verwenden und `/index.html` öffnen. Zuletzt lief sie unter `http://127.0.0.1:8080/index.html`.
 - Aktueller Fokus: Projektpräsentationen im Portfolio schärfen. Die forwerts-Darstellung ist in die aktive Seite übernommen. Weitere Änderungen mit Henri schrittweise erarbeiten.
+- Cognify (Stand 26.09.2026): Die ausführliche Case Study ist veröffentlicht, auf Deutsch und Englisch (`cs.cognify.*` in `js/main.js`), mit Bildern in `assets/img/case-studies/cognify/`. Henri hat die Texte freigegeben. Der Status „In Bearbeitung“ auf der Projektkarte ist entfernt. Als optionaler nächster Schritt ist ein Abschnitt „Überarbeitung“ mit 3 bis 5 überarbeiteten Screens vor dem Fazit geplant (in Figma, auf einer neuen Seite der Hi-Fi-Datei). Quellen, Zahlen und Entscheidungen: `docs/COGNIFY-CASE-STUDY-MATERIAL.md`.
 - `preview-neu.html` ist ein geparktes Redesign-Experiment. Seine früheren To-dos sind verworfen.
 - Vor Änderungen `CLAUDE.md` beziehungsweise `AGENTS.md` lesen, Git-Status und Remote-Stand prüfen. Lokale Arbeit erhalten.
 
@@ -18,7 +19,7 @@ Die Inhalte der Case Studies liegen als versteckte `<article data-case="…">` i
 
 Das Werkzeugband unter „Wie ich arbeite“ zeigt Figma, Adobe CC, Microsoft Office, Claude Code, v0, Codex und GitHub als stilisierte, einfarbige Zeichen (Adobe XD, Photoshop und Dyad wurden am 26.09.2026 entfernt).
 
-Die Schlagworte unter den Projektkarten (`.project__tags`) sind keine Pills mehr, sondern eine Zeile in Fraunces kursiv mit feinen Schrägstrichen als Trenner. Ein Status wie „In Bearbeitung“ trägt die Klasse `project__status` und erscheint in Mono-Versalien. Die Schlagworte benennen Themen und Prinzipien in Begriffen, die Recruitern und Firmen etwas sagen. Keine Methoden wie Card Sorting und keine akademischen Modelle wie die Self-Determination Theory; beides steht in den Case Studies. Englisch über `p.<projekt>.tagN` in `js/main.js`.
+Die Schlagworte unter den Projektkarten (`.project__tags`) sind keine Pills mehr, sondern eine Zeile in Fraunces kursiv mit feinen Schrägstrichen als Trenner. Ein Status wie „In Bearbeitung“ trägt die Klasse `project__status` und erscheint in Mono-Versalien (derzeit auf keiner Karte in Gebrauch). Die Schlagworte benennen Themen und Prinzipien in Begriffen, die Recruitern und Firmen etwas sagen. Keine Methoden wie Card Sorting und keine akademischen Modelle wie die Self-Determination Theory; beides steht in den Case Studies. Englisch über `p.<projekt>.tagN` in `js/main.js`.
 
 ## forwerts: übernommener Stand
 

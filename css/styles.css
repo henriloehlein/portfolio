@@ -661,6 +661,47 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 .cs__screen figcaption strong{font-size:14px;font-weight:500}
 .cs__screen--focus>a{border-color:var(--warm-1);box-shadow:0 0 0 1px color-mix(in srgb,var(--warm-1) 35%,transparent)}
 .cs__screen--focus figcaption strong{color:var(--warm-1)}
+/* Cognify: portrait phone flows, Lo-Fi/Hi-Fi pairs, data figures */
+.cs__cover{margin:0 0 50px}
+.cs__screenFlow--phone .cs__screen{flex:0 0 220px}
+.cs__screenFlow--phone .cs__screen:not(:last-child)::after{top:44%}
+.cs__screenFlow--phone .cs__screen>a{border-radius:24px;background:transparent}
+.cs__screenFlow--phone .cs__screen img{aspect-ratio:390/844;object-fit:cover;background:transparent}
+.cs__screenFlow--pairs{gap:40px}
+.cs__screenFlow--pairs .cs__screen{flex:0 0 min(400px,84vw)}
+.cs__screenFlow--pairs .cs__screen::after{display:none}
+.cs__pairImgs{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cs__pairImgs img{display:block;width:100%;aspect-ratio:390/844;object-fit:cover;border-radius:22px;border:1px solid var(--line)}
+.cs__pairImgs span{display:block;margin-top:8px;font:500 10.5px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.cs__shots--ar img{aspect-ratio:1;object-fit:cover}
+.cs__sec .cs__shots--ar figure.shot{margin:0}
+.cs__data{margin:26px 0 28px}
+.cs__data figcaption{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.04em;color:var(--muted);padding-top:12px}
+.cs__tableWrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px}
+.cs__table{width:100%;min-width:540px;border-collapse:collapse;font-size:14px}
+.cs__table th,.cs__table td{padding:11px 16px;text-align:left;border-bottom:1px solid var(--line)}
+.cs__table tbody tr:last-child>*{border-bottom:0}
+.cs__table thead th{font:500 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted-2);background:var(--surface)}
+.cs__table tbody th{font-weight:500;color:var(--text)}
+.cs__table td{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.cs__table td::before{content:"";display:inline-block;width:56px;height:4px;border-radius:2px;margin-right:10px;vertical-align:middle;background:linear-gradient(90deg,var(--warm-1) calc(var(--v)*20%),var(--line) 0)}
+.cs__stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;margin:28px 0 30px}
+.cs__stats>div{padding-top:16px;border-top:1px solid var(--line-2)}
+.cs__stats strong{display:block;font-family:var(--f-display);font-weight:380;font-size:clamp(34px,4vw,48px);letter-spacing:-.03em;line-height:1;color:var(--text);margin-bottom:10px}
+.cs__stats small{font-size:.42em;letter-spacing:0;color:var(--muted);margin-left:3px}
+.cs__stats span{display:block;font-size:14px;line-height:1.5;color:var(--muted)}
+.cs__stats--score{margin:34px 0 10px}
+.cs__sec .cs__note{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.04em;color:var(--muted);margin-bottom:30px}
+.cs__quote{margin:24px 0 30px;padding-left:24px;border-left:2px solid var(--line-2)}
+.cs__sec .cs__quote p{font-family:var(--f-display);font-style:italic;font-size:clamp(18px,2vw,22px);line-height:1.45;color:var(--text);margin-bottom:8px}
+.cs__quote cite{font:400 11.5px var(--f-mono);color:var(--muted)}
+.cs__subhead{font-size:16px;font-weight:600;letter-spacing:-.01em;margin:32px 0 12px}
+.cs__bars{list-style:none;padding:0;margin:0;display:grid;gap:11px}
+.cs__bars li{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr) 36px;align-items:center;gap:16px;font-size:14px;line-height:1.4;color:var(--muted)}
+.cs__bars i{height:8px;border-radius:4px;background:linear-gradient(90deg,var(--muted-2) calc(var(--v)*10%),var(--line) 0)}
+.cs__bars .is-low span,.cs__bars .is-low b{color:var(--text)}
+.cs__bars .is-low i{background:linear-gradient(90deg,var(--warm-1) calc(var(--v)*10%),var(--line) 0)}
+.cs__bars b{font:500 13px var(--f-mono);text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}
 
 /* ---------- Responsive ---------- */
 @media (max-width:1040px){
@@ -692,4 +733,11 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
   .about__grid{grid-template-columns:1fr}
   .contact__links{grid-template-columns:1fr}
   .cs__shots--2,.cs__grid2{grid-template-columns:1fr}
+}
+@media (max-width:760px){
+  .cs__stats{grid-template-columns:1fr 1fr;gap:22px 18px}
+  .cs__bars li{grid-template-columns:minmax(0,1fr) 36px;gap:6px 12px}
+  .cs__bars span{grid-column:1/-1}
+  .cs__screenFlow--phone .cs__screen{flex-basis:200px}
+  .cs__screenFlow--pairs .cs__screen{flex-basis:100%}
 }

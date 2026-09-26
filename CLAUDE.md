@@ -8,7 +8,8 @@ Statisches UX/UI-Portfolio mit HTML, CSS und JavaScript, ohne Build-Schritt oder
 - `preview-neu.html`, `css/preview-neu-base.css`, `css/preview-neu.css`, `js/preview-neu-main.js` und `js/preview-neu.js` enthalten einen zurückgestellten Redesign-Entwurf. Aktuelle Arbeitsbasis ist die Live-Seite.
 - Deployment-Details stehen in `docs/DEPLOY.md`, visuelle Referenzen in `docs/REFERENZEN.md`, die Vorgeschichte entfernter Komponenten in `docs/KOMPONENTEN-ARCHIV.md`.
 - `css/liquid-glass.css` enthält optionale Glas-Bausteine und ist nicht in `styles.css` eingebunden.
-- Aktuelle Übergabe: Die ausgewählte forwerts-Variante C ist in `index.html` übernommen. Projektprofile, horizontale Screenfolgen und die Auswahl aus Henris Kundenprojekten sind der aktuelle Stand. Details und inhaltliche Grenzen stehen in `docs/PROJEKT-STATUS.md`.
+- Aktuelle Übergabe: Die ausgewählte forwerts-Variante C ist in `index.html` übernommen. Projektprofile, horizontale Screenfolgen und die Auswahl aus Henris Kundenprojekten sind der aktuelle Stand. Die ausführliche Cognify-Case-Study ist veröffentlicht; ihre Quellen stehen in `docs/COGNIFY-CASE-STUDY-MATERIAL.md`. Details und inhaltliche Grenzen stehen in `docs/PROJEKT-STATUS.md`.
+- Figma-MCP: Das Konto ist im Starter-Plan, lesende Zugriffe sind stark begrenzt. Bildmaterial bevorzugt aus lokalen Exporten nehmen; wenn Figma nötig ist, lieber einen Screenshot einer ganzen Seite machen und lokal zuschneiden.
 
 ## Arbeitsweise
 - Vor größeren Änderungen Git-Status und Remote-Stand prüfen; nur nach Sichtung lokaler Änderungen pullen. Commit und Push erfolgen, wenn Henri die Synchronisierung oder Veröffentlichung beauftragt. Ein Push auf `main` veröffentlicht die getrackte Preview-Datei ebenfalls auf GitHub Pages.

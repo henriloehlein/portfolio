@@ -151,13 +151,13 @@
       <div class="project__index">03</div>
       <div class="project__body">
         <h3 class="project__name reveal" data-split>Cognify</h3>
-        <p class="project__role reveal" data-i18n="p.cognify.role">Augmented-Reality E-Learning Plattform · Konzept, UX/UI</p>
+        <p class="project__role reveal" data-i18n="p.cognify.role">Augmented-Reality-Lernplattform · Konzept, UX/UI, AR-Prototyp</p>
         <p class="project__tease reveal" data-i18n="p.cognify.tease">
-          Themen alltagsnah entdecken, mit AR-Darstellungen, Quizzes, durchdachter
-          Gamification und starkem Community-Aspekt.
+          Wissen aus Neugier entdecken, mit 3D-Modellen in Augmented Reality,
+          Quizzen und Gamification für langfristige Motivation.
         </p>
         <div class="project__tags">
-          <span data-i18n="p.cognify.tag1">Augmented Reality</span><span data-i18n="p.cognify.tag2">Gamification</span><span data-i18n="p.cognify.tag3">Microlearning</span><span data-i18n="p.cognify.tag4">Social Learning</span><span class="project__status" data-i18n="p.cognify.status">In Bearbeitung</span>
+          <span data-i18n="p.cognify.tag1">Augmented Reality</span><span data-i18n="p.cognify.tag2">Gamification</span><span data-i18n="p.cognify.tag3">Microlearning</span><span data-i18n="p.cognify.tag4">Social Learning</span>
         </div>
       </div>
       <div class="project__visual">
@@ -699,33 +699,183 @@
   <article data-case="cognify">
     <div class="cs__hero">
       <div class="cs__heroText">
-        <span class="cs__kicker">AR E-Learning · In Bearbeitung</span>
+        <span class="cs__kicker" data-i18n="cs.cognify.kicker">E-Learning · Augmented Reality · 2024</span>
         <h2 class="cs__title">Cognify</h2>
-        <p class="cs__sub">Augmented-Reality E-Learning Plattform</p>
-        <p class="cs__pitch"><em>Cognify</em> ist eine universelle E-Learning-Plattform, mit der Menschen vielfältige Themengebiete in alltäglichen Lerneinheiten erforschen und durch verschiedene Features nachhaltig zum Lernen motiviert werden.</p>
+        <p class="cs__sub" data-i18n="cs.cognify.sub">Lernplattform mit Augmented Reality</p>
+        <p class="cs__pitch" data-i18n="cs.cognify.pitch"><em>Cognify</em> ist eine Lernplattform für Menschen, die sich aus Neugier neues Wissen aneignen möchten. Kompakte Kurse verbinden Texte, Videos und Quizze mit Augmented Reality: Über gedruckte Bildmarker erscheinen 3D-Modelle wie ein menschliches Herz oder das Kolosseum direkt auf dem Tisch. Gamification und Community-Funktionen sollen für langfristige Motivation sorgen.</p>
       </div>
       <div class="cs__heroMeta">
         <dl>
-          <div><dt>Rolle</dt><dd>Konzept · UX/UI</dd></div>
-          <div><dt>Schwerpunkte</dt><dd>AR-Darstellung · Quizzes · Gamification · Community</dd></div>
-          <div><dt>Status</dt><dd>Case Study in Bearbeitung</dd></div>
+          <div><dt data-i18n="cs.cognify.meta.role">Rolle</dt><dd data-i18n="cs.cognify.role">Konzept · UX Research · UX/UI · AR-Prototyp</dd></div>
+          <div><dt data-i18n="cs.cognify.meta.methods">Methoden</dt><dd data-i18n="cs.cognify.methods">Wettbewerbsanalyse · Umfrage · Personas · Journey Maps · Usability-Testing</dd></div>
+          <div><dt>Tools</dt><dd>Figma · Unity · Vuforia · Photoshop</dd></div>
+          <div><dt data-i18n="cs.cognify.meta.context">Rahmen</dt><dd data-i18n="cs.cognify.context">Hochschulprojekt · Hochschule Ansbach · Sommersemester 2024</dd></div>
         </dl>
       </div>
     </div>
 
-    <div class="cs__shots cs__shots--2">
-      <figure class="shot shot--phone"><img src="assets/img/cognify-main.png" alt="Cognify Lernübersicht" /><figcaption>Lernen fortsetzen · Modulare Lerneinheiten</figcaption></figure>
-      <figure class="shot shot--phone"><img src="assets/img/cognify-ar.png" alt="Cognify AR Anatomie" /><figcaption>Augmented Reality · Interaktive Inhalte</figcaption></figure>
-    </div>
+    <figure class="shot cs__cover"><img src="assets/img/covers/cognify.png" alt="Cognify Willkommensscreen, Startseite, Kursvorschau und AR-Modelle von Herz und Kolosseum" /></figure>
 
     <section class="cs__sec">
-      <h3>Vision</h3>
-      <p>Cognify ermöglicht es Menschen, neue Themen alltagsnah und flexibel zu entdecken. Nutzende gestalten sich Lerneinheiten individuell und erkunden Inhalte durch interaktive Elemente wie <strong>Augmented-Reality-Darstellungen</strong>, anschließend stellen sie ihr Wissen mit <strong>Quizzes</strong> auf die Probe. Durchdachte <strong>Gamification-Elemente</strong> und ein ausgeprägter <strong>Community-Aspekt</strong> sorgen für ein langfristig motivierendes Umfeld und eine kontinuierliche, intuitive Lernerfahrung.</p>
+      <h3 data-i18n="cs.cognify.s1.title">Ausgangslage</h3>
+      <p data-i18n="cs.cognify.s1.p1">Zu Beginn stand eine Recherche zu bestehenden Lernplattformen. Die meisten Angebote richten sich an Schule, Studium oder berufliche Weiterbildung und gliedern ihre Inhalte nach Fächern. Anwendungen mit Augmented Reality behandeln meist ein einzelnes Thema und sind überwiegend für Kinder gedacht. Für Erwachsene, die sich im Alltag aus Neugier mit neuen Themen beschäftigen möchten, fand sich kein passendes Angebot.</p>
+      <p data-i18n="cs.cognify.s1.p2">Vier Anwendungen wurden getestet und nach denselben Kriterien bewertet: Serlo, My Daily Input und Studyflix als thematisch breite Plattformen sowie WDR AR 1933-1945 als Beispiel für Wissensvermittlung mit AR.</p>
+      <figure class="cs__data">
+        <div class="cs__tableWrap">
+          <table class="cs__table">
+            <thead><tr><th data-i18n="cs.cognify.t.crit">Kriterium</th><th>Serlo</th><th>My Daily Input</th><th>Studyflix</th></tr></thead>
+            <tbody>
+              <tr><th data-i18n="cs.cognify.t.c1">Design und Ästhetik</th><td style="--v:4">4</td><td style="--v:4.5">4,5</td><td style="--v:3.5">3,5</td></tr>
+              <tr><th data-i18n="cs.cognify.t.c2">Nutzerfreundlichkeit</th><td style="--v:4">4</td><td style="--v:3.5">3,5</td><td style="--v:4">4</td></tr>
+              <tr><th data-i18n="cs.cognify.t.c3">Personalisierung</th><td style="--v:2">2</td><td style="--v:5">5</td><td style="--v:4">4</td></tr>
+              <tr><th data-i18n="cs.cognify.t.c4">Barrierefreiheit</th><td style="--v:2">2</td><td style="--v:1">1</td><td style="--v:3">3</td></tr>
+              <tr><th data-i18n="cs.cognify.t.c5">Inhaltsqualität und -umfang</th><td style="--v:3.5">3,5</td><td style="--v:4">4</td><td style="--v:3">3</td></tr>
+              <tr><th data-i18n="cs.cognify.t.c6">Funktionsumfang</th><td style="--v:4">4</td><td style="--v:3.5">3,5</td><td style="--v:2">2</td></tr>
+              <tr><th>Community</th><td style="--v:4.5">4,5</td><td style="--v:0">0</td><td style="--v:0">0</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figcaption data-i18n="cs.cognify.t.caption">Wettbewerbsanalyse · Bewertung von 0 bis 5. WDR AR 1933-1945 wurde gesondert bewertet: Wissensvermittlung 5, AR-Umsetzung 4, Nutzerfreundlichkeit 1.</figcaption>
+      </figure>
+      <p data-i18n="cs.cognify.s1.p3">Keine der Plattformen verbindet Personalisierung und Community, und bei der Barrierefreiheit erreichte keine mehr als 3 von 5 Punkten. Die AR-Anwendung überzeugte bei der Wissensvermittlung, scheiterte aber an der Bedienbarkeit.</p>
     </section>
 
     <section class="cs__sec">
-      <h3>Kontext & Rahmenbedingungen</h3>
-      <p>Die ausführliche Case Study zu Recherche, Konzeption und Evaluation befindet sich derzeit in Bearbeitung und wird hier ergänzt.</p>
+      <h3 data-i18n="cs.cognify.s2.title">User Research</h3>
+      <p data-i18n="cs.cognify.s2.p1">Eine Online-Umfrage mit 20 Teilnehmenden lieferte Daten zu Lerngewohnheiten, Erwartungen an Lernplattformen und zur Haltung gegenüber Augmented Reality.</p>
+      <div class="cs__stats">
+        <div><strong>70 %</strong><span data-i18n="cs.cognify.stat1">nennen Motivationsprobleme als größtes Hindernis beim Lernen mit Plattformen</span></div>
+        <div><strong>80 %</strong><span data-i18n="cs.cognify.stat2">lernen mit visuellen Medien wie Bildern, Grafiken und Videos</span></div>
+        <div><strong>3,05<small>/5</small></strong><span data-i18n="cs.cognify.stat3">erwarteter Nutzen von AR im Durchschnitt; 11 von 20 nannten konkrete Einsatzideen</span></div>
+        <div><strong>60 %</strong><span data-i18n="cs.cognify.stat4">halten einen Community-Aspekt für völlig unwichtig</span></div>
+      </div>
+      <p data-i18n="cs.cognify.s2.p2">Die Haltung zu Augmented Reality war gespalten. Wer eine Idee für den Einsatz hatte, dachte fast immer an die Veranschaulichung komplexer Inhalte wie Organe, physikalische Vorgänge oder technische Objekte.</p>
+      <blockquote class="cs__quote"><p data-i18n="cs.cognify.quote">„Mit visueller Darstellung lernt man oft nicht nur auswendig, sondern versteht es wirklich.“</p><cite data-i18n="cs.cognify.quote.cite">Antwort aus der Umfrage</cite></blockquote>
+      <p data-i18n="cs.cognify.s2.p3">Aus den Ergebnissen entstanden drei Personas. <strong>Anna Schmidt</strong>, Grundschullehrerin und Mutter, sucht Lernangebote für Unterricht und Familie. <strong>Michael Hoffmann</strong>, 45 und Steuerberater, möchte Geschichte, Kunst und Philosophie erkunden, hat aber wenig Zeit. <strong>Nicole Lechner</strong>, 23 und Marketingassistentin, hat viel Freizeit, findet aber schwer die Motivation für sinnvolle Beschäftigungen. Sie verkörpert das häufigste Problem aus der Umfrage.</p>
+      <figure class="shot"><img src="assets/img/case-studies/cognify/persona-nicole.jpg" alt="Persona Nicole Lechner" loading="lazy" /><figcaption>Persona · Nicole Lechner</figcaption></figure>
+      <p data-i18n="cs.cognify.s2.p4">Die User Journey Map zeigt Nicoles Weg von der Langeweile im Alltag bis zur festen Lernroutine. Entscheidend sind der erste Eindruck, der sie zum Ausprobieren bringt, und die Abwechslung, die sie danach dranbleiben lässt.</p>
+      <figure class="shot"><img src="assets/img/case-studies/cognify/journey-nicole.jpg" alt="User Journey Map Nicole Lechner" loading="lazy" /><figcaption>User Journey Map · Nicole Lechner</figcaption></figure>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.cognify.s3.title">Synthese und Konzept</h3>
+      <p data-i18n="cs.cognify.s3.p1">Die Erkenntnisse wurden in einem Leitsatz verdichtet, an dem sich die weitere Gestaltung ausrichtete:</p>
+      <p class="cs__pull" data-i18n="cs.cognify.s3.pull">Nutzende einer Lernanwendung mit Augmented Reality legen Wert auf intuitive Bedienung, eine ansprechende Oberfläche und vielfältige interaktive Funktionen. Die Anwendung soll flexibel nutzbar sein und hochwertige Inhalte bieten.</p>
+      <div class="cs__grid2">
+        <div><h5 data-i18n="cs.cognify.s3.h1">Wissenspakete</h5><p data-i18n="cs.cognify.s3.t1">Kompakte Kurse zu einem Thema bilden den Kern. Texte, Darstellungen, Videos, Aufgaben und AR-Modelle lassen sich je nach Vorliebe kombinieren, ohne dass sich der Informationsumfang ändert.</p></div>
+        <div><h5>Gamification</h5><p data-i18n="cs.cognify.s3.t2">Erfahrungspunkte, Level, Erfolge und Meilensteine machen Fortschritt sichtbar und setzen regelmäßige Impulse gegen nachlassende Motivation.</p></div>
+        <div><h5>Community</h5><p data-i18n="cs.cognify.s3.t3">Freundesliste, Ranglisten, Forum und Gruppen sollen durch Gemeinschaft und leichten Wettbewerb zusätzlich motivieren.</p></div>
+        <div><h5 data-i18n="cs.cognify.s3.h4">Abwägung</h5><p data-i18n="cs.cognify.s3.t4">60 % der Befragten hielten Community für unwichtig. Weil Motivation aber das häufigste Problem war, blieb sie Teil des Konzepts, zurückhaltend eingebunden: Profile zeigen Interessen, Level und Erfolge, aber nicht den Umfang eines sozialen Netzwerks.</p></div>
+      </div>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.cognify.s4.title">Vom Wireframe zum Interface</h3>
+      <p data-i18n="cs.cognify.s4.p1">Die Lo-Fi-Wireframes dienten dazu, Ideen früh auszuprobieren und die Struktur festzulegen. Zwei Prinzipien zogen sich durch den gesamten Prozess: Nutzende nicht mit Informationen überfordern und trotzdem ein einladendes Erscheinungsbild schaffen, das nicht nach reinem Nachschlagewerk wirkt.</p>
+      <div class="cs__flowLabel"><span data-i18n="cs.cognify.s4.flow">Lo-Fi und Hi-Fi im Vergleich</span><div class="cs__flowControls"><button type="button" data-flow="cg-pairs" data-dir="-1" aria-label="Vorherige Screens">←</button><button type="button" data-flow="cg-pairs" data-dir="1" aria-label="Weitere Screens">→</button></div></div>
+      <div class="cs__screenFlow cs__screenFlow--pairs" data-flow-id="cg-pairs" tabindex="0" role="region" aria-label="Lo-Fi und Hi-Fi im Vergleich">
+        <figure class="cs__screen cs__pair"><div class="cs__pairImgs"><div><img src="assets/img/case-studies/cognify/lofi-willkommen.png" alt="Lo-Fi Willkommensscreen" loading="lazy"><span>Lo-Fi</span></div><div><img src="assets/img/case-studies/cognify/willkommen.jpg" alt="Hi-Fi Willkommensscreen" loading="lazy"><span>Hi-Fi</span></div></div><figcaption><span>01</span><strong data-i18n="cs.cognify.pair1">Willkommen</strong></figcaption></figure>
+        <figure class="cs__screen cs__pair"><div class="cs__pairImgs"><div><img src="assets/img/case-studies/cognify/lofi-startseite.png" alt="Lo-Fi Startseite" loading="lazy"><span>Lo-Fi</span></div><div><img src="assets/img/case-studies/cognify/startseite.jpg" alt="Hi-Fi Startseite" loading="lazy"><span>Hi-Fi</span></div></div><figcaption><span>02</span><strong data-i18n="cs.cognify.pair2">Startseite</strong></figcaption></figure>
+        <figure class="cs__screen cs__pair"><div class="cs__pairImgs"><div><img src="assets/img/case-studies/cognify/lofi-lernmethoden.png" alt="Lo-Fi Auswahl der Lernmethoden" loading="lazy"><span>Lo-Fi</span></div><div><img src="assets/img/case-studies/cognify/kurs-vorschau.jpg" alt="Hi-Fi Kursvorschau mit Auswahl der Lernmethoden" loading="lazy"><span>Hi-Fi</span></div></div><figcaption><span>03</span><strong data-i18n="cs.cognify.pair3">Kursvorschau und Lernmethoden</strong></figcaption></figure>
+        <figure class="cs__screen cs__pair"><div class="cs__pairImgs"><div><img src="assets/img/case-studies/cognify/lofi-kapitel.png" alt="Lo-Fi Kursinhalt" loading="lazy"><span>Lo-Fi</span></div><div><img src="assets/img/case-studies/cognify/kapitel-skelett.jpg" alt="Hi-Fi Kurskapitel Skelettsystem" loading="lazy"><span>Hi-Fi</span></div></div><figcaption><span>04</span><strong data-i18n="cs.cognify.pair4">Kursinhalt</strong></figcaption></figure>
+        <figure class="cs__screen cs__pair"><div class="cs__pairImgs"><div><img src="assets/img/case-studies/cognify/lofi-ergebnis.png" alt="Lo-Fi Quizergebnis" loading="lazy"><span>Lo-Fi</span></div><div><img src="assets/img/case-studies/cognify/quiz-ergebnis.jpg" alt="Hi-Fi Quizergebnis mit Erfahrungspunkten" loading="lazy"><span>Hi-Fi</span></div></div><figcaption><span>05</span><strong data-i18n="cs.cognify.pair5">Quizergebnis</strong></figcaption></figure>
+        <figure class="cs__screen cs__pair"><div class="cs__pairImgs"><div><img src="assets/img/case-studies/cognify/lofi-freunde.png" alt="Lo-Fi Freunde" loading="lazy"><span>Lo-Fi</span></div><div><img src="assets/img/case-studies/cognify/freunde.jpg" alt="Hi-Fi Freunde mit Ranking und Gruppen" loading="lazy"><span>Hi-Fi</span></div></div><figcaption><span>06</span><strong data-i18n="cs.cognify.pair6">Freunde</strong></figcaption></figure>
+      </div>
+      <h5 class="cs__subhead" data-i18n="cs.cognify.s4.h">Wichtigste Änderungen im Hi-Fi-Prototyp</h5>
+      <ul class="cs__bullets">
+        <li data-i18n="cs.cognify.s4.b1">Eine Kursvorschau vor jedem Kurs mit Kapitelübersicht und der Wahl der Lernmethoden</li>
+        <li data-i18n="cs.cognify.s4.b2">Kurskarten mit Prozentwert statt Fortschrittsbalken sowie Angaben zu Dauer und Schwierigkeit</li>
+        <li data-i18n="cs.cognify.s4.b3">Ein Erfahrungspunkte-System für abgeschlossene Kurse und Quizze, dazu eine Levelanzeige, die zeigt, welche Freunde höher oder niedriger stehen</li>
+        <li data-i18n="cs.cognify.s4.b4">Eingabefelder als schlichte Textzeilen statt grauer Boxen; der Weiter-Pfeil bleibt ausgegraut, bis alle Angaben vollständig sind</li>
+        <li data-i18n="cs.cognify.s4.b5">Ein Farbschema aus einer spezialisierten Palette mit stärkeren Kontrasten und klareren Farbunterschieden</li>
+      </ul>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.cognify.s5.title">Kernabläufe</h3>
+      <p data-i18n="cs.cognify.s5.p1">Die Startseite bündelt, was für den Lernalltag zählt: die Fortschrittsleiste mit Level und Erfahrungspunkten im Vergleich zu Freunden, darunter die Listen „Lernen fortsetzen“ und „Neues entdecken“. Zwei feste Buttons führen zur Community und zur Suche.</p>
+      <div class="cs__flowLabel"><span data-i18n="cs.cognify.s5.flow1">Startseite und Entdecken</span><div class="cs__flowControls"><button type="button" data-flow="cg-home" data-dir="-1" aria-label="Vorherige Screens">←</button><button type="button" data-flow="cg-home" data-dir="1" aria-label="Weitere Screens">→</button></div></div>
+      <div class="cs__screenFlow cs__screenFlow--phone" data-flow-id="cg-home" tabindex="0" role="region" aria-label="Startseite und Entdecken">
+        <figure class="cs__screen"><a href="assets/img/case-studies/cognify/startseite.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/startseite.jpg" alt="Startseite mit Fortschrittsleiste und Kurslisten" loading="lazy"></a><figcaption><span>01</span><strong data-i18n="cs.cognify.home1">Startseite</strong></figcaption></figure>
+        <figure class="cs__screen"><a href="assets/img/case-studies/cognify/lernen-fortsetzen.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/lernen-fortsetzen.jpg" alt="Lernen fortsetzen mit Kursfortschritt und Freunden" loading="lazy"></a><figcaption><span>02</span><strong data-i18n="cs.cognify.home2">Lernen fortsetzen</strong></figcaption></figure>
+        <figure class="cs__screen"><a href="assets/img/case-studies/cognify/neues-entdecken.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/neues-entdecken.jpg" alt="Neues entdecken mit Kursempfehlungen" loading="lazy"></a><figcaption><span>03</span><strong data-i18n="cs.cognify.home3">Neues entdecken</strong></figcaption></figure>
+      </div>
+      <div class="cs__flowLabel cs__flowLabel--sub"><span data-i18n="cs.cognify.s5.flow2">Ein Kurs von der Vorschau bis zum Ergebnis</span><div class="cs__flowControls"><button type="button" data-flow="cg-course" data-dir="-1" aria-label="Vorherige Screens">←</button><button type="button" data-flow="cg-course" data-dir="1" aria-label="Weitere Screens">→</button></div></div>
+      <div class="cs__screenFlow cs__screenFlow--phone" data-flow-id="cg-course" tabindex="0" role="region" aria-label="Kursablauf">
+        <figure class="cs__screen"><a href="assets/img/case-studies/cognify/kurs-vorschau.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/kurs-vorschau.jpg" alt="Kursvorschau Die menschliche Anatomie mit Auswahl der Lernmethoden" loading="lazy"></a><figcaption><span>01</span><strong data-i18n="cs.cognify.course1">Vorschau und Lernmethoden</strong></figcaption></figure>
+        <figure class="cs__screen"><a href="assets/img/case-studies/cognify/kapitel-skelett.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/kapitel-skelett.jpg" alt="Kapitel Skelettsystem mit Text und Abbildungen" loading="lazy"></a><figcaption><span>02</span><strong data-i18n="cs.cognify.course2">Kapitel</strong></figcaption></figure>
+        <figure class="cs__screen cs__screen--focus"><a href="assets/img/case-studies/cognify/kapitel-herz.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/kapitel-herz.jpg" alt="Kapitel Das Herz mit Hinweis auf das AR-Modell" loading="lazy"></a><figcaption><span>03</span><strong data-i18n="cs.cognify.course3">Kapitel mit AR-Modell</strong></figcaption></figure>
+        <figure class="cs__screen"><a href="assets/img/case-studies/cognify/quiz-ergebnis.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/quiz-ergebnis.jpg" alt="Quizergebnis mit Erfahrungspunkten und Vergleich" loading="lazy"></a><figcaption><span>04</span><strong data-i18n="cs.cognify.course4">Quiz und Erfahrungspunkte</strong></figcaption></figure>
+      </div>
+      <div class="cs__flowLabel cs__flowLabel--sub"><span data-i18n="cs.cognify.s5.flow3">Community und Profil</span><div class="cs__flowControls"><button type="button" data-flow="cg-social" data-dir="-1" aria-label="Vorherige Screens">←</button><button type="button" data-flow="cg-social" data-dir="1" aria-label="Weitere Screens">→</button></div></div>
+      <div class="cs__screenFlow cs__screenFlow--phone" data-flow-id="cg-social" tabindex="0" role="region" aria-label="Community und Profil">
+        <figure class="cs__screen"><a href="assets/img/case-studies/cognify/freunde.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/freunde.jpg" alt="Freundesliste mit Ranking und Gruppen" loading="lazy"></a><figcaption><span>01</span><strong data-i18n="cs.cognify.social1">Freunde und Ranking</strong></figcaption></figure>
+        <figure class="cs__screen"><a href="assets/img/case-studies/cognify/freund-profil.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/freund-profil.jpg" alt="Profil eines Freundes mit Interessen und Kursen" loading="lazy"></a><figcaption><span>02</span><strong data-i18n="cs.cognify.social2">Profil</strong></figcaption></figure>
+        <figure class="cs__screen"><a href="assets/img/case-studies/cognify/praeferenzen.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/praeferenzen.jpg" alt="Themenpräferenzen in den Einstellungen" loading="lazy"></a><figcaption><span>03</span><strong data-i18n="cs.cognify.social3">Themenpräferenzen</strong></figcaption></figure>
+      </div>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.cognify.s6.title">Augmented Reality</h3>
+      <p data-i18n="cs.cognify.s6.p1">Die AR-Funktion wurde nicht nur gestaltet, sondern als eigene Android-App mit Unity und der Vuforia Engine umgesetzt. Zu den Kursen „Die menschliche Anatomie“ und „Das Kolosseum“ gehört je eine Druckvorlage mit Bildmarker. Erkennt die Kamera den Marker, erscheint das passende 3D-Modell auf dem Blatt und lässt sich durch Bewegen des Geräts von allen Seiten betrachten.</p>
+      <div class="cs__shots cs__shots--2 cs__shots--ar">
+        <figure class="shot"><img src="assets/img/case-studies/cognify/ar-herz.jpg" alt="3D-Modell eines menschlichen Herzens auf der gedruckten Cognify-Vorlage" loading="lazy" /><figcaption data-i18n="cs.cognify.ar1">Kurs Anatomie · Herz</figcaption></figure>
+        <figure class="shot"><img src="assets/img/case-studies/cognify/ar-kolosseum.jpg" alt="3D-Modell des Kolosseums auf der gedruckten Cognify-Vorlage" loading="lazy" /><figcaption data-i18n="cs.cognify.ar2">Kurs Kolosseum · Modell</figcaption></figure>
+      </div>
+      <p data-i18n="cs.cognify.s6.p2">Im Interface ist AR eine von fünf Lernmethoden, die sich in der Kursvorschau aktivieren lässt; ein Druckersymbol führt dort zur Vorlage. Im Kurs weist ein Symbol am Ende des passenden Abschnitts auf das Modell hin.</p>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.cognify.s7.title">Designentscheidungen</h3>
+      <div class="cs__grid2">
+        <div><h5 data-i18n="cs.cognify.s7.h1">Vertraute Muster</h5><p data-i18n="cs.cognify.s7.t1">Nach Jakob’s Law erwarten Nutzende, dass eine App so funktioniert wie die Apps, die sie bereits kennen. Das Logo führt deshalb zurück zur Startseite, das Profilbild zu Konto und Einstellungen, die Suche liegt unten rechts.</p></div>
+        <div><h5 data-i18n="cs.cognify.s7.h2">Sichtbarer Fortschritt</h5><p data-i18n="cs.cognify.s7.t2">Die Fortschrittsleiste zeigt Level, Erfahrungspunkte und die Profilbilder von Freunden. Nach jedem Quiz folgen Punktezuwachs, der Vergleich mit Freunden und die Einordnung unter allen Nutzenden.</p></div>
+        <div><h5 data-i18n="cs.cognify.s7.h3">Reduzierte Oberfläche</h5><p data-i18n="cs.cognify.s7.t3">Jeder Screen zeigt nur, was für den nächsten Schritt nötig ist. Profil, Einstellungen und Community sind bewusst schlicht gehalten, damit sich auch weniger technikaffine Menschen zurechtfinden.</p></div>
+        <div><h5 data-i18n="cs.cognify.s7.h4">Barrierefreiheit</h5><p data-i18n="cs.cognify.s7.t4">In den Einstellungen lassen sich Schriftgröße, einfache Schrift, ein Modus für Farbenblindheit, Untertitel für Videos, ein Screenreader und ein Darkmode aktivieren.</p></div>
+      </div>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.cognify.s8.title">Evaluation</h3>
+      <p data-i18n="cs.cognify.s8.p1">Geplant waren eine quantitative Remote-Evaluation und drei moderierte Tests. Beim Versand des Prototyps zeigte sich, dass Figma von allen Testpersonen ein eigenes Konto verlangte; auch der Figma-Support fand keine Lösung. Statt die Evaluation zu verkleinern, wurde der qualitative Teil ausgebaut: sechs statt drei Testpersonen und zehn statt fünf Aufgaben.</p>
+      <p data-i18n="cs.cognify.s8.p2">Die Tests fanden vor Ort statt, mit dem Prototyp auf dem Smartphone sowie Tablet und Druckvorlagen für die AR-Funktion. Die sechs Teilnehmenden zwischen 22 und 65 Jahren unterschieden sich in Technikaffinität und AR-Erfahrung. Sie dachten während der Aufgaben laut, bewerteten jede Aufgabe nach ihrer Lösbarkeit und gaben zum Schluss im Gespräch Feedback.</p>
+      <figure class="cs__data">
+        <ol class="cs__bars">
+          <li style="--v:10"><span data-i18n="cs.cognify.task1">Konto erstellen und Interessen wählen</span><i></i><b>10,0</b></li>
+          <li style="--v:10"><span data-i18n="cs.cognify.task2">Kurs „Das Kolosseum“ mit Quiz abschließen</span><i></i><b>10,0</b></li>
+          <li style="--v:5.8" class="is-low"><span data-i18n="cs.cognify.task3">Lernmethoden im laufenden Kurs ändern</span><i></i><b>5,8</b></li>
+          <li style="--v:5.3" class="is-low"><span data-i18n="cs.cognify.task4">Freunde mit höherem und niedrigerem Level finden</span><i></i><b>5,3</b></li>
+          <li style="--v:6.2" class="is-low"><span data-i18n="cs.cognify.task5">Erreichte Meilensteine finden</span><i></i><b>6,2</b></li>
+          <li style="--v:8.5"><span data-i18n="cs.cognify.task6">Eigene Position in der globalen Rangliste finden</span><i></i><b>8,5</b></li>
+          <li style="--v:8.8"><span data-i18n="cs.cognify.task7">Profil eines Freundes öffnen</span><i></i><b>8,8</b></li>
+          <li style="--v:9.2"><span data-i18n="cs.cognify.task8">Eigene Gruppen finden</span><i></i><b>9,2</b></li>
+          <li style="--v:7"><span data-i18n="cs.cognify.task9">Themenpräferenzen ändern</span><i></i><b>7,0</b></li>
+          <li style="--v:8.5"><span data-i18n="cs.cognify.task10">Darkmode aktivieren</span><i></i><b>8,5</b></li>
+        </ol>
+        <figcaption data-i18n="cs.cognify.bars.caption">Lösbarkeit je Aufgabe · Durchschnitt aus sechs Bewertungen von 0 bis 10</figcaption>
+      </figure>
+      <div class="cs__stats cs__stats--score">
+        <div><strong>9,7</strong><span data-i18n="cs.cognify.score1">Optik</span></div>
+        <div><strong>9,5</strong><span data-i18n="cs.cognify.score2">Lerneffekt</span></div>
+        <div><strong>8,8</strong><span data-i18n="cs.cognify.score3">Übersichtlichkeit</span></div>
+        <div><strong>8,2</strong><span data-i18n="cs.cognify.score4">Bedienbarkeit</span></div>
+      </div>
+      <p class="cs__note" data-i18n="cs.cognify.score.caption">Abschlussbewertung · Durchschnitt von 10 Punkten</p>
+      <h5 class="cs__subhead" data-i18n="cs.cognify.s8.h">Befunde</h5>
+      <ul class="cs__bullets">
+        <li data-i18n="cs.cognify.s8.b1">Kurse und Quizze lösten alle Teilnehmenden ohne Mühe. Der Lernteil, das Herzstück der Anwendung, wurde durchweg positiv bewertet.</li>
+        <li data-i18n="cs.cognify.s8.b2">Fünf von sechs Personen übersahen die AR-Funktion zunächst. Der Hinweis stand am Ende des Fließtexts und ging beim Überfliegen unter. Wer AR nutzte, empfand es als intuitiv; einziges Hindernis war das Ausdrucken der Vorlage.</li>
+        <li data-i18n="cs.cognify.s8.b3">Die Touch-Ziele waren für alle Altersgruppen zu klein. Zum Teil lag das an den sehr exakten Klickflächen im Figma-Prototyp.</li>
+        <li data-i18n="cs.cognify.s8.b4">Die Lernmethoden im laufenden Kurs zu ändern, gelang selten auf direktem Weg, weil nichts auf die Funktion hinter dem Kurstitel hinwies.</li>
+        <li data-i18n="cs.cognify.s8.b5">Ältere Teilnehmende vermissten einen sichtbaren Zurück-Pfeil und fanden sich langsamer in der Informationsarchitektur zurecht. Jüngere übertrugen vertraute Muster aus anderen Apps sofort.</li>
+        <li data-i18n="cs.cognify.s8.b6">„Suche“ wurde als globale Suche verstanden, obwohl sie nur Kurse durchsucht.</li>
+      </ul>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.cognify.s10.title">Fazit</h3>
+      <p data-i18n="cs.cognify.s10.p1">Die abgeleiteten Verbesserungen konnten im Semester nicht mehr umgesetzt werden, weil das Projekt seinen geplanten Umfang auf mehreren Ebenen überschritten hatte, vom eigenen AR-Prototyp bis zur ausgeweiteten Evaluation.</p>
+      <p class="cs__pull" data-i18n="cs.cognify.s10.pull">Ein Alleinstellungsmerkmal wirkt nur, wenn es im Interface sichtbar ist. Die AR-Funktion war technisch gelöst, ging aber im Fließtext unter. Ebenso tragen vertraute Muster nur die Menschen, die sie kennen; alle anderen brauchen sichtbare Wegweiser.</p>
     </section>
   </article>
 
