@@ -491,8 +491,9 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 .project__role{font-family:var(--f-mono);font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--warm-1);margin-bottom:14px}
 .project__tease{font-size:15.5px;color:var(--muted);max-width:52ch;line-height:1.6}
 .project__tease em{font-style:italic;color:var(--text)}
-.project__tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
-.project__tags span{font-family:var(--f-mono);font-size:11px;letter-spacing:.03em;color:var(--muted);padding:5px 11px;border:1px solid var(--line);border-radius:50px}
+.project__tags{display:flex;flex-wrap:wrap;align-items:baseline;row-gap:2px;margin-top:16px;font-family:var(--f-display);font-style:italic;font-weight:360;font-size:14px;color:color-mix(in srgb,var(--warm-1) 38%,var(--text))}
+.project__tags span:not(:last-child)::after{content:"/";display:inline-block;margin:0 9px;font:400 11px var(--f-mono);font-style:normal;color:var(--muted-2)}
+.project__tags .project__status{font:500 10px var(--f-mono);font-style:normal;letter-spacing:.08em;text-transform:uppercase;color:var(--warm-1)}
 .project__visual{justify-self:end;width:100%;max-width:300px;height:210px;display:grid;place-items:center;overflow:hidden}
 .phone{width:118px;border-radius:22px;overflow:hidden;border:5px solid #14141c;box-shadow:var(--shadow);transform:translateY(6px) rotate(-3deg);transition:transform .6s var(--ease)}
 [data-theme="light"] .phone{border-color:#26242c}
@@ -620,13 +621,21 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 .cs__hinweis{font-size:14px!important;color:var(--muted-2)!important;border:1px dashed var(--line);border-radius:12px;padding:16px 18px;font-style:italic}
 
 /* forwerts: public product screens within the existing case-study panel */
-.cs__designStructure{display:grid;grid-template-columns:minmax(120px,.55fr) 1.45fr;gap:30px;align-items:start;padding:24px 0;margin:-9px 0 58px;border-bottom:1px solid var(--line)}
-.cs__designStructure span{font:500 11px var(--f-mono);letter-spacing:.1em;color:var(--warm-1)}
-.cs__designStructure p{font-size:16px;line-height:1.65;color:var(--text);max-width:58ch}
+.cs__partHead{margin-bottom:34px}
+.cs__partHead>span{display:block;font:500 11px var(--f-mono);letter-spacing:.12em;color:var(--warm-1);margin-bottom:14px}
+.cs__partHead h3{font-family:var(--f-display);font-size:clamp(32px,3.8vw,48px);font-weight:380;letter-spacing:-.035em;line-height:1.1;max-width:640px}
+.cs__partHead p{font-size:15px;line-height:1.65;color:var(--muted);margin:14px 0 0;max-width:62ch}
+.cs__partHead--projects{padding-top:46px;border-top:1px solid var(--line);margin-bottom:46px}
+.cs__tasks{padding:0;max-width:none;margin:0 0 72px}
+.cs__taskGrid{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px 30px}
+.cs__taskGrid>li{padding-top:18px;border-top:1px solid var(--line-2)}
+.cs__taskNum{font:500 11px var(--f-mono);color:var(--warm-1);margin-bottom:12px}
+.cs__taskGrid h4{font-size:17px;font-weight:600;letter-spacing:-.01em;line-height:1.3;margin-bottom:8px}
+.cs__taskGrid p{font-size:14.5px;line-height:1.6;color:var(--muted);margin:0}
 .cs__showcase{padding:0;max-width:none;margin:0 0 64px}
 .cs__showcaseHead{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,.78fr);column-gap:40px;align-items:end;margin-bottom:28px}
 .cs__showcaseHead>span{grid-column:1/-1;font:500 11px var(--f-mono);letter-spacing:.12em;color:var(--warm-1);margin-bottom:14px}
-.cs__showcaseHead h3{font-family:var(--f-display);font-size:clamp(34px,4vw,52px);font-weight:380;letter-spacing:-.035em;line-height:1.1;max-width:540px}
+.cs__showcaseHead h3{font-family:var(--f-display);font-size:clamp(26px,2.8vw,36px);font-weight:380;letter-spacing:-.035em;line-height:1.1;max-width:540px}
 .cs__showcaseHead p{font-size:15px;line-height:1.65;color:var(--muted);margin:0;max-width:56ch}
 .cs__showcaseHead .cs__projectContext{font:400 13px/1.5 var(--f-mono);color:var(--muted);margin:12px 0 0}
 .cs__projectTasks{list-style:none;padding:0;margin:0;align-self:start}
@@ -635,9 +644,8 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 .cs__projectTasks li:last-child{border-bottom:0}
 .cs__flowLabel{display:flex;align-items:center;gap:16px;border-top:1px solid var(--line);padding:16px 0;font:500 11px var(--f-mono);letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
 .cs__flowLabel span:first-child{color:var(--warm-1)}
-.cs__flowLabel span:nth-child(2){margin-left:auto;text-align:right}
 .cs__flowLabel--sub{margin-top:30px}
-.cs__flowControls{display:flex;gap:6px;flex-shrink:0}
+.cs__flowControls{display:flex;gap:6px;flex-shrink:0;margin-left:auto}
 .cs__flowControls button{width:34px;height:34px;border:1px solid var(--line);border-radius:50%;background:transparent;color:var(--text);font-size:18px;cursor:pointer;transition:border-color .2s,background .2s}
 .cs__flowControls button:hover{border-color:var(--warm-1);background:var(--surface)}
 .cs__flowControls button:focus-visible{outline:2px solid var(--warm-1);outline-offset:2px}
@@ -653,16 +661,6 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 .cs__screen figcaption strong{font-size:14px;font-weight:500}
 .cs__screen--focus>a{border-color:var(--warm-1);box-shadow:0 0 0 1px color-mix(in srgb,var(--warm-1) 35%,transparent)}
 .cs__screen--focus figcaption strong{color:var(--warm-1)}
-.cs__source{font:400 11px/1.6 var(--f-mono)!important;color:var(--muted-2)!important;margin:12px 0 0!important}
-.cs__source a{color:var(--muted);border-bottom:1px solid var(--line-2)}
-.cs__source a:hover{color:var(--warm-1)}
-.cs__moreWork{padding:28px 0;max-width:none;margin:0 0 36px;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1.2fr;gap:30px}
-.cs__moreWork h3{font-family:var(--f-display);font-size:30px;font-weight:380;line-height:1.2}
-.cs__moreWork ul{list-style:none;padding:0;margin:0}
-.cs__moreWork li{font-size:14px;line-height:1.55;color:var(--muted);padding:10px 0;border-bottom:1px solid var(--line)}
-.cs__moreWork li:first-child{padding-top:0}
-.cs__moreWork li:last-child{border-bottom:0}
-.cs__showcaseNote{font:400 12px/1.6 var(--f-mono);color:var(--muted-2);border-top:1px solid var(--line);padding-top:20px}
 
 /* ---------- Responsive ---------- */
 @media (max-width:1040px){
@@ -672,14 +670,14 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
   .project__visual{height:170px}
   .phone{width:92px}
   .cs__hero{grid-template-columns:1fr;gap:28px}
+  .cs__taskGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (max-width:760px){
-  .cs__designStructure,.cs__moreWork{grid-template-columns:1fr;gap:14px}
+  .cs__taskGrid{grid-template-columns:1fr;gap:28px}
   .cs__showcaseHead{grid-template-columns:1fr;gap:16px}
   .cs__showcaseHead>span{margin-bottom:0}
   .cs__screen{flex-basis:min(300px,80vw)}
   .cs__flowLabel{font-size:10px;flex-wrap:wrap}
-  .cs__flowLabel span:last-child{text-align:right}
 }
 @media (max-width:760px){
   .subnav__inner{gap:9px;border-radius:16px;padding:11px 16px}

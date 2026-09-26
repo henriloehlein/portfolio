@@ -16,24 +16,28 @@ Navigation, Projekte mit Case-Study-Modals, Arbeitsweise und Werkzeugband, Profi
 
 Die Inhalte der Case Studies liegen als versteckte `<article data-case="…">` in `index.html` und werden beim Öffnen nach `#modalContent` kopiert. Deutsche Texte stehen im HTML, englische `data-i18n`-Texte im `EN`-Dictionary von `js/main.js`.
 
+Das Werkzeugband unter „Wie ich arbeite“ zeigt Figma, Adobe CC, Microsoft Office, Claude Code, v0, Codex und GitHub als stilisierte, einfarbige Zeichen (Adobe XD, Photoshop und Dyad wurden am 26.09.2026 entfernt).
+
+Die Schlagworte unter den Projektkarten (`.project__tags`) sind keine Pills mehr, sondern eine Zeile in Fraunces kursiv mit feinen Schrägstrichen als Trenner. Ein Status wie „In Bearbeitung“ trägt die Klasse `project__status` und erscheint in Mono-Versalien. Die Schlagworte benennen Themen und Prinzipien in Begriffen, die Recruitern und Firmen etwas sagen. Keine Methoden wie Card Sorting und keine akademischen Modelle wie die Self-Determination Theory; beides steht in den Case Studies. Englisch über `p.<projekt>.tagN` in `js/main.js`.
+
 ## forwerts: übernommener Stand
 
-Die gewählte Variante C aus `preview-forwerts-varianten.html` ist in der aktiven Case Study umgesetzt:
+Stand 26.09.2026: Aufbau umgestellt von „das sind meine Projekte“ auf „das waren meine Aufgaben, hier Auszüge aus Projekten“:
 
-- Kurzer Einstieg zur Mitarbeit im UX Design bei verschiedenen Kundenprojekten.
-- Die drei gezeigten Beispiele sind ausdrücklich eine Auswahl aus Henris Arbeit bei forwerts, kein vollständiger Projektkatalog.
-- Zeitraum laut Zeugnis: September 2024 bis Februar 2025.
-- Sichtbarer, zurückhaltender Absatz zur Mitarbeit am Aufbau einer Designstruktur für einzelne Bereiche des Kunden-Centers und zu konsistenten Oberflächen über einzelne Screens hinaus.
-- Je Kundenprojekt ein sachliches Tätigkeitsprofil, danach eine horizontal scrollbare Bildfolge mit Pfeiltasten und Bildlinks.
+- Allgemein gehaltener Einstieg (Online-Shops, Kundenportale und Websites für Konzerne aus der Telekommunikations- und Energiebranche). Meta nennt „Rolle: UX Expert Intern“ und „Kunden: 1&1 · Vattenfall“.
+- Hauptteil „Tätigkeitsfelder“: sechs knappe Felder nach dem Zeugnis (Screen-Design, User Flows, Designstruktur, Informationsarchitektur, Visuelle Elemente, Workshops), bewusst ohne Projektzuordnung. Henri hat die Workshops vorbereitet, durchgeführt hat sie sein Betreuer.
+- Danach „Auszüge aus Kundenprojekten“. Nur hier werden Tätigkeiten konkret den Projekten zugeordnet. Henri möchte die nicht wörtlich belegten Projekttätigkeiten behalten.
+- Bewusst weggelassen: Aufnahmedatum der Screens, Hinweis auf Originalentwürfe, Screen-Anzahlen, Projekt-Chips. Henri empfindet solche Zusätze als überladen.
+- Das Praktikum steht nur als Rolle „UX Expert Intern“ in der Übersicht, nicht im Titel oder Kicker.
+- Zeitraum laut Zeugnis: September 2024 bis Februar 2025. Kundennamen dürfen laut Henri genannt werden.
 - 1&1 Online-Shop: sieben Schritte von Gerätekonfiguration bis Warenkorb, Zubehörstufe im Flow dezent hervorgehoben.
 - 1&1 Hilfe-Center: vier Ebenen von Startseite bis Hilfeartikel.
 - Vattenfall: zwei getrennte Seitenpaare für Tarif- und Serviceseiten.
-- Übergreifende Tätigkeiten unter „Weitere Aufgaben“: Icons, Infografiken, Badges, grafische Ideenausarbeitung und Textvorschläge.
 - Deutsch und Englisch sind synchron. Die Projektkarte nennt User Flows, Screen-Designs und Designstrukturen.
 
 ### Inhaltliche Grenzen und Präferenzen
 
-Henri möchte einen gesamtheitlichen Projektüberblick. Keine erzählerischen Überschriften wie „Von der Frage zur Antwort“, keine detaillierte Behauptung über einzelne UI-Entscheidungen und keine erfundenen Tätigkeiten, Methoden oder Conversion-Zahlen. Designstrukturen sind belegt; ein vollständig eigenständig entwickeltes Designsystem ist nicht belegt.
+Henri möchte einen gesamtheitlichen Projektüberblick. Keine erzählerischen Überschriften wie „Von der Frage zur Antwort“, keine detaillierte Behauptung über einzelne UI-Entscheidungen und keine erfundenen Tätigkeiten, Methoden oder Conversion-Zahlen. Das Zeugnis nennt „Mitarbeit und Aufbau einer Design Struktur“ für Bereiche des Kunden-Centers; das darf selbstbewusst formuliert werden, ein vollständig eigenständig entwickeltes Designsystem ist aber nicht belegt.
 
 Die Tätigkeiten beruhen auf Henris Angaben und dem privat gelesenen Zeugnis. Das Zeugnis selbst bleibt außerhalb des Repos. Die Screens in `assets/img/case-studies/` zeigen öffentliche Website-Ansichten vom 25.09.2026, keine damaligen Originalentwürfe. Die Vattenfall-Tarifaufnahme wurde ohne Cookie-Dialog neu erstellt. Quellen und Dateizuordnung: `docs/FORWERTS-CASE-STUDY-MATERIAL.md`.
 
