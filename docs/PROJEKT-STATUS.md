@@ -45,6 +45,13 @@ Die Tätigkeiten beruhen auf Henris Angaben und dem privat gelesenen Zeugnis. Da
 
 ### Weitere Entwürfe
 
+- `preview-farben.html` mit `css/preview-farben.css` (26.09.2026): Kopie der Live-Seite mit Umschalter für drei Farb- und Stilkonzepte plus „0 Aktuell“. Aufruf ohne `.html`, z. B. `/preview-farben?stil=b#about` (der lokale Server verliert den Parameter sonst beim Weiterleiten). Anlass: Henri findet die Verläufe in Hintergrund und Schrift gut, aber billig und studentisch.
+  - Gemeinsam: Aurora, treibende Blobs, Glow unter Verlaufsschrift und Schimmer-Sweeps entfallen.
+  - A Studiolicht: Graphit, Elfenbein, Kupfer; Verlaufsschrift als Metallglanz, der beim Scrollen wandert.
+  - B Dämmerung: Farbfeld mit Horizont, der beim Scrollen sinkt; Schrift vertikal verlaufend, von unten angestrahlt.
+  - C Druckbogen: Papier, Tinte, Ultramarin; Verläufe als Punktraster, hell als Grundeinstellung.
+  - Offen: Henris Entscheidung für eine Richtung oder Kombination, danach Übernahme in `css/styles.css` und `js/main.js` (dort `initScrollGradient` ersetzen). Die Datei ist eine Kopie von `index.html` und läuft bei Änderungen nicht mit.
+- `preview-stil-a/b/c.html` und `preview-stil-c1/c2/c3.html` (26.09.2026, aus einer parallelen Sitzung): frühere, eigenständige Stilentwürfe (Räume, Studie, Kontrast; C-Varianten Kobalt, Verlauf, Index). Nicht in die Live-Seite eingebunden.
 - `preview-forwerts-varianten.html`: drei umschaltbare Aufbauvarianten; C ist vorausgewählt. Vergleichsentwurf, keine aktive Startseite.
 - `preview-forwerts.html` mit `css/preview-forwerts.css`: früherer separater Showcase. Seine spezifischen Texte sind überholt.
 - `preview-neu.html` mit eigener CSS/JS: geparktes Redesign. Nur auf ausdrücklichen Wunsch öffnen.

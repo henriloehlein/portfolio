@@ -1,0 +1,247 @@
+/* =========================================================
+   Farb- und Stilvarianten (nur preview-farben.html)
+   ---------------------------------------------------------
+   Drei Konzepte, umschaltbar über html[data-stil]:
+     a  Studiolicht  · Graphit, Elfenbein, Kupfer. Verlauf als Licht auf Material.
+     b  Dämmerung    · Farbfeld nach Turrell/Rothko. Horizont sinkt beim Scrollen.
+     c  Druckbogen   · Papier, Tinte, Ultramarin. Verlauf als Druckraster.
+   "0" zeigt die aktuelle Live-Gestaltung unverändert.
+
+   main.js setzt --warm-1/--cool-1/--pink/--violet/--bg-tint inline auf <html>.
+   Die Varianten überschreiben das mit !important und steuern Farbe über --sp
+   (Scrollfortschritt 0…1, gesetzt vom Umschalter-Skript).
+   ========================================================= */
+
+/* ---------- Gemeinsame Veredelung aller drei Konzepte ----------
+   Was die jetzige Seite "billig" wirken lässt, ist weniger die Farbe als die Häufung:
+   rotierende Aurora, vier treibende Blobs, Glow-Schatten unter jeder Verlaufsschrift,
+   Schimmer-Sweeps in Navigation und Werkzeugband. Das fällt in allen Varianten weg. */
+html[data-stil]:not([data-stil="0"]) .field__aurora,
+html[data-stil]:not([data-stil="0"]) .field__blob{display:none}
+html[data-stil]:not([data-stil="0"]) .field{background:var(--bg);transition:background .6s var(--ease)}
+html[data-stil]:not([data-stil="0"]) .field::before{animation:none}
+html[data-stil]:not([data-stil="0"]) .field::after{background:none;opacity:1;mix-blend-mode:normal}
+
+html[data-stil]:not([data-stil="0"]) :is(.work__title,.rotator,.approach__line b,.focus__title em,.contact__title em){filter:none}
+html[data-stil]:not([data-stil="0"]) .rotator{animation:none}
+
+html[data-stil]:not([data-stil="0"]) .subnav__link:hover,
+html[data-stil]:not([data-stil="0"]) .subnav__link.is-active{animation:none;background-image:none;text-shadow:none;letter-spacing:.01em;transform:none;color:var(--text)}
+html[data-stil]:not([data-stil="0"]) .subnav__link::before{
+  background:color-mix(in srgb,var(--surface) 62%,transparent);
+  box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 10%,transparent),0 8px 22px -14px rgba(0,0,0,.45)}
+html[data-stil]:not([data-stil="0"]) .toolband::after{display:none}
+html[data-stil]:not([data-stil="0"]) .project::after{background:color-mix(in srgb,var(--text) 100%,transparent)}
+html[data-stil]:not([data-stil="0"]) .project:hover::after{opacity:.03}
+html[data-stil]:not([data-stil="0"]) .fcard__back::before{opacity:.1}
+
+
+/* =========================================================
+   A · STUDIOLICHT
+   Idee: Die Seite ist ein dunkles Fotostudio. Überschriften sind Material,
+   poliertes Kupfer und Elfenbein, und der Verlauf ist kein Farbwechsel, sondern
+   ein Glanzlicht, das beim Scrollen über die Schrift wandert. Hintergrund: ein
+   einziges Führungslicht von oben links, ein warmes Kantenlicht unten rechts.
+   Farbfamilie bleibt eng (Ton in Ton), dadurch wirkt es teuer statt bunt.
+   ========================================================= */
+html[data-stil="a"]{
+  --warm-1:#c27b55 !important;
+  --cool-1:#6d655c !important;
+  --pink:#8a7d70 !important;
+  --violet:#3a3531 !important;
+  --bg-tint:#c27b55 !important;
+  --warm-2:#d9c3ad;
+  --grad:linear-gradient(110deg,#e9d6bf,#c27b55);
+  --grad-soft:linear-gradient(120deg,#c27b55,#6d655c);
+  --head-grad:linear-gradient(100deg,#a88f76 0%,#f5eee4 22%,#d9bf9f 42%,#b87a55 62%,#f0e2cf 80%,#a88f76 100%);
+}
+html[data-stil="a"][data-theme="dark"]{
+  --bg:#0d0c0b;--bg-2:#11100f;--surface:#1a1816;--surface-2:#221f1c;
+  --line:rgba(255,240,225,.09);--line-2:rgba(255,240,225,.15);
+  --text:#eee8df;--muted:#a39b91;--muted-2:#716a62;
+}
+html[data-stil="a"][data-theme="light"]{
+  --warm-1:#9a5a36 !important;
+  --bg-tint:#9a5a36 !important;
+  --bg:#f3efe9;--bg-2:#ece7df;--surface:#fbf9f6;--surface-2:#f1ece5;
+  --line:rgba(40,28,18,.11);--line-2:rgba(40,28,18,.19);
+  --text:#1b1814;--muted:#615a52;--muted-2:#8d857b;
+  --head-grad:linear-gradient(100deg,#2a231d 0%,#5a4131 22%,#2a231d 42%,#9a5a36 62%,#3b2c22 80%,#2a231d 100%);
+}
+/* Material-Glanz: breiter Verlauf, Position hängt am Scrollfortschritt */
+html[data-stil="a"] :is(.work__title,.rotator,.approach__line b,.focus__title em,.contact__title em){
+  background-size:260% 100%;
+  background-position:calc(var(--sp,0) * 100%) 50%}
+html[data-stil="a"] .field::before{
+  background:
+    radial-gradient(62% 70% at calc(10% + var(--sp,0) * 34%) -18%, rgba(255,236,214,.17), rgba(255,236,214,.05) 45%, transparent 72%),
+    radial-gradient(60% 50% at 104% 110%, color-mix(in srgb,#c27b55 24%,transparent), transparent 70%),
+    radial-gradient(150% 120% at 50% 0%, transparent 45%, rgba(0,0,0,.55) 100%)}
+html[data-stil="a"][data-theme="light"] .field::before{
+  background:
+    radial-gradient(70% 60% at calc(12% + var(--sp,0) * 30%) -12%, rgba(255,255,255,.85), transparent 70%),
+    radial-gradient(55% 45% at 104% 108%, color-mix(in srgb,#9a5a36 10%,transparent), transparent 70%),
+    radial-gradient(150% 120% at 50% 0%, transparent 50%, rgba(80,60,40,.14) 100%)}
+html[data-stil="a"] .field__grain{opacity:.045}
+/* Kupfer nur als Signal: Labels, Nummern, feine Linien */
+html[data-stil="a"] .project__tags{color:color-mix(in srgb,var(--warm-1) 30%,var(--text))}
+html[data-stil="a"] .sectionTag span:first-child{color:var(--warm-1)}
+
+
+/* =========================================================
+   B · DÄMMERUNG
+   Idee: Farbfeld wie bei James Turrell oder Rothko. Der Hintergrund ist ein Himmel
+   mit Horizont. Oben auf der Seite steht der Horizont noch warm im Bild, beim
+   Scrollen sinkt er und die Seite wird Nacht. Das ersetzt den jetzigen
+   Ember-zu-Slate-Wechsel durch ein Bild, das man versteht.
+   Die Schrift ist vertikal verlaufend, als würde sie vom Horizont angestrahlt:
+   oben kühles Himmelslicht, unten warmes Abendlicht.
+   ========================================================= */
+html[data-stil="b"]{
+  --dusk:#e39a7a;   /* Abendlicht */
+  --night:#93a0e6;  /* Nachtblau */
+  --warm-1:color-mix(in oklch,var(--night) calc(var(--sp,0) * 100%),var(--dusk)) !important;
+  --cool-1:#5f6488 !important;
+  --pink:#b48a9c !important;
+  --violet:#2c2d48 !important;
+  --bg-tint:var(--warm-1) !important;
+  --warm-2:#efc6b2;
+  --grad:linear-gradient(110deg,var(--dusk),#b98fae,var(--night));
+  --grad-soft:linear-gradient(120deg,var(--dusk),var(--night));
+  --head-grad:linear-gradient(180deg,#ecebf6 8%,#e4d0d6 48%,#ebb59c 78%,#e0906f 100%);
+}
+html[data-stil="b"][data-theme="dark"]{
+  --bg:#0a0b13;--bg-2:#0d0e18;--surface:#141524;--surface-2:#1a1b2d;
+  --line:rgba(225,225,255,.09);--line-2:rgba(225,225,255,.15);
+  --text:#ecebf3;--muted:#9e9db3;--muted-2:#6c6b84;
+}
+html[data-stil="b"][data-theme="light"]{
+  --dusk:#b0553a;--night:#4652a8;
+  --bg:#f3f0f0;--bg-2:#ece8ea;--surface:#fbfafa;--surface-2:#f2eef0;
+  --line:rgba(30,24,44,.11);--line-2:rgba(30,24,44,.19);
+  --text:#18161f;--muted:#5d5a69;--muted-2:#8b8796;
+  --head-grad:linear-gradient(180deg,#2b2a4a 10%,#4a3a55 50%,#9a4f3a 88%,#b0553a 100%);
+}
+/* Himmel: Farbverlauf in breiten, ruhigen Bändern, Horizontglühen sinkt mit --sp */
+html[data-stil="b"][data-theme="dark"] .field{
+  background:linear-gradient(180deg,
+    color-mix(in oklch,#0a0b13 calc(var(--sp,0) * 100%),#1a1830) 0%,
+    #0c0d18 45%,
+    color-mix(in oklch,#0a0b13 calc(var(--sp,0) * 100%),#1d1624) 100%)}
+html[data-stil="b"] .field::before{
+  background:
+    radial-gradient(120% 46% at 50% calc(112% + var(--sp,0) * 55%),
+      color-mix(in srgb,#e39a7a 52%,transparent) 0%,
+      color-mix(in srgb,#b27a98 26%,transparent) 36%,
+      color-mix(in srgb,#5e5f9e 12%,transparent) 60%,
+      transparent 78%),
+    radial-gradient(90% 60% at 50% -20%, color-mix(in srgb,#6a73c9 calc(6% + var(--sp,0) * 10%),transparent), transparent 70%)}
+/* feine Horizontlinie, wie eine Kante zwischen zwei Farbfeldern */
+html[data-stil="b"] .field::after{
+  background:linear-gradient(90deg,transparent 8%,color-mix(in srgb,#efc6b2 22%,transparent) 50%,transparent 92%) no-repeat;
+  background-size:100% 1px;
+  background-position:0 calc(88% + var(--sp,0) * 30%);
+  opacity:calc(1 - var(--sp,0) * 1.4)}
+html[data-stil="b"][data-theme="light"] .field{
+  background:linear-gradient(180deg,#eceaf2 0%,#f3f0f0 45%,#f6ece6 100%)}
+html[data-stil="b"][data-theme="light"] .field::before{
+  background:
+    radial-gradient(120% 46% at 50% calc(112% + var(--sp,0) * 55%),
+      color-mix(in srgb,#f0a585 30%,transparent) 0%,
+      color-mix(in srgb,#d7a6c0 16%,transparent) 40%,
+      transparent 76%),
+    radial-gradient(90% 60% at 50% -20%, color-mix(in srgb,#9aa4e6 14%,transparent), transparent 70%)}
+html[data-stil="b"] .field__grain{opacity:.03}
+html[data-stil="b"] .project__tags{color:color-mix(in srgb,var(--warm-1) 34%,var(--text))}
+
+
+/* =========================================================
+   C · DRUCKBOGEN
+   Idee: Die Seite ist ein gedrucktes Magazin. Warmes Papier, tiefschwarze Tinte,
+   eine Schmuckfarbe Ultramarin. Verläufe gibt es weiterhin, aber als Druckraster:
+   der Hintergrund-Verlauf besteht aus Punkten, die zur Mitte hin auslaufen, wie im
+   Risografie- oder Siebdruck. Die Verlaufsschrift ist ein Überdruck von Ultramarin
+   und Zinnober, der dazwischen von selbst violett wird.
+   Hell ist hier die Grundeinstellung, dunkel ist ein "Negativ" in Nachtblau.
+   ========================================================= */
+html[data-stil="c"]{
+  --ink-a:#2b3bd4;  /* Ultramarin */
+  --ink-b:#e04a2c;  /* Zinnober, nur im Verlauf und als Punktraster */
+  --warm-1:var(--ink-a) !important;
+  --cool-1:#6b6f80 !important;
+  --pink:#8a8a95 !important;
+  --violet:#3a3c48 !important;
+  --bg-tint:var(--ink-a) !important;
+  --warm-2:#b9c0f2;
+  --grad:linear-gradient(110deg,var(--ink-a),var(--ink-b));
+  --grad-soft:linear-gradient(120deg,var(--ink-a),var(--ink-b));
+  --head-grad:linear-gradient(96deg,var(--ink-a) 0%,var(--ink-a) 58%,#5a3cc4 82%,#9a3f86 100%);
+  --f-mono:'Space Grotesk','Inter',sans-serif;
+}
+html[data-stil="c"][data-theme="light"]{
+  --bg:#f2eee6;--bg-2:#ece6db;--surface:#faf8f3;--surface-2:#f0ebe2;
+  --line:rgba(20,22,28,.14);--line-2:rgba(20,22,28,.26);
+  --text:#14161c;--muted:#565864;--muted-2:#878893;
+  --shadow-sm:0 8px 18px -14px rgba(20,22,40,.22);
+  --shadow-md:0 18px 36px -22px rgba(20,22,40,.3);
+  --shadow:0 26px 60px -30px rgba(20,22,40,.34);
+}
+html[data-stil="c"][data-theme="dark"]{
+  --ink-a:#8e9aff;--ink-b:#ff7a5c;
+  --bg:#0d1122;--bg-2:#10152a;--surface:#161c35;--surface-2:#1c2340;
+  --line:rgba(235,238,255,.11);--line-2:rgba(235,238,255,.2);
+  --text:#efece4;--muted:#a3a6ba;--muted-2:#71758d;
+  --head-grad:linear-gradient(96deg,#efece4 0%,var(--ink-a) 45%,#c08ae0 72%,var(--ink-b) 100%);
+}
+/* Punktraster als Verlauf: Ultramarin oben rechts, Zinnober unten links,
+   Zinnober leicht verdreht wie ein versetzter zweiter Druckgang */
+html[data-stil="c"] .field::before{
+  background-image:radial-gradient(circle,var(--ink-a) 1.15px,transparent 1.5px);
+  background-size:9px 9px;
+  opacity:.55;
+  -webkit-mask-image:radial-gradient(38% 62% at 104% calc(-6% + var(--sp,0) * 40%),#000 0%,rgba(0,0,0,.45) 45%,transparent 76%);
+          mask-image:radial-gradient(38% 62% at 104% calc(-6% + var(--sp,0) * 40%),#000 0%,rgba(0,0,0,.45) 45%,transparent 76%)}
+html[data-stil="c"] .field::after{
+  inset:-20%;
+  background-image:radial-gradient(circle,var(--ink-b) 1.05px,transparent 1.4px);
+  background-size:11px 11px;
+  transform:rotate(15deg);
+  opacity:.42;
+  -webkit-mask-image:radial-gradient(22% 30% at 16% calc(80% - var(--sp,0) * 25%),#000 0%,transparent 72%);
+          mask-image:radial-gradient(22% 30% at 16% calc(80% - var(--sp,0) * 25%),#000 0%,transparent 72%)}
+html[data-stil="c"][data-theme="light"] .field::after{mix-blend-mode:multiply}
+html[data-stil="c"][data-theme="dark"] .field::before{opacity:.22}
+html[data-stil="c"][data-theme="dark"] .field::after{opacity:.16}
+html[data-stil="c"] .field__grain{opacity:.07}
+html[data-stil="c"][data-theme="light"] .field__grain{mix-blend-mode:multiply}
+/* Druck-Typografie: kräftige Haarlinien, Überschriften in Tinte, nur die Kursiven im Verlauf */
+html[data-stil="c"] .work__title{background:none;-webkit-text-fill-color:currentColor;color:var(--text)}
+html[data-stil="c"] .work__head{border-bottom:2px solid var(--text);padding-bottom:18px}
+html[data-stil="c"] .projects{border-top:none}
+html[data-stil="c"] .project__tags{color:var(--muted)}
+html[data-stil="c"] .sectionTag{color:var(--text)}
+html[data-stil="c"] :is(.fcard__face,.contact__link){background:var(--surface);box-shadow:none}
+html[data-stil="c"] .subnav__link::before{background:color-mix(in srgb,var(--bg) 82%,transparent);box-shadow:inset 0 0 0 1px var(--line-2)}
+html[data-stil="c"] .subnav__link::after{display:none}
+html[data-stil="c"] .toolband{background:color-mix(in srgb,var(--surface) 55%,transparent);box-shadow:inset 0 0 0 1px var(--line)}
+
+
+/* ---------- Umschalter (nur Vorschau) ---------- */
+.stilbar{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:400;
+  width:min(calc(100vw - 32px),720px);padding:10px 10px 12px;border-radius:18px;
+  background:rgba(18,18,22,.86);color:#f1efea;
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  box-shadow:0 18px 40px -18px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,255,255,.1);
+  font:500 12.5px/1.45 'Space Grotesk','Inter',sans-serif}
+.stilbar,.stilbar *{cursor:auto}
+.stilbar button{cursor:pointer}
+.stilbar__row{display:flex;gap:4px;flex-wrap:wrap}
+.stilbar button{flex:1 1 0;min-width:0;padding:9px 10px;border-radius:11px;color:rgba(241,239,234,.66);white-space:nowrap;letter-spacing:.01em;transition:background .25s,color .25s}
+.stilbar button:hover{color:#fff;background:rgba(255,255,255,.06)}
+.stilbar button[aria-pressed="true"]{color:#111;background:#f1efea}
+.stilbar button b{font-weight:600;margin-right:6px;opacity:.55}
+.stilbar__note{margin:9px 8px 0;color:rgba(241,239,234,.72);font-weight:400}
+.stilbar__note strong{color:#fff;font-weight:600}
+.stilbar__hide{position:absolute;top:-11px;right:10px;width:24px;height:24px;border-radius:50%;background:#2a2a30!important;color:#ccc!important;flex:none!important;padding:0!important;font-size:13px;line-height:24px}
+.stilbar.is-min .stilbar__note{display:none}
+@media (max-width:560px){.stilbar button{flex:1 1 40%}.stilbar__note{font-size:12px}}

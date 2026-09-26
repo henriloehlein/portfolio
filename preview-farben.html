@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="dark" data-stil="a">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="author" content="Henri Löhlein" />
+<meta name="description" content="Henri Löhlein, UX/UI & Product Designer. Digitale Erfahrungen an der Schnittstelle von Psychologie und Design. Nudging, Persuasive Design, adaptive KI-Systeme." />
+<meta name="theme-color" content="#0a0a0f" />
+<title>Farbvarianten · Henri Löhlein</title>
+<meta name="robots" content="noindex, nofollow" />
+
+<!-- Domain: bei abweichender Domain nur die folgende Zeile anpassen -->
+<link rel="canonical" href="https://henriloehlein.de/" />
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+<meta property="og:title" content="Henri Löhlein — UX/UI & Product Design" />
+<meta property="og:description" content="Digitale Erfahrungen an der Schnittstelle von Psychologie und Design." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://henriloehlein.de/" />
+<meta property="og:image" content="https://henriloehlein.de/assets/img/steady-dashboard.png" />
+<meta property="og:locale" content="de_DE" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="css/styles.css" />
+<link rel="stylesheet" href="css/preview-farben.css" />
+</head>
+<body>
+
+<!-- ============ PRELOADER ============ -->
+<div class="preloader" id="preloader" aria-hidden="true">
+  <div class="preloader__inner">
+    <div class="preloader__name">
+      <span>H</span><span>e</span><span>n</span><span>r</span><span>i</span>
+      <span class="sp">&nbsp;</span>
+      <span>L</span><span>ö</span><span>h</span><span>l</span><span>e</span><span>i</span><span>n</span>
+    </div>
+    <div class="preloader__bar"><i></i></div>
+    <div class="preloader__meta">
+      <span data-i18n="pre.role">UX / UI & Product Designer</span>
+      <span class="preloader__count" id="preCount">0</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CUSTOM CURSOR · smooth spring-follow arrow, rotates to face travel ============ -->
+<div class="cursor" id="cursor" aria-hidden="true">
+  <svg class="cursor__arrow" width="27" height="29" viewBox="0 0 50 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M42.6817 41.1495L27.5103 6.79925C26.7269 5.02557 24.2082 5.02558 23.3927 6.79925L7.59814 41.1495C6.75833 42.9759 8.52712 44.8902 10.4125 44.1954L24.3757 39.0496C24.8829 38.8627 25.4385 38.8627 25.9422 39.0496L39.8121 44.1954C41.6849 44.8902 43.4884 42.9759 42.6817 41.1495Z" fill="#fff"/>
+    <path d="M43.7146 40.6933L28.5431 6.34306C27.3556 3.65428 23.5772 3.69516 22.3668 6.32755L6.57226 40.6778C5.3134 43.4156 7.97238 46.298 10.803 45.2549L24.7662 40.109C25.0221 40.0147 25.2999 40.0156 25.5494 40.1082L39.4193 45.254C42.2261 46.2953 44.9254 43.4347 43.7146 40.6933Z" stroke="#0a0a0f" stroke-width="2.25825"/>
+  </svg>
+  <span class="cursor__label" id="cursorLabel"></span>
+</div>
+
+<!-- ============ GRADIENT FIELD (background) ============ -->
+<div class="field" aria-hidden="true">
+  <div class="field__aurora"></div>
+  <div class="field__blob field__blob--1"></div>
+  <div class="field__blob field__blob--2"></div>
+  <div class="field__blob field__blob--3"></div>
+  <div class="field__blob field__blob--4"></div>
+  <div class="field__grain"></div>
+</div>
+
+<!-- ============ TOP BAR · identity left (portrait + name + typing line), DE/EN + theme right ============ -->
+<header class="nav nav--minimal" id="nav">
+  <div class="nav__id">
+    <div class="nav__portrait"><img src="assets/img/covers/portrait.jpg" alt="Henri Löhlein" /></div>
+    <span class="nav__name">Henri Löhlein</span>
+    <span class="nav__skills" id="typeSkills" aria-hidden="true"></span>
+    <span class="sr-only" id="typeSkillsSr"></span>
+  </div>
+  <div class="nav__tools">
+    <button class="lang" id="langToggle" aria-label="Sprache wechseln">
+      <span class="lang__opt is-active" data-lang="de">DE</span>
+      <span class="lang__sep">/</span>
+      <span class="lang__opt" data-lang="en">EN</span>
+    </button>
+    <button class="themeBtn" id="themeToggle" aria-label="Theme wechseln" data-cursor="Theme">
+      <svg viewBox="0 0 24 24" class="themeBtn__icon themeBtn__icon--moon"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg viewBox="0 0 24 24" class="themeBtn__icon themeBtn__icon--sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ============ SUBNAV · Sektionsübersicht, unter dem Bild / über dem Intro ============ -->
+<nav class="subnav" id="subnav" aria-label="Sektionen">
+  <span class="subnav__edge" id="subnavSentinel" aria-hidden="true"></span>
+  <div class="subnav__bg" aria-hidden="true"></div>
+  <div class="subnav__inner">
+    <div class="subnav__links" id="subnavLinks">
+      <a href="#work" class="subnav__link magnetic" data-i18n="nav.work">Projekte</a>
+      <a href="#how" class="subnav__link magnetic" data-i18n="nav.how">Wie ich arbeite</a>
+      <a href="#about" class="subnav__link magnetic" data-i18n="nav.about">Über mich</a>
+      <a href="#contact" class="subnav__link magnetic" data-i18n="nav.contact">Kontakt</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ PROJEKTE / CASE STUDIES ============ -->
+<section class="work" id="work">
+  <header class="work__head">
+    <p class="sectionTag reveal" data-split><span>01</span> <span data-i18n="tag.work">Case Studies</span></p>
+    <h2 class="work__title reveal" data-split data-i18n="work.title">Projekte</h2>
+  </header>
+
+  <ul class="projects" id="projects">
+
+    <li class="project" data-project="steady" data-cursor="Case Study">
+      <div class="project__index">01</div>
+      <div class="project__body">
+        <h3 class="project__name reveal" data-split>steady</h3>
+        <p class="project__role reveal" data-i18n="p.steady.role">Adaptives Planungs- & Organisationstool · Konzept, UX/UI, Prototyp</p>
+        <p class="project__tease reveal" data-i18n="p.steady.tease">
+          Eine App, die fragt, <em>warum</em> Menschen scheitern, und psychologische
+          Mechaniken nutzt, damit sie empathisch an ihren Routinen festhalten.
+        </p>
+        <div class="project__tags">
+          <span data-i18n="p.steady.tag1">Behavioral Design</span><span data-i18n="p.steady.tag2">Nudging</span><span data-i18n="p.steady.tag3">Adaptive Systeme</span><span data-i18n="p.steady.tag4">KI-Assistenz</span>
+        </div>
+      </div>
+      <div class="project__visual">
+        <div class="plate plate--cover"><img src="assets/img/covers/steady.png" alt="steady App-Mockups" loading="lazy" /></div>
+      </div>
+      <span class="project__open"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+    </li>
+
+    <li class="project" data-project="milo" data-cursor="Case Study">
+      <div class="project__index">02</div>
+      <div class="project__body">
+        <h3 class="project__name reveal" data-split>Milo</h3>
+        <p class="project__role reveal" data-i18n="p.milo.role">KI-Assistenz für ältere Menschen · Konzept, UX/UI, Prototyp</p>
+        <p class="project__tease reveal" data-i18n="p.milo.tease">
+          Ein empathischer, transparenter Assistent, der digitale Hemmschwellen abbaut und
+          Selbstständigkeit im Umgang mit Technik stärkt.
+        </p>
+        <div class="project__tags">
+          <span data-i18n="p.milo.tag1">Inclusive Design</span><span data-i18n="p.milo.tag2">Accessibility</span><span data-i18n="p.milo.tag3">Conversational UI</span><span data-i18n="p.milo.tag4">Vertrauen &amp; Kontrolle</span>
+        </div>
+      </div>
+      <div class="project__visual">
+        <div class="plate plate--cover"><img src="assets/img/covers/milo.png" alt="Milo App-Mockups" loading="lazy" /></div>
+      </div>
+      <span class="project__open"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+    </li>
+
+    <li class="project" data-project="cognify" data-cursor="Case Study">
+      <div class="project__index">03</div>
+      <div class="project__body">
+        <h3 class="project__name reveal" data-split>Cognify</h3>
+        <p class="project__role reveal" data-i18n="p.cognify.role">Augmented-Reality-Lernplattform · Konzept, UX/UI, AR-Prototyp</p>
+        <p class="project__tease reveal" data-i18n="p.cognify.tease">
+          Wissen aus Neugier entdecken, mit 3D-Modellen in Augmented Reality,
+          Quizzen und Gamification für langfristige Motivation.
+        </p>
+        <div class="project__tags">
+          <span data-i18n="p.cognify.tag1">Augmented Reality</span><span data-i18n="p.cognify.tag2">Gamification</span><span data-i18n="p.cognify.tag3">Microlearning</span><span data-i18n="p.cognify.tag4">Social Learning</span>
+        </div>
+      </div>
+      <div class="project__visual">
+        <div class="plate plate--cover"><img src="assets/img/covers/cognify.png" alt="Cognify Screens" loading="lazy" /></div>
+      </div>
+      <span class="project__open"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+    </li>
+
+    <li class="project" data-project="syntegon" data-cursor="Case Study">
+      <div class="project__index">04</div>
+      <div class="project__body">
+        <h3 class="project__name reveal" data-split data-i18n="p.syntegon.name">Bachelorarbeit · Syntegon</h3>
+        <p class="project__role reveal" data-i18n="p.syntegon.role">Visualisierungssystem für die Pharmaproduktion · Research & Development</p>
+        <p class="project__tease reveal" data-i18n="p.syntegon.tease">
+          Ein Visualisierungssystem, das Bedienende in der Pharmaproduktion Schritt für Schritt
+          führt und Fehler abfängt, bevor sie Folgen haben.
+        </p>
+        <div class="project__tags">
+          <span data-i18n="p.syntegon.tag1">Industrial UX</span><span data-i18n="p.syntegon.tag2">HMI-Design</span><span data-i18n="p.syntegon.tag3">Fehlervermeidung</span>
+        </div>
+      </div>
+      <div class="project__visual">
+        <div class="plate plate--cover plate--dark"><img src="assets/img/covers/syntegon.jpg" alt="Syntegon · SynTiso" loading="lazy" /></div>
+      </div>
+      <span class="project__open"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+    </li>
+
+    <li class="project" data-project="forwerts" data-cursor="Case Study">
+      <div class="project__index">05</div>
+      <div class="project__body">
+        <h3 class="project__name reveal" data-split data-i18n="p.forwerts.name">forwerts interactive</h3>
+        <p class="project__role reveal" data-i18n="p.forwerts.role">Kundenprojekte für 1&amp;1 und Vattenfall · UX Design</p>
+        <p class="project__tease reveal" data-i18n="p.forwerts.tease">
+          Screens, User Flows und Designstrukturen für Online-Shops, Kundenportale und Websites von Konzernen aus der Telekommunikations- und Energiebranche.
+        </p>
+        <div class="project__tags">
+          <span data-i18n="p.forwerts.tag1">E-Commerce</span><span data-i18n="p.forwerts.tag2">Self-Service-Portale</span><span data-i18n="p.forwerts.tag3">Designstrukturen</span>
+        </div>
+      </div>
+      <div class="project__visual">
+        <div class="plate plate--logo"><img src="assets/img/covers/forwerts.png" alt="forwerts interactive Logo" loading="lazy" /></div>
+      </div>
+      <span class="project__open"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+    </li>
+
+  </ul>
+</section>
+
+<!-- ============ WIE ICH ARBEITE (Werkzeugband + Haltung + Methode) ============ -->
+<section class="hero" id="how">
+  <p class="sectionTag reveal" data-split><span>02</span> <span data-i18n="tag.how">Wie ich arbeite</span></p>
+
+  <div class="toolband reveal">
+    <span class="sr-only">Werkzeuge: Figma, Adobe CC, Microsoft Office, Claude Code, v0, Codex, GitHub</span>
+    <div class="toolband__sicht">
+      <ul class="toolband__track" aria-hidden="true">
+        <li class="toolband__item">
+          <svg viewBox="0 0 24 36" fill="currentColor" aria-hidden="true">
+            <path d="M12 0H6a6 6 0 0 0 0 12h6V0Z"/>
+            <path d="M12 0h6a6 6 0 0 1 0 12h-6V0Z" opacity=".88"/>
+            <path d="M12 12H6a6 6 0 0 0 0 12h6V12Z" opacity=".76"/>
+            <circle cx="18" cy="18" r="6" opacity=".92"/>
+            <path d="M6 24a6 6 0 1 0 6 6v-6H6Z" opacity=".64"/>
+          </svg>
+          <span>Figma</span>
+        </li>
+        <li class="toolband__item">
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <rect x="1.6" y="1.6" width="28.8" height="28.8" rx="8" fill="currentColor" opacity=".14"/>
+            <rect x="1.6" y="1.6" width="28.8" height="28.8" rx="8" fill="none" stroke="currentColor" stroke-width="2.1"/>
+            <text x="16" y="21.2" text-anchor="middle" font-family="'Space Grotesk',monospace" font-size="13.5" font-weight="700" fill="currentColor">Cc</text>
+          </svg>
+          <span>Adobe CC</span>
+        </li>
+        <li class="toolband__item">
+          <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+            <rect x="2" y="2" width="13" height="13" rx="2" opacity=".92"/>
+            <rect x="17" y="2" width="13" height="13" rx="2" opacity=".72"/>
+            <rect x="2" y="17" width="13" height="13" rx="2" opacity=".58"/>
+            <rect x="17" y="17" width="13" height="13" rx="2" opacity=".82"/>
+          </svg>
+          <span>Microsoft Office</span>
+        </li>
+        <li class="toolband__item">
+          <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+            <g transform="translate(16 16)">
+              <rect x="-1.7" y="-14" width="3.4" height="28" rx="1.7"/>
+              <rect x="-1.7" y="-14" width="3.4" height="28" rx="1.7" transform="rotate(45)"/>
+              <rect x="-1.7" y="-14" width="3.4" height="28" rx="1.7" transform="rotate(90)"/>
+              <rect x="-1.7" y="-14" width="3.4" height="28" rx="1.7" transform="rotate(135)"/>
+            </g>
+          </svg>
+          <span>Claude Code</span>
+        </li>
+        <li class="toolband__item">
+          <svg viewBox="0 0 32 28" fill="currentColor" aria-hidden="true"><path d="M16 3.4 30.4 25H1.6L16 3.4Z"/></svg>
+          <span>v0</span>
+        </li>
+        <li class="toolband__item">
+          <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+            <defs><mask id="codexCut" maskUnits="userSpaceOnUse" x="0" y="0" width="32" height="32"><rect width="32" height="32" fill="#fff"/><path d="M9.6 11.2 14.4 16l-4.8 4.8M17 21.2h6" fill="none" stroke="#000" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></mask></defs>
+            <rect x="2" y="2" width="28" height="28" rx="9" mask="url(#codexCut)"/>
+          </svg>
+          <span>Codex</span>
+        </li>
+        <li class="toolband__item">
+          <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+            <path d="M10 9 5.5 3v8Z"/>
+            <path d="M22 9l4.5-6v8Z"/>
+            <circle cx="16" cy="17" r="10"/>
+          </svg>
+          <span>GitHub</span>
+        </li>
+        <li class="toolband__item" aria-hidden="true">
+          <svg viewBox="0 0 24 36" fill="currentColor" aria-hidden="true">
+            <path d="M12 0H6a6 6 0 0 0 0 12h6V0Z"/>
+            <path d="M12 0h6a6 6 0 0 1 0 12h-6V0Z" opacity=".88"/>
+            <path d="M12 12H6a6 6 0 0 0 0 12h6V12Z" opacity=".76"/>
+            <circle cx="18" cy="18" r="6" opacity=".92"/>
+            <path d="M6 24a6 6 0 1 0 6 6v-6H6Z" opacity=".64"/>
+          </svg>
+          <span>Figma</span>
+        </li>
+        <li class="toolband__item" aria-hidden="true">
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <rect x="1.6" y="1.6" width="28.8" height="28.8" rx="8" fill="currentColor" opacity=".14"/>
+            <rect x="1.6" y="1.6" width="28.8" height="28.8" rx="8" fill="none" stroke="currentColor" stroke-width="2.1"/>
+            <text x="16" y="21.2" text-anchor="middle" font-family="'Space Grotesk',monospace" font-size="13.5" font-weight="700" fill="currentColor">Cc</text>
+          </svg>
+          <span>Adobe CC</span>
+        </li>
+        <li class="toolband__item" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+            <rect x="2" y="2" width="13" height="13" rx="2" opacity=".92"/>
+            <rect x="17" y="2" width="13" height="13" rx="2" opacity=".72"/>
+            <rect x="2" y="17" width="13" height="13" rx="2" opacity=".58"/>
+            <rect x="17" y="17" width="13" height="13" rx="2" opacity=".82"/>
+          </svg>
+          <span>Microsoft Office</span>
+        </li>
+        <li class="toolband__item" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+            <g transform="translate(16 16)">
+              <rect x="-1.7" y="-14" width="3.4" height="28" rx="1.7"/>
+              <rect x="-1.7" y="-14" width="3.4" height="28" rx="1.7" transform="rotate(45)"/>
+              <rect x="-1.7" y="-14" width="3.4" height="28" rx="1.7" transform="rotate(90)"/>
+              <rect x="-1.7" y="-14" width="3.4" height="28" rx="1.7" transform="rotate(135)"/>
+            </g>
+          </svg>
+          <span>Claude Code</span>
+        </li>
+        <li class="toolband__item" aria-hidden="true">
+          <svg viewBox="0 0 32 28" fill="currentColor" aria-hidden="true"><path d="M16 3.4 30.4 25H1.6L16 3.4Z"/></svg>
+          <span>v0</span>
+        </li>
+        <li class="toolband__item" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+            <rect x="2" y="2" width="28" height="28" rx="9" mask="url(#codexCut)"/>
+          </svg>
+          <span>Codex</span>
+        </li>
+        <li class="toolband__item" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+            <path d="M10 9 5.5 3v8Z"/>
+            <path d="M22 9l4.5-6v8Z"/>
+            <circle cx="16" cy="17" r="10"/>
+          </svg>
+          <span>GitHub</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="hero__text">
+    <h1 class="hero__title">
+      <span class="line"><span class="word" data-i18n="hero.t1">Design</span></span>
+      <span class="line"><span class="word" data-i18n="hero.t2">an der Grenze</span></span>
+      <span class="line line--accent">
+        <span class="word rotator" id="rotator" aria-hidden="true"></span>
+        <span class="sr-only">zwischen Unterstützung und Manipulation</span>
+      </span>
+    </h1>
+
+    <p class="hero__lede reveal" data-i18n="hero.lede">
+      Ich bin Henri Löhlein, UX/UI &amp; Product&nbsp;Designer. Ich arbeite an der Schnittstelle von
+      <em>Psychologie und Technologie</em>: wie KI, LLMs und adaptive Systeme verändern, wie
+      Menschen entscheiden, vertrauen und handeln. Mein Fokus liegt auf psychologisch
+      fundierten Mechaniken, von der Research bis zum getesteten Prototyp.
+    </p>
+
+    <a href="#contact" class="hero__cta" data-cursor="Kontakt">
+      <span class="hero__ctaInner">
+        <span class="hero__ctaDot" aria-hidden="true"></span>
+        <span class="hero__ctaLabel" data-i18n="hero.cta">Zum Kontakt</span>
+      </span>
+      <span class="hero__ctaReveal" aria-hidden="true">
+        <span data-i18n="hero.cta">Zum Kontakt</span>
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </span>
+    </a>
+  </div>
+
+  <div class="approach">
+    <p class="sectionTag reveal" data-split><span>01</span> <span data-i18n="tag.approach">Haltung</span></p>
+    <div class="approach__chain">
+      <p class="approach__line reveal" data-split data-stagger>
+        <span data-i18n="chain.1a">Lösungen folgen</span> <b data-i18n="chain.1b">Bedürfnissen.</b>
+      </p>
+      <p class="approach__line reveal" data-split data-stagger>
+        <span data-i18n="chain.2a">Bedürfnisse folgen</span> <b data-i18n="chain.2b">Empathie.</b>
+      </p>
+      <p class="approach__line reveal" data-split data-stagger>
+        <span data-i18n="chain.3a">Und Empathie folgt</span> <b data-i18n="chain.3b">echtem Interesse.</b>
+      </p>
+    </div>
+    <p class="approach__note reveal" data-i18n="approach.note">
+      Zielgerichtetes Design entsteht nur, wo Herausforderungen mit Empathie und
+      funktionalem Denken angegangen werden. Genau dort liegt mein Ansatz.
+    </p>
+  </div>
+
+  <div class="about__method reveal">
+    <h3 data-split data-i18n="about.h3method">Methode</h3>
+    <p data-i18n="about.pmethod">
+      Meine Projekte beginnen mit echtem Interesse am Problem, nicht mit einer fertigen Lösung.
+      Aus Research und Empathie, etwa Personas, Journey Maps, Interviews und Card Sortings, leite
+      ich psychologisch fundierte Mechaniken ab. Sie entstehen in Figma als modulare, klar
+      hierarchisierte Systeme und werden im Usability-Testing mit echten Menschen geschärft.
+    </p>
+  </div>
+</section>
+
+<!-- ============ ÜBER MICH (inkl. Interessen) ============ -->
+<section class="about" id="about">
+  <p class="sectionTag reveal" data-split><span>03</span> <span data-i18n="tag.about">Über mich</span></p>
+  <div class="about__grid">
+    <div class="about__col reveal">
+      <h3 data-split data-i18n="about.h1">Psychologie & Design</h3>
+      <p data-i18n="about.p1">
+        Digitale Interaktionen formen Entscheidungen, Gewohnheiten und Emotionen. Mich
+        interessieren die subtilen Mechanismen dahinter, Nudging, Dark Patterns, Persuasive
+        Design, und die Frage, wo verantwortungsvolle Gestaltung die Grenze zwischen
+        Unterstützung und Manipulation zieht.
+      </p>
+    </div>
+    <div class="about__col reveal">
+      <h3 data-split data-i18n="about.h2">Blick nach vorn</h3>
+      <p data-i18n="about.p2">
+        Neue Technologien wie KI und adaptive Systeme prägen Wahrnehmung, Vertrauen und
+        Interaktion. Ich will verstehen, wie, und diese Bewegung mitgestalten. Meine Arbeit
+        adressiert reale Probleme, fundiert in einem Verständnis dafür, wie Nutzer denken,
+        handeln und fühlen.
+      </p>
+    </div>
+  </div>
+
+  <header class="focus__head">
+    <h2 class="focus__title reveal" data-split data-i18n="focus.title">
+      Das Zusammenspiel von <em>Psychologie</em> und <em>Design.</em>
+    </h2>
+  </header>
+
+  <div class="focus__grid" id="focusGrid">
+    <article class="fcard reveal" tabindex="0">
+      <div class="fcard__inner">
+        <div class="fcard__face fcard__front">
+          <svg class="fcard__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="16" cy="12" r="4"/><path d="M3 12h7M7 8l4 4-4 4"/></svg>
+          <span class="fcard__num">01</span>
+          <h3 data-split data-i18n="focus.c1.t">Nudging</h3>
+        </div>
+        <div class="fcard__face fcard__back">
+          <p data-i18n="focus.c1.d">Verhalten lenken ohne Druck oder Zwang, zur richtigen Zeit im richtigen Kontext.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="fcard reveal" tabindex="0">
+      <div class="fcard__inner">
+        <div class="fcard__face fcard__front">
+          <svg class="fcard__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20C5 20 1 12 1 12a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><path d="M2 2l20 20"/></svg>
+          <span class="fcard__num">02</span>
+          <h3 data-split data-i18n="focus.c2.t">Dark Patterns</h3>
+        </div>
+        <div class="fcard__face fcard__back">
+          <p data-i18n="focus.c2.d">Mechanismen, die Nutzer gegen ihre eigenen Interessen lenken. Verstehen, um sie zu vermeiden.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="fcard reveal" tabindex="0">
+      <div class="fcard__inner">
+        <div class="fcard__face fcard__front">
+          <svg class="fcard__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>
+          <span class="fcard__num">03</span>
+          <h3 data-split data-i18n="focus.c3.t">Persuasive Design</h3>
+        </div>
+        <div class="fcard__face fcard__back">
+          <p data-i18n="focus.c3.d">Modelle wie das Fogg Behavior Model und die Self-Determination Theory in echte Mechaniken übersetzen.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="fcard reveal" tabindex="0">
+      <div class="fcard__inner">
+        <div class="fcard__face fcard__front">
+          <svg class="fcard__icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="1.5"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></svg>
+          <span class="fcard__num">04</span>
+          <h3 data-split data-i18n="focus.c4.t">Adaptive KI</h3>
+        </div>
+        <div class="fcard__face fcard__back">
+          <p data-i18n="focus.c4.d">Wie LLMs, generative und adaptive Systeme Wahrnehmung und Vertrauen prägen, und wie sich diese Werkzeuge im Designprozess selbst nutzen lassen.</p>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <div class="about__passions reveal">
+    <span class="about__passionsLabel" data-split data-i18n="about.passions">Leidenschaften & Interessen</span>
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>Verhaltenspsychologie</span><span>·</span><span>Künstliche Intelligenz</span><span>·</span><span>Persuasive Design</span><span>·</span><span>Typografie</span><span>·</span><span>Prototyping</span><span>·</span><span>Mensch-Maschine-Interaktion</span><span>·</span><span>Ethik im Design</span><span>·</span><span>Gamification</span><span>·</span>
+        <span>Verhaltenspsychologie</span><span>·</span><span>Künstliche Intelligenz</span><span>·</span><span>Persuasive Design</span><span>·</span><span>Typografie</span><span>·</span><span>Prototyping</span><span>·</span><span>Mensch-Maschine-Interaktion</span><span>·</span><span>Ethik im Design</span><span>·</span><span>Gamification</span><span>·</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact" id="contact">
+  <p class="sectionTag reveal" data-split><span>04</span> <span data-i18n="tag.contact">Kontakt</span></p>
+  <h2 class="contact__title reveal" data-split>
+    <span data-i18n="contact.t1">Offen für Projekte, die</span>
+    <em data-i18n="contact.t2">echte Probleme</em>
+    <span data-i18n="contact.t3">lösen.</span>
+  </h2>
+  <div class="contact__links">
+    <a href="mailto:henriloehlein@gmail.com" class="contact__link magnetic" data-cursor="Mail">
+      <span class="contact__linkLabel">Mail</span>
+      <span class="contact__linkVal">henriloehlein@gmail.com</span>
+    </a>
+    <a href="https://linkedin.com/in/henriloehlein" target="_blank" rel="noopener" class="contact__link magnetic" data-cursor="Öffnen">
+      <span class="contact__linkLabel">LinkedIn</span>
+      <span class="contact__linkVal">in/henriloehlein</span>
+    </a>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer__row">
+    <span class="footer__name">Henri Löhlein</span>
+    <span class="footer__copy">© 2026 · <span data-i18n="footer.rights">Alle Rechte vorbehalten</span></span>
+  </div>
+  <div class="footer__row footer__row--meta">
+    <span data-i18n="footer.made">Rothenburg ob der Tauber, Bayern</span>
+    <a href="#top" class="footer__top" data-cursor="Hoch">
+      <span data-i18n="footer.top">Nach oben</span>
+      <svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+    </a>
+  </div>
+</footer>
+
+<!-- ============ PROJECT MODAL ============ -->
+<div class="modal" id="modal" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="modal__scrim" data-close></div>
+  <div class="modal__panel">
+    <div class="modal__bar">
+      <span class="modal__barName" id="modalBarName"></span>
+      <button class="modal__close" data-close aria-label="Schließen" data-cursor="Schließen">
+        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="modal__progress"><i id="modalProgress"></i></div>
+    <div class="modal__content" id="modalContent" tabindex="-1"></div>
+  </div>
+</div>
+
+<!-- ============ CASE STUDY SOURCES (hidden, cloned into modal) ============ -->
+<div id="cases" hidden>
+
+  <!-- ===== STEADY ===== -->
+  <article data-case="steady">
+    <div class="cs__hero">
+      <div class="cs__heroText">
+        <span class="cs__kicker" data-i18n="cs.steady.kicker">Behavioral Design · 2025</span>
+        <h2 class="cs__title">steady</h2>
+        <p class="cs__sub" data-i18n="cs.steady.sub">Adaptives Planungs- und Organisationstool</p>
+        <p class="cs__pitch" data-i18n="cs.steady.pitch"><em>steady</em> ist eine Planungs-App, die nicht nur Aufgaben ordnet, sondern Menschen dabei unterstützt, an Routinen und Zielen festzuhalten. Ein KI-Assistent passt Ton, Zeitpunkt und Art seiner Unterstützung an den jeweiligen Nutzertyp an und meldet sich dann, wenn es im Alltag darauf ankommt.</p>
+      </div>
+      <div class="cs__heroMeta">
+        <dl>
+          <div><dt data-i18n="cs.meta.role">Rolle</dt><dd data-i18n="cs.steady.role">Konzept · UX Research · UX/UI · Prototyp</dd></div>
+          <div><dt data-i18n="cs.meta.methods">Methoden</dt><dd data-i18n="cs.steady.methods">Literaturrecherche · Wettbewerbsanalyse · Personas · Card Sorting · Usability-Testing</dd></div>
+          <div><dt>Tools</dt><dd>Figma · Miro</dd></div>
+          <div><dt data-i18n="cs.meta.context">Rahmen</dt><dd data-i18n="cs.steady.context">Hochschulprojekt · Hochschule Ansbach · Sommersemester 2025</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <figure class="shot cs__cover"><img src="assets/img/covers/steady.png" alt="steady Dashboard, Ziele, Onboarding und Startscreen auf Smartphones" /></figure>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.steady.s1.title">Ausgangslage</h3>
+      <p data-i18n="cs.steady.s1.p1">Planungs-Apps wie Notion oder der Kalender strukturieren Aufgaben, verändern aber kaum das Verhalten. Die Idee entstand aus eigener Erfahrung: Trotz digitaler Ordnung fiel es schwer, langfristige Ziele konsequent zu verfolgen. Gleichzeitig zeigte sich im Umfeld, wie wenig es oft braucht, damit Menschen eine Gewohnheit hinterfragen, etwa eine kurze Pause vor dem Öffnen einer App.</p>
+      <p data-i18n="cs.steady.s1.p2">Daraus entstand die Frage, wie ein Planungstool bei der Umsetzung begleiten kann, ohne zu bevormunden. Ein zu strenges System erzeugt Druck, und wer sich kontrolliert fühlt, löscht die App. Mitte Mai 2025 änderte sich deshalb der Ansatz grundlegend:</p>
+      <div class="cs__contrast">
+        <div><span data-i18n="cs.steady.s1.before">Erster Ansatz</span><p data-i18n="cs.steady.s1.beforeText">Einzelne Disziplinierungsmechaniken erscheinen in festen Momenten, etwa beim Verschieben oder Löschen eines Ziels. Die Reaktion ist immer gleich, unabhängig von Tagesform und Situation, und kann belehrend wirken.</p></div>
+        <div><span data-i18n="cs.steady.s1.after">Überarbeiteter Ansatz</span><p data-i18n="cs.steady.s1.afterText">Ein KI-Assistent wird zur zentralen Steuerungsschicht. Er setzt Mechaniken wie die Erinnerung an eigene Beweggründe situativ ein, abgestimmt auf Zeitpunkt, Kontext und Nutzertyp.</p></div>
+      </div>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.steady.s2.title">Psychologische Grundlage</h3>
+      <p data-i18n="cs.steady.s2.p1">Vier Modelle aus der Literaturrecherche bildeten das Fundament. Jedes wurde in eine konkrete Anforderung an die App übersetzt.</p>
+      <dl class="cs__map">
+        <div><dt>Self-Determination Theory<small>Ryan &amp; Deci, 2000</small></dt><dd data-i18n="cs.steady.s2.m1">Autonomie, Kompetenz und Verbundenheit tragen Motivation. Ziele wählen Nutzende selbst, Fortschritt ist jederzeit sichtbar, und der Assistent begleitet im Dialog.</dd></div>
+        <div><dt>Fogg Behavior Model<small>Fogg, 2009</small></dt><dd data-i18n="cs.steady.s2.m2">Verhalten entsteht, wenn Motivation, Fähigkeit und Auslöser zusammenkommen. steady vereinfacht Aufgaben, statt nur anzutreiben, und achtet auf den richtigen Zeitpunkt für Impulse.</dd></div>
+        <div><dt>Nudging<small data-i18n="cs.steady.s2.src3">Metaanalyse, Mertens et al., 2022</small></dt><dd data-i18n="cs.steady.s2.m3">Strukturelle Nudges wie Voreinstellungen und Anordnung wirken am stärksten. Die App arbeitet mit vorausgewählten Kategorien und einer klaren Reihenfolge der Informationen. Verpflichtende Mechaniken setzt sie sparsam ein.</dd></div>
+        <div><dt data-i18n="cs.steady.s2.t4">Adaptive Systeme</dt><dd data-i18n="cs.steady.s2.m4">Automatische Anpassung braucht Transparenz und Kontrolle. Nutzende sehen ihren Nutzertyp, verstehen die Anpassungen und können sie jederzeit ändern.</dd></div>
+      </dl>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.steady.s3.title">Nutzertypen statt Zielgruppe</h3>
+      <p data-i18n="cs.steady.s3.p1">Die App soll jede Person individuell ansprechen. Intern gewichtet das System feine Dimensionen wie Motivationsstil, Strukturverhalten und Frustrationstoleranz. Im Onboarding stehen dafür nur drei verständliche Fragen.</p>
+      <div class="cs__lineup" style="--n:4">
+        <figure><img src="assets/img/case-studies/steady/frage-motivation.jpg" alt="Onboarding-Frage: Was motiviert dich am meisten?" loading="lazy"><figcaption><strong data-i18n="cs.steady.s3.c1">Motivation</strong><span data-i18n="cs.steady.s3.c1t">Leistung, Routine oder Belohnung</span></figcaption></figure>
+        <figure><img src="assets/img/case-studies/steady/frage-struktur.jpg" alt="Onboarding-Frage: Wie gehst du am liebsten an deine Aufgaben ran?" loading="lazy"><figcaption><strong data-i18n="cs.steady.s3.c2">Umgang mit Aufgaben</strong><span data-i18n="cs.steady.s3.c2t">Planvoll, flexibel oder chaotisch</span></figcaption></figure>
+        <figure><img src="assets/img/case-studies/steady/frage-begleitung.jpg" alt="Onboarding-Frage: Wie möchtest du begleitet und unterstützt werden?" loading="lazy"><figcaption><strong data-i18n="cs.steady.s3.c3">Begleitstil</strong><span data-i18n="cs.steady.s3.c3t">Sanft, direkt, emotional oder rational</span></figcaption></figure>
+        <figure><img src="assets/img/case-studies/steady/nutzertyp-ergebnis.jpg" alt="Abschluss des Onboardings mit Marias Nutzertyp" loading="lazy"><figcaption><strong data-i18n="cs.steady.s3.c4">Ergebnis</strong><span data-i18n="cs.steady.s3.c4t">Der Nutzertyp, jederzeit änderbar</span></figcaption></figure>
+      </div>
+      <p data-i18n="cs.steady.s3.p2">Anpassen lassen sich nur Tonalität, Zeitpunkt und Mechaniken der Unterstützung. Navigation, Oberfläche und Kernfunktionen bleiben für alle gleich, damit die App verlässlich bedienbar bleibt.</p>
+    </section>
+
+    <section class="cs__sec">
+      <h3>User Research</h3>
+      <div class="cs__split">
+        <figure class="shot"><a href="assets/img/case-studies/steady/persona-maria.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/steady/persona-maria.jpg" alt="Persona Maria, die erschöpfte Alltagsheldin" loading="lazy" /></a><figcaption>Persona · Maria</figcaption></figure>
+        <div>
+          <p data-i18n="cs.steady.s4.p1">Drei Personas bilden unterschiedliche Muster ab: <strong>Maria</strong>, die erschöpfte Alltagsheldin, <strong>Anna</strong>, die strukturierte Selbstoptimiererin, und <strong>Ben</strong>, der kreative Chaot.</p>
+          <p data-i18n="cs.steady.s4.p2">Personas und Journey Maps entstanden bewusst ohne Bezug zur App, um die Menschen unabhängig von einer Lösung zu verstehen. Erst die Use Cases übertrugen die Erkenntnisse auf konkrete Situationen.</p>
+        </div>
+      </div>
+      <figure class="shot"><a href="assets/img/case-studies/steady/journey-maria.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/steady/journey-maria.jpg" alt="User Journey Map Maria in sechs Phasen" loading="lazy" /></a><figcaption data-i18n="cs.steady.s4.journey">User Journey Map · Maria, von der Überforderung bis zur Entlastung</figcaption></figure>
+
+      <div class="cs__case">
+        <span class="cs__caseTag" data-i18n="cs.steady.uc.tag">Use Case · Maria nimmt Yoga in ihren Alltag auf</span>
+        <div class="cs__phase">
+          <h5 data-i18n="cs.steady.uc.h1">Zielerfassung und Planung</h5>
+          <p data-i18n="cs.steady.uc.p1">Maria möchte Yoga in ihre Routinen aufnehmen und verstehen, was es mit ihr macht. Sie zweifelt noch an der Nachhaltigkeit. <b>Optimale Unterstützung:</b> Reflexionsfragen wie „Was sind deine größten Ängste?“ und späteres gemeinsames Reflektieren. Sie braucht viel emotionale Begleitung.</p>
+        </div>
+        <div class="cs__phase">
+          <h5 data-i18n="cs.steady.uc.h2">Umsetzung</h5>
+          <p data-i18n="cs.steady.uc.p2">Yoga ist dreimal die Woche im Kalender. Ihr Alltag ist oft unplanbar; fällt sie aus dem Rhythmus, kommt Frust. <b>Optimale Unterstützung:</b> empathische Erinnerungen, sichtbarer Fortschritt und leichtes Verfolgen der Routinen.</p>
+        </div>
+        <div class="cs__phase">
+          <h5 data-i18n="cs.steady.uc.h3">Rückschlag</h5>
+          <p data-i18n="cs.steady.uc.p3">Der Alltagsdruck wirkt überwältigend, ein negativer innerer Monolog lähmt sie. <b>Optimale Unterstützung:</b> achtsame Reaktionen, Reflexionsimpulse wie „Was würdest du einer Freundin raten?“ und die Möglichkeit, Ziele zu pausieren, zu vereinfachen oder neu zu priorisieren.</p>
+        </div>
+      </div>
+      <p class="cs__pull" data-i18n="cs.steady.s4.pull">Eine Intervention wirkt nur dann als Unterstützung, wenn sie zur Situation passt. Sonst wird sie als Bevormundung erlebt.</p>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.steady.s5.title">Informationsarchitektur</h3>
+      <p data-i18n="cs.steady.s5.p1">Vor dem Hi-Fi-Prototyp prüfte ein kombiniertes Card Sorting mit vier Personen zwischen 24 und 65 Jahren die geplante Struktur. Im geschlossenen Teil ordneten sie 22 Begriffe sechs App-Bereichen zu, im offenen Teil markierten sie unklare Begriffe und schlugen Alternativen vor.</p>
+      <p data-i18n="cs.steady.s5.p2">Die Grundstruktur bestätigte sich. Unklar war dagegen die Trennung der Einträge: „Aufgabe“ und „Routinetask“ klangen fast gleich, und Aufgaben ließen sich keinem Bereich eindeutig zuordnen.</p>
+      <figure class="cs__merge">
+        <div class="cs__mergeGrid">
+          <span class="cs__mergeLabel" data-i18n="cs.steady.s5.before">Vorher</span>
+          <span class="cs__chip" data-i18n="cs.steady.s5.task">Aufgabe</span><span class="cs__chip" data-i18n="cs.steady.s5.appt">Termin</span><span class="cs__chip" data-i18n="cs.steady.s5.routine">Routine&shy;task</span><span class="cs__chip" data-i18n="cs.steady.s5.sub">Teilziel</span>
+          <span class="cs__mergeLabel" data-i18n="cs.steady.s5.after">Nachher</span>
+          <span class="cs__chip cs__chip--cal cs__chip--merged" data-i18n="cs.steady.s5.cal">Kalender&shy;eintrag</span><span class="cs__chip cs__chip--routine" data-i18n="cs.steady.s5.routine2">Routine&shy;task</span><span class="cs__chip cs__chip--goal" data-i18n="cs.steady.s5.sub2">Teilziel</span>
+        </div>
+        <figcaption data-i18n="cs.steady.s5.caption">Eintragsarten vor und nach dem Card Sorting · Farben wie im Interface</figcaption>
+      </figure>
+      <p data-i18n="cs.steady.s5.p3">Aufgabe und Termin wurden zum Kalendereintrag zusammengefasst. Die drei Eintragsarten tragen im ganzen Interface eine feste Farbe und lassen sich zusätzlich über ein übergreifendes Hinzufügen-Overlay anlegen, das je nach Bereich die passende Kategorie vorauswählt.</p>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.steady.s6.title">Kernscreens</h3>
+      <div class="cs__anno">
+        <figure class="cs__annoShot"><img src="assets/img/case-studies/steady/dashboard.jpg" alt="steady Dashboard mit Begrüßung, Schnellübersicht und Tagesablauf" loading="lazy"><i class="cs__pin" style="--y:22%">1</i><i class="cs__pin" style="--y:40%">2</i><i class="cs__pin" style="--y:76%">3</i></figure>
+        <ol class="cs__annoNotes">
+          <li><span>1</span><div><h5 data-i18n="cs.steady.a1.h">Begrüßung nach Kontext</h5><p data-i18n="cs.steady.a1.p">Die Begrüßung passt sich der Tageszeit an. Im Dashboard steht der Assistent bewusst groß daneben und lädt zum Gespräch ein.</p></div></li>
+          <li><span>2</span><div><h5 data-i18n="cs.steady.a2.h">Schnellübersicht</h5><p data-i18n="cs.steady.a2.p">Der nächste Eintrag lässt sich direkt beim Öffnen abhaken. Darunter stehen erledigte Einträge und der Rückstand des Tages.</p></div></li>
+          <li><span>3</span><div><h5 data-i18n="cs.steady.a3.h">Tagesablauf</h5><p data-i18n="cs.steady.a3.p">Einträge sind farbig nach Art getrennt, per Ziehen sortierbar und per Wischen erledigt. Einträge im Rückstand rutschen nach unten.</p></div></li>
+        </ol>
+      </div>
+      <div class="cs__anno cs__anno--flip">
+        <figure class="cs__annoShot"><img src="assets/img/case-studies/steady/ziele.jpg" alt="steady Ziele mit Hauptziel, Fortschritt und Teilzielen in Prioritätsstufen" loading="lazy"><i class="cs__pin" style="--y:45%">1</i><i class="cs__pin" style="--y:71%">2</i><i class="cs__pin" style="--y:91%">3</i></figure>
+        <ol class="cs__annoNotes">
+          <li><span>1</span><div><h5 data-i18n="cs.steady.b1.h">Berechneter Fortschritt</h5><p data-i18n="cs.steady.b1.p">Der Fortschritt des Hauptziels ergibt sich automatisch aus den Teilzielen. Jede Änderung zeigt sofort, was sie bewirkt.</p></div></li>
+          <li><span>2</span><div><h5 data-i18n="cs.steady.b2.h">Prioritätsstufen</h5><p data-i18n="cs.steady.b2.p">Farbige Linien trennen die Prioritäten. Wird ein Teilziel über eine Linie gezogen, übernimmt es deren Stufe. Der Fortschritt wird per Slider in Wiederholungsschritten gesetzt.</p></div></li>
+          <li><span>3</span><div><h5 data-i18n="cs.steady.b3.h">Abschluss als Stufe</h5><p data-i18n="cs.steady.b3.p">Erledigte Teilziele wandern in die unterste Stufe und bleiben sichtbar. Der Rückblick auf das Geschaffte wirkt zusätzlich belohnend.</p></div></li>
+        </ol>
+      </div>
+      <p data-i18n="cs.steady.s6.p1">Außerhalb des Dashboards sitzt der Assistent als Icon unten rechts, im natürlichen Greifbereich des Daumens. Eine Seitenleiste führt zu Tagesablauf, Zielen, Kalender, Einstellungen und Hilfe.</p>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.steady.s7.title">Der Assistent als Begleiter</h3>
+      <p data-i18n="cs.steady.s7.p1">Alle Mechaniken laufen über den Assistenten statt über eigene Overlays. Damit er nicht wie ein Pop-up wirkt, reagiert er im Prototyp zeitverzögert, etwa wenn ein Bereich geöffnet oder eine Aktion abgeschlossen wird. So entsteht der Eindruck eines Begleiters, der von sich aus da ist.</p>
+      <ol class="cs__moments">
+        <li><span data-i18n="cs.steady.m1.t">Dashboard</span><p data-i18n="cs.steady.m1.p">Maria verneint die Frage nach Übungen. Der Assistent schlägt vor, zwei Ziele zu pausieren, damit sie sich auf sich selbst konzentrieren kann.</p></li>
+        <li><span data-i18n="cs.steady.m2.t">Ziele</span><p data-i18n="cs.steady.m2.p">Er lobt ihren Fortschritt und regt eine Nachricht an ihr Zukunfts-Ich an, die sie in einer schwächeren Phase motivieren soll.</p></li>
+        <li><span data-i18n="cs.steady.m3.t">Wochenrückblick</span><p data-i18n="cs.steady.m3.p">Er fragt, warum die Woche so gut lief. Aus Marias Antwort leitet er eine Dankbarkeitsübung ab und legt auf Wunsch den passenden Eintrag an.</p></li>
+      </ol>
+      <p data-i18n="cs.steady.s7.p2">Auch die Wortwahl folgt dieser Haltung. Der Assistent fragt „Womit kann ich dich unterstützen?“ statt „Womit kann ich dir helfen?“ und betont damit den gemeinsamen Prozess statt eines Gefälles.</p>
+      <div class="cs__flowLabel"><span data-i18n="cs.steady.s7.flow">Einführung durch den Assistenten</span><div class="cs__flowControls"><button type="button" data-flow="st-tour" data-dir="-1" aria-label="Vorherige Screens">←</button><button type="button" data-flow="st-tour" data-dir="1" aria-label="Weitere Screens">→</button></div></div>
+      <div class="cs__screenFlow cs__screenFlow--phone" data-flow-id="st-tour" tabindex="0" role="region" aria-label="Einführung durch den Assistenten">
+        <figure class="cs__screen"><a href="assets/img/case-studies/steady/tour-1.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/steady/tour-1.jpg" alt="Der Assistent stellt sich vor" loading="lazy"></a><figcaption><span>01</span><strong data-i18n="cs.steady.tour1">Vorstellung</strong></figcaption></figure>
+        <figure class="cs__screen"><a href="assets/img/case-studies/steady/tour-2.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/steady/tour-2.jpg" alt="Erklärung der Schnellübersicht" loading="lazy"></a><figcaption><span>02</span><strong data-i18n="cs.steady.tour2">Schnellübersicht</strong></figcaption></figure>
+        <figure class="cs__screen"><a href="assets/img/case-studies/steady/tour-3.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/steady/tour-3.jpg" alt="Erklärung des Tagesablaufs und der Farben" loading="lazy"></a><figcaption><span>03</span><strong data-i18n="cs.steady.tour3">Tagesablauf und Farben</strong></figcaption></figure>
+        <figure class="cs__screen"><a href="assets/img/case-studies/steady/tour-4.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/steady/tour-4.jpg" alt="Erklärung von Hauptziel und Teilzielen" loading="lazy"></a><figcaption><span>04</span><strong data-i18n="cs.steady.tour4">Hauptziel und Teilziele</strong></figcaption></figure>
+        <figure class="cs__screen"><a href="assets/img/case-studies/steady/tour-5.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/steady/tour-5.jpg" alt="Erklärung der Seitenleiste" loading="lazy"></a><figcaption><span>05</span><strong data-i18n="cs.steady.tour5">Seitenleiste</strong></figcaption></figure>
+        <figure class="cs__screen"><a href="assets/img/case-studies/steady/tour-6.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/steady/tour-6.jpg" alt="Erklärung des Kalenders in der Seitenleiste" loading="lazy"></a><figcaption><span>06</span><strong data-i18n="cs.steady.tour6">Kalender</strong></figcaption></figure>
+      </div>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.steady.s8.title">Gestaltung</h3>
+      <div class="cs__spec">
+        <div>
+          <span class="cs__specLabel" data-i18n="cs.steady.s8.colors">Farbsystem</span>
+          <ul class="cs__swatches">
+            <li><i style="--c:#eaf4fe"></i><span data-i18n="cs.steady.s5.routine3">Routinetask</span><small>#EAF4FE</small></li>
+            <li><i style="--c:#fee2dd"></i><span data-i18n="cs.steady.s5.cal2">Kalendereintrag</span><small>#FEE2DD</small></li>
+            <li><i style="--c:#ffe9bf"></i><span data-i18n="cs.steady.s5.sub3">Teilziel</span><small>#FFE9BF</small></li>
+            <li><i style="--c:#97544e"></i><span data-i18n="cs.steady.s8.progress">Fortschritt</span><small>#97544E</small></li>
+            <li><i style="--c:linear-gradient(170deg,#9db4d8,#d4b6b8 45%,#f0d7da 62%,#7a8694)"></i><span data-i18n="cs.steady.s8.gradient">Verlauf</span><small>Signature</small></li>
+          </ul>
+        </div>
+        <dl class="cs__specList">
+          <div><dt data-i18n="cs.steady.s8.d1">Raster</dt><dd data-i18n="cs.steady.s8.d1t">8-px-Grid, vier Spalten, Komponenten mit Auto-Layout</dd></div>
+          <div><dt data-i18n="cs.steady.s8.d2">Schrift</dt><dd data-i18n="cs.steady.s8.d2t">Nunito Sans, ruhig und gut lesbar</dd></div>
+          <div><dt>Icons</dt><dd data-i18n="cs.steady.s8.d3t">Ein Set mit Konturen in 24 px. Gefüllte Icons wurden früh verworfen, weil sie die Screens überladen.</dd></div>
+          <div><dt data-i18n="cs.steady.s8.d4">Verläufe</dt><dd data-i18n="cs.steady.s8.d4t">Erkennungsmerkmal, angeregt durch die Wettbewerbsanalyse. In den Einstellungen lassen sie sich durch ruhigere Farbmodi ersetzen.</dd></div>
+        </dl>
+      </div>
+      <p data-i18n="cs.steady.s8.p1">Warme Akzente in Rot und Gelb stehen für Zuwendung, Blau für Klarheit. Das Logo wurde nach Feedback aus der Betreuung kräftiger gesetzt, der Pfeil im „y“ entfiel, und es übernahm den Farbverlauf der App.</p>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.steady.s9.title">Evaluation</h3>
+      <p data-i18n="cs.steady.s9.p1">Acht Personen zwischen 22 und 65 Jahren testeten den Hi-Fi-Prototyp mit zehn Aufgaben und Fragen, fünf davon begleitet vor Ort am Smartphone, drei unbegleitet im Browser. Ausgewählt wurden sie nach Alter, Technikaffinität und Erfahrung mit Planungs-Apps.</p>
+      <figure class="cs__data">
+        <ol class="cs__strip" style="--rows:8">
+          <li><span data-i18n="cs.steady.task1">Hauptziel erstellen</span><div class="cs__stripTrack"><i style="--v:8;--k:0"></i><i style="--v:9;--k:0"></i><i style="--v:9;--k:1"></i><i style="--v:10;--k:0"></i><i style="--v:10;--k:1"></i><i style="--v:10;--k:2"></i><i style="--v:10;--k:3"></i><i style="--v:10;--k:4"></i></div><b data-i18n="cs.steady.avg1">9,5</b></li>
+          <li><span data-i18n="cs.steady.task2">Jahresrückblick aufrufen</span><div class="cs__stripTrack"><i style="--v:9;--k:0"></i><i style="--v:9;--k:1"></i><i style="--v:10;--k:0"></i><i style="--v:10;--k:1"></i><i style="--v:10;--k:2"></i><i style="--v:10;--k:3"></i><i style="--v:10;--k:4"></i><i style="--v:10;--k:5"></i></div><b data-i18n="cs.steady.avg2">9,8</b></li>
+          <li><span data-i18n="cs.steady.task3">Nutzertyp einsehen</span><div class="cs__stripTrack"><i style="--v:10;--k:0"></i><i style="--v:10;--k:1"></i><i style="--v:10;--k:2"></i><i style="--v:10;--k:3"></i><i style="--v:10;--k:4"></i><i style="--v:10;--k:5"></i><i style="--v:10;--k:6"></i><i style="--v:10;--k:7"></i></div><b data-i18n="cs.steady.avg3">10,0</b></li>
+          <li class="is-low"><span data-i18n="cs.steady.task4">Routinetask hinzufügen</span><div class="cs__stripTrack"><i class="is-low" style="--v:0;--k:0"></i><i class="is-low" style="--v:3;--k:0"></i><i style="--v:7;--k:0"></i><i style="--v:8;--k:0"></i><i style="--v:9;--k:0"></i><i style="--v:9;--k:1"></i><i style="--v:10;--k:0"></i><i style="--v:10;--k:1"></i></div><b data-i18n="cs.steady.avg4">7,0</b></li>
+        </ol>
+        <div class="cs__stripAxis" aria-hidden="true"><span></span><div><span>0</span><span>5</span><span>10</span></div><span></span></div>
+        <figcaption data-i18n="cs.steady.strip.caption">Machbarkeit je Aufgabe von 0 bis 10 · jeder Punkt steht für eine Person, rechts der Durchschnitt</figcaption>
+      </figure>
+      <div class="cs__quotes">
+        <blockquote><p data-i18n="cs.steady.q1">„Die App ist einfach gehalten, dadurch kann man nicht so leicht den Überblick verlieren.“</p><cite data-i18n="cs.steady.q1c">Testperson, 26, Student</cite></blockquote>
+        <blockquote><p data-i18n="cs.steady.q2">„Hilfreich, jedoch auch teils störend, da er oft ungefragt auftaucht.“</p><cite data-i18n="cs.steady.q2c">Testperson, 24, Student, über den Assistenten</cite></blockquote>
+      </div>
+      <h5 class="cs__subhead" data-i18n="cs.steady.s9.h">Befunde</h5>
+      <ul class="cs__bullets">
+        <li data-i18n="cs.steady.s9.b1">Layout und Optik wurden durchweg als übersichtlich, modern und motivierend beschrieben, genau das Ziel der reduzierten Oberfläche.</li>
+        <li data-i18n="cs.steady.s9.b2">Die Einführung durch den Assistenten nahmen alle ernst. Weniger technikaffine Personen erinnerten sich später gezielt an seine Hinweise.</li>
+        <li data-i18n="cs.steady.s9.b3">Einen Routinetask anzulegen, fiel den beiden ältesten Personen schwer, eine brach ab. Die Auswahl im Hinzufügen-Overlay verhielt sich im Prototyp zudem uneinheitlich.</li>
+        <li data-i18n="cs.steady.s9.b4">Der Assistent tauchte für einige zu oft auf. Seine Aktivität war auf Marias Einstellung „hoch“ gesetzt, um viele Interaktionen in kurzer Zeit zu zeigen.</li>
+        <li data-i18n="cs.steady.s9.b5">Wünsche für später: Sprachsteuerung, Verknüpfung mit anderen Apps und Gamification wie Streaks.</li>
+      </ul>
+      <div class="cs__split cs__split--phone">
+        <figure class="cs__phoneShot"><img src="assets/img/case-studies/steady/ziel-neu.jpg" alt="Neuer Screen nach dem Anlegen eines Hauptziels" loading="lazy"><figcaption data-i18n="cs.steady.s9.newScreen">Neu nach dem Test: das angelegte Ziel direkt im Überblick</figcaption></figure>
+        <div>
+          <h5 class="cs__subhead cs__subhead--flush" data-i18n="cs.steady.s9.h2">Überarbeitungen</h5>
+          <ul class="cs__changes">
+            <li data-i18n="cs.steady.s9.c1">Fehlerhafte Verbindungen im Prototyp behoben</li>
+            <li data-i18n="cs.steady.s9.c2">Größerer Schließen-Button im Chat des Assistenten</li>
+            <li data-i18n="cs.steady.s9.c3">Spracheingabe über einen Mikrofon-Button</li>
+            <li data-i18n="cs.steady.s9.c4">Hinzufügen-Overlay stabilisiert, die Auswahl springt nicht mehr</li>
+            <li data-i18n="cs.steady.s9.c5">Bestätigungsscreen nach dem Anlegen eines Hauptziels</li>
+            <li data-i18n="cs.steady.s9.c6">Overlays schließen per Tipp außerhalb</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.steady.s10.title">Fazit</h3>
+      <p data-i18n="cs.steady.s10.p1">Der Kurswechsel zum Assistenten und die Umstrukturierung nach dem Card Sorting haben das Konzept erst zu dem gemacht, was am Ende getestet wurde. Beides entstand aus Rückschlägen im Prozess. Die Kritik am zu präsenten Assistenten beantwortet das Konzept selbst: Seine Aktivität ist einstellbar.</p>
+      <p class="cs__pull" data-i18n="cs.steady.s10.pull">In steady passt sich nicht die Oberfläche an, sondern die Begleitung. Die Struktur bleibt verlässlich, während Ton und Zeitpunkt der Unterstützung dem Menschen folgen.</p>
+    </section>
+  </article>
+
+  <!-- ===== MILO ===== -->
+  <article data-case="milo">
+    <div class="cs__hero">
+      <div class="cs__heroText">
+        <span class="cs__kicker" data-i18n="cs.milo.kicker">Inclusive Design · 2025/26</span>
+        <h2 class="cs__title">Milo</h2>
+        <p class="cs__sub" data-i18n="cs.milo.sub">KI-Assistenz für ältere Menschen</p>
+        <p class="cs__pitch" data-i18n="cs.milo.pitch"><em>Milo</em> ist eine KI-basierte Assistenz, die älteren und wenig technikaffinen Menschen einen ruhigen Einstieg in künstliche Intelligenz ermöglicht. Ein zentraler Gesprächsverlauf, drei wählbare Eingabewege und konsequente Rückmeldungen sollen Unsicherheit abbauen und Selbstständigkeit stärken.</p>
+      </div>
+      <div class="cs__heroMeta">
+        <dl>
+          <div><dt data-i18n="cs.meta.role">Rolle</dt><dd data-i18n="cs.milo.role">Konzept · UX Research · UX/UI · Prototyp</dd></div>
+          <div><dt data-i18n="cs.meta.methods">Methoden</dt><dd data-i18n="cs.milo.methods">Literaturrecherche · Marktanalyse · Personas · Journey Maps · Use Cases · Usability-Testing</dd></div>
+          <div><dt>Tools</dt><dd>Figma</dd></div>
+          <div><dt data-i18n="cs.meta.context">Rahmen</dt><dd data-i18n="cs.milo.context">Hochschulprojekt · Hochschule Ansbach · Wintersemester 2025/26</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <figure class="shot cs__cover"><img src="assets/img/covers/milo.png" alt="Milo Willkommensscreen, Onboarding und Gesprächsansichten auf Smartphones" /></figure>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.milo.s1.title">Ausgangslage</h3>
+      <p data-i18n="cs.milo.s1.p1">Für viele ältere Menschen liegt die größte Hürde nicht in der Bedienung, sondern im Kopf: die Angst, etwas falsch oder kaputt zu machen, Misstrauen gegenüber undurchsichtiger Technik und das Gefühl, den Anschluss verpasst zu haben. Dazu kommen nachlassende Sehkraft, Feinmotorik und Aufmerksamkeit.</p>
+      <p data-i18n="cs.milo.s1.p2">Die Marktanalyse fand keine Anwendung, die eine KI-Assistenz gezielt für diese Gruppe umsetzt. Produkte wie Hallo Alfred oder GrandPad wenden sich oft zuerst an Angehörige und behandeln ältere Menschen als Nebennutzende. Das bestätigt genau das Misstrauen in ihre Selbstständigkeit, das die Nutzung erschwert.</p>
+      <p data-i18n="cs.milo.s1.p3">Aus der Recherche entstanden drei Leitfragen:</p>
+      <ol class="cs__questions">
+        <li data-i18n="cs.milo.q1">Welche Ängste und Barrieren erleben ältere Menschen im Kontakt mit KI-Anwendungen?</li>
+        <li data-i18n="cs.milo.q2">Welche Interaktionsformen bevorzugen sie, etwa Sprache oder Touch?</li>
+        <li data-i18n="cs.milo.q3">Wie lassen sich Autonomie und Selbstwirksamkeit nachhaltig stärken?</li>
+      </ol>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.milo.s2.title">Leitlinien aus der Recherche</h3>
+      <dl class="cs__map cs__map--pairs">
+        <div><dt data-i18n="cs.milo.l1">Sehkraft</dt><dd data-i18n="cs.milo.l1t">Große Schrift, hohe Kontraste, großzügige Abstände</dd></div>
+        <div><dt data-i18n="cs.milo.l2">Feinmotorik</dt><dd data-i18n="cs.milo.l2t">Große Schaltflächen mit Abstand, einfache Gesten statt Doppeltippen oder Pinch</dd></div>
+        <div><dt data-i18n="cs.milo.l3">Aufmerksamkeit</dt><dd data-i18n="cs.milo.l3t">Ein Schritt pro Screen, wenige und langsame Animationen, keine plötzlichen Pop-ups</dd></div>
+        <div><dt data-i18n="cs.milo.l4">Angst vor Fehlern</dt><dd data-i18n="cs.milo.l4t">Rückfrage vor kritischen Aktionen, Bestätigung nach jeder Aktion, Rückgängig wo möglich</dd></div>
+        <div><dt data-i18n="cs.milo.l5">Unvertraute Symbole</dt><dd data-i18n="cs.milo.l5t">Beschriftete Schaltflächen und einfache Sprache ohne Fachbegriffe</dd></div>
+        <div><dt data-i18n="cs.milo.l6">Misstrauen</dt><dd data-i18n="cs.milo.l6t">Transparenz bei Daten und Kosten, menschliche Hilfe jederzeit erreichbar, keine Werbung</dd></div>
+      </dl>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.milo.s3.title">Verantwortung in der Ansprache</h3>
+      <p data-i18n="cs.milo.s3.p1">Milo soll warm und zugewandt sprechen, darf aber keine Beziehung vortäuschen. Gerade für Menschen mit Einsamkeitserfahrung wäre eine KI, die sich wie ein Freund gibt, eine Form der Manipulation. Milo macht deshalb klar, dass es ein technisches Werkzeug ist, und kennzeichnet Empfehlungen als Vorschläge.</p>
+      <div class="cs__voice">
+        <div><span data-i18n="cs.milo.s3.do">So spricht Milo</span><ul><li data-i18n="cs.milo.s3.do1">„Ich bin dein digitaler Assistent und helfe dir gerne.“</li><li data-i18n="cs.milo.s3.do2">„Milo ist das alles, künstliche Intelligenz, die zu Ihnen passt.“</li></ul></div>
+        <div><span data-i18n="cs.milo.s3.dont">Bewusst vermieden</span><ul><li data-i18n="cs.milo.s3.dont1">„Ich habe mich auf unser Gespräch gefreut.“</li><li data-i18n="cs.milo.s3.dont2">„Du fehlst mir.“</li></ul></div>
+      </div>
+      <p data-i18n="cs.milo.s3.p2">Auch das Geschäftsmodell folgt dieser Haltung: keine Werbung und ein transparent begründetes Premium-Angebot, das erst nach einiger Zeit erscheint und nicht schon bei der Registrierung.</p>
+    </section>
+
+    <section class="cs__sec">
+      <h3>User Research</h3>
+      <p data-i18n="cs.milo.s4.p1">Drei Personas decken die Spannweite von vorsichtig bis neugierig ab: <strong>Inge</strong>, die vorsichtige Alltagsbewältigerin, <strong>Karl</strong>, der skeptische Pragmatiker mit gesundheitlichen Einschränkungen, und <strong>Monika</strong>, die neugierige Entdeckerin. Der Prototyp folgt Inge, die von ihren Kindern ein Smartphone geschenkt bekam, es aber kaum nutzt.</p>
+      <figure class="shot"><a href="assets/img/case-studies/milo/persona-inge.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/milo/persona-inge.jpg" alt="Persona Inge, die vorsichtige Alltagsbewältigerin" loading="lazy" /></a><figcaption>Persona · Inge</figcaption></figure>
+      <figure class="cs__pano">
+        <div class="cs__panoScroll" tabindex="0" role="region" aria-label="User Journey Map Inge"><img src="assets/img/case-studies/milo/journey-inge.jpg" alt="User Journey Map Inge vom ersten Zögern bis zur selbstständigen Nutzung" loading="lazy" /></div>
+        <figcaption data-i18n="cs.milo.s4.journey">User Journey Map · Inge, vom Zögern bis zur selbstständigen Nutzung · seitlich scrollbar</figcaption>
+      </figure>
+      <div class="cs__case">
+        <span class="cs__caseTag" data-i18n="cs.milo.uc.tag">Use Case · Inge fragt zum ersten Mal nach dem Wetter</span>
+        <div class="cs__phase"><h5 data-i18n="cs.steady.uc.h1">Zielerfassung und Planung</h5><p data-i18n="cs.milo.uc.p1">Inge will den Assistenten zum ersten Mal nutzen, weiß aber nicht, wie sie ihre Frage formulieren soll. <b>Optimale Unterstützung:</b> schon im Onboarding zeigen, wie man mit der KI spricht, also Starthilfe, bevor eine Hürde entsteht.</p></div>
+        <div class="cs__phase"><h5 data-i18n="cs.steady.uc.h2">Umsetzung</h5><p data-i18n="cs.milo.uc.p2">Sie schreibt „Wie wird das Wetter morgen?“ und weiß nicht, woran sie den Erfolg erkennt. <b>Optimale Unterstützung:</b> Antworten visuell und sprachlich eindeutig darstellen und Nachrichten der App klar als solche kennzeichnen.</p></div>
+        <div class="cs__phase"><h5 data-i18n="cs.steady.uc.h3">Rückschlag</h5><p data-i18n="cs.milo.uc.p3">Eine Rückmeldung wie „Du musst zuerst deine Ortsangabe anpassen“ lässt sie sich ohnmächtig fühlen. <b>Optimale Unterstützung:</b> jederzeit Kontrolle über das Gespräch und bei Unverständnis ein direkter Weg zur Hilfe.</p></div>
+      </div>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.milo.s5.title">Konzept und Struktur</h3>
+      <p data-i18n="cs.milo.s5.p1">Im Zentrum steht ein einziger Gesprächsverlauf. Viele KI-Anwendungen verlangen, Chats selbst anzulegen und zu ordnen, für die Zielgruppe eine zusätzliche Hürde. Milo sortiert besprochene Themen stattdessen in einstellbaren Abständen automatisch in vergangene Gespräche ein und meldet danach, wo sie zu finden sind. Das hält den aktiven Verlauf kurz, was auch der Antwortqualität des Sprachmodells zugutekommt.</p>
+      <figure class="cs__ia">
+        <div class="cs__iaCore"><span data-i18n="cs.milo.ia.core">Startbildschirm</span><strong data-i18n="cs.milo.ia.chat">Gespräch mit Milo</strong><small data-i18n="cs.milo.ia.chatText">Ein zentraler Verlauf, der sich selbst einsortiert</small></div>
+        <i class="cs__iaLink" aria-hidden="true"></i>
+        <ul class="cs__iaMenu">
+          <li data-i18n="cs.milo.ia.m1">Vergangene Gespräche</li>
+          <li data-i18n="cs.milo.ia.m2">Erinnerungen</li>
+          <li data-i18n="cs.milo.ia.m3">Hilfe</li>
+          <li data-i18n="cs.milo.ia.m4">Einstellungen</li>
+          <li class="is-cut"><s data-i18n="cs.milo.ia.m5">Entdecken</s><small data-i18n="cs.milo.ia.m5t">ins Gespräch integriert</small></li>
+        </ul>
+        <figcaption data-i18n="cs.milo.ia.caption">Informationsstruktur · das Menü ist über die Kopfleiste von überall erreichbar</figcaption>
+      </figure>
+      <p data-i18n="cs.milo.s5.p2">Ein eigener Bereich „Entdecken“ für Veranstaltungen und Angebote wurde verworfen, weil er das Prinzip eines zentralen Assistenten aufgebrochen hätte. Milo schlägt solche Inhalte nun passend im Gespräch vor, etwa eine Veranstaltung in der Nähe samt Erinnerung.</p>
+      <p data-i18n="cs.milo.s5.p3">Der Name ist kurz, leicht auszusprechen und ohne Geschlechtszuordnung. „Alfred“ aus der Marktanalyse wirkte vertraut, hätte dem Assistenten aber unbeabsichtigt Eigenschaften zugeschrieben. Im Onboarding lässt sich Milo umbenennen.</p>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.milo.s6.title">Ein Einstieg ohne Hürde</h3>
+      <div class="cs__split cs__split--phone">
+        <figure class="cs__phoneShot">
+          <picture>
+            <source srcset="assets/img/case-studies/milo/willkommen-still.webp" media="(prefers-reduced-motion: reduce)">
+            <img src="assets/img/case-studies/milo/willkommen.webp" alt="Willkommenssequenz: Milo ist wie ein guter Nachbar, ein digitaler Wegweiser, ein riesiges Lexikon und ein aufmerksamer Notizzettel" loading="lazy">
+          </picture>
+          <figcaption data-i18n="cs.milo.s6.loop">Willkommenssequenz · Aufnahme aus dem Prototyp</figcaption>
+        </figure>
+        <div>
+          <p data-i18n="cs.milo.s6.p1">Die Willkommenssequenz entstand spät im Prozess. Im Austausch mit der Betreuung wurde deutlich, dass die Angst vor dem ersten Kontakt zwar in der Recherche stand, im Interface aber kaum adressiert war.</p>
+          <p data-i18n="cs.milo.s6.p2">Alltagsnahe Bilder erklären, was eine KI leisten kann: Milo ist wie ein guter Nachbar, ein digitaler Wegweiser, ein riesiges Lexikon und ein aufmerksamer Notizzettel. Langsame Übergänge lassen Zeit zum Lesen, und schon hier wird Milo als künstliche Intelligenz benannt.</p>
+        </div>
+      </div>
+      <p data-i18n="cs.milo.s6.p3">Das Onboarding führt in sechs Schritten durch Anrede, Eingabe, Ausgabe, Barrierefreiheit, Geräte sowie Datenschutz und endet mit einer Zusammenfassung, die sich noch ändern lässt. Neben dem Zurück-Pfeil gibt es immer eine beschriftete Schaltfläche, und die kleinen Fortschrittspunkte haben eine größere, unsichtbare Tippfläche.</p>
+      <div class="cs__lineup" style="--n:4">
+        <figure><img src="assets/img/case-studies/milo/onboarding-ausgabe.jpg" alt="Onboarding: Wie soll Milo mit Ihnen kommunizieren?" loading="lazy"><figcaption><strong data-i18n="cs.milo.ob1">Ausgabe</strong><span data-i18n="cs.milo.ob1t">Text oder vorgelesene Antworten</span></figcaption></figure>
+        <figure><img src="assets/img/case-studies/milo/onboarding-barrierefreiheit.jpg" alt="Onboarding: Barrierefreiheit einrichten" loading="lazy"><figcaption><strong data-i18n="cs.milo.ob2">Barrierefreiheit</strong><span data-i18n="cs.milo.ob2t">Schriftgröße und Sprechtempo</span></figcaption></figure>
+        <figure><img src="assets/img/case-studies/milo/onboarding-geraete.jpg" alt="Onboarding: Geräte verbinden" loading="lazy"><figcaption><strong data-i18n="cs.milo.ob3">Geräte</strong><span data-i18n="cs.milo.ob3t">Smartwatch und Hörgerät</span></figcaption></figure>
+        <figure><img src="assets/img/case-studies/milo/onboarding-datenschutz.jpg" alt="Onboarding: Datenschutz und Berechtigungen" loading="lazy"><figcaption><strong data-i18n="cs.milo.ob4">Datenschutz</strong><span data-i18n="cs.milo.ob4t">Jede Berechtigung mit Begründung</span></figcaption></figure>
+      </div>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.milo.s7.title">Drei Eingabewege</h3>
+      <p data-i18n="cs.milo.s7.p1">Nicht jede Person kann oder will tippen. Im Onboarding wählen Nutzende deshalb zwischen Text, Sprache und Touch, und das Eingabefeld passt sich der Wahl an.</p>
+      <div class="cs__lineup cs__lineup--wide" style="--n:3">
+        <figure><img src="assets/img/case-studies/milo/touch.jpg" alt="Touch-Eingabe mit Vorschlägen von Milo" loading="lazy"><figcaption><strong>Touch</strong><span data-i18n="cs.milo.in1">Milo schlägt passende Nachrichten als Flächen vor. Ein ganzes Gespräch lässt sich ohne Tippen führen.</span></figcaption></figure>
+        <figure><img src="assets/img/case-studies/milo/sprache.jpg" alt="Spracheingabe mit großem Sprechen-Button" loading="lazy"><figcaption><strong data-i18n="cs.milo.in2h">Sprache</strong><span data-i18n="cs.milo.in2">Für Karl mit Seh- und Motorikeinschränkungen dominiert ein großer Sprechen-Button.</span></figcaption></figure>
+        <figure><img src="assets/img/case-studies/milo/aufnahme.jpg" alt="Hinweis Jetzt sprechen während der Aufnahme" loading="lazy"><figcaption><strong data-i18n="cs.milo.in3h">Aufnahme</strong><span data-i18n="cs.milo.in3">Beim Sprechen zeigt ein eindeutiger Hinweis, dass Milo zuhört. Der erkannte Text lässt sich vor dem Senden prüfen.</span></figcaption></figure>
+      </div>
+      <p data-i18n="cs.milo.s7.p2">Nachrichten gehen erst nach bewusstem Senden hinaus. Die Sprachausgabe ordnet das Gesagte ein („Milo sagt …“), und ein Anruf-Modus wurde bewusst verworfen, weil er für die Zielgruppe schwer nachvollziehbar gewesen wäre.</p>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.milo.s8.title">Gestaltungssystem</h3>
+      <div class="cs__spec">
+        <div>
+          <span class="cs__specLabel" data-i18n="cs.milo.s8.type">Schriftgrößen im Onboarding wählbar</span>
+          <div class="cs__typeScale">
+            <div><small data-i18n="cs.milo.s8.small">Klein · 16 px</small><p style="font-size:16px" data-i18n="cs.milo.s8.sample1">Wie wird das Wetter morgen?</p></div>
+            <div><small data-i18n="cs.milo.s8.normal">Normal · 20 px</small><p style="font-size:20px" data-i18n="cs.milo.s8.sample2">Wie wird das Wetter morgen?</p></div>
+            <div><small data-i18n="cs.milo.s8.large">Groß · 24 px</small><p style="font-size:24px" data-i18n="cs.milo.s8.sample3">Wie wird das Wetter morgen?</p></div>
+          </div>
+        </div>
+        <div>
+          <span class="cs__specLabel" data-i18n="cs.milo.s8.shape">Form nach Funktion</span>
+          <ul class="cs__radii">
+            <li><i style="--r:8px"></i><span data-i18n="cs.milo.s8.r1">Inhalt</span><small>8 px</small></li>
+            <li><i style="--r:14px"></i><span data-i18n="cs.milo.s8.r2">Schaltfläche</span><small>14 px</small></li>
+            <li><i style="--r:20px"></i><span data-i18n="cs.milo.s8.r3">Eingabe</span><small>20 px</small></li>
+          </ul>
+          <span class="cs__specLabel cs__specLabel--gap" data-i18n="cs.milo.s8.colors">Farben</span>
+          <ul class="cs__swatches">
+            <li><i style="--c:#540300"></i><span data-i18n="cs.milo.s8.c1">Aktion</span><small>#540300</small></li>
+            <li><i style="--c:#fed8c1"></i><span data-i18n="cs.milo.s8.c2">Fläche</span><small>#FED8C1</small></li>
+            <li><i style="--c:#edf4fa"></i><span data-i18n="cs.milo.s8.c3">Eigene Eingabe</span><small>#EDF4FA</small></li>
+          </ul>
+        </div>
+      </div>
+      <ul class="cs__bullets">
+        <li data-i18n="cs.milo.s8.b1">Warme Töne von Gelb bis Dunkelrot auf hellem Grund sind gut wahrnehmbar und wirken ruhig. Eigene Farbthemen wurden bewusst weggelassen, um versehentlich schlecht lesbare Einstellungen zu vermeiden.</li>
+        <li data-i18n="cs.milo.s8.b2">Eigene Nachrichten und Vorschläge sind hellblau, damit sich die Aktionen der Nutzenden klar von Milos Antworten abheben.</li>
+        <li data-i18n="cs.milo.s8.b3">Schaltflächen und Eingabefelder tragen einen leichten Schatten, entgegen aktuellen Trends, damit Bedienbares als solches erkennbar ist.</li>
+        <li data-i18n="cs.milo.s8.b4">Entscheidungen laufen über Schaltflächen, dauerhafte Zustände über Schalter und Abstufungen über Skalen mit genau drei Stufen.</li>
+      </ul>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.milo.s9.title">Sicherheit im Alltag</h3>
+      <div class="cs__split">
+        <div class="cs__lineup" style="--n:2">
+          <figure><img src="assets/img/case-studies/milo/erinnerungen.jpg" alt="Erinnerungen mit Medikamentenplan und Terminen" loading="lazy"><figcaption><strong data-i18n="cs.milo.s9.c1">Erinnerungen</strong></figcaption></figure>
+          <figure><img src="assets/img/case-studies/milo/hilfe.jpg" alt="Hilfe mit Telefonnummer des Supports" loading="lazy"><figcaption><strong data-i18n="cs.milo.s9.c2">Hilfe</strong></figcaption></figure>
+        </div>
+        <div>
+          <p data-i18n="cs.milo.s9.p1">Vor dem Löschen oder Abbrechen fragt Milo nach, und nach jeder Aktion bestätigt ein kurzer Hinweis den Erfolg. Ein falscher Tipp hat so nie ernste Folgen.</p>
+          <p data-i18n="cs.milo.s9.p2">Erinnerungen, etwa an Medikamente, entstehen im Gespräch oder von Hand und erscheinen als Liste oder im vertrauten Kalender. Der Hilfebereich stellt Telefon, Chat und E-Mail zu echten Menschen an den Anfang.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.milo.s10.title">Evaluation</h3>
+      <p data-i18n="cs.milo.s10.p1">Fünf Personen zwischen 59 und 74 Jahren testeten den Prototyp vor Ort am Smartphone, weitgehend ohne Moderation. Zehn Aufgaben und Fragen deckten die zentralen Bereiche ab.</p>
+      <figure class="cs__data">
+        <ol class="cs__strip" style="--rows:4">
+          <li><span data-i18n="cs.milo.task1">Unterhaltung mit Milo beginnen</span><div class="cs__stripTrack"><i style="--v:9;--k:0"></i><i style="--v:10;--k:0"></i><i style="--v:10;--k:1"></i><i style="--v:10;--k:2"></i><i style="--v:10;--k:3"></i></div><b data-i18n="cs.milo.avg1">9,8</b></li>
+          <li><span data-i18n="cs.milo.task2">Vergangenes Gespräch wieder aufnehmen</span><div class="cs__stripTrack"><i style="--v:7;--k:0"></i><i style="--v:8;--k:0"></i><i style="--v:10;--k:0"></i><i style="--v:10;--k:1"></i><i style="--v:10;--k:2"></i></div><b data-i18n="cs.milo.avg2">9,0</b></li>
+          <li><span data-i18n="cs.milo.task3">Erinnerung erstellen</span><div class="cs__stripTrack"><i style="--v:8;--k:0"></i><i style="--v:9;--k:0"></i><i style="--v:10;--k:0"></i><i style="--v:10;--k:1"></i><i style="--v:10;--k:2"></i></div><b data-i18n="cs.milo.avg3">9,4</b></li>
+          <li class="is-low"><span data-i18n="cs.milo.task4">Eingabemethode anpassen</span><div class="cs__stripTrack"><i class="is-low" style="--v:0;--k:0"></i><i style="--v:9;--k:0"></i><i style="--v:10;--k:0"></i><i style="--v:10;--k:1"></i><i style="--v:10;--k:2"></i></div><b data-i18n="cs.milo.avg4">7,8</b></li>
+        </ol>
+        <div class="cs__stripAxis" aria-hidden="true"><span></span><div><span>0</span><span>5</span><span>10</span></div><span></span></div>
+        <figcaption data-i18n="cs.milo.strip.caption">Machbarkeit je Aufgabe von 0 bis 10 · jeder Punkt steht für eine Person, nicht gelöst zählt als 0</figcaption>
+      </figure>
+      <div class="cs__quotes">
+        <blockquote><p data-i18n="cs.milo.q1">„Es war sehr ruhig und gelassen.“</p><cite data-i18n="cs.milo.q1c">Testperson, 59</cite></blockquote>
+        <blockquote><p data-i18n="cs.milo.q2">„Verständlich, nicht technisch.“</p><cite data-i18n="cs.milo.q2c">Testperson, 72</cite></blockquote>
+      </div>
+      <h5 class="cs__subhead" data-i18n="cs.milo.s10.h">Befunde</h5>
+      <ul class="cs__bullets">
+        <li data-i18n="cs.milo.s10.b1">Übersichtlichkeit, Menüführung und der ruhige Einstieg wurden durchweg gelobt. Der Willkommenssequenz schenkten alle volle Aufmerksamkeit.</li>
+        <li data-i18n="cs.milo.s10.b2">Unsicherheiten entstanden vor allem an den Grenzen des Figma-Prototyps, etwa weil keine echte Tastatur erschien.</li>
+        <li data-i18n="cs.milo.s10.b3">Der Begriff „Eingabemethode“ war nicht sofort verständlich, eine Person fand die Einstellung nicht.</li>
+        <li data-i18n="cs.milo.s10.b4">Mehreren war die große Schrift zu groß. Das bestätigt, dass die Schriftgröße wählbar sein muss, statt pauschal maximal zu sein.</li>
+      </ul>
+      <p data-i18n="cs.milo.s10.p2">Danach wurden fehlerhafte Interaktionen und Overlays korrigiert und der Hintergrund zugunsten des Kontrasts angepasst. Da die Testpersonen die App nicht selbst gefunden hatten, lässt sich die Wirkung des Einstiegs auf die Entscheidung zur Nutzung nicht belegen.</p>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.milo.s11.title">Fazit</h3>
+      <p class="cs__pull" data-i18n="cs.milo.s11.pull">Barrierefreiheit war hier keine Anforderung unter vielen, sondern die Grundlage jeder Entscheidung. Die Gestaltung musste aus der Situation der Menschen abgeleitet werden, nicht aus gewohnten Mustern oder eigenem Stil.</p>
+    </section>
+  </article>
+
+  <!-- ===== COGNIFY ===== -->
+  <article data-case="cognify">
+    <div class="cs__hero">
+      <div class="cs__heroText">
+        <span class="cs__kicker" data-i18n="cs.cognify.kicker">E-Learning · Augmented Reality · 2024</span>
+        <h2 class="cs__title">Cognify</h2>
+        <p class="cs__sub" data-i18n="cs.cognify.sub">Lernplattform mit Augmented Reality</p>
+        <p class="cs__pitch" data-i18n="cs.cognify.pitch"><em>Cognify</em> ist eine Lernplattform für Menschen, die sich aus Neugier neues Wissen aneignen möchten. Kompakte Kurse verbinden Texte, Videos und Quizze mit Augmented Reality: Über gedruckte Bildmarker erscheinen 3D-Modelle wie ein menschliches Herz oder das Kolosseum direkt auf dem Tisch. Gamification und Community-Funktionen sollen für langfristige Motivation sorgen.</p>
+      </div>
+      <div class="cs__heroMeta">
+        <dl>
+          <div><dt data-i18n="cs.cognify.meta.role">Rolle</dt><dd data-i18n="cs.cognify.role">Konzept · UX Research · UX/UI · AR-Prototyp</dd></div>
+          <div><dt data-i18n="cs.cognify.meta.methods">Methoden</dt><dd data-i18n="cs.cognify.methods">Wettbewerbsanalyse · Umfrage · Personas · Journey Maps · Usability-Testing</dd></div>
+          <div><dt>Tools</dt><dd>Figma · Unity · Vuforia · Photoshop</dd></div>
+          <div><dt data-i18n="cs.cognify.meta.context">Rahmen</dt><dd data-i18n="cs.cognify.context">Hochschulprojekt · Hochschule Ansbach · Sommersemester 2024</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <figure class="shot cs__cover"><img src="assets/img/covers/cognify.png" alt="Cognify Willkommensscreen, Startseite, Kursvorschau und AR-Modelle von Herz und Kolosseum" /></figure>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.cognify.s1.title">Ausgangslage</h3>
+      <p data-i18n="cs.cognify.s1.p1">Zu Beginn stand eine Recherche zu bestehenden Lernplattformen. Die meisten Angebote richten sich an Schule, Studium oder berufliche Weiterbildung und gliedern ihre Inhalte nach Fächern. Anwendungen mit Augmented Reality behandeln meist ein einzelnes Thema und sind überwiegend für Kinder gedacht. Für Erwachsene, die sich im Alltag aus Neugier mit neuen Themen beschäftigen möchten, fand sich kein passendes Angebot.</p>
+      <p data-i18n="cs.cognify.s1.p2">Vier Anwendungen wurden getestet und nach denselben Kriterien bewertet: Serlo, My Daily Input und Studyflix als thematisch breite Plattformen sowie WDR AR 1933-1945 als Beispiel für Wissensvermittlung mit AR.</p>
+      <figure class="cs__data">
+        <div class="cs__tableWrap">
+          <table class="cs__table">
+            <thead><tr><th data-i18n="cs.cognify.t.crit">Kriterium</th><th>Serlo</th><th>My Daily Input</th><th>Studyflix</th></tr></thead>
+            <tbody>
+              <tr><th data-i18n="cs.cognify.t.c1">Design und Ästhetik</th><td style="--v:4">4</td><td style="--v:4.5">4,5</td><td style="--v:3.5">3,5</td></tr>
+              <tr><th data-i18n="cs.cognify.t.c2">Nutzerfreundlichkeit</th><td style="--v:4">4</td><td style="--v:3.5">3,5</td><td style="--v:4">4</td></tr>
+              <tr><th data-i18n="cs.cognify.t.c3">Personalisierung</th><td style="--v:2">2</td><td style="--v:5">5</td><td style="--v:4">4</td></tr>
+              <tr><th data-i18n="cs.cognify.t.c4">Barrierefreiheit</th><td style="--v:2">2</td><td style="--v:1">1</td><td style="--v:3">3</td></tr>
+              <tr><th data-i18n="cs.cognify.t.c5">Inhaltsqualität und -umfang</th><td style="--v:3.5">3,5</td><td style="--v:4">4</td><td style="--v:3">3</td></tr>
+              <tr><th data-i18n="cs.cognify.t.c6">Funktionsumfang</th><td style="--v:4">4</td><td style="--v:3.5">3,5</td><td style="--v:2">2</td></tr>
+              <tr><th>Community</th><td style="--v:4.5">4,5</td><td style="--v:0">0</td><td style="--v:0">0</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figcaption data-i18n="cs.cognify.t.caption">Wettbewerbsanalyse · Bewertung von 0 bis 5. WDR AR 1933-1945 wurde gesondert bewertet: Wissensvermittlung 5, AR-Umsetzung 4, Nutzerfreundlichkeit 1.</figcaption>
+      </figure>
+      <p data-i18n="cs.cognify.s1.p3">Keine der Plattformen verbindet Personalisierung und Community, und bei der Barrierefreiheit erreichte keine mehr als 3 von 5 Punkten. Die AR-Anwendung überzeugte bei der Wissensvermittlung, scheiterte aber an der Bedienbarkeit.</p>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.cognify.s2.title">User Research</h3>
+      <p data-i18n="cs.cognify.s2.p1">Eine Online-Umfrage mit 20 Teilnehmenden lieferte Daten zu Lerngewohnheiten, Erwartungen an Lernplattformen und zur Haltung gegenüber Augmented Reality.</p>
+      <div class="cs__stats">
+        <div><strong>70 %</strong><span data-i18n="cs.cognify.stat1">nennen Motivationsprobleme als größtes Hindernis beim Lernen mit Plattformen</span></div>
+        <div><strong>80 %</strong><span data-i18n="cs.cognify.stat2">lernen mit visuellen Medien wie Bildern, Grafiken und Videos</span></div>
+        <div><strong>3,05<small>/5</small></strong><span data-i18n="cs.cognify.stat3">erwarteter Nutzen von AR im Durchschnitt; 11 von 20 nannten konkrete Einsatzideen</span></div>
+        <div><strong>60 %</strong><span data-i18n="cs.cognify.stat4">halten einen Community-Aspekt für völlig unwichtig</span></div>
+      </div>
+      <p data-i18n="cs.cognify.s2.p2">Die Haltung zu Augmented Reality war gespalten. Wer eine Idee für den Einsatz hatte, dachte fast immer an die Veranschaulichung komplexer Inhalte wie Organe, physikalische Vorgänge oder technische Objekte.</p>
+      <blockquote class="cs__quote"><p data-i18n="cs.cognify.quote">„Mit visueller Darstellung lernt man oft nicht nur auswendig, sondern versteht es wirklich.“</p><cite data-i18n="cs.cognify.quote.cite">Antwort aus der Umfrage</cite></blockquote>
+      <p data-i18n="cs.cognify.s2.p3">Aus den Ergebnissen entstanden drei Personas. <strong>Anna Schmidt</strong>, Grundschullehrerin und Mutter, sucht Lernangebote für Unterricht und Familie. <strong>Michael Hoffmann</strong>, 45 und Steuerberater, möchte Geschichte, Kunst und Philosophie erkunden, hat aber wenig Zeit. <strong>Nicole Lechner</strong>, 23 und Marketingassistentin, hat viel Freizeit, findet aber schwer die Motivation für sinnvolle Beschäftigungen. Sie verkörpert das häufigste Problem aus der Umfrage.</p>
+      <figure class="shot"><img src="assets/img/case-studies/cognify/persona-nicole.jpg" alt="Persona Nicole Lechner" loading="lazy" /><figcaption>Persona · Nicole Lechner</figcaption></figure>
+      <p data-i18n="cs.cognify.s2.p4">Die User Journey Map zeigt Nicoles Weg von der Langeweile im Alltag bis zur festen Lernroutine. Entscheidend sind der erste Eindruck, der sie zum Ausprobieren bringt, und die Abwechslung, die sie danach dranbleiben lässt.</p>
+      <figure class="shot"><img src="assets/img/case-studies/cognify/journey-nicole.jpg" alt="User Journey Map Nicole Lechner" loading="lazy" /><figcaption>User Journey Map · Nicole Lechner</figcaption></figure>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.cognify.s3.title">Synthese und Konzept</h3>
+      <p data-i18n="cs.cognify.s3.p1">Die Erkenntnisse wurden in einem Leitsatz verdichtet, an dem sich die weitere Gestaltung ausrichtete:</p>
+      <p class="cs__pull" data-i18n="cs.cognify.s3.pull">Nutzende einer Lernanwendung mit Augmented Reality legen Wert auf intuitive Bedienung, eine ansprechende Oberfläche und vielfältige interaktive Funktionen. Die Anwendung soll flexibel nutzbar sein und hochwertige Inhalte bieten.</p>
+      <div class="cs__grid2">
+        <div><h5 data-i18n="cs.cognify.s3.h1">Wissenspakete</h5><p data-i18n="cs.cognify.s3.t1">Kompakte Kurse zu einem Thema bilden den Kern. Texte, Darstellungen, Videos, Aufgaben und AR-Modelle lassen sich je nach Vorliebe kombinieren, ohne dass sich der Informationsumfang ändert.</p></div>
+        <div><h5>Gamification</h5><p data-i18n="cs.cognify.s3.t2">Erfahrungspunkte, Level, Erfolge und Meilensteine machen Fortschritt sichtbar und setzen regelmäßige Impulse gegen nachlassende Motivation.</p></div>
+        <div><h5>Community</h5><p data-i18n="cs.cognify.s3.t3">Freundesliste, Ranglisten, Forum und Gruppen sollen durch Gemeinschaft und leichten Wettbewerb zusätzlich motivieren.</p></div>
+        <div><h5 data-i18n="cs.cognify.s3.h4">Abwägung</h5><p data-i18n="cs.cognify.s3.t4">60 % der Befragten hielten Community für unwichtig. Weil Motivation aber das häufigste Problem war, blieb sie Teil des Konzepts, zurückhaltend eingebunden: Profile zeigen Interessen, Level und Erfolge, aber nicht den Umfang eines sozialen Netzwerks.</p></div>
+      </div>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.cognify.s4.title">Vom Wireframe zum Interface</h3>
+      <p data-i18n="cs.cognify.s4.p1">Die Lo-Fi-Wireframes dienten dazu, Ideen früh auszuprobieren und die Struktur festzulegen. Zwei Prinzipien zogen sich durch den gesamten Prozess: Nutzende nicht mit Informationen überfordern und trotzdem ein einladendes Erscheinungsbild schaffen, das nicht nach reinem Nachschlagewerk wirkt.</p>
+      <div class="cs__flowLabel"><span data-i18n="cs.cognify.s4.flow">Lo-Fi und Hi-Fi im Vergleich</span><div class="cs__seg" role="group" aria-label="Ansicht wählen"><button type="button" data-fi="lo" aria-pressed="false">Lo-Fi</button><button type="button" data-fi="hi" aria-pressed="true">Hi-Fi</button></div></div>
+      <div class="cs__fiGrid" data-fi-state="hi">
+        <figure><div class="cs__fiImgs"><img class="is-lo" src="assets/img/case-studies/cognify/lofi-willkommen.png" alt="Lo-Fi Willkommensscreen" loading="lazy"><img class="is-hi" src="assets/img/case-studies/cognify/willkommen.jpg" alt="Hi-Fi Willkommensscreen" loading="lazy"></div><figcaption data-i18n="cs.cognify.pair1">Willkommen</figcaption></figure>
+        <figure><div class="cs__fiImgs"><img class="is-lo" src="assets/img/case-studies/cognify/lofi-startseite.png" alt="Lo-Fi Startseite" loading="lazy"><img class="is-hi" src="assets/img/case-studies/cognify/startseite.jpg" alt="Hi-Fi Startseite" loading="lazy"></div><figcaption data-i18n="cs.cognify.pair2">Startseite</figcaption></figure>
+        <figure><div class="cs__fiImgs"><img class="is-lo" src="assets/img/case-studies/cognify/lofi-lernmethoden.png" alt="Lo-Fi Auswahl der Lernmethoden" loading="lazy"><img class="is-hi" src="assets/img/case-studies/cognify/kurs-vorschau.jpg" alt="Hi-Fi Kursvorschau mit Auswahl der Lernmethoden" loading="lazy"></div><figcaption data-i18n="cs.cognify.pair3">Kursvorschau und Lernmethoden</figcaption></figure>
+        <figure><div class="cs__fiImgs"><img class="is-lo" src="assets/img/case-studies/cognify/lofi-kapitel.png" alt="Lo-Fi Kursinhalt" loading="lazy"><img class="is-hi" src="assets/img/case-studies/cognify/kapitel-skelett.jpg" alt="Hi-Fi Kurskapitel Skelettsystem" loading="lazy"></div><figcaption data-i18n="cs.cognify.pair4">Kursinhalt</figcaption></figure>
+        <figure><div class="cs__fiImgs"><img class="is-lo" src="assets/img/case-studies/cognify/lofi-ergebnis.png" alt="Lo-Fi Quizergebnis" loading="lazy"><img class="is-hi" src="assets/img/case-studies/cognify/quiz-ergebnis.jpg" alt="Hi-Fi Quizergebnis mit Erfahrungspunkten" loading="lazy"></div><figcaption data-i18n="cs.cognify.pair5">Quizergebnis</figcaption></figure>
+        <figure><div class="cs__fiImgs"><img class="is-lo" src="assets/img/case-studies/cognify/lofi-freunde.png" alt="Lo-Fi Freunde" loading="lazy"><img class="is-hi" src="assets/img/case-studies/cognify/freunde.jpg" alt="Hi-Fi Freunde mit Ranking und Gruppen" loading="lazy"></div><figcaption data-i18n="cs.cognify.pair6">Freunde</figcaption></figure>
+      </div>
+      <h5 class="cs__subhead" data-i18n="cs.cognify.s4.h">Wichtigste Änderungen im Hi-Fi-Prototyp</h5>
+      <ul class="cs__bullets">
+        <li data-i18n="cs.cognify.s4.b1">Eine Kursvorschau vor jedem Kurs mit Kapitelübersicht und der Wahl der Lernmethoden</li>
+        <li data-i18n="cs.cognify.s4.b2">Kurskarten mit Prozentwert statt Fortschrittsbalken sowie Angaben zu Dauer und Schwierigkeit</li>
+        <li data-i18n="cs.cognify.s4.b3">Ein Erfahrungspunkte-System für abgeschlossene Kurse und Quizze, dazu eine Levelanzeige, die zeigt, welche Freunde höher oder niedriger stehen</li>
+        <li data-i18n="cs.cognify.s4.b4">Eingabefelder als schlichte Textzeilen statt grauer Boxen; der Weiter-Pfeil bleibt ausgegraut, bis alle Angaben vollständig sind</li>
+        <li data-i18n="cs.cognify.s4.b5">Ein Farbschema aus einer spezialisierten Palette mit stärkeren Kontrasten und klareren Farbunterschieden</li>
+      </ul>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.cognify.s5.title">Kernabläufe</h3>
+      <p data-i18n="cs.cognify.s5.p1">Die Startseite bündelt, was für den Lernalltag zählt: die Fortschrittsleiste mit Level und Erfahrungspunkten im Vergleich zu Freunden, darunter die Listen „Lernen fortsetzen“ und „Neues entdecken“. Zwei feste Buttons führen zur Community und zur Suche.</p>
+      <div class="cs__flowLabel"><span data-i18n="cs.cognify.s5.flow1">Startseite und Entdecken</span></div>
+      <div class="cs__lineup" style="--n:3">
+        <figure><a href="assets/img/case-studies/cognify/startseite.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/startseite.jpg" alt="Startseite mit Fortschrittsleiste und Kurslisten" loading="lazy"></a><figcaption><strong data-i18n="cs.cognify.home1">Startseite</strong></figcaption></figure>
+        <figure><a href="assets/img/case-studies/cognify/lernen-fortsetzen.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/lernen-fortsetzen.jpg" alt="Lernen fortsetzen mit Kursfortschritt und Freunden" loading="lazy"></a><figcaption><strong data-i18n="cs.cognify.home2">Lernen fortsetzen</strong></figcaption></figure>
+        <figure><a href="assets/img/case-studies/cognify/neues-entdecken.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/neues-entdecken.jpg" alt="Neues entdecken mit Kursempfehlungen" loading="lazy"></a><figcaption><strong data-i18n="cs.cognify.home3">Neues entdecken</strong></figcaption></figure>
+      </div>
+      <div class="cs__flowLabel cs__flowLabel--sub"><span data-i18n="cs.cognify.s5.flow2">Ein Kurs von der Vorschau bis zum Ergebnis</span></div>
+      <div class="cs__lineup cs__lineup--steps" style="--n:4">
+        <figure><a href="assets/img/case-studies/cognify/kurs-vorschau.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/kurs-vorschau.jpg" alt="Kursvorschau Die menschliche Anatomie mit Auswahl der Lernmethoden" loading="lazy"></a><figcaption><strong data-i18n="cs.cognify.course1">Vorschau und Lernmethoden</strong></figcaption></figure>
+        <figure><a href="assets/img/case-studies/cognify/kapitel-skelett.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/kapitel-skelett.jpg" alt="Kapitel Skelettsystem mit Text und Abbildungen" loading="lazy"></a><figcaption><strong data-i18n="cs.cognify.course2">Kapitel</strong></figcaption></figure>
+        <figure class="is-focus"><a href="assets/img/case-studies/cognify/kapitel-herz.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/kapitel-herz.jpg" alt="Kapitel Das Herz mit Hinweis auf das AR-Modell" loading="lazy"></a><figcaption><strong data-i18n="cs.cognify.course3">Kapitel mit AR-Modell</strong></figcaption></figure>
+        <figure><a href="assets/img/case-studies/cognify/quiz-ergebnis.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/quiz-ergebnis.jpg" alt="Quizergebnis mit Erfahrungspunkten und Vergleich" loading="lazy"></a><figcaption><strong data-i18n="cs.cognify.course4">Quiz und Erfahrungspunkte</strong></figcaption></figure>
+      </div>
+      <div class="cs__flowLabel cs__flowLabel--sub"><span data-i18n="cs.cognify.s5.flow3">Community und Profil</span></div>
+      <div class="cs__lineup" style="--n:3">
+        <figure><a href="assets/img/case-studies/cognify/freunde.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/freunde.jpg" alt="Freundesliste mit Ranking und Gruppen" loading="lazy"></a><figcaption><strong data-i18n="cs.cognify.social1">Freunde und Ranking</strong></figcaption></figure>
+        <figure><a href="assets/img/case-studies/cognify/freund-profil.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/freund-profil.jpg" alt="Profil eines Freundes mit Interessen und Kursen" loading="lazy"></a><figcaption><strong data-i18n="cs.cognify.social2">Profil</strong></figcaption></figure>
+        <figure><a href="assets/img/case-studies/cognify/praeferenzen.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/praeferenzen.jpg" alt="Themenpräferenzen in den Einstellungen" loading="lazy"></a><figcaption><strong data-i18n="cs.cognify.social3">Themenpräferenzen</strong></figcaption></figure>
+      </div>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.cognify.s6.title">Augmented Reality</h3>
+      <p data-i18n="cs.cognify.s6.p1">Die AR-Funktion wurde nicht nur gestaltet, sondern als eigene Android-App mit Unity und der Vuforia Engine umgesetzt. Zu den Kursen „Die menschliche Anatomie“ und „Das Kolosseum“ gehört je eine Druckvorlage mit Bildmarker. Erkennt die Kamera den Marker, erscheint das passende 3D-Modell auf dem Blatt und lässt sich durch Bewegen des Geräts von allen Seiten betrachten.</p>
+      <div class="cs__shots cs__shots--2 cs__shots--ar">
+        <figure class="shot"><img src="assets/img/case-studies/cognify/ar-herz.jpg" alt="3D-Modell eines menschlichen Herzens auf der gedruckten Cognify-Vorlage" loading="lazy" /><figcaption data-i18n="cs.cognify.ar1">Kurs Anatomie · Herz</figcaption></figure>
+        <figure class="shot"><img src="assets/img/case-studies/cognify/ar-kolosseum.jpg" alt="3D-Modell des Kolosseums auf der gedruckten Cognify-Vorlage" loading="lazy" /><figcaption data-i18n="cs.cognify.ar2">Kurs Kolosseum · Modell</figcaption></figure>
+      </div>
+      <p data-i18n="cs.cognify.s6.p2">Im Interface ist AR eine von fünf Lernmethoden, die sich in der Kursvorschau aktivieren lässt; ein Druckersymbol führt dort zur Vorlage. Im Kurs weist ein Symbol am Ende des passenden Abschnitts auf das Modell hin.</p>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.cognify.s7.title">Designentscheidungen</h3>
+      <div class="cs__grid2">
+        <div><h5 data-i18n="cs.cognify.s7.h1">Vertraute Muster</h5><p data-i18n="cs.cognify.s7.t1">Nach Jakob’s Law erwarten Nutzende, dass eine App so funktioniert wie die Apps, die sie bereits kennen. Das Logo führt deshalb zurück zur Startseite, das Profilbild zu Konto und Einstellungen, die Suche liegt unten rechts.</p></div>
+        <div><h5 data-i18n="cs.cognify.s7.h2">Sichtbarer Fortschritt</h5><p data-i18n="cs.cognify.s7.t2">Die Fortschrittsleiste zeigt Level, Erfahrungspunkte und die Profilbilder von Freunden. Nach jedem Quiz folgen Punktezuwachs, der Vergleich mit Freunden und die Einordnung unter allen Nutzenden.</p></div>
+        <div><h5 data-i18n="cs.cognify.s7.h3">Reduzierte Oberfläche</h5><p data-i18n="cs.cognify.s7.t3">Jeder Screen zeigt nur, was für den nächsten Schritt nötig ist. Profil, Einstellungen und Community sind bewusst schlicht gehalten, damit sich auch weniger technikaffine Menschen zurechtfinden.</p></div>
+        <div><h5 data-i18n="cs.cognify.s7.h4">Barrierefreiheit</h5><p data-i18n="cs.cognify.s7.t4">In den Einstellungen lassen sich Schriftgröße, einfache Schrift, ein Modus für Farbenblindheit, Untertitel für Videos, ein Screenreader und ein Darkmode aktivieren.</p></div>
+      </div>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.cognify.s8.title">Evaluation</h3>
+      <p data-i18n="cs.cognify.s8.p1">Geplant waren eine quantitative Remote-Evaluation und drei moderierte Tests. Beim Versand des Prototyps zeigte sich, dass Figma von allen Testpersonen ein eigenes Konto verlangte; auch der Figma-Support fand keine Lösung. Statt die Evaluation zu verkleinern, wurde der qualitative Teil ausgebaut: sechs statt drei Testpersonen und zehn statt fünf Aufgaben.</p>
+      <p data-i18n="cs.cognify.s8.p2">Die Tests fanden vor Ort statt, mit dem Prototyp auf dem Smartphone sowie Tablet und Druckvorlagen für die AR-Funktion. Die sechs Teilnehmenden zwischen 22 und 65 Jahren unterschieden sich in Technikaffinität und AR-Erfahrung. Sie dachten während der Aufgaben laut, bewerteten jede Aufgabe nach ihrer Lösbarkeit und gaben zum Schluss im Gespräch Feedback.</p>
+      <figure class="cs__data">
+        <ol class="cs__bars">
+          <li style="--v:10"><span data-i18n="cs.cognify.task1">Konto erstellen und Interessen wählen</span><i></i><b>10,0</b></li>
+          <li style="--v:10"><span data-i18n="cs.cognify.task2">Kurs „Das Kolosseum“ mit Quiz abschließen</span><i></i><b>10,0</b></li>
+          <li style="--v:5.8" class="is-low"><span data-i18n="cs.cognify.task3">Lernmethoden im laufenden Kurs ändern</span><i></i><b>5,8</b></li>
+          <li style="--v:5.3" class="is-low"><span data-i18n="cs.cognify.task4">Freunde mit höherem und niedrigerem Level finden</span><i></i><b>5,3</b></li>
+          <li style="--v:6.2" class="is-low"><span data-i18n="cs.cognify.task5">Erreichte Meilensteine finden</span><i></i><b>6,2</b></li>
+          <li style="--v:8.5"><span data-i18n="cs.cognify.task6">Eigene Position in der globalen Rangliste finden</span><i></i><b>8,5</b></li>
+          <li style="--v:8.8"><span data-i18n="cs.cognify.task7">Profil eines Freundes öffnen</span><i></i><b>8,8</b></li>
+          <li style="--v:9.2"><span data-i18n="cs.cognify.task8">Eigene Gruppen finden</span><i></i><b>9,2</b></li>
+          <li style="--v:7"><span data-i18n="cs.cognify.task9">Themenpräferenzen ändern</span><i></i><b>7,0</b></li>
+          <li style="--v:8.5"><span data-i18n="cs.cognify.task10">Darkmode aktivieren</span><i></i><b>8,5</b></li>
+        </ol>
+        <figcaption data-i18n="cs.cognify.bars.caption">Lösbarkeit je Aufgabe · Durchschnitt aus sechs Bewertungen von 0 bis 10</figcaption>
+      </figure>
+      <div class="cs__stats cs__stats--score">
+        <div><strong>9,7</strong><span data-i18n="cs.cognify.score1">Optik</span></div>
+        <div><strong>9,5</strong><span data-i18n="cs.cognify.score2">Lerneffekt</span></div>
+        <div><strong>8,8</strong><span data-i18n="cs.cognify.score3">Übersichtlichkeit</span></div>
+        <div><strong>8,2</strong><span data-i18n="cs.cognify.score4">Bedienbarkeit</span></div>
+      </div>
+      <p class="cs__note" data-i18n="cs.cognify.score.caption">Abschlussbewertung · Durchschnitt von 10 Punkten</p>
+      <h5 class="cs__subhead" data-i18n="cs.cognify.s8.h">Befunde</h5>
+      <ul class="cs__bullets">
+        <li data-i18n="cs.cognify.s8.b1">Kurse und Quizze lösten alle Teilnehmenden ohne Mühe. Der Lernteil, das Herzstück der Anwendung, wurde durchweg positiv bewertet.</li>
+        <li data-i18n="cs.cognify.s8.b2">Fünf von sechs Personen übersahen die AR-Funktion zunächst. Der Hinweis stand am Ende des Fließtexts und ging beim Überfliegen unter. Wer AR nutzte, empfand es als intuitiv; einziges Hindernis war das Ausdrucken der Vorlage.</li>
+        <li data-i18n="cs.cognify.s8.b3">Die Touch-Ziele waren für alle Altersgruppen zu klein. Zum Teil lag das an den sehr exakten Klickflächen im Figma-Prototyp.</li>
+        <li data-i18n="cs.cognify.s8.b4">Die Lernmethoden im laufenden Kurs zu ändern, gelang selten auf direktem Weg, weil nichts auf die Funktion hinter dem Kurstitel hinwies.</li>
+        <li data-i18n="cs.cognify.s8.b5">Ältere Teilnehmende vermissten einen sichtbaren Zurück-Pfeil und fanden sich langsamer in der Informationsarchitektur zurecht. Jüngere übertrugen vertraute Muster aus anderen Apps sofort.</li>
+        <li data-i18n="cs.cognify.s8.b6">„Suche“ wurde als globale Suche verstanden, obwohl sie nur Kurse durchsucht.</li>
+      </ul>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.cognify.s10.title">Fazit</h3>
+      <p data-i18n="cs.cognify.s10.p1">Die abgeleiteten Verbesserungen konnten im Semester nicht mehr umgesetzt werden, weil das Projekt seinen geplanten Umfang auf mehreren Ebenen überschritten hatte, vom eigenen AR-Prototyp bis zur ausgeweiteten Evaluation.</p>
+      <p class="cs__pull" data-i18n="cs.cognify.s10.pull">Ein Alleinstellungsmerkmal wirkt nur, wenn es im Interface sichtbar ist. Die AR-Funktion war technisch gelöst, ging aber im Fließtext unter. Ebenso tragen vertraute Muster nur die Menschen, die sie kennen; alle anderen brauchen sichtbare Wegweiser.</p>
+    </section>
+  </article>
+
+  <!-- ===== SYNTEGON ===== -->
+  <article data-case="syntegon">
+    <div class="cs__hero">
+      <div class="cs__heroText">
+        <span class="cs__kicker" data-i18n="cs.syntegon.kicker">Industrial UX · Bachelorarbeit · 2026</span>
+        <h2 class="cs__title">Syntegon</h2>
+        <p class="cs__sub" data-i18n="cs.syntegon.sub">Visualisierungssystem für die Pharmaproduktion</p>
+        <p class="cs__pitch" data-i18n="cs.syntegon.pitch">In meiner Bachelorarbeit in Zusammenarbeit mit <strong>Syntegon</strong> habe ich ein Visualisierungssystem konzipiert und als interaktiven Prototyp umgesetzt. Es führt Bedienende in der pharmazeutischen Produktion Schritt für Schritt durch manuelle Arbeitsschritte und sorgt dafür, dass Fehler keine Folgen haben.</p>
+      </div>
+      <div class="cs__heroMeta">
+        <dl>
+          <div><dt data-i18n="cs.meta.role">Rolle</dt><dd data-i18n="cs.syntegon.role">Research · Konzeption · UX/UI · Prototyp</dd></div>
+          <div><dt data-i18n="cs.meta.methods">Methoden</dt><dd data-i18n="cs.syntegon.methods">Literatur- und Dokumentenanalyse · Experteninterviews · Qualitative Inhaltsanalyse · Expertenevaluation</dd></div>
+          <div><dt>Tools</dt><dd>Figma · Claude / Generative AI · Miro</dd></div>
+          <div><dt data-i18n="cs.syntegon.meta.period">Zeitraum</dt><dd data-i18n="cs.syntegon.period">März bis Juli 2026</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.syntegon.s1.title">Fragestellung</h3>
+      <p class="cs__pull" data-i18n="cs.syntegon.s1.pull">Wie muss ein Visualisierungssystem konzipiert sein, damit es Bedienende bei manuellen Arbeitsschritten sicher führt und Fehler verhindert?</p>
+      <p data-i18n="cs.syntegon.s1.p1">In der Pharmaproduktion gelten strenge regulatorische Anforderungen wie der EU-GMP-Leitfaden. Wo Menschen manuell eingreifen, können Verwechslungen weitreichende Folgen haben. Die Arbeit untersucht, wie Informationsarchitektur, Schrittführung und Rückmeldung in diesem Umfeld zusammenspielen müssen.</p>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.syntegon.s2.title">Vorgehen</h3>
+      <ol class="cs__process">
+        <li><h5 data-i18n="cs.syntegon.p1.h">Literatur und Dokumente</h5><p data-i18n="cs.syntegon.p1.t">Regulatorischer Rahmen, menschliche Fehlerursachen und Grundprinzipien industrieller Bedienoberflächen</p></li>
+        <li><h5 data-i18n="cs.syntegon.p2.h">Experteninterviews</h5><p data-i18n="cs.syntegon.p2.t">Drei leitfadengestützte Interviews mit Fachleuten aus Entwicklung, technischer Umsetzung und pharmazeutischer Regulatorik</p></li>
+        <li><h5 data-i18n="cs.syntegon.p3.h">Anforderungen</h5><p data-i18n="cs.syntegon.p3.t">Per qualitativer Inhaltsanalyse abgeleitet, getrennt nach System und Führung der Bedienenden</p></li>
+        <li><h5 data-i18n="cs.syntegon.p4.h">Prototyp</h5><p data-i18n="cs.syntegon.p4.t">Interaktiver Hi-Fi-Prototyp in Figma, aufgebaut mit dem Designsystem des Unternehmens</p></li>
+        <li><h5 data-i18n="cs.syntegon.p5.h">Expertenevaluation</h5><p data-i18n="cs.syntegon.p5.t">Individuelle Fragen je Fachperson auf einer fünfstufigen Skala, dazu übergreifende Usability-Kriterien</p></li>
+        <li><h5 data-i18n="cs.syntegon.p6.h">Iteration</h5><p data-i18n="cs.syntegon.p6.t">Begriffe vereinheitlicht, einen Prüfschritt ergänzt und die Schrittführung nachgeschärft</p></li>
+      </ol>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.syntegon.s3.title">Leitidee: Fail-safe</h3>
+      <p data-i18n="cs.syntegon.s3.p1">Offenheit und eine möglichst freie Bedienung treten in diesem Umfeld zurück. Das System übernimmt die Verantwortung, die in sicherheitskritischen Abläufen nicht allein beim Menschen liegen kann.</p>
+      <figure class="cs__safe">
+        <ol class="cs__safeFlow">
+          <li data-i18n="cs.syntegon.f1">Schritt wird angezeigt</li>
+          <li data-i18n="cs.syntegon.f2">Handlung der Bedienenden</li>
+          <li data-i18n="cs.syntegon.f3">Prüfung durch das System</li>
+        </ol>
+        <div class="cs__safeOut">
+          <p class="is-ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span data-i18n="cs.syntegon.f4">Korrekt: kurze Bestätigung, dann folgt der nächste Schritt ohne weitere Eingabe</span></p>
+          <p class="is-stop"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg><span data-i18n="cs.syntegon.f5">Abweichung: Der Prozess geht erst weiter, wenn der Schritt korrekt ausgeführt ist</span></p>
+        </div>
+        <figcaption data-i18n="cs.syntegon.f.caption">Prinzip der Schrittführung, vereinfacht dargestellt</figcaption>
+      </figure>
+      <div class="cs__grid2">
+        <div><h5 data-i18n="cs.syntegon.g1.h">Schrittgebundene Führung</h5><p data-i18n="cs.syntegon.g1.t">Bedienende sehen immer genau den aktuellen Schritt und die Informationen, die sie dafür brauchen.</p></div>
+        <div><h5 data-i18n="cs.syntegon.g2.h">Prüfung statt Bestätigung</h5><p data-i18n="cs.syntegon.g2.t">Ein Schritt gilt erst als erledigt, wenn das System ihn geprüft hat. Wo eine Prüfung möglich ist, entfallen manuelle Freigaben.</p></div>
+        <div><h5 data-i18n="cs.syntegon.g3.h">Weniger Interaktion</h5><p data-i18n="cs.syntegon.g3.t">Jede Eingabe am Bildschirm ist eine Nebenaufgabe. Weniger Bestätigungen halten Hände und Aufmerksamkeit bei der eigentlichen Arbeit.</p></div>
+        <div><h5 data-i18n="cs.syntegon.g4.h">Vertraute Oberfläche</h5><p data-i18n="cs.syntegon.g4.t">Das Designsystem des Unternehmens sorgt für ein einheitliches Erscheinungsbild und erleichtert die Orientierung.</p></div>
+      </div>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.syntegon.s4.title">Evaluation und Iteration</h3>
+      <p data-i18n="cs.syntegon.s4.p1">Da reale Bedienende im Projektzeitraum nicht zur Verfügung standen, bewerteten die drei interviewten Fachleute den Prototyp. Sie verbinden Fachwissen mit Kenntnis der Anforderungen und gelten damit als besonders wirksame Prüfende. Zugleich wurden die abgeleiteten Anforderungen so mit denselben Personen rückgekoppelt.</p>
+      <p data-i18n="cs.syntegon.s4.p2">Besonders positiv bewertet wurden Feedback und Systemreaktion sowie die Fail-safe-Wirkung. Die Evaluation deckte außerdem einen Schritt auf, der sich nur manuell bestätigen ließ. Er wurde so umgebaut, dass ihn ausschließlich eine Prüfung durch das System abschließt, und die Bestätigungsschaltflächen fielen weg.</p>
+      <p data-i18n="cs.syntegon.s4.p3">Eine Expertenevaluation ersetzt keinen Test mit Endnutzenden. Das Konzept ist eine geprüfte Grundlage, auf der die weitere Entwicklung aufbauen kann.</p>
+    </section>
+
+    <section class="cs__sec">
+      <h3 data-i18n="cs.syntegon.s5.title">Persönliches Learning</h3>
+      <p data-i18n="cs.syntegon.s5.p1">Besonders wertvoll war die Arbeit an einem industriellen Produkt mit Menschen aus Mechanical Engineering, Pharma Engineering, UX und Forschung und Entwicklung. In diesem Umfeld zählt keine möglichst freie Bedienung, sondern verlässliche Führung. Gute Gestaltung heißt hier, Verantwortung vom Menschen auf das System zu verlagern.</p>
+      <p class="cs__hinweis" data-i18n="cs.syntegon.note">Die Arbeit enthält vertrauliche Informationen des Unternehmens. Screens und projektspezifische Details werden deshalb nicht gezeigt.</p>
+    </section>
+  </article>
+
+  <!-- ===== FORWERTS ===== -->
+  <article data-case="forwerts">
+    <div class="cs__hero">
+      <div class="cs__heroText">
+        <span class="cs__kicker" data-i18n="cs.forwerts.kicker">UX DESIGN · 2024/25</span>
+        <h2 class="cs__title">forwerts interactive</h2>
+        <p class="cs__sub" data-i18n="cs.forwerts.sub">UX Design in Kundenprojekten</p>
+        <p class="cs__pitch" data-i18n="cs.forwerts.pitch">Bei <strong>forwerts interactive</strong> arbeitete ich im UX-Team an Online-Shops, Kundenportalen und Websites für Konzerne aus der Telekommunikations- und Energiebranche.</p>
+      </div>
+      <div class="cs__heroMeta">
+        <dl>
+          <div><dt data-i18n="cs.forwerts.meta.role">Rolle</dt><dd>UX Expert Intern</dd></div>
+          <div><dt data-i18n="cs.forwerts.meta.period">Zeitraum</dt><dd data-i18n="cs.forwerts.period">September 2024 bis Februar 2025</dd></div>
+          <div><dt data-i18n="cs.forwerts.meta.clients">Kunden</dt><dd>1&amp;1 · Vattenfall</dd></div>
+          <div><dt>Studio</dt><dd><a href="https://www.forwerts.com/" target="_blank" rel="noopener">forwerts interactive ↗</a></dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <section class="cs__tasks" aria-labelledby="cs-tasks-title">
+      <div class="cs__partHead"><span data-i18n="cs.forwerts.tasks.label">AUFGABEN</span><h3 id="cs-tasks-title" data-i18n="cs.forwerts.tasks.title">Tätigkeitsfelder</h3></div>
+      <ol class="cs__taskGrid">
+        <li><span class="cs__taskNum">01</span><h4 data-i18n="cs.forwerts.t1.title">Screen-Design</h4><p data-i18n="cs.forwerts.t1.text">Ausarbeitung von Screen-Designs nach den Vorgaben der jeweiligen Kundenprojekte.</p></li>
+        <li><span class="cs__taskNum">02</span><h4 data-i18n="cs.forwerts.t2.title">User Flows</h4><p data-i18n="cs.forwerts.t2.text">Ideenfindung für Funnel-Flows und Funktionen, grafisch ausgearbeitet und mit Textvorschlägen.</p></li>
+        <li><span class="cs__taskNum">03</span><h4 data-i18n="cs.forwerts.t3.title">Designstruktur</h4><p data-i18n="cs.forwerts.t3.text">Aufbau einer Designstruktur für Bereiche des Kunden-Centers.</p></li>
+        <li><span class="cs__taskNum">04</span><h4 data-i18n="cs.forwerts.t4.title">Informationsarchitektur</h4><p data-i18n="cs.forwerts.t4.text">Analyse und Neukonzeption von Webseitenstrukturen.</p></li>
+        <li><span class="cs__taskNum">05</span><h4 data-i18n="cs.forwerts.t5.title">Visuelle Elemente</h4><p data-i18n="cs.forwerts.t5.text">Icons, Infografiken und Badges für Online-Shop und Kunden-Center.</p></li>
+        <li><span class="cs__taskNum">06</span><h4 data-i18n="cs.forwerts.t6.title">Workshops</h4><p data-i18n="cs.forwerts.t6.text">Aufbereitung von Screen-Designs und Flows für Kundenworkshops.</p></li>
+      </ol>
+    </section>
+
+    <div class="cs__partHead cs__partHead--projects"><span data-i18n="cs.forwerts.excerpts.label">PROJEKTE</span><h3 data-i18n="cs.forwerts.excerpts.title">Auszüge aus Kundenprojekten</h3></div>
+
+    <section class="cs__sec cs__showcase" aria-labelledby="cs-shop-title">
+      <div class="cs__showcaseHead"><span>01 / E-COMMERCE</span><div><h3 id="cs-shop-title">1&amp;1 Online-Shop</h3><p class="cs__projectContext" data-i18n="cs.forwerts.shop.context">Bestellprozess und Zubehör</p></div><ul class="cs__projectTasks"><li data-i18n="cs.forwerts.shop.task1">Mitarbeit an User Flows im Bestellprozess</li><li data-i18n="cs.forwerts.shop.task2">Optimierung der Zubehörstufe im Bestellverlauf</li><li data-i18n="cs.forwerts.shop.task3">Ausarbeitung von Screen-Designs und Funktionsideen</li></ul></div>
+      <div class="cs__flowLabel"><span data-i18n="cs.forwerts.shop.flow">Bestellprozess</span><div class="cs__flowControls"><button type="button" data-flow="shop" data-dir="-1" aria-label="Vorherige Screens">←</button><button type="button" data-flow="shop" data-dir="1" aria-label="Weitere Screens">→</button></div></div>
+      <div class="cs__screenFlow" data-flow-id="shop" tabindex="0" role="region" aria-label="1&amp;1 Bestellweg">
+        <figure class="cs__screen"><a href="assets/img/case-studies/shop-produkt.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/shop-produkt.jpg" alt="1&amp;1 Gerätekonfiguration" loading="lazy"></a><figcaption><span>01</span><strong data-i18n="cs.forwerts.shop.1">Gerät konfigurieren</strong></figcaption></figure>
+        <figure class="cs__screen"><a href="assets/img/case-studies/shop-laufzeit.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/shop-laufzeit.jpg" alt="1&amp;1 Auswahl des Laufzeitmodells" loading="lazy"></a><figcaption><span>02</span><strong data-i18n="cs.forwerts.shop.2">Laufzeit wählen</strong></figcaption></figure>
+        <figure class="cs__screen"><a href="assets/img/case-studies/shop-tarif.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/shop-tarif.jpg" alt="1&amp;1 Auswahl des Mobilfunktarifs" loading="lazy"></a><figcaption><span>03</span><strong data-i18n="cs.forwerts.shop.3">Tarif wählen</strong></figcaption></figure>
+        <figure class="cs__screen"><a href="assets/img/case-studies/shop-watch.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/shop-watch.jpg" alt="1&amp;1 optionale Watch im Bestellweg" loading="lazy"></a><figcaption><span>04</span><strong data-i18n="cs.forwerts.shop.4">Watch prüfen</strong></figcaption></figure>
+        <figure class="cs__screen"><a href="assets/img/case-studies/shop-tauschpraemie.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/shop-tauschpraemie.jpg" alt="1&amp;1 optionale Tauschprämie im Bestellweg" loading="lazy"></a><figcaption><span>05</span><strong data-i18n="cs.forwerts.shop.5">Tauschprämie prüfen</strong></figcaption></figure>
+        <figure class="cs__screen cs__screen--focus"><a href="assets/img/case-studies/shop-zubehoer.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/shop-zubehoer.jpg" alt="1&amp;1 Zubehörseite mit Kategorien und Produktkarten" loading="lazy"></a><figcaption><span>06</span><strong data-i18n="cs.forwerts.shop.6">Zubehör ergänzen</strong></figcaption></figure>
+        <figure class="cs__screen"><a href="assets/img/case-studies/shop-warenkorb.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/shop-warenkorb.jpg" alt="1&amp;1 Warenkorb mit Tarifübersicht" loading="lazy"></a><figcaption><span>07</span><strong data-i18n="cs.forwerts.shop.7">Warenkorb prüfen</strong></figcaption></figure>
+      </div>
+    </section>
+
+    <section class="cs__sec cs__showcase" aria-labelledby="cs-help-title">
+      <div class="cs__showcaseHead"><span>02 / KUNDENSERVICE</span><div><h3 id="cs-help-title">1&amp;1 Hilfe-Center</h3><p class="cs__projectContext" data-i18n="cs.forwerts.help.context">Seiten und Unterseiten</p></div><ul class="cs__projectTasks"><li data-i18n="cs.forwerts.help.task1">Konzeption und Überarbeitung von Seiten und Unterseiten</li><li data-i18n="cs.forwerts.help.task2">Mitarbeit an der Informations- und Designstruktur des Hilfe-Centers</li></ul></div>
+      <div class="cs__flowLabel"><span data-i18n="cs.forwerts.help.flow">Seitenebenen</span><div class="cs__flowControls"><button type="button" data-flow="help" data-dir="-1" aria-label="Vorherige Screens">←</button><button type="button" data-flow="help" data-dir="1" aria-label="Weitere Screens">→</button></div></div>
+      <div class="cs__screenFlow" data-flow-id="help" tabindex="0" role="region" aria-label="1&amp;1 Hilfeweg">
+        <figure class="cs__screen"><a href="assets/img/case-studies/hilfe-start.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/hilfe-start.jpg" alt="1&amp;1 Hilfe-Center Startseite mit Suche und Themen" loading="lazy"></a><figcaption><span>01</span><strong data-i18n="cs.forwerts.help.1">Einstieg</strong></figcaption></figure>
+        <figure class="cs__screen"><a href="assets/img/case-studies/hilfe-thema.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/hilfe-thema.jpg" alt="1&amp;1 Themenfeld Störung und technische Hilfe" loading="lazy"></a><figcaption><span>02</span><strong data-i18n="cs.forwerts.help.2">Themenfeld</strong></figcaption></figure>
+        <figure class="cs__screen"><a href="assets/img/case-studies/hilfe-unterthema.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/hilfe-unterthema.jpg" alt="1&amp;1 Unterthema Störung selbst beheben oder melden" loading="lazy"></a><figcaption><span>03</span><strong data-i18n="cs.forwerts.help.3">Unterthema</strong></figcaption></figure>
+        <figure class="cs__screen"><a href="assets/img/case-studies/hilfe-artikel.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/hilfe-artikel.jpg" alt="1&amp;1 Hilfeartikel mit Lösungsschritten" loading="lazy"></a><figcaption><span>04</span><strong data-i18n="cs.forwerts.help.4">Hilfeartikel</strong></figcaption></figure>
+      </div>
+    </section>
+
+    <section class="cs__sec cs__showcase" aria-labelledby="cs-vattenfall-title">
+      <div class="cs__showcaseHead"><span>03 / WEBSITE</span><div><h3 id="cs-vattenfall-title">Vattenfall</h3><p class="cs__projectContext" data-i18n="cs.forwerts.vattenfall.context">Webseitenstruktur und Seitenaufbau</p></div><ul class="cs__projectTasks"><li data-i18n="cs.forwerts.vattenfall.task1">Analyse und Mapping der bestehenden Webseitenstruktur</li><li data-i18n="cs.forwerts.vattenfall.task2">Neukonzeption von Struktur und Seitenaufbau in Mockups</li></ul></div>
+      <div class="cs__flowLabel"><span data-i18n="cs.forwerts.vattenfall.plans">Tarifseiten</span><div class="cs__flowControls"><button type="button" data-flow="plans" data-dir="-1" aria-label="Vorherige Screens">←</button><button type="button" data-flow="plans" data-dir="1" aria-label="Weitere Screens">→</button></div></div>
+      <div class="cs__screenFlow" data-flow-id="plans" tabindex="0" role="region" aria-label="Vattenfall Tarifseiten">
+        <figure class="cs__screen"><a href="assets/img/case-studies/vattenfall-tarife.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/vattenfall-tarife.jpg" alt="Vattenfall Stromtarifübersicht mit Tarifrechner" loading="lazy"></a><figcaption><span>01</span><strong data-i18n="cs.forwerts.vattenfall.1">Tarifübersicht</strong></figcaption></figure>
+        <figure class="cs__screen"><a href="assets/img/case-studies/vattenfall-oekostrom.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/vattenfall-oekostrom.jpg" alt="Vattenfall Ökostrom-Detailseite mit Tarifrechner" loading="lazy"></a><figcaption><span>02</span><strong data-i18n="cs.forwerts.vattenfall.2">Tarifdetail</strong></figcaption></figure>
+      </div>
+      <div class="cs__flowLabel cs__flowLabel--sub"><span data-i18n="cs.forwerts.vattenfall.service">Serviceseiten</span><div class="cs__flowControls"><button type="button" data-flow="service" data-dir="-1" aria-label="Vorherige Screens">←</button><button type="button" data-flow="service" data-dir="1" aria-label="Weitere Screens">→</button></div></div>
+      <div class="cs__screenFlow" data-flow-id="service" tabindex="0" role="region" aria-label="Vattenfall Serviceseiten">
+        <figure class="cs__screen"><a href="assets/img/case-studies/vattenfall-service.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/vattenfall-service.jpg" alt="Vattenfall Serviceübersicht mit Anliegen" loading="lazy"></a><figcaption><span>03</span><strong data-i18n="cs.forwerts.vattenfall.3">Serviceübersicht</strong></figcaption></figure>
+        <figure class="cs__screen"><a href="assets/img/case-studies/vattenfall-detail.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/vattenfall-detail.jpg" alt="Vattenfall Servicedetailseite zum Zählerstand" loading="lazy"></a><figcaption><span>04</span><strong data-i18n="cs.forwerts.vattenfall.4">Servicedetail</strong></figcaption></figure>
+      </div>
+    </section>
+  </article>
+
+</div>
+
+<script src="js/main.js"></script>
+<!-- ============ STIL-UMSCHALTER (nur Vorschau) ============ -->
+<div class="stilbar" id="stilbar" role="group" aria-label="Farbvarianten">
+  <button class="stilbar__hide" type="button" id="stilbarMin" aria-label="Beschreibung ein- oder ausblenden">–</button>
+  <div class="stilbar__row">
+    <button type="button" data-stil="0"><b>0</b>Aktuell</button>
+    <button type="button" data-stil="a"><b>A</b>Studiolicht</button>
+    <button type="button" data-stil="b"><b>B</b>Dämmerung</button>
+    <button type="button" data-stil="c"><b>C</b>Druckbogen</button>
+  </div>
+  <p class="stilbar__note" id="stilbarNote"></p>
+</div>
+<script>
+(function(){
+  var root = document.documentElement;
+  var NOTES = {
+    '0': '<strong>Aktuell.</strong> Live-Stand zum Vergleich: Aurora, treibende Blobs, Glow unter der Verlaufsschrift, Ember zu Slate beim Scrollen.',
+    'a': '<strong>Studiolicht.</strong> Graphit, Elfenbein, Kupfer. Ein Führungslicht statt Blobs. Der Verlauf ist ein Glanzlicht, das beim Scrollen über die Schrift wandert.',
+    'b': '<strong>Dämmerung.</strong> Farbfeld mit Horizont. Oben glüht der Abend, beim Scrollen sinkt der Horizont und die Seite wird Nacht. Schrift von unten angestrahlt.',
+    'c': '<strong>Druckbogen.</strong> Papier, Tinte, Ultramarin. Verläufe als Druckraster aus Punkten, Verlaufsschrift als Überdruck von Blau und Zinnober. Hell als Grundeinstellung.'
+  };
+  var THEME = { a: 'dark', b: 'dark', c: 'light' };
+  var bar = document.getElementById('stilbar');
+  var note = document.getElementById('stilbarNote');
+  function set(v, withTheme){
+    if (!NOTES[v]) v = 'a';
+    root.setAttribute('data-stil', v);
+    if (withTheme && THEME[v]) root.setAttribute('data-theme', THEME[v]);
+    note.innerHTML = NOTES[v];
+    bar.querySelectorAll('[data-stil]').forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.stil === v); });
+    var u = new URL(location.href); u.searchParams.set('stil', v); history.replaceState(null, '', u);
+  }
+  bar.querySelectorAll('button[data-stil]').forEach(function(b){ b.addEventListener('click', function(){ set(b.dataset.stil, true); }); });
+  document.getElementById('stilbarMin').addEventListener('click', function(){ bar.classList.toggle('is-min'); });
+  addEventListener('keydown', function(e){
+    if (e.target.closest && e.target.closest('input,textarea')) return;
+    var k = e.key.toLowerCase(); if (k === '0' || k === 'a' || k === 'b' || k === 'c') set(k, true);
+  });
+  /* Scrollfortschritt 0…1 als --sp, daran hängen Licht, Horizont und Raster der Varianten */
+  var tick = false;
+  function sp(){ var max = Math.max(1, root.scrollHeight - innerHeight); root.style.setProperty('--sp', Math.min(1, Math.max(0, scrollY / max)).toFixed(4)); tick = false; }
+  addEventListener('scroll', function(){ if (!tick){ tick = true; requestAnimationFrame(sp); } }, { passive: true });
+  addEventListener('resize', sp, { passive: true });
+  sp();
+  set(new URL(location.href).searchParams.get('stil') || 'a', true);
+})();
+</script>
+</body>
+</html>
