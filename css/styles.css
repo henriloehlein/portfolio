@@ -219,18 +219,18 @@ html.has-custom-cursor,html.has-custom-cursor *{cursor:none}
 /* Normal document flow on purpose, not fixed: this bar lives only at the very top of the page
    and scrolls away with everything else once the user scrolls past it. It is not a persistent
    sticky header. */
-.nav{position:relative;width:100%;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:16px var(--pad);transition:padding .4s var(--ease)}
+.nav{position:relative;width:100%;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:clamp(18px,2.4vw,34px) var(--pad);transition:padding .4s var(--ease)}
 .nav--minimal.is-stuck{padding:10px var(--pad)}
-.nav__id{display:flex;align-items:center;gap:12px;flex:1 1 auto;min-width:0}
-.nav__portrait{width:36px;aspect-ratio:1;flex:none;border-radius:50%;overflow:hidden;outline:1px solid color-mix(in srgb,var(--text) 12%,transparent);outline-offset:2px}
+.nav__id{display:flex;align-items:center;gap:clamp(12px,1.2vw,18px);flex:1 1 auto;min-width:0}
+.nav__portrait{width:clamp(40px,3.6vw,54px);aspect-ratio:1;flex:none;border-radius:50%;overflow:hidden;outline:1px solid color-mix(in srgb,var(--text) 12%,transparent);outline-offset:2px}
 .nav__portrait img{width:100%;height:100%;object-fit:cover;filter:brightness(.9) contrast(1.03)}
-.nav__name{font-family:var(--f-display);font-weight:400;font-size:17px;letter-spacing:-.01em;color:var(--text);white-space:nowrap}
+.nav__name{font-family:var(--f-display);font-weight:400;font-size:clamp(19px,1.7vw,25px);letter-spacing:-.015em;color:var(--text);white-space:nowrap}
 /* Single line that never wraps, so the bar keeps its height while the loop types. Fills the
    space up to the tools; on narrower viewports the overflowing tail fades out under the mask
    instead of pushing the tools or breaking the line. */
-.nav__skills{display:flex;align-items:center;flex:1 1 auto;min-width:0;font-family:var(--f-mono);font-size:12.5px;line-height:1.4;letter-spacing:.04em;color:var(--muted);white-space:nowrap;overflow:hidden;
+.nav__skills{display:flex;align-items:center;flex:1 1 auto;min-width:0;font-family:var(--f-mono);font-size:clamp(12.5px,1vw,14.5px);line-height:1.4;letter-spacing:.04em;color:var(--muted);white-space:nowrap;overflow:hidden;
   -webkit-mask-image:linear-gradient(to right,#000 calc(100% - 40px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 40px),transparent)}
-.nav__skills::before{content:"";flex:none;width:1px;height:12px;background:var(--line-2);margin-right:12px}
+.nav__skills::before{content:"";flex:none;width:1px;height:1.2em;background:var(--line-2);margin-right:clamp(12px,1.2vw,18px)}
 /* typing-cursor caret: blinks continuously through typing, the hold, and the delete, never
    fades, since it is mid-animation for as long as the loop runs. */
 .typeCursor{display:inline-block;margin-left:2px;animation:typeBlink 1s step-end infinite}
@@ -255,7 +255,7 @@ html.has-custom-cursor,html.has-custom-cursor *{cursor:none}
 .burger i{width:20px;height:2px;background:var(--text);transition:transform .3s,opacity .3s}
 
 /* ---------- Subnav · borderless, stretched across width ---------- */
-.subnav{position:sticky;top:var(--nav-h);z-index:90;max-width:var(--maxw);margin:0 auto}
+.subnav{position:sticky;top:var(--nav-h);z-index:90;max-width:var(--maxw);margin:clamp(4px,1.6vw,26px) auto 0}
 .subnav__edge{display:block;height:0}
 /* No bar-wide shield: legibility comes from each link's own glass pill (see .subnav__link::before/
    ::after), scoped to the word itself, and it only exists on hover/active. */
@@ -315,6 +315,12 @@ html.has-custom-cursor,html.has-custom-cursor *{cursor:none}
   .subnav__inner{padding:12px 2px}
   .subnav__links{gap:6px;justify-content:space-between}
   .subnav__link{font-size:12.5px}
+}
+/* At phone width the four pills were ~60px wider than the viewport, which widened the layout
+   viewport and pushed the fixed case-study panel partly off-screen. */
+@media (max-width:400px){
+  .subnav__links{gap:4px}
+  .subnav__link{font-size:12px;padding:8px 8px}
 }
 
 /* ---------- Layout helpers ---------- */
@@ -600,8 +606,9 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 .shot--phone img{width:auto;max-height:520px;border-radius:20px;border:5px solid #14141c;box-shadow:var(--shadow)}
 .shot figcaption{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.04em;color:var(--muted);padding:12px 16px;border-top:1px solid var(--line)}
 .shot--phone figcaption{border-top:none;text-align:center}
-.cs__sec{margin-bottom:48px}
-.cs__sec>h3{font-family:var(--f-mono);font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--warm-1);margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+/* case sections are <section> elements, so drop the page-section padding they would otherwise inherit */
+.cs__sec{padding:0;max-width:none;margin:0 0 clamp(56px,7vw,80px)}
+.cs__sec>h3{font-family:var(--f-display);font-size:clamp(26px,2.6vw,34px);font-weight:380;letter-spacing:-.03em;line-height:1.15;color:var(--text);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--line)}
 .cs__sec p{font-size:16px;line-height:1.7;color:var(--muted);margin-bottom:16px;max-width:74ch}
 .cs__sec p strong{color:var(--text);font-weight:600}
 .cs__sec figure.shot{margin:24px 0}
@@ -661,18 +668,12 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 .cs__screen figcaption strong{font-size:14px;font-weight:500}
 .cs__screen--focus>a{border-color:var(--warm-1);box-shadow:0 0 0 1px color-mix(in srgb,var(--warm-1) 35%,transparent)}
 .cs__screen--focus figcaption strong{color:var(--warm-1)}
-/* Cognify: portrait phone flows, Lo-Fi/Hi-Fi pairs, data figures */
+/* Cognify: portrait phone flows and data figures */
 .cs__cover{margin:0 0 50px}
 .cs__screenFlow--phone .cs__screen{flex:0 0 220px}
 .cs__screenFlow--phone .cs__screen:not(:last-child)::after{top:44%}
 .cs__screenFlow--phone .cs__screen>a{border-radius:24px;background:transparent}
 .cs__screenFlow--phone .cs__screen img{aspect-ratio:390/844;object-fit:cover;background:transparent}
-.cs__screenFlow--pairs{gap:40px}
-.cs__screenFlow--pairs .cs__screen{flex:0 0 min(400px,84vw)}
-.cs__screenFlow--pairs .cs__screen::after{display:none}
-.cs__pairImgs{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.cs__pairImgs img{display:block;width:100%;aspect-ratio:390/844;object-fit:cover;border-radius:22px;border:1px solid var(--line)}
-.cs__pairImgs span{display:block;margin-top:8px;font:500 10.5px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .cs__shots--ar img{aspect-ratio:1;object-fit:cover}
 .cs__sec .cs__shots--ar figure.shot{margin:0}
 .cs__data{margin:26px 0 28px}
@@ -702,6 +703,228 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 .cs__bars .is-low span,.cs__bars .is-low b{color:var(--text)}
 .cs__bars .is-low i{background:linear-gradient(90deg,var(--warm-1) calc(var(--v)*10%),var(--line) 0)}
 .cs__bars b{font:500 13px var(--f-mono);text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}
+
+/* ---------- Case-study formats: one per kind of statement ----------
+   The horizontal flow above stays for real sequences. Everything below picks its
+   form from what the section says: a static lineup for a few comparable screens,
+   pinned notes for single-screen decisions, a dot plot for test results, small
+   diagrams where a structure or rule matters more than a screen. */
+
+/* Static lineup: short sets of phone screens that fit without scrolling */
+.cs__lineup{display:grid;grid-template-columns:repeat(var(--n,3),minmax(0,1fr));gap:20px;margin:22px 0 30px}
+.cs__lineup figure{margin:0;min-width:0;position:relative}
+.cs__lineup a{display:block;border-radius:22px;transition:transform .3s var(--ease)}
+.cs__lineup a:hover{transform:translateY(-3px)}
+.cs__lineup img{display:block;width:100%;aspect-ratio:390/844;object-fit:cover;border-radius:22px;border:1px solid var(--line);background:var(--surface)}
+.cs__lineup figcaption{padding-top:12px;font-size:13.5px;line-height:1.5;color:var(--muted)}
+.cs__lineup figcaption strong{display:block;color:var(--text);font-weight:500;font-size:14px}
+.cs__lineup figcaption span{display:block;margin-top:2px}
+.cs__lineup .is-focus img{border-color:var(--warm-1);box-shadow:0 0 0 1px color-mix(in srgb,var(--warm-1) 40%,transparent)}
+.cs__lineup .is-focus strong{color:var(--warm-1)}
+.cs__lineup--steps figure:not(:last-child)::after{content:"";position:absolute;right:-15px;top:38%;width:8px;height:8px;border-top:1.5px solid var(--warm-1);border-right:1.5px solid var(--warm-1);transform:rotate(45deg)}
+.cs__lineup--wide{gap:28px}
+
+/* Lo-fi / hi-fi switch (Cognify) */
+.cs__seg{display:inline-flex;margin-left:auto;padding:3px;border:1px solid var(--line);border-radius:999px;flex-shrink:0}
+.cs__seg button{padding:6px 14px;border-radius:999px;font:500 11px var(--f-mono);letter-spacing:.07em;text-transform:uppercase;color:var(--muted);transition:background .25s,color .25s}
+.cs__seg button[aria-pressed="true"]{background:var(--text);color:var(--bg)}
+.cs__seg button:hover:not([aria-pressed="true"]){color:var(--text)}
+.cs__seg button:focus-visible{outline:2px solid var(--warm-1);outline-offset:2px}
+.cs__fiGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px 20px;margin:8px 0 30px}
+.cs__fiGrid figure{margin:0;min-width:0}
+.cs__fiImgs{display:grid}
+.cs__fiImgs img{grid-area:1/1;width:100%;aspect-ratio:390/844;object-fit:cover;border-radius:22px;border:1px solid var(--line);background:var(--surface);transition:opacity .45s var(--ease),transform .45s var(--ease)}
+.cs__fiGrid[data-fi-state="hi"] .is-lo,.cs__fiGrid[data-fi-state="lo"] .is-hi{opacity:0;transform:scale(.985);pointer-events:none}
+.cs__fiGrid figcaption{padding-top:11px;font-size:14px;font-weight:500}
+
+/* Before / after concept */
+.cs__contrast{display:grid;grid-template-columns:1fr 1fr;margin:24px 0 8px;border-top:1px solid var(--line-2)}
+.cs__contrast>div{padding:20px 28px 6px 0}
+.cs__contrast>div+div{padding:20px 0 6px 28px;border-left:1px solid var(--line)}
+.cs__contrast span{display:block;font:500 11px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2);margin-bottom:10px}
+.cs__contrast>div+div span{color:var(--warm-1)}
+.cs__sec .cs__contrast p{font-size:15.5px;margin:0}
+.cs__sec .cs__contrast>div+div p{color:var(--text)}
+
+/* Model or barrier → consequence */
+.cs__map{margin:22px 0 30px}
+.cs__map>div{display:grid;grid-template-columns:minmax(0,.75fr) minmax(0,1.6fr);gap:28px;padding:18px 0;border-top:1px solid var(--line)}
+.cs__map>div:last-child{border-bottom:1px solid var(--line)}
+.cs__map dt{font-family:var(--f-display);font-size:20px;line-height:1.25;font-weight:380;letter-spacing:-.015em;color:var(--text)}
+.cs__map dt small{display:block;margin-top:6px;font:400 11.5px var(--f-mono);letter-spacing:.03em;color:var(--muted-2)}
+.cs__map dd{font-size:15px;line-height:1.65;color:var(--muted)}
+.cs__map--pairs>div{grid-template-columns:minmax(0,.6fr) minmax(0,1.6fr);padding:14px 0}
+.cs__map--pairs dt{font-size:18px}
+.cs__map--pairs dd{color:var(--text)}
+
+/* Image beside text */
+.cs__split{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:36px;align-items:center;margin:24px 0 30px}
+.cs__split--phone{grid-template-columns:minmax(0,270px) minmax(0,1fr);gap:44px}
+.cs__split figure.shot,.cs__split .cs__lineup{margin:0}
+.cs__split>div>p:last-child{margin-bottom:0}
+.cs__phoneShot{margin:0}
+.cs__phoneShot img{display:block;width:100%;aspect-ratio:390/844;object-fit:cover;border-radius:26px;border:1px solid var(--line);background:var(--surface);box-shadow:var(--shadow-md)}
+.cs__phoneShot figcaption{padding-top:12px;font:400 11.5px/1.5 var(--f-mono);letter-spacing:.03em;color:var(--muted)}
+.cs__subhead--flush{margin-top:0}
+
+/* Card sorting: entry types merge */
+.cs__merge{margin:24px 0 28px}
+.cs__mergeGrid{display:grid;grid-template-columns:78px repeat(4,minmax(0,1fr));gap:14px 10px;align-items:center}
+.cs__mergeLabel{font:500 11px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2)}
+.cs__chip{display:flex;align-items:center;justify-content:center;min-height:44px;padding:8px 12px;border-radius:12px;border:1px dashed var(--line-2);font-size:14px;color:var(--muted);text-align:center;line-height:1.3}
+.cs__chip--cal,.cs__chip--routine,.cs__chip--goal{border:1px solid transparent;color:#1d1b22;font-weight:500}
+.cs__chip--cal{background:#fee2dd;border-color:#f3b9ae}
+.cs__chip--routine{background:#eaf4fe;border-color:#b9d5f1}
+.cs__chip--goal{background:#ffe9bf;border-color:#efcf8a}
+.cs__chip--merged{grid-column:span 2;position:relative;margin-top:14px}
+.cs__chip--merged::before{content:"";position:absolute;left:25%;right:25%;top:-16px;height:10px;border:1.5px solid var(--muted-2);border-bottom:0;border-radius:6px 6px 0 0}
+.cs__merge figcaption{padding-top:14px;font:400 11.5px var(--f-mono);letter-spacing:.03em;color:var(--muted)}
+
+/* Single screen with pinned notes */
+.cs__anno{display:grid;grid-template-columns:minmax(0,290px) minmax(0,1fr);gap:56px;align-items:center;margin:28px 0 44px}
+.cs__anno--flip{grid-template-columns:minmax(0,1fr) minmax(0,290px)}
+.cs__anno--flip .cs__annoShot{order:2}
+.cs__annoShot{position:relative;margin:0}
+.cs__annoShot img{display:block;width:100%;border-radius:28px;border:1px solid var(--line);box-shadow:var(--shadow-md)}
+.cs__pin,.cs__annoNotes li>span{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--warm-1);color:#fff;font:600 12px var(--f-mono);font-style:normal}
+.cs__pin{position:absolute;left:100%;top:var(--y);transform:translate(-50%,-50%);box-shadow:0 0 0 4px var(--bg-2),0 4px 12px rgba(0,0,0,.3)}
+.cs__anno--flip .cs__pin{left:0}
+.cs__annoNotes{list-style:none;padding:0;margin:0;display:grid;gap:26px}
+.cs__annoNotes li{display:grid;grid-template-columns:26px minmax(0,1fr);gap:16px;align-items:start}
+.cs__annoNotes h5{font-size:16px;font-weight:600;letter-spacing:-.01em;margin:2px 0 6px}
+.cs__sec .cs__annoNotes p{font-size:15px;margin:0}
+
+/* Assistant moments: vertical timeline */
+.cs__moments{list-style:none;margin:24px 0 30px 5px;padding:4px 0 0 28px;border-left:1px solid var(--line-2)}
+.cs__moments li{position:relative;padding-bottom:24px}
+.cs__moments li:last-child{padding-bottom:4px}
+.cs__moments li::before{content:"";position:absolute;left:-33px;top:5px;width:9px;height:9px;border-radius:50%;background:var(--bg-2);border:1.5px solid var(--warm-1)}
+.cs__moments span{display:block;margin-bottom:6px;font:500 11.5px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--warm-1)}
+.cs__sec .cs__moments p{margin:0;font-size:15.5px;color:var(--text)}
+
+/* Specs: swatches, type scale, radii */
+.cs__spec{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;margin:22px 0 28px;padding:28px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.cs__specLabel{display:block;margin-bottom:16px;font:500 11px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2)}
+.cs__specLabel--gap{margin-top:28px}
+.cs__swatches,.cs__radii{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:18px 16px}
+.cs__swatches li,.cs__radii li{display:grid;gap:3px;min-width:72px}
+.cs__swatches i{display:block;width:48px;height:48px;border-radius:12px;background:var(--c);box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);margin-bottom:6px}
+.cs__swatches span,.cs__radii span{font-size:13px;color:var(--text)}
+.cs__swatches small,.cs__radii small{font:400 11px var(--f-mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.cs__radii i{display:block;width:72px;height:46px;border-radius:var(--r);border:1.5px solid var(--muted);margin-bottom:6px}
+.cs__specList>div{padding:12px 0;border-top:1px solid var(--line)}
+.cs__specList>div:first-child{border-top:0;padding-top:0}
+.cs__specList dt{font:500 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted-2);margin-bottom:4px}
+.cs__specList dd{font-size:14.5px;line-height:1.55;color:var(--text)}
+.cs__typeScale{display:grid;gap:16px}
+.cs__typeScale>div{display:grid;grid-template-columns:96px minmax(0,1fr);gap:14px;align-items:baseline}
+.cs__typeScale small{font:400 11px var(--f-mono);color:var(--muted)}
+.cs__sec .cs__typeScale p{margin:0;line-height:1.25;color:var(--text);max-width:none}
+
+/* Test results as a dot plot: one dot per participant */
+.cs__strip{list-style:none;padding:0;margin:0;display:grid;gap:18px}
+.cs__strip>li,.cs__stripAxis{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr) 40px;gap:20px;align-items:end}
+.cs__strip>li>span{font-size:14px;line-height:1.4;color:var(--muted);padding-bottom:2px}
+.cs__strip>li.is-low>span,.cs__strip>li.is-low>b{color:var(--text)}
+.cs__stripTrack{position:relative;height:calc(var(--rows,4)*9px + 6px);margin:0 5px;border-bottom:1px solid var(--line-2)}
+.cs__stripTrack i{position:absolute;left:calc(var(--v)*10%);bottom:calc(var(--k)*9px + 3px);width:8px;height:8px;margin-left:-4px;border-radius:50%;background:var(--muted)}
+.cs__stripTrack i.is-low{background:var(--warm-1)}
+.cs__strip b{font:500 13px var(--f-mono);text-align:right;color:var(--muted);font-variant-numeric:tabular-nums;padding-bottom:1px}
+.cs__stripAxis{margin-top:8px}
+.cs__stripAxis>div{display:flex;justify-content:space-between;margin:0 1px;font:400 10.5px var(--f-mono);color:var(--muted-2)}
+
+/* Short quotes side by side */
+.cs__quotes{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin:30px 0 8px}
+.cs__quotes blockquote{margin:0;padding-top:16px;border-top:1px solid var(--line-2)}
+.cs__sec .cs__quotes p{font-family:var(--f-display);font-style:italic;font-size:clamp(18px,1.9vw,21px);line-height:1.45;color:var(--text);margin-bottom:10px;font-weight:340}
+.cs__quotes cite{font:400 11.5px var(--f-mono);font-style:normal;color:var(--muted)}
+
+/* Change log */
+.cs__changes{list-style:none;padding:0;margin:0}
+.cs__changes li{display:grid;grid-template-columns:18px minmax(0,1fr);gap:10px;padding:10px 0;border-top:1px solid var(--line);font-size:14.5px;line-height:1.5;color:var(--text)}
+.cs__changes li::before{content:"";width:9px;height:5px;margin-top:7px;border-left:1.5px solid var(--warm-1);border-bottom:1.5px solid var(--warm-1);transform:rotate(-45deg)}
+
+/* Guiding questions */
+.cs__questions{list-style:none;padding:0;margin:18px 0 8px}
+.cs__questions li{padding:14px 0;border-top:1px solid var(--line);font-family:var(--f-display);font-size:clamp(19px,2vw,23px);line-height:1.35;font-weight:360;letter-spacing:-.01em;color:var(--text)}
+.cs__questions li:last-child{border-bottom:1px solid var(--line)}
+
+/* Do / don't in tone of voice */
+.cs__voice{display:grid;grid-template-columns:1fr 1fr;margin:24px 0 26px;border-top:1px solid var(--line-2)}
+.cs__voice>div{padding:18px 28px 4px 0}
+.cs__voice>div+div{padding:18px 0 4px 28px;border-left:1px solid var(--line)}
+.cs__voice span{display:block;font:500 11px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--warm-1)}
+.cs__voice>div+div span{color:var(--muted-2)}
+.cs__voice ul{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:10px}
+.cs__voice li{font-family:var(--f-display);font-style:italic;font-size:19px;line-height:1.4;font-weight:340;color:var(--text)}
+.cs__voice>div+div li{color:var(--muted);text-decoration:line-through;text-decoration-thickness:1px;text-decoration-color:color-mix(in srgb,var(--muted) 70%,transparent)}
+
+/* Wide journey map that scrolls sideways */
+.cs__pano{margin:24px 0 30px}
+.cs__panoScroll{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:#fff;scrollbar-color:var(--line-2) transparent}
+.cs__panoScroll:focus-visible{outline:2px solid var(--warm-1);outline-offset:2px}
+.cs__panoScroll img{display:block;width:1200px;max-width:none}
+.cs__pano figcaption{padding-top:12px;font:400 11.5px var(--f-mono);letter-spacing:.03em;color:var(--muted)}
+
+/* Information structure diagram (Milo) */
+.cs__ia{display:grid;grid-template-columns:minmax(0,1fr) 44px minmax(0,1fr);align-items:center;margin:26px 0 30px}
+.cs__iaCore{padding:22px 24px;border:1px solid var(--line-2);border-radius:14px;background:var(--surface)}
+.cs__iaCore span{display:block;font:500 11px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2);margin-bottom:8px}
+.cs__iaCore strong{display:block;font-family:var(--f-display);font-size:24px;font-weight:380;letter-spacing:-.02em;line-height:1.2}
+.cs__iaCore small{display:block;margin-top:8px;font-size:13.5px;line-height:1.5;color:var(--muted)}
+.cs__iaLink{height:1px;background:var(--line-2)}
+.cs__iaMenu{list-style:none;padding:0;margin:0;border-left:1px solid var(--line-2)}
+.cs__iaMenu li{position:relative;padding:9px 0 9px 24px;font-size:15px;color:var(--text)}
+.cs__iaMenu li::before{content:"";position:absolute;left:0;top:50%;width:14px;border-top:1px solid var(--line-2)}
+.cs__iaMenu .is-cut{color:var(--muted-2)}
+.cs__iaMenu .is-cut s{text-decoration-thickness:1px}
+.cs__iaMenu .is-cut small{display:block;font:400 11px var(--f-mono);color:var(--warm-1);margin-top:2px}
+.cs__ia figcaption{grid-column:1/-1;padding-top:16px;font:400 11.5px var(--f-mono);letter-spacing:.03em;color:var(--muted)}
+
+/* Syntegon: process rail and fail-safe rule */
+.cs__process{list-style:none;padding:0;margin:30px 0 30px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));row-gap:38px;counter-reset:step}
+.cs__process li{counter-increment:step;position:relative;padding:22px 26px 0 0;border-top:1px solid var(--line-2)}
+.cs__process li::before{content:counter(step,decimal-leading-zero);position:absolute;top:-10px;left:0;padding-right:10px;background:var(--bg-2);font:500 11px/20px var(--f-mono);color:var(--warm-1)}
+.cs__process h5{font-size:16px;font-weight:600;letter-spacing:-.01em;margin-bottom:6px}
+.cs__sec .cs__process p{font-size:14.5px;line-height:1.6;margin:0}
+.cs__safe{margin:26px 0 34px}
+.cs__safeFlow{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.cs__safeFlow li{position:relative;padding:16px 18px;border:1px solid var(--line-2);border-radius:12px;font-size:15px;font-weight:500;color:var(--text);background:var(--surface)}
+.cs__safeFlow li:not(:last-child)::after{content:"";position:absolute;right:-15px;top:50%;width:8px;height:8px;margin-top:-4px;border-top:1.5px solid var(--warm-1);border-right:1.5px solid var(--warm-1);transform:rotate(45deg)}
+.cs__safeOut{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:22px}
+.cs__sec .cs__safeOut p{display:grid;grid-template-columns:22px minmax(0,1fr);gap:12px;margin:0;font-size:15px;color:var(--text)}
+.cs__safeOut svg{width:22px;height:22px;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.cs__safeOut .is-ok svg{stroke:#5f9c6b}
+.cs__safeOut .is-stop svg{stroke:var(--warm-1)}
+.cs__safe figcaption{padding-top:16px;font:400 11.5px var(--f-mono);letter-spacing:.03em;color:var(--muted)}
+
+@media (max-width:760px){
+  .cs__lineup{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 14px}
+  .cs__lineup--steps figure::after{display:none}
+  .cs__fiGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 14px}
+  .cs__contrast,.cs__voice,.cs__quotes,.cs__spec,.cs__safeOut{grid-template-columns:1fr}
+  .cs__contrast>div,.cs__voice>div{padding:18px 0 4px}
+  .cs__contrast>div+div,.cs__voice>div+div{padding:18px 0 4px;border-left:0;border-top:1px solid var(--line)}
+  .cs__quotes{gap:22px}
+  .cs__map>div,.cs__map--pairs>div{grid-template-columns:1fr;gap:6px}
+  .cs__split,.cs__split--phone{grid-template-columns:1fr;gap:24px}
+  .cs__split--phone>figure{max-width:260px}
+  .cs__anno,.cs__anno--flip{grid-template-columns:1fr;gap:30px}
+  .cs__anno--flip .cs__annoShot{order:0}
+  .cs__annoShot{max-width:260px;margin:0 auto;width:100%}
+  .cs__mergeGrid{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px 8px}
+  .cs__mergeLabel{grid-column:1/-1}
+  .cs__chip{font-size:12px;padding:8px 4px}
+  .cs__strip>li,.cs__stripAxis{grid-template-columns:minmax(0,1fr) 40px;gap:8px 12px}
+  .cs__strip>li>span{grid-column:1/-1}
+  .cs__stripAxis>span:first-child{display:none}
+  .cs__ia{grid-template-columns:1fr}
+  .cs__iaLink{width:1px;height:26px;margin-left:24px}
+  .cs__iaMenu{margin-left:24px}
+  .cs__process,.cs__safeFlow{grid-template-columns:1fr}
+  .cs__safeFlow li:not(:last-child)::after{right:auto;left:24px;top:auto;bottom:-15px;transform:rotate(135deg)}
+  .cs__typeScale>div{grid-template-columns:1fr;gap:4px}
+}
 
 /* ---------- Responsive ---------- */
 @media (max-width:1040px){
@@ -739,5 +962,4 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
   .cs__bars li{grid-template-columns:minmax(0,1fr) 36px;gap:6px 12px}
   .cs__bars span{grid-column:1/-1}
   .cs__screenFlow--phone .cs__screen{flex-basis:200px}
-  .cs__screenFlow--pairs .cs__screen{flex-basis:100%}
 }
