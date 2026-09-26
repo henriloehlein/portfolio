@@ -11,7 +11,8 @@ Live: <https://henriloehlein.github.io/portfolio/>
 | `index.html` | die Seite, inklusive der Case-Study-Inhalte |
 | `css/`, `js/` | Design-System und Interaktionen |
 | `assets/img/` | Bilder der Seite |
-| `preview-neu.html` | Redesign zur Prüfung; nicht die Startseite, aber über die direkte URL öffentlich erreichbar |
+| `preview-neu.html` | geparktes Redesign-Experiment, über direkte URL öffentlich erreichbar |
+| `preview-forwerts-varianten.html` | Vergleichsentwurf zur forwerts-Darstellung; Variante C ist in die Startseite übernommen |
 | `docs/` | Arbeitsnotizen zum Projekt |
 
 Ein Push auf `main` veröffentlicht automatisch über GitHub Pages.

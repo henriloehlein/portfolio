@@ -33,8 +33,38 @@
     'p.cognify.tease':'Discover topics close to everyday life, with AR visualisations, quizzes, thoughtful gamification and a strong community aspect.',
     'p.syntegon.name':'Bachelor Thesis · Syntegon','p.syntegon.role':'Visualisation system for pharma production · Research & Development',
     'p.syntegon.tease':'A mobile system that visualises complex production information so operators are guided safely and decisively.',
-    'p.forwerts.name':'forwerts interactive','p.forwerts.role':'Internship semester UX Design · E-commerce, funnel optimisation',
-    'p.forwerts.tease':'Screen designs, funnel flows, icons and infographics in an online-shop context, with demonstrably better conversion and drop-off rates.',
+    'p.forwerts.name':'forwerts interactive','p.forwerts.role':'UX Design · forwerts interactive',
+    'p.forwerts.tease':'User flows, screen designs and design structures across client projects. Three selected examples from work for 1&1 and Vattenfall.',
+    'p.forwerts.tag.screen':'Screen Design','p.forwerts.tag.structure':'Design Structures',
+    'cs.forwerts.kicker':'UX DESIGN · 2024/25',
+    'cs.forwerts.sub':'UX Design across client projects',
+    'cs.forwerts.pitch':'At <strong>forwerts interactive</strong>, I worked in UX design across various client projects. The following three examples from work for 1&1 and Vattenfall are a selection.',
+    'cs.forwerts.meta.role':'Role','cs.forwerts.meta.period':'Period','cs.forwerts.period':'September 2024 to February 2025','cs.forwerts.meta.projects':'Selection',
+    'cs.forwerts.structure.label':'DESIGN STRUCTURES',
+    'cs.forwerts.structure.text':'I contributed to building a design structure for individual areas of the customer centre. This work addressed consistency across screens.',
+    'cs.forwerts.shop.context':'Order process and accessories',
+    'cs.forwerts.shop.task1':'Contributing to user flows in the order process',
+    'cs.forwerts.shop.task2':'Optimising the accessories step in the order journey',
+    'cs.forwerts.shop.task3':'Developing screen designs and feature ideas',
+    'cs.forwerts.shop.flow':'Public website views','cs.forwerts.scroll7':'7 screens · scroll sideways',
+    'cs.forwerts.shop.1':'Configure device','cs.forwerts.shop.2':'Choose term','cs.forwerts.shop.3':'Choose plan','cs.forwerts.shop.4':'Consider watch','cs.forwerts.shop.5':'Consider trade-in','cs.forwerts.shop.6':'Add accessories','cs.forwerts.shop.7':'Review basket',
+    'cs.forwerts.shop.source':'Public <a href="https://www.1und1.de/handyshop" target="_blank" rel="noopener">1&1 website</a> · Captured 25 September 2026',
+    'cs.forwerts.help.context':'Pages and subpages',
+    'cs.forwerts.help.task1':'Concept and revision of pages and subpages',
+    'cs.forwerts.help.task2':'Contributing to the information and design structure of the Help Center',
+    'cs.forwerts.help.flow':'Public website views','cs.forwerts.scroll4':'4 screens · scroll sideways','cs.forwerts.scroll2':'2 screens · scroll sideways',
+    'cs.forwerts.help.1':'Landing page','cs.forwerts.help.2':'Topic','cs.forwerts.help.3':'Subtopic','cs.forwerts.help.4':'Help article',
+    'cs.forwerts.help.source':'Public <a href="https://hilfe-center.1und1.de/" target="_blank" rel="noopener">1&1 Help Center</a> · Captured 25 September 2026',
+    'cs.forwerts.vattenfall.context':'Website structure and page layouts',
+    'cs.forwerts.vattenfall.task1':'Mapping and presenting the website structure',
+    'cs.forwerts.vattenfall.task2':'Contributing to the fundamental page layouts',
+    'cs.forwerts.vattenfall.plans':'Plan pages','cs.forwerts.vattenfall.service':'Service pages',
+    'cs.forwerts.vattenfall.1':'Plan overview','cs.forwerts.vattenfall.2':'Plan detail','cs.forwerts.vattenfall.3':'Service overview','cs.forwerts.vattenfall.4':'Service detail',
+    'cs.forwerts.vattenfall.source':'Public <a href="https://www.vattenfall.de/strom/tarife" target="_blank" rel="noopener">plan pages</a> and <a href="https://www.vattenfall.de/service" target="_blank" rel="noopener">service pages</a> · Captured 25 September 2026',
+    'cs.forwerts.more.title':'Additional tasks',
+    'cs.forwerts.more.1':'Icons, infographics and badges for online shops and customer centres',
+    'cs.forwerts.more.2':'Visual development of ideas and copy suggestions',
+    'cs.forwerts.note':'The projects shown are a selection of my work at forwerts. The screenshots show public website views from 2026.',
     'about.h1':'Psychology & design','about.p1':'Digital interactions shape decisions, habits and emotions. I am interested in the subtle mechanisms behind them, nudging, dark patterns, persuasive design, and the question of where responsible design draws the line between support and manipulation.',
     'about.h2':'Looking ahead','about.p2':'New technologies like AI and adaptive systems shape perception, trust and interaction. I want to understand how, and help shape that movement. My work addresses real problems, grounded in an understanding of how users think, act and feel.',
     'about.h3method':'Method','about.pmethod':'My projects begin with genuine interest in the problem, not with a finished solution. From research and empathy, such as personas, journey maps, interviews and card sortings, I derive psychologically grounded mechanics. They take shape in Figma as modular, clearly hierarchised systems and are sharpened in usability testing with real people.',
@@ -47,7 +77,7 @@
     'Accessibility':'Accessibility','Conversational UI':'Conversational UI','Inclusive Design':'Inclusive Design',
     'AR / Spatial':'AR / Spatial','Gamification':'Gamification','Community':'Community','In Bearbeitung':'In progress',
     'Industrial UX':'Industrial UX','Informationsarchitektur':'Information Architecture','Forschung':'Research','Interdisziplinär':'Interdisciplinary',
-    'E-Commerce':'E-Commerce','Conversion':'Conversion','Design-System':'Design System','UX-Workshops':'UX Workshops',
+    'E-Commerce':'E-Commerce','Conversion':'Conversion','Design-System':'Design System','Designstrukturen':'Design Structures','Screen-Design':'Screen Design','UX-Workshops':'UX Workshops',
     'Trust & Control':'Trust & Control','Self-Determination Theory':'Self-Determination Theory','Marquee':''
   };
   const DEstore = new Map();
@@ -465,6 +495,15 @@
     p.addEventListener('click', () => openProject(p.dataset.project));
   });
   $$('[data-close]', modal).forEach(b => b.addEventListener('click', closeProject));
+  mContent.addEventListener('click', e => {
+    const button = e.target.closest('.cs__flowControls button[data-flow]');
+    if (!button) return;
+    const flow = mContent.querySelector(`[data-flow-id="${button.dataset.flow}"]`);
+    const card = flow && flow.querySelector('.cs__screen');
+    if (!card) return;
+    const gap = parseFloat(getComputedStyle(flow).gap) || 0;
+    flow.scrollBy({ left: Number(button.dataset.dir) * (card.getBoundingClientRect().width + gap), behavior: reduce ? 'auto' : 'smooth' });
+  });
   addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('is-open')) closeProject(); });
   mContent && mContent.addEventListener('scroll', () => {
     const max = mContent.scrollHeight - mContent.clientHeight;

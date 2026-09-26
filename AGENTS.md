@@ -3,7 +3,7 @@
 ## Source of truth
 - This directory is the website and Git repository root. The site uses static HTML, CSS and JavaScript without a build step or framework.
 - Start with `docs/PROJEKT-STATUS.md`. Read `CLAUDE.md` before changes. For visual or CSS work, consult only the relevant sections of `docs/REFERENZEN.md`.
-- `index.html`, `css/styles.css` and `js/main.js` are the live site. The current redesign is `preview-neu.html` with its own CSS and JavaScript. Keep live files unchanged until Henri approves moving the preview into them.
+- `index.html`, `css/styles.css` and `js/main.js` are the live site and current working basis. `preview-neu.html` with its own CSS and JavaScript is a parked redesign experiment; do not treat its former to-dos as active.
 - Inspect the files for the requested surface. Read `docs/KOMPONENTEN-ARCHIV.md` only when a removed component or its history matters.
 
 ## Careful changes
@@ -13,7 +13,7 @@
 - Keep German and English copy in sync. Live `data-i18n` strings use the `EN` dictionary in `js/main.js`. The redesign preview has shared `data-i18n` strings in `js/preview-neu-main.js` and new `data-i18n-p` strings in `js/preview-neu.js`.
 - Preserve privacy. Never track CV PDFs, the raw `Bilder/` folder, environment files or other private source material. `AGENTS.md`, `CLAUDE.md`, `README.md` and `docs/` are intended to be tracked.
 - Do not publish or change hosting without Henri's explicit request. A push to `main` publishes the tracked preview file on GitHub Pages too; its `noindex` tag does not make it private.
-- Start a static preview from this directory on an available port. For visual changes, inspect relevant desktop and mobile widths when browser preview is available.
+- Start a static preview from this directory on an available port and open `/index.html` by default. Open `/preview-neu.html` only when Henri explicitly requests the experiment. For visual changes, inspect relevant desktop and mobile widths when browser preview is available.
 
 ## Keep guidance current
 - Document the actual live and preview structures. Old component notes do not imply a component should be restored; verify markup and scripts first.
