@@ -688,22 +688,28 @@
   /* ---------- Scroll-linked signature gradient (ember -> slate across the whole page) ----------
      One warm->cool arc for the entire scroll, not a different hue per section: --warm-1, --cool-1,
      --pink and --violet (plus --bg-tint, which drives every --head-grad headline) all interpolate
-     together from the ember palette at the top to the slate palette at the bottom. The transition
-     is centred on the midpoint of the page and spread across most of the scroll distance (WIDTH),
-     so it reads as a slow drift rather than a jump. */
+     together from the ember palette at the top to the slate palette further down. The transition
+     is anchored to section 02 (#how): it starts while 02 scrolls into view and is complete once
+     02 has reached the upper part of the viewport, so the page is already slate from 02 on. */
   (function initScrollGradient() {
     const root = document.documentElement;
     const EMBER = { '--warm-1': [169, 80, 63], '--cool-1': [91, 87, 84], '--pink': [114, 109, 105], '--violet': [64, 61, 59] };
     const SLATE = { '--warm-1': [63, 90, 134], '--cool-1': [92, 95, 102], '--pink': [109, 112, 121], '--violet': [60, 62, 68] };
-    const MID = 0.5, WIDTH = 0.8; // transition centred at 50% of scroll, spans ~80% of the scroll distance
+    const how = document.getElementById('how');
     const smooth = t => t * t * (3 - 2 * t);
     const lerp = (a, b, t) => a.map((v, i) => Math.round(v + (b[i] - v) * t));
     const toHex = c => '#' + c.map(v => Math.max(0, Math.min(255, v)).toString(16).padStart(2, '0')).join('');
     let ticking = false;
     function apply() {
-      const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
-      const p = Math.min(1, Math.max(0, scrollY / max));
-      const f = smooth(Math.min(1, Math.max(0, (p - (MID - WIDTH / 2)) / WIDTH)));
+      let p;
+      if (how) {
+        const top = how.getBoundingClientRect().top + scrollY;
+        const start = top - innerHeight * 0.8, end = top - innerHeight * 0.1;
+        p = (scrollY - start) / Math.max(1, end - start);
+      } else {
+        p = scrollY / Math.max(1, document.documentElement.scrollHeight - innerHeight);
+      }
+      const f = smooth(Math.min(1, Math.max(0, p)));
       Object.keys(EMBER).forEach(k => root.style.setProperty(k, toHex(lerp(EMBER[k], SLATE[k], f))));
       root.style.setProperty('--bg-tint', toHex(lerp(EMBER['--warm-1'], SLATE['--warm-1'], f)));
       ticking = false;
