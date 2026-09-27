@@ -689,22 +689,22 @@
      One warm->cool arc for the entire scroll, not a different hue per section: --warm-1, --cool-1,
      --pink and --violet (plus --bg-tint, which drives every --head-grad headline) all interpolate
      together from the ember palette at the top to the slate palette further down. The transition
-     is anchored to section 02 (#how): it starts while 02 scrolls into view and is complete once
-     02 has reached the upper part of the viewport, so the page is already slate from 02 on. */
+     is a long, slow drift anchored to section 02 (#how): it begins in the project list, is about
+     halfway when 02 scrolls into view and completes towards the end of 02, before 03 (#about). */
   (function initScrollGradient() {
     const root = document.documentElement;
     const EMBER = { '--warm-1': [169, 80, 63], '--cool-1': [91, 87, 84], '--pink': [114, 109, 105], '--violet': [64, 61, 59] };
     const SLATE = { '--warm-1': [63, 90, 134], '--cool-1': [92, 95, 102], '--pink': [109, 112, 121], '--violet': [60, 62, 68] };
-    const how = document.getElementById('how');
+    const how = document.getElementById('how'), about = document.getElementById('about');
     const smooth = t => t * t * (3 - 2 * t);
     const lerp = (a, b, t) => a.map((v, i) => Math.round(v + (b[i] - v) * t));
     const toHex = c => '#' + c.map(v => Math.max(0, Math.min(255, v)).toString(16).padStart(2, '0')).join('');
     let ticking = false;
     function apply() {
       let p;
-      if (how) {
-        const top = how.getBoundingClientRect().top + scrollY;
-        const start = top - innerHeight * 0.8, end = top - innerHeight * 0.1;
+      if (how && about) {
+        const docTop = el => el.getBoundingClientRect().top + scrollY;
+        const start = docTop(how) - innerHeight * 1.8, end = docTop(about) - innerHeight * 0.3;
         p = (scrollY - start) / Math.max(1, end - start);
       } else {
         p = scrollY / Math.max(1, document.documentElement.scrollHeight - innerHeight);

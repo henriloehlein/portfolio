@@ -328,6 +328,9 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 .sectionTag{display:flex;align-items:center;gap:12px;font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:34px}
 /* one accent for every section tag, it already follows the live scroll gradient via --warm-1 */
 .sectionTag > span:first-child{color:var(--warm-1)}
+/* quieter heading for equal parts inside a section (Haltung, Methode): no number, short accent rule */
+.subTag{display:flex;align-items:center;gap:14px;font-family:var(--f-mono);font-size:12px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 28px}
+.subTag::before{content:"";width:28px;height:1px;background:var(--warm-1);flex:none}
 
 /* ---------- Reveal ---------- */
 .reveal{opacity:0;transform:translateY(34px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
@@ -524,8 +527,6 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 .about__col h3{font-family:var(--f-mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--warm-1);margin-bottom:20px}
 .about__col p{font-size:clamp(17px,1.8vw,22px);line-height:1.6;color:var(--text);font-weight:300;letter-spacing:-.01em}
 .about__method{max-width:900px;margin:0 0 clamp(40px,6vw,70px)}
-.about__method h3{font-family:var(--f-mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--warm-1);margin-bottom:20px}
-.about__method h3.sectionTag{font-size:12px;letter-spacing:.14em;color:var(--muted);margin-bottom:34px}
 .about__method p{font-size:clamp(17px,1.8vw,22px);line-height:1.6;color:var(--text);font-weight:300;letter-spacing:-.01em}
 .about .focus__grid{margin-bottom:clamp(40px,6vw,70px)}
 .about__passionsLabel{display:block;font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
