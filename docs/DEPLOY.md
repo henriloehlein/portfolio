@@ -26,6 +26,14 @@ Auf der Kommandozeile in der Repo-Wurzel zuerst `git status --short` prüfen, da
 gewünschten Pfade mit `git add -- DATEI` aufnehmen und mit `git diff --cached` kontrollieren.
 Anschließend committen und `git push origin main` ausführen.
 
+## Cache: Versionsnummer bei CSS/JS erhöhen
+
+GitHub Pages lässt Dateien etwa 10 Minuten im Browser zwischenspeichern. Ändern sich
+`index.html` und `js/main.js` gemeinsam, kann ein Browser neues HTML mit altem Skript
+kombinieren; dann funktionieren z. B. die Case Studies nicht. Deshalb tragen die Verweise in
+`index.html` eine Versionsnummer (`css/styles.css?v=…`, `js/main.js?v=…`). Bei jeder
+Änderung an CSS oder JS das Datum dort auf den aktuellen Tag setzen.
+
 ## Was NICHT veröffentlicht wird
 
 In `.gitignore` ausgeschlossen (bleibt lokal, landet nicht auf der öffentlichen Seite):
