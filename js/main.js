@@ -138,6 +138,19 @@
     'cs.cognify.s10.p1':'The derived improvements could not be implemented within the semester, as the project had exceeded its planned scope on several levels, from the custom AR prototype to the expanded evaluation.',
     'cs.cognify.s10.pull':'A unique selling point only works if it is visible in the interface. The AR feature was solved technically but got lost in the body text. Likewise, familiar patterns only carry the people who know them; everyone else needs visible signposts.',
     'cs.meta.role':'Role','cs.meta.methods':'Methods','cs.meta.context':'Context',
+    'cs.glance.start':'Starting point','cs.glance.approach':'Approach','cs.glance.result':'Outcome',
+    'cs.steady.g1':'Planning apps organise tasks but hardly change behaviour. A system that is too strict creates pressure instead, and anyone who feels controlled deletes the app.',
+    'cs.steady.g2':'Four psychological models from the literature, a competitor analysis, three personas with journey maps and use cases, a card sort with four people, then a hi-fi prototype in Figma with an AI assistant as the central control layer.',
+    'cs.steady.g3':'Eight people tested the prototype with ten tasks and questions. Layout and look came across as clear and motivating. Adding a routine task caused trouble; the add overlay was stabilised afterwards.',
+    'cs.milo.g1':'For many older people the biggest hurdle is not operating the device but the fear of doing something wrong. The market analysis found no AI assistant aimed specifically at this group.',
+    'cs.milo.g2':'Literature research and market analysis, turned into guidelines for eyesight, motor skills, attention and trust. Three personas with journey maps and use cases, then a Figma prototype with three selectable input modes.',
+    'cs.milo.g3':'Five people aged 59 to 74 tested the prototype. Clarity, menu navigation and the calm onboarding were praised throughout. The term “input method” was not immediately understood.',
+    'cs.cognify.g1':'Learning platforms mostly target school, university or work, AR apps mostly children. There was no suitable offer for adults who want to learn out of curiosity. 70 % of respondents named motivation as the biggest obstacle.',
+    'cs.cognify.g2':'Competitor analysis, a survey with 20 participants, personas and journey maps. Then lo-fi and hi-fi prototypes in Figma and a dedicated AR app built with Unity and the Vuforia Engine.',
+    'cs.cognify.g3':'Six moderated tests with ten tasks. Everyone completed courses and quizzes with ease, learning effect 9.5 out of 10. Five of six initially missed the AR feature because its cue was buried in the body text.',
+    'cs.syntegon.g1':'Pharmaceutical production is subject to strict regulatory requirements. Wherever people intervene manually, mix-ups can have far-reaching consequences.',
+    'cs.syntegon.g2':'Literature and document analysis, three expert interviews and a qualitative content analysis. This led to an interactive hi-fi prototype in Figma built with the company’s design system.',
+    'cs.syntegon.g3':'The experts rated feedback, system response and the fail-safe effect particularly highly. A step that could only be confirmed manually is now completed solely by a system check.',
     'cs.steady.kicker':'Behavioral design · 2025',
     'cs.steady.sub':'Adaptive planning and organisation tool',
     'cs.steady.pitch':'<em>steady</em> is a planning app that does more than organise tasks: it helps people stick to their routines and goals. An AI assistant adapts the tone, timing and kind of its support to each user type and steps in when it matters in everyday life.',
@@ -298,8 +311,8 @@
     'cs.milo.task1':'Start a conversation with Milo','cs.milo.task2':'Resume a past conversation','cs.milo.task3':'Create a reminder','cs.milo.task4':'Change the input method',
     'cs.milo.avg1':'9.8','cs.milo.avg2':'9.0','cs.milo.avg3':'9.4','cs.milo.avg4':'7.8',
     'cs.milo.strip.caption':'Feasibility per task from 0 to 10 · each dot is one person, not solved counts as 0',
-    'cs.milo.q1':'“It was very calm and relaxed.”','cs.milo.q1c':'Participant, 59',
-    'cs.milo.q2':'“Understandable, not technical.”','cs.milo.q2c':'Participant, 72',
+    'cs.milo.quote1':'“It was very calm and relaxed.”','cs.milo.q1c':'Participant, 59',
+    'cs.milo.quote2':'“Understandable, not technical.”','cs.milo.q2c':'Participant, 72',
     'cs.milo.s10.h':'Findings',
     'cs.milo.s10.b1':'Clarity, menu navigation and the calm introduction were praised throughout. Everyone gave the welcome sequence their full attention.',
     'cs.milo.s10.b2':'Uncertainty arose mainly at the limits of the Figma prototype, for example because no real keyboard appeared.',
@@ -732,30 +745,109 @@
     });
   });
 
-  /* ---------- Project modal ---------- */
+  /* ---------- Project modal ----------
+     Centred window with chapters. Each hidden source article holds .cs__chapter blocks; the
+     first is the overview, every chapter becomes a tab with its own scrolling pane, and the
+     last pane links on to the next project in the list. */
   const modal = $('#modal');
+  const mWin = $('.modal__win', modal);
   const mContent = $('#modalContent');
-  const mBarName = $('#modalBarName');
+  const mTabs = $('#modalTabs');
+  const mTitle = $('#modalTitle');
+  const mKicker = $('#modalKicker');
   const mProgress = $('#modalProgress');
   const cases = $('#cases');
+  const order = $$('.project').map(p => p.dataset.project);
+  let chapters = [];
+  let current = 0;
+  let caseId = null;
   let lastFocus = null;
+  const tr = (de, en) => (lang === 'en' ? en : de);
+  const arrow = d => `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${d > 0 ? 'M5 12h14M13 6l6 6-6 6' : 'M19 12H5M11 6l-6 6 6 6'}"/></svg>`;
+  const projectName = id => {
+    const el = $(`.project[data-project="${id}"] .project__name`);
+    return el ? el.textContent.replace(/\s+/g, ' ').trim() : id;
+  };
+
+  function labelChapters() {
+    mTabs.setAttribute('aria-label', tr('Kapitel', 'Chapters'));
+    chapters.forEach((c, i) => {
+      c.tab.textContent = tr(c.de, c.en);
+      const prev = chapters[i - 1];
+      const nextId = order[(order.indexOf(caseId) + 1) % order.length];
+      c.foot.innerHTML =
+        (prev ? `<button type="button" data-chapter="${i - 1}">${arrow(-1)}${tr(prev.de, prev.en)}</button>` : '') +
+        (chapters[i + 1]
+          ? `<button type="button" class="is-next" data-chapter="${i + 1}">${tr(chapters[i + 1].de, chapters[i + 1].en)}${arrow(1)}</button>`
+          : `<button type="button" class="is-next" data-project="${nextId}">${tr('Nächstes Projekt', 'Next project')}: ${projectName(nextId)}${arrow(1)}</button>`);
+    });
+    const kicker = chapters[0] && $('.cs__kicker', chapters[0].pane);
+    mKicker.textContent = kicker ? kicker.textContent : '';
+  }
+
+  function showChapter(i, focusTab) {
+    current = i;
+    mWin.dataset.chapter = i;
+    chapters.forEach((c, k) => {
+      const on = k === i;
+      c.tab.setAttribute('aria-selected', String(on));
+      c.tab.tabIndex = on ? 0 : -1;
+      c.pane.hidden = !on;
+      if (on) c.pane.scrollTop = 0;
+    });
+    mProgress.style.width = ((i + 1) / chapters.length) * 100 + '%';
+    const tab = chapters[i].tab;
+    if (mTabs.scrollWidth > mTabs.clientWidth) tab.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduce ? 'auto' : 'smooth' });
+    if (focusTab) tab.focus({ preventScroll: true });
+  }
 
   function openProject(id) {
     const src = cases.querySelector(`[data-case="${id}"]`);
     if (!src) return;
-    mContent.innerHTML = src.innerHTML;
-    mContent.setAttribute('data-case', id); // so [data-case="x"] .cs__title accent rules can match once moved
-    const nameEl = src.querySelector('.cs__title');
-    mBarName.textContent = nameEl ? nameEl.textContent : '';
-    lastFocus = document.activeElement;
-    modal.classList.add('is-open');
-    document.body.style.overflow = 'hidden';
-    mContent.scrollTop = 0;
-    mProgress.style.width = '0%';
-    setTimeout(() => mContent.focus(), 300);
+    const copy = src.cloneNode(true);
+    // Clones must remember the German source text, not whichever language is showing right now.
+    const srcI = $$('[data-i18n]', src);
+    $$('[data-i18n]', copy).forEach((el, i) => { if (DEstore.has(srcI[i])) DEstore.set(el, DEstore.get(srcI[i])); });
+    mContent.innerHTML = '';
+    mTabs.innerHTML = '';
+    caseId = id;
+    mWin.setAttribute('data-case', id); // so [data-case="x"] .cs__title accent rules match
+    chapters = $$(':scope > .cs__chapter', copy).map((ch, i) => {
+      const pane = document.createElement('div');
+      pane.className = 'modal__pane';
+      pane.id = `cs-pane-${i}`;
+      pane.setAttribute('role', 'tabpanel');
+      pane.setAttribute('aria-labelledby', `cs-tab-${i}`);
+      pane.tabIndex = 0;
+      pane.append(...ch.childNodes);
+      const foot = document.createElement('nav');
+      foot.className = 'modal__foot';
+      pane.append(foot);
+      const tab = document.createElement('button');
+      tab.type = 'button';
+      tab.id = `cs-tab-${i}`;
+      tab.setAttribute('role', 'tab');
+      tab.setAttribute('aria-controls', pane.id);
+      tab.addEventListener('click', () => showChapter(i));
+      mTabs.append(tab);
+      mContent.append(pane);
+      return { pane, tab, foot, de: ch.dataset.label, en: ch.dataset.labelEn || ch.dataset.label };
+    });
+    const nameEl = chapters[0] && $('.cs__title', chapters[0].pane);
+    mTitle.textContent = nameEl ? nameEl.textContent : '';
+    labelChapters();
+    showChapter(0);
+    if (!modal.classList.contains('is-open')) {
+      lastFocus = document.activeElement;
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    setTimeout(() => mWin.focus({ preventScroll: true }), 60);
   }
   function closeProject() {
     modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
     lastFocus && lastFocus.focus && lastFocus.focus();
   }
@@ -763,7 +855,31 @@
     p.addEventListener('click', () => openProject(p.dataset.project));
   });
   $$('[data-close]', modal).forEach(b => b.addEventListener('click', closeProject));
+  mTabs.addEventListener('keydown', e => {
+    const d = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+    if (e.key === 'Home' || e.key === 'End') { e.preventDefault(); showChapter(e.key === 'Home' ? 0 : chapters.length - 1, true); }
+    else if (d) { e.preventDefault(); showChapter((current + d + chapters.length) % chapters.length, true); }
+  });
   mContent.addEventListener('click', e => {
+    // Chapter footer: previous/next chapter or the next project
+    const step = e.target.closest('.modal__foot button');
+    if (step) {
+      if (step.dataset.project) openProject(step.dataset.project);
+      else showChapter(Number(step.dataset.chapter), true);
+      return;
+    }
+    // Overview links that jump into a chapter (forwerts client projects)
+    const jump = e.target.closest('[data-goto]');
+    if (jump) {
+      showChapter(Number(jump.dataset.goto), true);
+      const target = jump.dataset.gotoSel && $(jump.dataset.gotoSel, chapters[current].pane);
+      const block = target && (target.closest('section') || target);
+      if (block) {
+        const pane = chapters[current].pane;
+        pane.scrollTop += block.getBoundingClientRect().top - pane.getBoundingClientRect().top - 24;
+      }
+      return;
+    }
     const button = e.target.closest('.cs__flowControls button[data-flow]');
     if (!button) return;
     const flow = mContent.querySelector(`[data-flow-id="${button.dataset.flow}"]`);
@@ -781,11 +897,19 @@
     grid.dataset.fiState = button.dataset.fi;
     $$('button[data-fi]', button.parentElement).forEach(b => b.setAttribute('aria-pressed', String(b === button)));
   });
-  addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('is-open')) closeProject(); });
-  mContent && mContent.addEventListener('scroll', () => {
-    const max = mContent.scrollHeight - mContent.clientHeight;
-    mProgress.style.width = (max > 0 ? (mContent.scrollTop / max) * 100 : 0) + '%';
-  }, { passive: true });
+  addEventListener('keydown', e => {
+    if (!modal.classList.contains('is-open')) return;
+    if (e.key === 'Escape') { closeProject(); return; }
+    // Keep keyboard focus inside the window while it is open
+    if (e.key !== 'Tab') return;
+    const focusable = $$('a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])', mWin)
+      .filter(el => el.offsetParent !== null && !el.closest('[hidden]'));
+    if (!focusable.length) return;
+    const first = focusable[0], last = focusable[focusable.length - 1];
+    if (e.shiftKey && (document.activeElement === first || document.activeElement === mWin)) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+  document.addEventListener('hl:lang', () => { if (chapters.length) labelChapters(); });
 
   /* ---------- Year safety + console sign ---------- */
   console.log('%cHenri Löhlein — UX/UI Design', 'font-size:14px;font-weight:600;color:#ff6b5e');

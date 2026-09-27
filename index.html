@@ -523,44 +523,54 @@
 </footer>
 
 <!-- ============ PROJECT MODAL ============ -->
-<div class="modal" id="modal" aria-hidden="true" role="dialog" aria-modal="true">
+<div class="modal" id="modal" aria-hidden="true">
   <div class="modal__scrim" data-close></div>
-  <div class="modal__panel">
-    <div class="modal__bar">
-      <span class="modal__barName" id="modalBarName"></span>
+  <div class="modal__win" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1">
+    <div class="modal__head">
+      <div class="modal__id"><strong id="modalTitle"></strong><span id="modalKicker"></span></div>
+      <div class="modal__tabs" id="modalTabs" role="tablist" aria-label="Kapitel"></div>
       <button class="modal__close" data-close aria-label="Schließen" data-cursor="Schließen">
         <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
       </button>
     </div>
     <div class="modal__progress"><i id="modalProgress"></i></div>
-    <div class="modal__content" id="modalContent" tabindex="-1"></div>
+    <div class="modal__content" id="modalContent"></div>
   </div>
 </div>
 
 <!-- ============ CASE STUDY SOURCES (hidden, cloned into modal) ============ -->
+<!-- Each article is split into chapters (.cs__chapter): the first is the overview, the rest
+     become tabs. data-label / data-label-en name the tab in both languages. -->
 <div id="cases" hidden>
 
   <!-- ===== STEADY ===== -->
   <article data-case="steady">
-    <div class="cs__hero">
-      <div class="cs__heroText">
+   <div class="cs__chapter" data-label="Überblick" data-label-en="Overview">
+    <div class="cs__heroMeta cs__metaStrip">
+      <dl>
+        <div><dt data-i18n="cs.meta.role">Rolle</dt><dd data-i18n="cs.steady.role">Konzept · UX Research · UX/UI · Prototyp</dd></div>
+        <div><dt data-i18n="cs.meta.methods">Methoden</dt><dd data-i18n="cs.steady.methods">Literaturrecherche · Wettbewerbsanalyse · Personas · Card Sorting · Usability-Testing</dd></div>
+        <div><dt>Tools</dt><dd>Figma · Miro</dd></div>
+        <div><dt data-i18n="cs.meta.context">Rahmen</dt><dd data-i18n="cs.steady.context">Hochschulprojekt · Hochschule Ansbach · Sommersemester 2025</dd></div>
+      </dl>
+    </div>
+    <div class="cs__over">
+      <div>
         <span class="cs__kicker" data-i18n="cs.steady.kicker">Behavioral Design · 2025</span>
         <h2 class="cs__title">steady</h2>
         <p class="cs__sub" data-i18n="cs.steady.sub">Adaptives Planungs- und Organisationstool</p>
         <p class="cs__pitch" data-i18n="cs.steady.pitch"><em>steady</em> ist eine Planungs-App, die nicht nur Aufgaben ordnet, sondern Menschen dabei unterstützt, an Routinen und Zielen festzuhalten. Ein KI-Assistent passt Ton, Zeitpunkt und Art seiner Unterstützung an den jeweiligen Nutzertyp an und meldet sich dann, wenn es im Alltag darauf ankommt.</p>
       </div>
-      <div class="cs__heroMeta">
-        <dl>
-          <div><dt data-i18n="cs.meta.role">Rolle</dt><dd data-i18n="cs.steady.role">Konzept · UX Research · UX/UI · Prototyp</dd></div>
-          <div><dt data-i18n="cs.meta.methods">Methoden</dt><dd data-i18n="cs.steady.methods">Literaturrecherche · Wettbewerbsanalyse · Personas · Card Sorting · Usability-Testing</dd></div>
-          <div><dt>Tools</dt><dd>Figma · Miro</dd></div>
-          <div><dt data-i18n="cs.meta.context">Rahmen</dt><dd data-i18n="cs.steady.context">Hochschulprojekt · Hochschule Ansbach · Sommersemester 2025</dd></div>
-        </dl>
-      </div>
+      <figure class="cs__overMedia"><img src="assets/img/covers/steady.png" alt="steady Dashboard, Ziele, Onboarding und Startscreen auf Smartphones" /></figure>
     </div>
+    <div class="cs__glance">
+      <div><span data-i18n="cs.glance.start">Ausgangslage</span><p data-i18n="cs.steady.g1">Planungs-Apps ordnen Aufgaben, verändern aber kaum das Verhalten. Ein zu strenges System erzeugt dagegen Druck, und wer sich kontrolliert fühlt, löscht die App.</p></div>
+      <div><span data-i18n="cs.glance.approach">Vorgehen</span><p data-i18n="cs.steady.g2">Vier psychologische Modelle aus der Literatur, Wettbewerbsanalyse, drei Personas mit Journey Maps und Use Cases, ein Card Sorting mit vier Personen, danach ein Hi-Fi-Prototyp in Figma mit einem KI-Assistenten als zentraler Steuerung.</p></div>
+      <div><span data-i18n="cs.glance.result">Ergebnis</span><p data-i18n="cs.steady.g3">Acht Personen testeten den Prototyp mit zehn Aufgaben und Fragen. Layout und Optik wirkten übersichtlich und motivierend. Beim Anlegen eines Routinetasks hakte es; das Hinzufügen-Overlay wurde danach stabilisiert.</p></div>
+    </div>
+   </div>
 
-    <figure class="shot cs__cover"><img src="assets/img/covers/steady.png" alt="steady Dashboard, Ziele, Onboarding und Startscreen auf Smartphones" /></figure>
-
+   <div class="cs__chapter" data-label="Ausgangslage" data-label-en="Background">
     <section class="cs__sec">
       <h3 data-i18n="cs.steady.s1.title">Ausgangslage</h3>
       <p data-i18n="cs.steady.s1.p1">Planungs-Apps wie Notion oder der Kalender strukturieren Aufgaben, verändern aber kaum das Verhalten. Die Idee entstand aus eigener Erfahrung: Trotz digitaler Ordnung fiel es schwer, langfristige Ziele konsequent zu verfolgen. Gleichzeitig zeigte sich im Umfeld, wie wenig es oft braucht, damit Menschen eine Gewohnheit hinterfragen, etwa eine kurze Pause vor dem Öffnen einer App.</p>
@@ -582,6 +592,9 @@
       </dl>
     </section>
 
+   </div>
+
+   <div class="cs__chapter" data-label="Research" data-label-en="Research">
     <section class="cs__sec">
       <h3 data-i18n="cs.steady.s3.title">Nutzertypen statt Zielgruppe</h3>
       <p data-i18n="cs.steady.s3.p1">Die App soll jede Person individuell ansprechen. Intern gewichtet das System feine Dimensionen wie Motivationsstil, Strukturverhalten und Frustrationstoleranz. Im Onboarding stehen dafür nur drei verständliche Fragen.</p>
@@ -625,20 +638,27 @@
 
     <section class="cs__sec">
       <h3 data-i18n="cs.steady.s5.title">Informationsarchitektur</h3>
-      <p data-i18n="cs.steady.s5.p1">Vor dem Hi-Fi-Prototyp prüfte ein kombiniertes Card Sorting mit vier Personen zwischen 24 und 65 Jahren die geplante Struktur. Im geschlossenen Teil ordneten sie 22 Begriffe sechs App-Bereichen zu, im offenen Teil markierten sie unklare Begriffe und schlugen Alternativen vor.</p>
-      <p data-i18n="cs.steady.s5.p2">Die Grundstruktur bestätigte sich. Unklar war dagegen die Trennung der Einträge: „Aufgabe“ und „Routinetask“ klangen fast gleich, und Aufgaben ließen sich keinem Bereich eindeutig zuordnen.</p>
-      <figure class="cs__merge">
-        <div class="cs__mergeGrid">
-          <span class="cs__mergeLabel" data-i18n="cs.steady.s5.before">Vorher</span>
-          <span class="cs__chip" data-i18n="cs.steady.s5.task">Aufgabe</span><span class="cs__chip" data-i18n="cs.steady.s5.appt">Termin</span><span class="cs__chip" data-i18n="cs.steady.s5.routine">Routine&shy;task</span><span class="cs__chip" data-i18n="cs.steady.s5.sub">Teilziel</span>
-          <span class="cs__mergeLabel" data-i18n="cs.steady.s5.after">Nachher</span>
-          <span class="cs__chip cs__chip--cal cs__chip--merged" data-i18n="cs.steady.s5.cal">Kalender&shy;eintrag</span><span class="cs__chip cs__chip--routine" data-i18n="cs.steady.s5.routine2">Routine&shy;task</span><span class="cs__chip cs__chip--goal" data-i18n="cs.steady.s5.sub2">Teilziel</span>
+      <div class="cs__cols">
+        <div>
+        <p data-i18n="cs.steady.s5.p1">Vor dem Hi-Fi-Prototyp prüfte ein kombiniertes Card Sorting mit vier Personen zwischen 24 und 65 Jahren die geplante Struktur. Im geschlossenen Teil ordneten sie 22 Begriffe sechs App-Bereichen zu, im offenen Teil markierten sie unklare Begriffe und schlugen Alternativen vor.</p>
+        <p data-i18n="cs.steady.s5.p2">Die Grundstruktur bestätigte sich. Unklar war dagegen die Trennung der Einträge: „Aufgabe“ und „Routinetask“ klangen fast gleich, und Aufgaben ließen sich keinem Bereich eindeutig zuordnen.</p>
+        <p data-i18n="cs.steady.s5.p3">Aufgabe und Termin wurden zum Kalendereintrag zusammengefasst. Die drei Eintragsarten tragen im ganzen Interface eine feste Farbe und lassen sich zusätzlich über ein übergreifendes Hinzufügen-Overlay anlegen, das je nach Bereich die passende Kategorie vorauswählt.</p>
         </div>
-        <figcaption data-i18n="cs.steady.s5.caption">Eintragsarten vor und nach dem Card Sorting · Farben wie im Interface</figcaption>
-      </figure>
-      <p data-i18n="cs.steady.s5.p3">Aufgabe und Termin wurden zum Kalendereintrag zusammengefasst. Die drei Eintragsarten tragen im ganzen Interface eine feste Farbe und lassen sich zusätzlich über ein übergreifendes Hinzufügen-Overlay anlegen, das je nach Bereich die passende Kategorie vorauswählt.</p>
+        <figure class="cs__merge cs__sticky">
+          <div class="cs__mergeGrid">
+            <span class="cs__mergeLabel" data-i18n="cs.steady.s5.before">Vorher</span>
+            <span class="cs__chip" data-i18n="cs.steady.s5.task">Aufgabe</span><span class="cs__chip" data-i18n="cs.steady.s5.appt">Termin</span><span class="cs__chip" data-i18n="cs.steady.s5.routine">Routine&shy;task</span><span class="cs__chip" data-i18n="cs.steady.s5.sub">Teilziel</span>
+            <span class="cs__mergeLabel" data-i18n="cs.steady.s5.after">Nachher</span>
+            <span class="cs__chip cs__chip--cal cs__chip--merged" data-i18n="cs.steady.s5.cal">Kalender&shy;eintrag</span><span class="cs__chip cs__chip--routine" data-i18n="cs.steady.s5.routine2">Routine&shy;task</span><span class="cs__chip cs__chip--goal" data-i18n="cs.steady.s5.sub2">Teilziel</span>
+          </div>
+          <figcaption data-i18n="cs.steady.s5.caption">Eintragsarten vor und nach dem Card Sorting · Farben wie im Interface</figcaption>
+        </figure>
+      </div>
     </section>
 
+   </div>
+
+   <div class="cs__chapter" data-label="Interface" data-label-en="Interface">
     <section class="cs__sec">
       <h3 data-i18n="cs.steady.s6.title">Kernscreens</h3>
       <div class="cs__anno">
@@ -662,13 +682,17 @@
 
     <section class="cs__sec">
       <h3 data-i18n="cs.steady.s7.title">Der Assistent als Begleiter</h3>
-      <p data-i18n="cs.steady.s7.p1">Alle Mechaniken laufen über den Assistenten statt über eigene Overlays. Damit er nicht wie ein Pop-up wirkt, reagiert er im Prototyp zeitverzögert, etwa wenn ein Bereich geöffnet oder eine Aktion abgeschlossen wird. So entsteht der Eindruck eines Begleiters, der von sich aus da ist.</p>
-      <ol class="cs__moments">
-        <li><span data-i18n="cs.steady.m1.t">Dashboard</span><p data-i18n="cs.steady.m1.p">Maria verneint die Frage nach Übungen. Der Assistent schlägt vor, zwei Ziele zu pausieren, damit sie sich auf sich selbst konzentrieren kann.</p></li>
-        <li><span data-i18n="cs.steady.m2.t">Ziele</span><p data-i18n="cs.steady.m2.p">Er lobt ihren Fortschritt und regt eine Nachricht an ihr Zukunfts-Ich an, die sie in einer schwächeren Phase motivieren soll.</p></li>
-        <li><span data-i18n="cs.steady.m3.t">Wochenrückblick</span><p data-i18n="cs.steady.m3.p">Er fragt, warum die Woche so gut lief. Aus Marias Antwort leitet er eine Dankbarkeitsübung ab und legt auf Wunsch den passenden Eintrag an.</p></li>
-      </ol>
-      <p data-i18n="cs.steady.s7.p2">Auch die Wortwahl folgt dieser Haltung. Der Assistent fragt „Womit kann ich dich unterstützen?“ statt „Womit kann ich dir helfen?“ und betont damit den gemeinsamen Prozess statt eines Gefälles.</p>
+      <div class="cs__cols">
+        <div>
+        <p data-i18n="cs.steady.s7.p1">Alle Mechaniken laufen über den Assistenten statt über eigene Overlays. Damit er nicht wie ein Pop-up wirkt, reagiert er im Prototyp zeitverzögert, etwa wenn ein Bereich geöffnet oder eine Aktion abgeschlossen wird. So entsteht der Eindruck eines Begleiters, der von sich aus da ist.</p>
+        <p data-i18n="cs.steady.s7.p2">Auch die Wortwahl folgt dieser Haltung. Der Assistent fragt „Womit kann ich dich unterstützen?“ statt „Womit kann ich dir helfen?“ und betont damit den gemeinsamen Prozess statt eines Gefälles.</p>
+        </div>
+        <ol class="cs__moments cs__sticky">
+          <li><span data-i18n="cs.steady.m1.t">Dashboard</span><p data-i18n="cs.steady.m1.p">Maria verneint die Frage nach Übungen. Der Assistent schlägt vor, zwei Ziele zu pausieren, damit sie sich auf sich selbst konzentrieren kann.</p></li>
+          <li><span data-i18n="cs.steady.m2.t">Ziele</span><p data-i18n="cs.steady.m2.p">Er lobt ihren Fortschritt und regt eine Nachricht an ihr Zukunfts-Ich an, die sie in einer schwächeren Phase motivieren soll.</p></li>
+          <li><span data-i18n="cs.steady.m3.t">Wochenrückblick</span><p data-i18n="cs.steady.m3.p">Er fragt, warum die Woche so gut lief. Aus Marias Antwort leitet er eine Dankbarkeitsübung ab und legt auf Wunsch den passenden Eintrag an.</p></li>
+        </ol>
+      </div>
       <div class="cs__flowLabel"><span data-i18n="cs.steady.s7.flow">Einführung durch den Assistenten</span><div class="cs__flowControls"><button type="button" data-flow="st-tour" data-dir="-1" aria-label="Vorherige Screens">←</button><button type="button" data-flow="st-tour" data-dir="1" aria-label="Weitere Screens">→</button></div></div>
       <div class="cs__screenFlow cs__screenFlow--phone" data-flow-id="st-tour" tabindex="0" role="region" aria-label="Einführung durch den Assistenten">
         <figure class="cs__screen"><a href="assets/img/case-studies/steady/tour-1.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/steady/tour-1.jpg" alt="Der Assistent stellt sich vor" loading="lazy"></a><figcaption><span>01</span><strong data-i18n="cs.steady.tour1">Vorstellung</strong></figcaption></figure>
@@ -703,25 +727,32 @@
       <p data-i18n="cs.steady.s8.p1">Warme Akzente in Rot und Gelb stehen für Zuwendung, Blau für Klarheit. Das Logo wurde nach Feedback aus der Betreuung kräftiger gesetzt, der Pfeil im „y“ entfiel, und es übernahm den Farbverlauf der App.</p>
     </section>
 
+   </div>
+
+   <div class="cs__chapter" data-label="Evaluation" data-label-en="Evaluation">
     <section class="cs__sec">
       <h3 data-i18n="cs.steady.s9.title">Evaluation</h3>
-      <p data-i18n="cs.steady.s9.p1">Acht Personen zwischen 22 und 65 Jahren testeten den Hi-Fi-Prototyp mit zehn Aufgaben und Fragen, fünf davon begleitet vor Ort am Smartphone, drei unbegleitet im Browser. Ausgewählt wurden sie nach Alter, Technikaffinität und Erfahrung mit Planungs-Apps.</p>
-      <figure class="cs__data">
-        <ol class="cs__strip" style="--rows:8">
-          <li><span data-i18n="cs.steady.task1">Hauptziel erstellen</span><div class="cs__stripTrack"><i style="--v:8;--k:0"></i><i style="--v:9;--k:0"></i><i style="--v:9;--k:1"></i><i style="--v:10;--k:0"></i><i style="--v:10;--k:1"></i><i style="--v:10;--k:2"></i><i style="--v:10;--k:3"></i><i style="--v:10;--k:4"></i></div><b data-i18n="cs.steady.avg1">9,5</b></li>
-          <li><span data-i18n="cs.steady.task2">Jahresrückblick aufrufen</span><div class="cs__stripTrack"><i style="--v:9;--k:0"></i><i style="--v:9;--k:1"></i><i style="--v:10;--k:0"></i><i style="--v:10;--k:1"></i><i style="--v:10;--k:2"></i><i style="--v:10;--k:3"></i><i style="--v:10;--k:4"></i><i style="--v:10;--k:5"></i></div><b data-i18n="cs.steady.avg2">9,8</b></li>
-          <li><span data-i18n="cs.steady.task3">Nutzertyp einsehen</span><div class="cs__stripTrack"><i style="--v:10;--k:0"></i><i style="--v:10;--k:1"></i><i style="--v:10;--k:2"></i><i style="--v:10;--k:3"></i><i style="--v:10;--k:4"></i><i style="--v:10;--k:5"></i><i style="--v:10;--k:6"></i><i style="--v:10;--k:7"></i></div><b data-i18n="cs.steady.avg3">10,0</b></li>
-          <li class="is-low"><span data-i18n="cs.steady.task4">Routinetask hinzufügen</span><div class="cs__stripTrack"><i class="is-low" style="--v:0;--k:0"></i><i class="is-low" style="--v:3;--k:0"></i><i style="--v:7;--k:0"></i><i style="--v:8;--k:0"></i><i style="--v:9;--k:0"></i><i style="--v:9;--k:1"></i><i style="--v:10;--k:0"></i><i style="--v:10;--k:1"></i></div><b data-i18n="cs.steady.avg4">7,0</b></li>
-        </ol>
-        <div class="cs__stripAxis" aria-hidden="true"><span></span><div><span>0</span><span>5</span><span>10</span></div><span></span></div>
-        <figcaption data-i18n="cs.steady.strip.caption">Machbarkeit je Aufgabe von 0 bis 10 · jeder Punkt steht für eine Person, rechts der Durchschnitt</figcaption>
-      </figure>
-      <div class="cs__quotes">
-        <blockquote><p data-i18n="cs.steady.q1">„Die App ist einfach gehalten, dadurch kann man nicht so leicht den Überblick verlieren.“</p><cite data-i18n="cs.steady.q1c">Testperson, 26, Student</cite></blockquote>
-        <blockquote><p data-i18n="cs.steady.q2">„Hilfreich, jedoch auch teils störend, da er oft ungefragt auftaucht.“</p><cite data-i18n="cs.steady.q2c">Testperson, 24, Student, über den Assistenten</cite></blockquote>
+      <div class="cs__cols">
+        <div>
+        <p data-i18n="cs.steady.s9.p1">Acht Personen zwischen 22 und 65 Jahren testeten den Hi-Fi-Prototyp mit zehn Aufgaben und Fragen, fünf davon begleitet vor Ort am Smartphone, drei unbegleitet im Browser. Ausgewählt wurden sie nach Alter, Technikaffinität und Erfahrung mit Planungs-Apps.</p>
+        <div class="cs__quotes">
+          <blockquote><p data-i18n="cs.steady.q1">„Die App ist einfach gehalten, dadurch kann man nicht so leicht den Überblick verlieren.“</p><cite data-i18n="cs.steady.q1c">Testperson, 26, Student</cite></blockquote>
+          <blockquote><p data-i18n="cs.steady.q2">„Hilfreich, jedoch auch teils störend, da er oft ungefragt auftaucht.“</p><cite data-i18n="cs.steady.q2c">Testperson, 24, Student, über den Assistenten</cite></blockquote>
+        </div>
+        </div>
+        <figure class="cs__data cs__sticky">
+          <ol class="cs__strip" style="--rows:8">
+            <li><span data-i18n="cs.steady.task1">Hauptziel erstellen</span><div class="cs__stripTrack"><i style="--v:8;--k:0"></i><i style="--v:9;--k:0"></i><i style="--v:9;--k:1"></i><i style="--v:10;--k:0"></i><i style="--v:10;--k:1"></i><i style="--v:10;--k:2"></i><i style="--v:10;--k:3"></i><i style="--v:10;--k:4"></i></div><b data-i18n="cs.steady.avg1">9,5</b></li>
+            <li><span data-i18n="cs.steady.task2">Jahresrückblick aufrufen</span><div class="cs__stripTrack"><i style="--v:9;--k:0"></i><i style="--v:9;--k:1"></i><i style="--v:10;--k:0"></i><i style="--v:10;--k:1"></i><i style="--v:10;--k:2"></i><i style="--v:10;--k:3"></i><i style="--v:10;--k:4"></i><i style="--v:10;--k:5"></i></div><b data-i18n="cs.steady.avg2">9,8</b></li>
+            <li><span data-i18n="cs.steady.task3">Nutzertyp einsehen</span><div class="cs__stripTrack"><i style="--v:10;--k:0"></i><i style="--v:10;--k:1"></i><i style="--v:10;--k:2"></i><i style="--v:10;--k:3"></i><i style="--v:10;--k:4"></i><i style="--v:10;--k:5"></i><i style="--v:10;--k:6"></i><i style="--v:10;--k:7"></i></div><b data-i18n="cs.steady.avg3">10,0</b></li>
+            <li class="is-low"><span data-i18n="cs.steady.task4">Routinetask hinzufügen</span><div class="cs__stripTrack"><i class="is-low" style="--v:0;--k:0"></i><i class="is-low" style="--v:3;--k:0"></i><i style="--v:7;--k:0"></i><i style="--v:8;--k:0"></i><i style="--v:9;--k:0"></i><i style="--v:9;--k:1"></i><i style="--v:10;--k:0"></i><i style="--v:10;--k:1"></i></div><b data-i18n="cs.steady.avg4">7,0</b></li>
+          </ol>
+          <div class="cs__stripAxis" aria-hidden="true"><span></span><div><span>0</span><span>5</span><span>10</span></div><span></span></div>
+          <figcaption data-i18n="cs.steady.strip.caption">Machbarkeit je Aufgabe von 0 bis 10 · jeder Punkt steht für eine Person, rechts der Durchschnitt</figcaption>
+        </figure>
       </div>
       <h5 class="cs__subhead" data-i18n="cs.steady.s9.h">Befunde</h5>
-      <ul class="cs__bullets">
+      <ul class="cs__bullets cs__bullets--2">
         <li data-i18n="cs.steady.s9.b1">Layout und Optik wurden durchweg als übersichtlich, modern und motivierend beschrieben, genau das Ziel der reduzierten Oberfläche.</li>
         <li data-i18n="cs.steady.s9.b2">Die Einführung durch den Assistenten nahmen alle ernst. Weniger technikaffine Personen erinnerten sich später gezielt an seine Hinweise.</li>
         <li data-i18n="cs.steady.s9.b3">Einen Routinetask anzulegen, fiel den beiden ältesten Personen schwer, eine brach ab. Die Auswahl im Hinzufügen-Overlay verhielt sich im Prototyp zudem uneinheitlich.</li>
@@ -749,39 +780,53 @@
       <p data-i18n="cs.steady.s10.p1">Der Kurswechsel zum Assistenten und die Umstrukturierung nach dem Card Sorting haben das Konzept erst zu dem gemacht, was am Ende getestet wurde. Beides entstand aus Rückschlägen im Prozess. Die Kritik am zu präsenten Assistenten beantwortet das Konzept selbst: Seine Aktivität ist einstellbar.</p>
       <p class="cs__pull" data-i18n="cs.steady.s10.pull">In steady passt sich nicht die Oberfläche an, sondern die Begleitung. Die Struktur bleibt verlässlich, während Ton und Zeitpunkt der Unterstützung dem Menschen folgen.</p>
     </section>
+   </div>
   </article>
 
   <!-- ===== MILO ===== -->
   <article data-case="milo">
-    <div class="cs__hero">
-      <div class="cs__heroText">
+   <div class="cs__chapter" data-label="Überblick" data-label-en="Overview">
+    <div class="cs__heroMeta cs__metaStrip">
+      <dl>
+        <div><dt data-i18n="cs.meta.role">Rolle</dt><dd data-i18n="cs.milo.role">Konzept · UX Research · UX/UI · Prototyp</dd></div>
+        <div><dt data-i18n="cs.meta.methods">Methoden</dt><dd data-i18n="cs.milo.methods">Literaturrecherche · Marktanalyse · Personas · Journey Maps · Use Cases · Usability-Testing</dd></div>
+        <div><dt>Tools</dt><dd>Figma</dd></div>
+        <div><dt data-i18n="cs.meta.context">Rahmen</dt><dd data-i18n="cs.milo.context">Hochschulprojekt · Hochschule Ansbach · Wintersemester 2025/26</dd></div>
+      </dl>
+    </div>
+    <div class="cs__over">
+      <div>
         <span class="cs__kicker" data-i18n="cs.milo.kicker">Inclusive Design · 2025/26</span>
         <h2 class="cs__title">Milo</h2>
         <p class="cs__sub" data-i18n="cs.milo.sub">KI-Assistenz für ältere Menschen</p>
         <p class="cs__pitch" data-i18n="cs.milo.pitch"><em>Milo</em> ist eine KI-basierte Assistenz, die älteren und wenig technikaffinen Menschen einen ruhigen Einstieg in künstliche Intelligenz ermöglicht. Ein zentraler Gesprächsverlauf, drei wählbare Eingabewege und konsequente Rückmeldungen sollen Unsicherheit abbauen und Selbstständigkeit stärken.</p>
       </div>
-      <div class="cs__heroMeta">
-        <dl>
-          <div><dt data-i18n="cs.meta.role">Rolle</dt><dd data-i18n="cs.milo.role">Konzept · UX Research · UX/UI · Prototyp</dd></div>
-          <div><dt data-i18n="cs.meta.methods">Methoden</dt><dd data-i18n="cs.milo.methods">Literaturrecherche · Marktanalyse · Personas · Journey Maps · Use Cases · Usability-Testing</dd></div>
-          <div><dt>Tools</dt><dd>Figma</dd></div>
-          <div><dt data-i18n="cs.meta.context">Rahmen</dt><dd data-i18n="cs.milo.context">Hochschulprojekt · Hochschule Ansbach · Wintersemester 2025/26</dd></div>
-        </dl>
-      </div>
+      <figure class="cs__overMedia"><img src="assets/img/covers/milo.png" alt="Milo Willkommensscreen, Onboarding und Gesprächsansichten auf Smartphones" /></figure>
     </div>
+    <div class="cs__glance">
+      <div><span data-i18n="cs.glance.start">Ausgangslage</span><p data-i18n="cs.milo.g1">Für viele ältere Menschen liegt die größte Hürde nicht in der Bedienung, sondern in der Angst, etwas falsch zu machen. Die Marktanalyse fand keine KI-Assistenz, die sich gezielt an diese Gruppe richtet.</p></div>
+      <div><span data-i18n="cs.glance.approach">Vorgehen</span><p data-i18n="cs.milo.g2">Literaturrecherche und Marktanalyse, daraus Leitlinien für Sehkraft, Motorik, Aufmerksamkeit und Vertrauen. Drei Personas mit Journey Maps und Use Cases, danach ein Prototyp in Figma mit drei wählbaren Eingabewegen.</p></div>
+      <div><span data-i18n="cs.glance.result">Ergebnis</span><p data-i18n="cs.milo.g3">Fünf Personen zwischen 59 und 74 Jahren testeten den Prototyp. Übersichtlichkeit, Menüführung und der ruhige Einstieg wurden durchweg gelobt. Der Begriff „Eingabemethode“ war nicht sofort verständlich.</p></div>
+    </div>
+   </div>
 
-    <figure class="shot cs__cover"><img src="assets/img/covers/milo.png" alt="Milo Willkommensscreen, Onboarding und Gesprächsansichten auf Smartphones" /></figure>
-
+   <div class="cs__chapter" data-label="Ausgangslage" data-label-en="Background">
     <section class="cs__sec">
       <h3 data-i18n="cs.milo.s1.title">Ausgangslage</h3>
+      <div class="cs__cols">
+      <div>
       <p data-i18n="cs.milo.s1.p1">Für viele ältere Menschen liegt die größte Hürde nicht in der Bedienung, sondern im Kopf: die Angst, etwas falsch oder kaputt zu machen, Misstrauen gegenüber undurchsichtiger Technik und das Gefühl, den Anschluss verpasst zu haben. Dazu kommen nachlassende Sehkraft, Feinmotorik und Aufmerksamkeit.</p>
       <p data-i18n="cs.milo.s1.p2">Die Marktanalyse fand keine Anwendung, die eine KI-Assistenz gezielt für diese Gruppe umsetzt. Produkte wie Hallo Alfred oder GrandPad wenden sich oft zuerst an Angehörige und behandeln ältere Menschen als Nebennutzende. Das bestätigt genau das Misstrauen in ihre Selbstständigkeit, das die Nutzung erschwert.</p>
+      </div>
+      <div>
       <p data-i18n="cs.milo.s1.p3">Aus der Recherche entstanden drei Leitfragen:</p>
       <ol class="cs__questions">
         <li data-i18n="cs.milo.q1">Welche Ängste und Barrieren erleben ältere Menschen im Kontakt mit KI-Anwendungen?</li>
         <li data-i18n="cs.milo.q2">Welche Interaktionsformen bevorzugen sie, etwa Sprache oder Touch?</li>
         <li data-i18n="cs.milo.q3">Wie lassen sich Autonomie und Selbstwirksamkeit nachhaltig stärken?</li>
       </ol>
+      </div>
+      </div>
     </section>
 
     <section class="cs__sec">
@@ -806,10 +851,15 @@
       <p data-i18n="cs.milo.s3.p2">Auch das Geschäftsmodell folgt dieser Haltung: keine Werbung und ein transparent begründetes Premium-Angebot, das erst nach einiger Zeit erscheint und nicht schon bei der Registrierung.</p>
     </section>
 
+   </div>
+
+   <div class="cs__chapter" data-label="Research" data-label-en="Research">
     <section class="cs__sec">
       <h3>User Research</h3>
-      <p data-i18n="cs.milo.s4.p1">Drei Personas decken die Spannweite von vorsichtig bis neugierig ab: <strong>Inge</strong>, die vorsichtige Alltagsbewältigerin, <strong>Karl</strong>, der skeptische Pragmatiker mit gesundheitlichen Einschränkungen, und <strong>Monika</strong>, die neugierige Entdeckerin. Der Prototyp folgt Inge, die von ihren Kindern ein Smartphone geschenkt bekam, es aber kaum nutzt.</p>
-      <figure class="shot"><a href="assets/img/case-studies/milo/persona-inge.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/milo/persona-inge.jpg" alt="Persona Inge, die vorsichtige Alltagsbewältigerin" loading="lazy" /></a><figcaption>Persona · Inge</figcaption></figure>
+      <div class="cs__split cs__split--text">
+        <p data-i18n="cs.milo.s4.p1">Drei Personas decken die Spannweite von vorsichtig bis neugierig ab: <strong>Inge</strong>, die vorsichtige Alltagsbewältigerin, <strong>Karl</strong>, der skeptische Pragmatiker mit gesundheitlichen Einschränkungen, und <strong>Monika</strong>, die neugierige Entdeckerin. Der Prototyp folgt Inge, die von ihren Kindern ein Smartphone geschenkt bekam, es aber kaum nutzt.</p>
+        <figure class="shot"><a href="assets/img/case-studies/milo/persona-inge.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/milo/persona-inge.jpg" alt="Persona Inge, die vorsichtige Alltagsbewältigerin" loading="lazy" /></a><figcaption>Persona · Inge</figcaption></figure>
+      </div>
       <figure class="cs__pano">
         <div class="cs__panoScroll" tabindex="0" role="region" aria-label="User Journey Map Inge"><img src="assets/img/case-studies/milo/journey-inge.jpg" alt="User Journey Map Inge vom ersten Zögern bis zur selbstständigen Nutzung" loading="lazy" /></div>
         <figcaption data-i18n="cs.milo.s4.journey">User Journey Map · Inge, vom Zögern bis zur selbstständigen Nutzung · seitlich scrollbar</figcaption>
@@ -822,23 +872,30 @@
       </div>
     </section>
 
+   </div>
+
+   <div class="cs__chapter" data-label="Konzept" data-label-en="Concept">
     <section class="cs__sec">
       <h3 data-i18n="cs.milo.s5.title">Konzept und Struktur</h3>
-      <p data-i18n="cs.milo.s5.p1">Im Zentrum steht ein einziger Gesprächsverlauf. Viele KI-Anwendungen verlangen, Chats selbst anzulegen und zu ordnen, für die Zielgruppe eine zusätzliche Hürde. Milo sortiert besprochene Themen stattdessen in einstellbaren Abständen automatisch in vergangene Gespräche ein und meldet danach, wo sie zu finden sind. Das hält den aktiven Verlauf kurz, was auch der Antwortqualität des Sprachmodells zugutekommt.</p>
-      <figure class="cs__ia">
-        <div class="cs__iaCore"><span data-i18n="cs.milo.ia.core">Startbildschirm</span><strong data-i18n="cs.milo.ia.chat">Gespräch mit Milo</strong><small data-i18n="cs.milo.ia.chatText">Ein zentraler Verlauf, der sich selbst einsortiert</small></div>
-        <i class="cs__iaLink" aria-hidden="true"></i>
-        <ul class="cs__iaMenu">
-          <li data-i18n="cs.milo.ia.m1">Vergangene Gespräche</li>
-          <li data-i18n="cs.milo.ia.m2">Erinnerungen</li>
-          <li data-i18n="cs.milo.ia.m3">Hilfe</li>
-          <li data-i18n="cs.milo.ia.m4">Einstellungen</li>
-          <li class="is-cut"><s data-i18n="cs.milo.ia.m5">Entdecken</s><small data-i18n="cs.milo.ia.m5t">ins Gespräch integriert</small></li>
-        </ul>
-        <figcaption data-i18n="cs.milo.ia.caption">Informationsstruktur · das Menü ist über die Kopfleiste von überall erreichbar</figcaption>
-      </figure>
-      <p data-i18n="cs.milo.s5.p2">Ein eigener Bereich „Entdecken“ für Veranstaltungen und Angebote wurde verworfen, weil er das Prinzip eines zentralen Assistenten aufgebrochen hätte. Milo schlägt solche Inhalte nun passend im Gespräch vor, etwa eine Veranstaltung in der Nähe samt Erinnerung.</p>
-      <p data-i18n="cs.milo.s5.p3">Der Name ist kurz, leicht auszusprechen und ohne Geschlechtszuordnung. „Alfred“ aus der Marktanalyse wirkte vertraut, hätte dem Assistenten aber unbeabsichtigt Eigenschaften zugeschrieben. Im Onboarding lässt sich Milo umbenennen.</p>
+      <div class="cs__cols">
+        <div>
+        <p data-i18n="cs.milo.s5.p1">Im Zentrum steht ein einziger Gesprächsverlauf. Viele KI-Anwendungen verlangen, Chats selbst anzulegen und zu ordnen, für die Zielgruppe eine zusätzliche Hürde. Milo sortiert besprochene Themen stattdessen in einstellbaren Abständen automatisch in vergangene Gespräche ein und meldet danach, wo sie zu finden sind. Das hält den aktiven Verlauf kurz, was auch der Antwortqualität des Sprachmodells zugutekommt.</p>
+        <p data-i18n="cs.milo.s5.p2">Ein eigener Bereich „Entdecken“ für Veranstaltungen und Angebote wurde verworfen, weil er das Prinzip eines zentralen Assistenten aufgebrochen hätte. Milo schlägt solche Inhalte nun passend im Gespräch vor, etwa eine Veranstaltung in der Nähe samt Erinnerung.</p>
+        <p data-i18n="cs.milo.s5.p3">Der Name ist kurz, leicht auszusprechen und ohne Geschlechtszuordnung. „Alfred“ aus der Marktanalyse wirkte vertraut, hätte dem Assistenten aber unbeabsichtigt Eigenschaften zugeschrieben. Im Onboarding lässt sich Milo umbenennen.</p>
+        </div>
+        <figure class="cs__ia cs__sticky">
+          <div class="cs__iaCore"><span data-i18n="cs.milo.ia.core">Startbildschirm</span><strong data-i18n="cs.milo.ia.chat">Gespräch mit Milo</strong><small data-i18n="cs.milo.ia.chatText">Ein zentraler Verlauf, der sich selbst einsortiert</small></div>
+          <i class="cs__iaLink" aria-hidden="true"></i>
+          <ul class="cs__iaMenu">
+            <li data-i18n="cs.milo.ia.m1">Vergangene Gespräche</li>
+            <li data-i18n="cs.milo.ia.m2">Erinnerungen</li>
+            <li data-i18n="cs.milo.ia.m3">Hilfe</li>
+            <li data-i18n="cs.milo.ia.m4">Einstellungen</li>
+            <li class="is-cut"><s data-i18n="cs.milo.ia.m5">Entdecken</s><small data-i18n="cs.milo.ia.m5t">ins Gespräch integriert</small></li>
+          </ul>
+          <figcaption data-i18n="cs.milo.ia.caption">Informationsstruktur · das Menü ist über die Kopfleiste von überall erreichbar</figcaption>
+        </figure>
+      </div>
     </section>
 
     <section class="cs__sec">
@@ -876,6 +933,9 @@
       <p data-i18n="cs.milo.s7.p2">Nachrichten gehen erst nach bewusstem Senden hinaus. Die Sprachausgabe ordnet das Gesagte ein („Milo sagt …“), und ein Anruf-Modus wurde bewusst verworfen, weil er für die Zielgruppe schwer nachvollziehbar gewesen wäre.</p>
     </section>
 
+   </div>
+
+   <div class="cs__chapter" data-label="Gestaltung" data-label-en="Design">
     <section class="cs__sec">
       <h3 data-i18n="cs.milo.s8.title">Gestaltungssystem</h3>
       <div class="cs__spec">
@@ -924,25 +984,32 @@
       </div>
     </section>
 
+   </div>
+
+   <div class="cs__chapter" data-label="Evaluation" data-label-en="Evaluation">
     <section class="cs__sec">
       <h3 data-i18n="cs.milo.s10.title">Evaluation</h3>
-      <p data-i18n="cs.milo.s10.p1">Fünf Personen zwischen 59 und 74 Jahren testeten den Prototyp vor Ort am Smartphone, weitgehend ohne Moderation. Zehn Aufgaben und Fragen deckten die zentralen Bereiche ab.</p>
-      <figure class="cs__data">
-        <ol class="cs__strip" style="--rows:4">
-          <li><span data-i18n="cs.milo.task1">Unterhaltung mit Milo beginnen</span><div class="cs__stripTrack"><i style="--v:9;--k:0"></i><i style="--v:10;--k:0"></i><i style="--v:10;--k:1"></i><i style="--v:10;--k:2"></i><i style="--v:10;--k:3"></i></div><b data-i18n="cs.milo.avg1">9,8</b></li>
-          <li><span data-i18n="cs.milo.task2">Vergangenes Gespräch wieder aufnehmen</span><div class="cs__stripTrack"><i style="--v:7;--k:0"></i><i style="--v:8;--k:0"></i><i style="--v:10;--k:0"></i><i style="--v:10;--k:1"></i><i style="--v:10;--k:2"></i></div><b data-i18n="cs.milo.avg2">9,0</b></li>
-          <li><span data-i18n="cs.milo.task3">Erinnerung erstellen</span><div class="cs__stripTrack"><i style="--v:8;--k:0"></i><i style="--v:9;--k:0"></i><i style="--v:10;--k:0"></i><i style="--v:10;--k:1"></i><i style="--v:10;--k:2"></i></div><b data-i18n="cs.milo.avg3">9,4</b></li>
-          <li class="is-low"><span data-i18n="cs.milo.task4">Eingabemethode anpassen</span><div class="cs__stripTrack"><i class="is-low" style="--v:0;--k:0"></i><i style="--v:9;--k:0"></i><i style="--v:10;--k:0"></i><i style="--v:10;--k:1"></i><i style="--v:10;--k:2"></i></div><b data-i18n="cs.milo.avg4">7,8</b></li>
-        </ol>
-        <div class="cs__stripAxis" aria-hidden="true"><span></span><div><span>0</span><span>5</span><span>10</span></div><span></span></div>
-        <figcaption data-i18n="cs.milo.strip.caption">Machbarkeit je Aufgabe von 0 bis 10 · jeder Punkt steht für eine Person, nicht gelöst zählt als 0</figcaption>
-      </figure>
-      <div class="cs__quotes">
-        <blockquote><p data-i18n="cs.milo.q1">„Es war sehr ruhig und gelassen.“</p><cite data-i18n="cs.milo.q1c">Testperson, 59</cite></blockquote>
-        <blockquote><p data-i18n="cs.milo.q2">„Verständlich, nicht technisch.“</p><cite data-i18n="cs.milo.q2c">Testperson, 72</cite></blockquote>
+      <div class="cs__cols">
+        <div>
+        <p data-i18n="cs.milo.s10.p1">Fünf Personen zwischen 59 und 74 Jahren testeten den Prototyp vor Ort am Smartphone, weitgehend ohne Moderation. Zehn Aufgaben und Fragen deckten die zentralen Bereiche ab.</p>
+        <div class="cs__quotes">
+          <blockquote><p data-i18n="cs.milo.quote1">„Es war sehr ruhig und gelassen.“</p><cite data-i18n="cs.milo.q1c">Testperson, 59</cite></blockquote>
+          <blockquote><p data-i18n="cs.milo.quote2">„Verständlich, nicht technisch.“</p><cite data-i18n="cs.milo.q2c">Testperson, 72</cite></blockquote>
+        </div>
+        </div>
+        <figure class="cs__data cs__sticky">
+          <ol class="cs__strip" style="--rows:4">
+            <li><span data-i18n="cs.milo.task1">Unterhaltung mit Milo beginnen</span><div class="cs__stripTrack"><i style="--v:9;--k:0"></i><i style="--v:10;--k:0"></i><i style="--v:10;--k:1"></i><i style="--v:10;--k:2"></i><i style="--v:10;--k:3"></i></div><b data-i18n="cs.milo.avg1">9,8</b></li>
+            <li><span data-i18n="cs.milo.task2">Vergangenes Gespräch wieder aufnehmen</span><div class="cs__stripTrack"><i style="--v:7;--k:0"></i><i style="--v:8;--k:0"></i><i style="--v:10;--k:0"></i><i style="--v:10;--k:1"></i><i style="--v:10;--k:2"></i></div><b data-i18n="cs.milo.avg2">9,0</b></li>
+            <li><span data-i18n="cs.milo.task3">Erinnerung erstellen</span><div class="cs__stripTrack"><i style="--v:8;--k:0"></i><i style="--v:9;--k:0"></i><i style="--v:10;--k:0"></i><i style="--v:10;--k:1"></i><i style="--v:10;--k:2"></i></div><b data-i18n="cs.milo.avg3">9,4</b></li>
+            <li class="is-low"><span data-i18n="cs.milo.task4">Eingabemethode anpassen</span><div class="cs__stripTrack"><i class="is-low" style="--v:0;--k:0"></i><i style="--v:9;--k:0"></i><i style="--v:10;--k:0"></i><i style="--v:10;--k:1"></i><i style="--v:10;--k:2"></i></div><b data-i18n="cs.milo.avg4">7,8</b></li>
+          </ol>
+          <div class="cs__stripAxis" aria-hidden="true"><span></span><div><span>0</span><span>5</span><span>10</span></div><span></span></div>
+          <figcaption data-i18n="cs.milo.strip.caption">Machbarkeit je Aufgabe von 0 bis 10 · jeder Punkt steht für eine Person, nicht gelöst zählt als 0</figcaption>
+        </figure>
       </div>
       <h5 class="cs__subhead" data-i18n="cs.milo.s10.h">Befunde</h5>
-      <ul class="cs__bullets">
+      <ul class="cs__bullets cs__bullets--2">
         <li data-i18n="cs.milo.s10.b1">Übersichtlichkeit, Menüführung und der ruhige Einstieg wurden durchweg gelobt. Der Willkommenssequenz schenkten alle volle Aufmerksamkeit.</li>
         <li data-i18n="cs.milo.s10.b2">Unsicherheiten entstanden vor allem an den Grenzen des Figma-Prototyps, etwa weil keine echte Tastatur erschien.</li>
         <li data-i18n="cs.milo.s10.b3">Der Begriff „Eingabemethode“ war nicht sofort verständlich, eine Person fand die Einstellung nicht.</li>
@@ -955,51 +1022,63 @@
       <h3 data-i18n="cs.milo.s11.title">Fazit</h3>
       <p class="cs__pull" data-i18n="cs.milo.s11.pull">Barrierefreiheit war hier keine Anforderung unter vielen, sondern die Grundlage jeder Entscheidung. Die Gestaltung musste aus der Situation der Menschen abgeleitet werden, nicht aus gewohnten Mustern oder eigenem Stil.</p>
     </section>
+   </div>
   </article>
 
   <!-- ===== COGNIFY ===== -->
   <article data-case="cognify">
-    <div class="cs__hero">
-      <div class="cs__heroText">
+   <div class="cs__chapter" data-label="Überblick" data-label-en="Overview">
+    <div class="cs__heroMeta cs__metaStrip">
+      <dl>
+        <div><dt data-i18n="cs.cognify.meta.role">Rolle</dt><dd data-i18n="cs.cognify.role">Konzept · UX Research · UX/UI · AR-Prototyp</dd></div>
+        <div><dt data-i18n="cs.cognify.meta.methods">Methoden</dt><dd data-i18n="cs.cognify.methods">Wettbewerbsanalyse · Umfrage · Personas · Journey Maps · Usability-Testing</dd></div>
+        <div><dt>Tools</dt><dd>Figma · Unity · Vuforia · Photoshop</dd></div>
+        <div><dt data-i18n="cs.cognify.meta.context">Rahmen</dt><dd data-i18n="cs.cognify.context">Hochschulprojekt · Hochschule Ansbach · Sommersemester 2024</dd></div>
+      </dl>
+    </div>
+    <div class="cs__over">
+      <div>
         <span class="cs__kicker" data-i18n="cs.cognify.kicker">E-Learning · Augmented Reality · 2024</span>
         <h2 class="cs__title">Cognify</h2>
         <p class="cs__sub" data-i18n="cs.cognify.sub">Lernplattform mit Augmented Reality</p>
         <p class="cs__pitch" data-i18n="cs.cognify.pitch"><em>Cognify</em> ist eine Lernplattform für Menschen, die sich aus Neugier neues Wissen aneignen möchten. Kompakte Kurse verbinden Texte, Videos und Quizze mit Augmented Reality: Über gedruckte Bildmarker erscheinen 3D-Modelle wie ein menschliches Herz oder das Kolosseum direkt auf dem Tisch. Gamification und Community-Funktionen sollen für langfristige Motivation sorgen.</p>
       </div>
-      <div class="cs__heroMeta">
-        <dl>
-          <div><dt data-i18n="cs.cognify.meta.role">Rolle</dt><dd data-i18n="cs.cognify.role">Konzept · UX Research · UX/UI · AR-Prototyp</dd></div>
-          <div><dt data-i18n="cs.cognify.meta.methods">Methoden</dt><dd data-i18n="cs.cognify.methods">Wettbewerbsanalyse · Umfrage · Personas · Journey Maps · Usability-Testing</dd></div>
-          <div><dt>Tools</dt><dd>Figma · Unity · Vuforia · Photoshop</dd></div>
-          <div><dt data-i18n="cs.cognify.meta.context">Rahmen</dt><dd data-i18n="cs.cognify.context">Hochschulprojekt · Hochschule Ansbach · Sommersemester 2024</dd></div>
-        </dl>
-      </div>
+      <figure class="cs__overMedia"><img src="assets/img/covers/cognify.png" alt="Cognify Willkommensscreen, Startseite, Kursvorschau und AR-Modelle von Herz und Kolosseum" /></figure>
     </div>
+    <div class="cs__glance">
+      <div><span data-i18n="cs.glance.start">Ausgangslage</span><p data-i18n="cs.cognify.g1">Lernplattformen richten sich meist an Schule, Studium oder Beruf, AR-Anwendungen überwiegend an Kinder. Für Erwachsene, die aus Neugier lernen möchten, fand sich kein passendes Angebot. 70 % der Befragten nannten Motivation als größtes Hindernis.</p></div>
+      <div><span data-i18n="cs.glance.approach">Vorgehen</span><p data-i18n="cs.cognify.g2">Wettbewerbsanalyse, Umfrage mit 20 Teilnehmenden, Personas und Journey Maps. Danach Lo-Fi- und Hi-Fi-Prototyp in Figma und eine eigene AR-App mit Unity und der Vuforia Engine.</p></div>
+      <div><span data-i18n="cs.glance.result">Ergebnis</span><p data-i18n="cs.cognify.g3">Sechs moderierte Tests mit zehn Aufgaben. Kurse und Quizze lösten alle ohne Mühe, Lerneffekt 9,5 von 10. Die AR-Funktion übersahen fünf von sechs zunächst, weil der Hinweis im Fließtext unterging.</p></div>
+    </div>
+   </div>
 
-    <figure class="shot cs__cover"><img src="assets/img/covers/cognify.png" alt="Cognify Willkommensscreen, Startseite, Kursvorschau und AR-Modelle von Herz und Kolosseum" /></figure>
-
+   <div class="cs__chapter" data-label="Research" data-label-en="Research">
     <section class="cs__sec">
       <h3 data-i18n="cs.cognify.s1.title">Ausgangslage</h3>
-      <p data-i18n="cs.cognify.s1.p1">Zu Beginn stand eine Recherche zu bestehenden Lernplattformen. Die meisten Angebote richten sich an Schule, Studium oder berufliche Weiterbildung und gliedern ihre Inhalte nach Fächern. Anwendungen mit Augmented Reality behandeln meist ein einzelnes Thema und sind überwiegend für Kinder gedacht. Für Erwachsene, die sich im Alltag aus Neugier mit neuen Themen beschäftigen möchten, fand sich kein passendes Angebot.</p>
-      <p data-i18n="cs.cognify.s1.p2">Vier Anwendungen wurden getestet und nach denselben Kriterien bewertet: Serlo, My Daily Input und Studyflix als thematisch breite Plattformen sowie WDR AR 1933-1945 als Beispiel für Wissensvermittlung mit AR.</p>
-      <figure class="cs__data">
-        <div class="cs__tableWrap">
-          <table class="cs__table">
-            <thead><tr><th data-i18n="cs.cognify.t.crit">Kriterium</th><th>Serlo</th><th>My Daily Input</th><th>Studyflix</th></tr></thead>
-            <tbody>
-              <tr><th data-i18n="cs.cognify.t.c1">Design und Ästhetik</th><td style="--v:4">4</td><td style="--v:4.5">4,5</td><td style="--v:3.5">3,5</td></tr>
-              <tr><th data-i18n="cs.cognify.t.c2">Nutzerfreundlichkeit</th><td style="--v:4">4</td><td style="--v:3.5">3,5</td><td style="--v:4">4</td></tr>
-              <tr><th data-i18n="cs.cognify.t.c3">Personalisierung</th><td style="--v:2">2</td><td style="--v:5">5</td><td style="--v:4">4</td></tr>
-              <tr><th data-i18n="cs.cognify.t.c4">Barrierefreiheit</th><td style="--v:2">2</td><td style="--v:1">1</td><td style="--v:3">3</td></tr>
-              <tr><th data-i18n="cs.cognify.t.c5">Inhaltsqualität und -umfang</th><td style="--v:3.5">3,5</td><td style="--v:4">4</td><td style="--v:3">3</td></tr>
-              <tr><th data-i18n="cs.cognify.t.c6">Funktionsumfang</th><td style="--v:4">4</td><td style="--v:3.5">3,5</td><td style="--v:2">2</td></tr>
-              <tr><th>Community</th><td style="--v:4.5">4,5</td><td style="--v:0">0</td><td style="--v:0">0</td></tr>
-            </tbody>
-          </table>
+      <div class="cs__cols">
+        <div>
+          <p data-i18n="cs.cognify.s1.p1">Zu Beginn stand eine Recherche zu bestehenden Lernplattformen. Die meisten Angebote richten sich an Schule, Studium oder berufliche Weiterbildung und gliedern ihre Inhalte nach Fächern. Anwendungen mit Augmented Reality behandeln meist ein einzelnes Thema und sind überwiegend für Kinder gedacht. Für Erwachsene, die sich im Alltag aus Neugier mit neuen Themen beschäftigen möchten, fand sich kein passendes Angebot.</p>
+          <p data-i18n="cs.cognify.s1.p2">Vier Anwendungen wurden getestet und nach denselben Kriterien bewertet: Serlo, My Daily Input und Studyflix als thematisch breite Plattformen sowie WDR AR 1933-1945 als Beispiel für Wissensvermittlung mit AR.</p>
+          <p data-i18n="cs.cognify.s1.p3">Keine der Plattformen verbindet Personalisierung und Community, und bei der Barrierefreiheit erreichte keine mehr als 3 von 5 Punkten. Die AR-Anwendung überzeugte bei der Wissensvermittlung, scheiterte aber an der Bedienbarkeit.</p>
         </div>
-        <figcaption data-i18n="cs.cognify.t.caption">Wettbewerbsanalyse · Bewertung von 0 bis 5. WDR AR 1933-1945 wurde gesondert bewertet: Wissensvermittlung 5, AR-Umsetzung 4, Nutzerfreundlichkeit 1.</figcaption>
-      </figure>
-      <p data-i18n="cs.cognify.s1.p3">Keine der Plattformen verbindet Personalisierung und Community, und bei der Barrierefreiheit erreichte keine mehr als 3 von 5 Punkten. Die AR-Anwendung überzeugte bei der Wissensvermittlung, scheiterte aber an der Bedienbarkeit.</p>
+        <figure class="cs__data cs__sticky">
+          <div class="cs__tableWrap">
+            <table class="cs__table">
+              <thead><tr><th data-i18n="cs.cognify.t.crit">Kriterium</th><th>Serlo</th><th>My Daily Input</th><th>Studyflix</th></tr></thead>
+              <tbody>
+                <tr><th data-i18n="cs.cognify.t.c1">Design und Ästhetik</th><td style="--v:4">4</td><td style="--v:4.5">4,5</td><td style="--v:3.5">3,5</td></tr>
+                <tr><th data-i18n="cs.cognify.t.c2">Nutzerfreundlichkeit</th><td style="--v:4">4</td><td style="--v:3.5">3,5</td><td style="--v:4">4</td></tr>
+                <tr><th data-i18n="cs.cognify.t.c3">Personalisierung</th><td style="--v:2">2</td><td style="--v:5">5</td><td style="--v:4">4</td></tr>
+                <tr><th data-i18n="cs.cognify.t.c4">Barrierefreiheit</th><td style="--v:2">2</td><td style="--v:1">1</td><td style="--v:3">3</td></tr>
+                <tr><th data-i18n="cs.cognify.t.c5">Inhaltsqualität und -umfang</th><td style="--v:3.5">3,5</td><td style="--v:4">4</td><td style="--v:3">3</td></tr>
+                <tr><th data-i18n="cs.cognify.t.c6">Funktionsumfang</th><td style="--v:4">4</td><td style="--v:3.5">3,5</td><td style="--v:2">2</td></tr>
+                <tr><th>Community</th><td style="--v:4.5">4,5</td><td style="--v:0">0</td><td style="--v:0">0</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <figcaption data-i18n="cs.cognify.t.caption">Wettbewerbsanalyse · Bewertung von 0 bis 5. WDR AR 1933-1945 wurde gesondert bewertet: Wissensvermittlung 5, AR-Umsetzung 4, Nutzerfreundlichkeit 1.</figcaption>
+        </figure>
+      </div>
     </section>
 
     <section class="cs__sec">
@@ -1011,31 +1090,52 @@
         <div><strong>3,05<small>/5</small></strong><span data-i18n="cs.cognify.stat3">erwarteter Nutzen von AR im Durchschnitt; 11 von 20 nannten konkrete Einsatzideen</span></div>
         <div><strong>60 %</strong><span data-i18n="cs.cognify.stat4">halten einen Community-Aspekt für völlig unwichtig</span></div>
       </div>
-      <p data-i18n="cs.cognify.s2.p2">Die Haltung zu Augmented Reality war gespalten. Wer eine Idee für den Einsatz hatte, dachte fast immer an die Veranschaulichung komplexer Inhalte wie Organe, physikalische Vorgänge oder technische Objekte.</p>
-      <blockquote class="cs__quote"><p data-i18n="cs.cognify.quote">„Mit visueller Darstellung lernt man oft nicht nur auswendig, sondern versteht es wirklich.“</p><cite data-i18n="cs.cognify.quote.cite">Antwort aus der Umfrage</cite></blockquote>
-      <p data-i18n="cs.cognify.s2.p3">Aus den Ergebnissen entstanden drei Personas. <strong>Anna Schmidt</strong>, Grundschullehrerin und Mutter, sucht Lernangebote für Unterricht und Familie. <strong>Michael Hoffmann</strong>, 45 und Steuerberater, möchte Geschichte, Kunst und Philosophie erkunden, hat aber wenig Zeit. <strong>Nicole Lechner</strong>, 23 und Marketingassistentin, hat viel Freizeit, findet aber schwer die Motivation für sinnvolle Beschäftigungen. Sie verkörpert das häufigste Problem aus der Umfrage.</p>
-      <figure class="shot"><img src="assets/img/case-studies/cognify/persona-nicole.jpg" alt="Persona Nicole Lechner" loading="lazy" /><figcaption>Persona · Nicole Lechner</figcaption></figure>
-      <p data-i18n="cs.cognify.s2.p4">Die User Journey Map zeigt Nicoles Weg von der Langeweile im Alltag bis zur festen Lernroutine. Entscheidend sind der erste Eindruck, der sie zum Ausprobieren bringt, und die Abwechslung, die sie danach dranbleiben lässt.</p>
+      <div class="cs__cols cs__cols--flip">
+        <figure class="shot cs__sticky"><img src="assets/img/case-studies/cognify/persona-nicole.jpg" alt="Persona Nicole Lechner" loading="lazy" /><figcaption>Persona · Nicole Lechner</figcaption></figure>
+        <div>
+          <p data-i18n="cs.cognify.s2.p2">Die Haltung zu Augmented Reality war gespalten. Wer eine Idee für den Einsatz hatte, dachte fast immer an die Veranschaulichung komplexer Inhalte wie Organe, physikalische Vorgänge oder technische Objekte.</p>
+          <blockquote class="cs__quote"><p data-i18n="cs.cognify.quote">„Mit visueller Darstellung lernt man oft nicht nur auswendig, sondern versteht es wirklich.“</p><cite data-i18n="cs.cognify.quote.cite">Antwort aus der Umfrage</cite></blockquote>
+          <p data-i18n="cs.cognify.s2.p3">Aus den Ergebnissen entstanden drei Personas. <strong>Anna Schmidt</strong>, Grundschullehrerin und Mutter, sucht Lernangebote für Unterricht und Familie. <strong>Michael Hoffmann</strong>, 45 und Steuerberater, möchte Geschichte, Kunst und Philosophie erkunden, hat aber wenig Zeit. <strong>Nicole Lechner</strong>, 23 und Marketingassistentin, hat viel Freizeit, findet aber schwer die Motivation für sinnvolle Beschäftigungen. Sie verkörpert das häufigste Problem aus der Umfrage.</p>
+        </div>
+      </div>
+      <p class="cs__gapTop" data-i18n="cs.cognify.s2.p4">Die User Journey Map zeigt Nicoles Weg von der Langeweile im Alltag bis zur festen Lernroutine. Entscheidend sind der erste Eindruck, der sie zum Ausprobieren bringt, und die Abwechslung, die sie danach dranbleiben lässt.</p>
       <figure class="shot"><img src="assets/img/case-studies/cognify/journey-nicole.jpg" alt="User Journey Map Nicole Lechner" loading="lazy" /><figcaption>User Journey Map · Nicole Lechner</figcaption></figure>
     </section>
+   </div>
 
+   <div class="cs__chapter" data-label="Konzept" data-label-en="Concept">
     <section class="cs__sec">
       <h3 data-i18n="cs.cognify.s3.title">Synthese und Konzept</h3>
       <p data-i18n="cs.cognify.s3.p1">Die Erkenntnisse wurden in einem Leitsatz verdichtet, an dem sich die weitere Gestaltung ausrichtete:</p>
       <p class="cs__pull" data-i18n="cs.cognify.s3.pull">Nutzende einer Lernanwendung mit Augmented Reality legen Wert auf intuitive Bedienung, eine ansprechende Oberfläche und vielfältige interaktive Funktionen. Die Anwendung soll flexibel nutzbar sein und hochwertige Inhalte bieten.</p>
-      <div class="cs__grid2">
-        <div><h5 data-i18n="cs.cognify.s3.h1">Wissenspakete</h5><p data-i18n="cs.cognify.s3.t1">Kompakte Kurse zu einem Thema bilden den Kern. Texte, Darstellungen, Videos, Aufgaben und AR-Modelle lassen sich je nach Vorliebe kombinieren, ohne dass sich der Informationsumfang ändert.</p></div>
-        <div><h5>Gamification</h5><p data-i18n="cs.cognify.s3.t2">Erfahrungspunkte, Level, Erfolge und Meilensteine machen Fortschritt sichtbar und setzen regelmäßige Impulse gegen nachlassende Motivation.</p></div>
-        <div><h5>Community</h5><p data-i18n="cs.cognify.s3.t3">Freundesliste, Ranglisten, Forum und Gruppen sollen durch Gemeinschaft und leichten Wettbewerb zusätzlich motivieren.</p></div>
-        <div><h5 data-i18n="cs.cognify.s3.h4">Abwägung</h5><p data-i18n="cs.cognify.s3.t4">60 % der Befragten hielten Community für unwichtig. Weil Motivation aber das häufigste Problem war, blieb sie Teil des Konzepts, zurückhaltend eingebunden: Profile zeigen Interessen, Level und Erfolge, aber nicht den Umfang eines sozialen Netzwerks.</p></div>
-      </div>
+      <dl class="cs__map">
+        <div><dt data-i18n="cs.cognify.s3.h1">Wissenspakete</dt><dd data-i18n="cs.cognify.s3.t1">Kompakte Kurse zu einem Thema bilden den Kern. Texte, Darstellungen, Videos, Aufgaben und AR-Modelle lassen sich je nach Vorliebe kombinieren, ohne dass sich der Informationsumfang ändert.</dd></div>
+        <div><dt>Gamification</dt><dd data-i18n="cs.cognify.s3.t2">Erfahrungspunkte, Level, Erfolge und Meilensteine machen Fortschritt sichtbar und setzen regelmäßige Impulse gegen nachlassende Motivation.</dd></div>
+        <div><dt>Community</dt><dd data-i18n="cs.cognify.s3.t3">Freundesliste, Ranglisten, Forum und Gruppen sollen durch Gemeinschaft und leichten Wettbewerb zusätzlich motivieren.</dd></div>
+        <div><dt data-i18n="cs.cognify.s3.h4">Abwägung</dt><dd data-i18n="cs.cognify.s3.t4">60 % der Befragten hielten Community für unwichtig. Weil Motivation aber das häufigste Problem war, blieb sie Teil des Konzepts, zurückhaltend eingebunden: Profile zeigen Interessen, Level und Erfolge, aber nicht den Umfang eines sozialen Netzwerks.</dd></div>
+      </dl>
     </section>
 
+    <section class="cs__sec">
+      <h3 data-i18n="cs.cognify.s7.title">Designentscheidungen</h3>
+      <div class="cs__split cs__split--phone">
+        <figure class="cs__phoneShot"><img src="assets/img/case-studies/cognify/startseite.jpg" alt="Startseite mit Fortschrittsleiste und Kurslisten" loading="lazy"><figcaption data-i18n="cs.cognify.home1">Startseite</figcaption></figure>
+        <div class="cs__grid2">
+          <div><h5 data-i18n="cs.cognify.s7.h1">Vertraute Muster</h5><p data-i18n="cs.cognify.s7.t1">Nach Jakob’s Law erwarten Nutzende, dass eine App so funktioniert wie die Apps, die sie bereits kennen. Das Logo führt deshalb zurück zur Startseite, das Profilbild zu Konto und Einstellungen, die Suche liegt unten rechts.</p></div>
+          <div><h5 data-i18n="cs.cognify.s7.h2">Sichtbarer Fortschritt</h5><p data-i18n="cs.cognify.s7.t2">Die Fortschrittsleiste zeigt Level, Erfahrungspunkte und die Profilbilder von Freunden. Nach jedem Quiz folgen Punktezuwachs, der Vergleich mit Freunden und die Einordnung unter allen Nutzenden.</p></div>
+          <div><h5 data-i18n="cs.cognify.s7.h3">Reduzierte Oberfläche</h5><p data-i18n="cs.cognify.s7.t3">Jeder Screen zeigt nur, was für den nächsten Schritt nötig ist. Profil, Einstellungen und Community sind bewusst schlicht gehalten, damit sich auch weniger technikaffine Menschen zurechtfinden.</p></div>
+          <div><h5 data-i18n="cs.cognify.s7.h4">Barrierefreiheit</h5><p data-i18n="cs.cognify.s7.t4">In den Einstellungen lassen sich Schriftgröße, einfache Schrift, ein Modus für Farbenblindheit, Untertitel für Videos, ein Screenreader und ein Darkmode aktivieren.</p></div>
+        </div>
+      </div>
+    </section>
+   </div>
+
+   <div class="cs__chapter" data-label="Interface" data-label-en="Interface">
     <section class="cs__sec">
       <h3 data-i18n="cs.cognify.s4.title">Vom Wireframe zum Interface</h3>
       <p data-i18n="cs.cognify.s4.p1">Die Lo-Fi-Wireframes dienten dazu, Ideen früh auszuprobieren und die Struktur festzulegen. Zwei Prinzipien zogen sich durch den gesamten Prozess: Nutzende nicht mit Informationen überfordern und trotzdem ein einladendes Erscheinungsbild schaffen, das nicht nach reinem Nachschlagewerk wirkt.</p>
       <div class="cs__flowLabel"><span data-i18n="cs.cognify.s4.flow">Lo-Fi und Hi-Fi im Vergleich</span><div class="cs__seg" role="group" aria-label="Ansicht wählen"><button type="button" data-fi="lo" aria-pressed="false">Lo-Fi</button><button type="button" data-fi="hi" aria-pressed="true">Hi-Fi</button></div></div>
-      <div class="cs__fiGrid" data-fi-state="hi">
+      <div class="cs__fiGrid cs__fiGrid--6" data-fi-state="hi">
         <figure><div class="cs__fiImgs"><img class="is-lo" src="assets/img/case-studies/cognify/lofi-willkommen.png" alt="Lo-Fi Willkommensscreen" loading="lazy"><img class="is-hi" src="assets/img/case-studies/cognify/willkommen.jpg" alt="Hi-Fi Willkommensscreen" loading="lazy"></div><figcaption data-i18n="cs.cognify.pair1">Willkommen</figcaption></figure>
         <figure><div class="cs__fiImgs"><img class="is-lo" src="assets/img/case-studies/cognify/lofi-startseite.png" alt="Lo-Fi Startseite" loading="lazy"><img class="is-hi" src="assets/img/case-studies/cognify/startseite.jpg" alt="Hi-Fi Startseite" loading="lazy"></div><figcaption data-i18n="cs.cognify.pair2">Startseite</figcaption></figure>
         <figure><div class="cs__fiImgs"><img class="is-lo" src="assets/img/case-studies/cognify/lofi-lernmethoden.png" alt="Lo-Fi Auswahl der Lernmethoden" loading="lazy"><img class="is-hi" src="assets/img/case-studies/cognify/kurs-vorschau.jpg" alt="Hi-Fi Kursvorschau mit Auswahl der Lernmethoden" loading="lazy"></div><figcaption data-i18n="cs.cognify.pair3">Kursvorschau und Lernmethoden</figcaption></figure>
@@ -1044,7 +1144,7 @@
         <figure><div class="cs__fiImgs"><img class="is-lo" src="assets/img/case-studies/cognify/lofi-freunde.png" alt="Lo-Fi Freunde" loading="lazy"><img class="is-hi" src="assets/img/case-studies/cognify/freunde.jpg" alt="Hi-Fi Freunde mit Ranking und Gruppen" loading="lazy"></div><figcaption data-i18n="cs.cognify.pair6">Freunde</figcaption></figure>
       </div>
       <h5 class="cs__subhead" data-i18n="cs.cognify.s4.h">Wichtigste Änderungen im Hi-Fi-Prototyp</h5>
-      <ul class="cs__bullets">
+      <ul class="cs__bullets cs__bullets--2">
         <li data-i18n="cs.cognify.s4.b1">Eine Kursvorschau vor jedem Kurs mit Kapitelübersicht und der Wahl der Lernmethoden</li>
         <li data-i18n="cs.cognify.s4.b2">Kurskarten mit Prozentwert statt Fortschrittsbalken sowie Angaben zu Dauer und Schwierigkeit</li>
         <li data-i18n="cs.cognify.s4.b3">Ein Erfahrungspunkte-System für abgeschlossene Kurse und Quizze, dazu eine Levelanzeige, die zeigt, welche Freunde höher oder niedriger stehen</li>
@@ -1056,75 +1156,81 @@
     <section class="cs__sec">
       <h3 data-i18n="cs.cognify.s5.title">Kernabläufe</h3>
       <p data-i18n="cs.cognify.s5.p1">Die Startseite bündelt, was für den Lernalltag zählt: die Fortschrittsleiste mit Level und Erfahrungspunkten im Vergleich zu Freunden, darunter die Listen „Lernen fortsetzen“ und „Neues entdecken“. Zwei feste Buttons führen zur Community und zur Suche.</p>
-      <div class="cs__flowLabel"><span data-i18n="cs.cognify.s5.flow1">Startseite und Entdecken</span></div>
-      <div class="cs__lineup" style="--n:3">
-        <figure><a href="assets/img/case-studies/cognify/startseite.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/startseite.jpg" alt="Startseite mit Fortschrittsleiste und Kurslisten" loading="lazy"></a><figcaption><strong data-i18n="cs.cognify.home1">Startseite</strong></figcaption></figure>
-        <figure><a href="assets/img/case-studies/cognify/lernen-fortsetzen.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/lernen-fortsetzen.jpg" alt="Lernen fortsetzen mit Kursfortschritt und Freunden" loading="lazy"></a><figcaption><strong data-i18n="cs.cognify.home2">Lernen fortsetzen</strong></figcaption></figure>
-        <figure><a href="assets/img/case-studies/cognify/neues-entdecken.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/neues-entdecken.jpg" alt="Neues entdecken mit Kursempfehlungen" loading="lazy"></a><figcaption><strong data-i18n="cs.cognify.home3">Neues entdecken</strong></figcaption></figure>
-      </div>
-      <div class="cs__flowLabel cs__flowLabel--sub"><span data-i18n="cs.cognify.s5.flow2">Ein Kurs von der Vorschau bis zum Ergebnis</span></div>
+      <div class="cs__flowLabel"><span data-i18n="cs.cognify.s5.flow2">Ein Kurs von der Vorschau bis zum Ergebnis</span></div>
       <div class="cs__lineup cs__lineup--steps" style="--n:4">
         <figure><a href="assets/img/case-studies/cognify/kurs-vorschau.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/kurs-vorschau.jpg" alt="Kursvorschau Die menschliche Anatomie mit Auswahl der Lernmethoden" loading="lazy"></a><figcaption><strong data-i18n="cs.cognify.course1">Vorschau und Lernmethoden</strong></figcaption></figure>
         <figure><a href="assets/img/case-studies/cognify/kapitel-skelett.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/kapitel-skelett.jpg" alt="Kapitel Skelettsystem mit Text und Abbildungen" loading="lazy"></a><figcaption><strong data-i18n="cs.cognify.course2">Kapitel</strong></figcaption></figure>
         <figure class="is-focus"><a href="assets/img/case-studies/cognify/kapitel-herz.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/kapitel-herz.jpg" alt="Kapitel Das Herz mit Hinweis auf das AR-Modell" loading="lazy"></a><figcaption><strong data-i18n="cs.cognify.course3">Kapitel mit AR-Modell</strong></figcaption></figure>
         <figure><a href="assets/img/case-studies/cognify/quiz-ergebnis.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/quiz-ergebnis.jpg" alt="Quizergebnis mit Erfahrungspunkten und Vergleich" loading="lazy"></a><figcaption><strong data-i18n="cs.cognify.course4">Quiz und Erfahrungspunkte</strong></figcaption></figure>
       </div>
-      <div class="cs__flowLabel cs__flowLabel--sub"><span data-i18n="cs.cognify.s5.flow3">Community und Profil</span></div>
-      <div class="cs__lineup" style="--n:3">
-        <figure><a href="assets/img/case-studies/cognify/freunde.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/freunde.jpg" alt="Freundesliste mit Ranking und Gruppen" loading="lazy"></a><figcaption><strong data-i18n="cs.cognify.social1">Freunde und Ranking</strong></figcaption></figure>
-        <figure><a href="assets/img/case-studies/cognify/freund-profil.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/freund-profil.jpg" alt="Profil eines Freundes mit Interessen und Kursen" loading="lazy"></a><figcaption><strong data-i18n="cs.cognify.social2">Profil</strong></figcaption></figure>
-        <figure><a href="assets/img/case-studies/cognify/praeferenzen.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/praeferenzen.jpg" alt="Themenpräferenzen in den Einstellungen" loading="lazy"></a><figcaption><strong data-i18n="cs.cognify.social3">Themenpräferenzen</strong></figcaption></figure>
+      <div class="cs__pair">
+        <div>
+          <div class="cs__flowLabel cs__flowLabel--sub"><span data-i18n="cs.cognify.s5.flow1">Startseite und Entdecken</span></div>
+          <div class="cs__lineup" style="--n:3">
+            <figure><a href="assets/img/case-studies/cognify/startseite.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/startseite.jpg" alt="Startseite mit Fortschrittsleiste und Kurslisten" loading="lazy"></a><figcaption><strong data-i18n="cs.cognify.home1">Startseite</strong></figcaption></figure>
+            <figure><a href="assets/img/case-studies/cognify/lernen-fortsetzen.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/lernen-fortsetzen.jpg" alt="Lernen fortsetzen mit Kursfortschritt und Freunden" loading="lazy"></a><figcaption><strong data-i18n="cs.cognify.home2">Lernen fortsetzen</strong></figcaption></figure>
+            <figure><a href="assets/img/case-studies/cognify/neues-entdecken.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/neues-entdecken.jpg" alt="Neues entdecken mit Kursempfehlungen" loading="lazy"></a><figcaption><strong data-i18n="cs.cognify.home3">Neues entdecken</strong></figcaption></figure>
+          </div>
+        </div>
+        <div>
+          <div class="cs__flowLabel cs__flowLabel--sub"><span data-i18n="cs.cognify.s5.flow3">Community und Profil</span></div>
+          <div class="cs__lineup" style="--n:3">
+            <figure><a href="assets/img/case-studies/cognify/freunde.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/freunde.jpg" alt="Freundesliste mit Ranking und Gruppen" loading="lazy"></a><figcaption><strong data-i18n="cs.cognify.social1">Freunde und Ranking</strong></figcaption></figure>
+            <figure><a href="assets/img/case-studies/cognify/freund-profil.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/freund-profil.jpg" alt="Profil eines Freundes mit Interessen und Kursen" loading="lazy"></a><figcaption><strong data-i18n="cs.cognify.social2">Profil</strong></figcaption></figure>
+            <figure><a href="assets/img/case-studies/cognify/praeferenzen.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/cognify/praeferenzen.jpg" alt="Themenpräferenzen in den Einstellungen" loading="lazy"></a><figcaption><strong data-i18n="cs.cognify.social3">Themenpräferenzen</strong></figcaption></figure>
+          </div>
+        </div>
       </div>
     </section>
 
     <section class="cs__sec">
       <h3 data-i18n="cs.cognify.s6.title">Augmented Reality</h3>
-      <p data-i18n="cs.cognify.s6.p1">Die AR-Funktion wurde nicht nur gestaltet, sondern als eigene Android-App mit Unity und der Vuforia Engine umgesetzt. Zu den Kursen „Die menschliche Anatomie“ und „Das Kolosseum“ gehört je eine Druckvorlage mit Bildmarker. Erkennt die Kamera den Marker, erscheint das passende 3D-Modell auf dem Blatt und lässt sich durch Bewegen des Geräts von allen Seiten betrachten.</p>
-      <div class="cs__shots cs__shots--2 cs__shots--ar">
-        <figure class="shot"><img src="assets/img/case-studies/cognify/ar-herz.jpg" alt="3D-Modell eines menschlichen Herzens auf der gedruckten Cognify-Vorlage" loading="lazy" /><figcaption data-i18n="cs.cognify.ar1">Kurs Anatomie · Herz</figcaption></figure>
-        <figure class="shot"><img src="assets/img/case-studies/cognify/ar-kolosseum.jpg" alt="3D-Modell des Kolosseums auf der gedruckten Cognify-Vorlage" loading="lazy" /><figcaption data-i18n="cs.cognify.ar2">Kurs Kolosseum · Modell</figcaption></figure>
-      </div>
-      <p data-i18n="cs.cognify.s6.p2">Im Interface ist AR eine von fünf Lernmethoden, die sich in der Kursvorschau aktivieren lässt; ein Druckersymbol führt dort zur Vorlage. Im Kurs weist ein Symbol am Ende des passenden Abschnitts auf das Modell hin.</p>
-    </section>
-
-    <section class="cs__sec">
-      <h3 data-i18n="cs.cognify.s7.title">Designentscheidungen</h3>
-      <div class="cs__grid2">
-        <div><h5 data-i18n="cs.cognify.s7.h1">Vertraute Muster</h5><p data-i18n="cs.cognify.s7.t1">Nach Jakob’s Law erwarten Nutzende, dass eine App so funktioniert wie die Apps, die sie bereits kennen. Das Logo führt deshalb zurück zur Startseite, das Profilbild zu Konto und Einstellungen, die Suche liegt unten rechts.</p></div>
-        <div><h5 data-i18n="cs.cognify.s7.h2">Sichtbarer Fortschritt</h5><p data-i18n="cs.cognify.s7.t2">Die Fortschrittsleiste zeigt Level, Erfahrungspunkte und die Profilbilder von Freunden. Nach jedem Quiz folgen Punktezuwachs, der Vergleich mit Freunden und die Einordnung unter allen Nutzenden.</p></div>
-        <div><h5 data-i18n="cs.cognify.s7.h3">Reduzierte Oberfläche</h5><p data-i18n="cs.cognify.s7.t3">Jeder Screen zeigt nur, was für den nächsten Schritt nötig ist. Profil, Einstellungen und Community sind bewusst schlicht gehalten, damit sich auch weniger technikaffine Menschen zurechtfinden.</p></div>
-        <div><h5 data-i18n="cs.cognify.s7.h4">Barrierefreiheit</h5><p data-i18n="cs.cognify.s7.t4">In den Einstellungen lassen sich Schriftgröße, einfache Schrift, ein Modus für Farbenblindheit, Untertitel für Videos, ein Screenreader und ein Darkmode aktivieren.</p></div>
+      <div class="cs__cols">
+        <div>
+          <p data-i18n="cs.cognify.s6.p1">Die AR-Funktion wurde nicht nur gestaltet, sondern als eigene Android-App mit Unity und der Vuforia Engine umgesetzt. Zu den Kursen „Die menschliche Anatomie“ und „Das Kolosseum“ gehört je eine Druckvorlage mit Bildmarker. Erkennt die Kamera den Marker, erscheint das passende 3D-Modell auf dem Blatt und lässt sich durch Bewegen des Geräts von allen Seiten betrachten.</p>
+          <p data-i18n="cs.cognify.s6.p2">Im Interface ist AR eine von fünf Lernmethoden, die sich in der Kursvorschau aktivieren lässt; ein Druckersymbol führt dort zur Vorlage. Im Kurs weist ein Symbol am Ende des passenden Abschnitts auf das Modell hin.</p>
+        </div>
+        <div class="cs__shots cs__shots--2 cs__shots--ar">
+          <figure class="shot"><img src="assets/img/case-studies/cognify/ar-herz.jpg" alt="3D-Modell eines menschlichen Herzens auf der gedruckten Cognify-Vorlage" loading="lazy" /><figcaption data-i18n="cs.cognify.ar1">Kurs Anatomie · Herz</figcaption></figure>
+          <figure class="shot"><img src="assets/img/case-studies/cognify/ar-kolosseum.jpg" alt="3D-Modell des Kolosseums auf der gedruckten Cognify-Vorlage" loading="lazy" /><figcaption data-i18n="cs.cognify.ar2">Kurs Kolosseum · Modell</figcaption></figure>
+        </div>
       </div>
     </section>
+   </div>
 
+   <div class="cs__chapter" data-label="Evaluation" data-label-en="Evaluation">
     <section class="cs__sec">
       <h3 data-i18n="cs.cognify.s8.title">Evaluation</h3>
-      <p data-i18n="cs.cognify.s8.p1">Geplant waren eine quantitative Remote-Evaluation und drei moderierte Tests. Beim Versand des Prototyps zeigte sich, dass Figma von allen Testpersonen ein eigenes Konto verlangte; auch der Figma-Support fand keine Lösung. Statt die Evaluation zu verkleinern, wurde der qualitative Teil ausgebaut: sechs statt drei Testpersonen und zehn statt fünf Aufgaben.</p>
-      <p data-i18n="cs.cognify.s8.p2">Die Tests fanden vor Ort statt, mit dem Prototyp auf dem Smartphone sowie Tablet und Druckvorlagen für die AR-Funktion. Die sechs Teilnehmenden zwischen 22 und 65 Jahren unterschieden sich in Technikaffinität und AR-Erfahrung. Sie dachten während der Aufgaben laut, bewerteten jede Aufgabe nach ihrer Lösbarkeit und gaben zum Schluss im Gespräch Feedback.</p>
-      <figure class="cs__data">
-        <ol class="cs__bars">
-          <li style="--v:10"><span data-i18n="cs.cognify.task1">Konto erstellen und Interessen wählen</span><i></i><b>10,0</b></li>
-          <li style="--v:10"><span data-i18n="cs.cognify.task2">Kurs „Das Kolosseum“ mit Quiz abschließen</span><i></i><b>10,0</b></li>
-          <li style="--v:5.8" class="is-low"><span data-i18n="cs.cognify.task3">Lernmethoden im laufenden Kurs ändern</span><i></i><b>5,8</b></li>
-          <li style="--v:5.3" class="is-low"><span data-i18n="cs.cognify.task4">Freunde mit höherem und niedrigerem Level finden</span><i></i><b>5,3</b></li>
-          <li style="--v:6.2" class="is-low"><span data-i18n="cs.cognify.task5">Erreichte Meilensteine finden</span><i></i><b>6,2</b></li>
-          <li style="--v:8.5"><span data-i18n="cs.cognify.task6">Eigene Position in der globalen Rangliste finden</span><i></i><b>8,5</b></li>
-          <li style="--v:8.8"><span data-i18n="cs.cognify.task7">Profil eines Freundes öffnen</span><i></i><b>8,8</b></li>
-          <li style="--v:9.2"><span data-i18n="cs.cognify.task8">Eigene Gruppen finden</span><i></i><b>9,2</b></li>
-          <li style="--v:7"><span data-i18n="cs.cognify.task9">Themenpräferenzen ändern</span><i></i><b>7,0</b></li>
-          <li style="--v:8.5"><span data-i18n="cs.cognify.task10">Darkmode aktivieren</span><i></i><b>8,5</b></li>
-        </ol>
-        <figcaption data-i18n="cs.cognify.bars.caption">Lösbarkeit je Aufgabe · Durchschnitt aus sechs Bewertungen von 0 bis 10</figcaption>
-      </figure>
-      <div class="cs__stats cs__stats--score">
-        <div><strong>9,7</strong><span data-i18n="cs.cognify.score1">Optik</span></div>
-        <div><strong>9,5</strong><span data-i18n="cs.cognify.score2">Lerneffekt</span></div>
-        <div><strong>8,8</strong><span data-i18n="cs.cognify.score3">Übersichtlichkeit</span></div>
-        <div><strong>8,2</strong><span data-i18n="cs.cognify.score4">Bedienbarkeit</span></div>
+      <div class="cs__cols">
+        <div>
+          <p data-i18n="cs.cognify.s8.p1">Geplant waren eine quantitative Remote-Evaluation und drei moderierte Tests. Beim Versand des Prototyps zeigte sich, dass Figma von allen Testpersonen ein eigenes Konto verlangte; auch der Figma-Support fand keine Lösung. Statt die Evaluation zu verkleinern, wurde der qualitative Teil ausgebaut: sechs statt drei Testpersonen und zehn statt fünf Aufgaben.</p>
+          <p data-i18n="cs.cognify.s8.p2">Die Tests fanden vor Ort statt, mit dem Prototyp auf dem Smartphone sowie Tablet und Druckvorlagen für die AR-Funktion. Die sechs Teilnehmenden zwischen 22 und 65 Jahren unterschieden sich in Technikaffinität und AR-Erfahrung. Sie dachten während der Aufgaben laut, bewerteten jede Aufgabe nach ihrer Lösbarkeit und gaben zum Schluss im Gespräch Feedback.</p>
+          <div class="cs__stats cs__stats--score cs__stats--2">
+            <div><strong>9,7</strong><span data-i18n="cs.cognify.score1">Optik</span></div>
+            <div><strong>9,5</strong><span data-i18n="cs.cognify.score2">Lerneffekt</span></div>
+            <div><strong>8,8</strong><span data-i18n="cs.cognify.score3">Übersichtlichkeit</span></div>
+            <div><strong>8,2</strong><span data-i18n="cs.cognify.score4">Bedienbarkeit</span></div>
+          </div>
+          <p class="cs__note" data-i18n="cs.cognify.score.caption">Abschlussbewertung · Durchschnitt von 10 Punkten</p>
+        </div>
+        <figure class="cs__data cs__sticky">
+          <ol class="cs__bars">
+            <li style="--v:10"><span data-i18n="cs.cognify.task1">Konto erstellen und Interessen wählen</span><i></i><b>10,0</b></li>
+            <li style="--v:10"><span data-i18n="cs.cognify.task2">Kurs „Das Kolosseum“ mit Quiz abschließen</span><i></i><b>10,0</b></li>
+            <li style="--v:5.8" class="is-low"><span data-i18n="cs.cognify.task3">Lernmethoden im laufenden Kurs ändern</span><i></i><b>5,8</b></li>
+            <li style="--v:5.3" class="is-low"><span data-i18n="cs.cognify.task4">Freunde mit höherem und niedrigerem Level finden</span><i></i><b>5,3</b></li>
+            <li style="--v:6.2" class="is-low"><span data-i18n="cs.cognify.task5">Erreichte Meilensteine finden</span><i></i><b>6,2</b></li>
+            <li style="--v:8.5"><span data-i18n="cs.cognify.task6">Eigene Position in der globalen Rangliste finden</span><i></i><b>8,5</b></li>
+            <li style="--v:8.8"><span data-i18n="cs.cognify.task7">Profil eines Freundes öffnen</span><i></i><b>8,8</b></li>
+            <li style="--v:9.2"><span data-i18n="cs.cognify.task8">Eigene Gruppen finden</span><i></i><b>9,2</b></li>
+            <li style="--v:7"><span data-i18n="cs.cognify.task9">Themenpräferenzen ändern</span><i></i><b>7,0</b></li>
+            <li style="--v:8.5"><span data-i18n="cs.cognify.task10">Darkmode aktivieren</span><i></i><b>8,5</b></li>
+          </ol>
+          <figcaption data-i18n="cs.cognify.bars.caption">Lösbarkeit je Aufgabe · Durchschnitt aus sechs Bewertungen von 0 bis 10</figcaption>
+        </figure>
       </div>
-      <p class="cs__note" data-i18n="cs.cognify.score.caption">Abschlussbewertung · Durchschnitt von 10 Punkten</p>
       <h5 class="cs__subhead" data-i18n="cs.cognify.s8.h">Befunde</h5>
-      <ul class="cs__bullets">
+      <ul class="cs__bullets cs__bullets--2">
         <li data-i18n="cs.cognify.s8.b1">Kurse und Quizze lösten alle Teilnehmenden ohne Mühe. Der Lernteil, das Herzstück der Anwendung, wurde durchweg positiv bewertet.</li>
         <li data-i18n="cs.cognify.s8.b2">Fünf von sechs Personen übersahen die AR-Funktion zunächst. Der Hinweis stand am Ende des Fließtexts und ging beim Überfliegen unter. Wer AR nutzte, empfand es als intuitiv; einziges Hindernis war das Ausdrucken der Vorlage.</li>
         <li data-i18n="cs.cognify.s8.b3">Die Touch-Ziele waren für alle Altersgruppen zu klein. Zum Teil lag das an den sehr exakten Klickflächen im Figma-Prototyp.</li>
@@ -1139,30 +1245,43 @@
       <p data-i18n="cs.cognify.s10.p1">Die abgeleiteten Verbesserungen konnten im Semester nicht mehr umgesetzt werden, weil das Projekt seinen geplanten Umfang auf mehreren Ebenen überschritten hatte, vom eigenen AR-Prototyp bis zur ausgeweiteten Evaluation.</p>
       <p class="cs__pull" data-i18n="cs.cognify.s10.pull">Ein Alleinstellungsmerkmal wirkt nur, wenn es im Interface sichtbar ist. Die AR-Funktion war technisch gelöst, ging aber im Fließtext unter. Ebenso tragen vertraute Muster nur die Menschen, die sie kennen; alle anderen brauchen sichtbare Wegweiser.</p>
     </section>
+   </div>
   </article>
 
   <!-- ===== SYNTEGON ===== -->
   <article data-case="syntegon">
-    <div class="cs__hero">
-      <div class="cs__heroText">
+   <div class="cs__chapter" data-label="Überblick" data-label-en="Overview">
+    <div class="cs__heroMeta cs__metaStrip">
+      <dl>
+        <div><dt data-i18n="cs.meta.role">Rolle</dt><dd data-i18n="cs.syntegon.role">Research · Konzeption · UX/UI · Prototyp</dd></div>
+        <div><dt data-i18n="cs.meta.methods">Methoden</dt><dd data-i18n="cs.syntegon.methods">Literatur- und Dokumentenanalyse · Experteninterviews · Qualitative Inhaltsanalyse · Expertenevaluation</dd></div>
+        <div><dt>Tools</dt><dd>Figma · Claude / Generative AI · Miro</dd></div>
+        <div><dt data-i18n="cs.syntegon.meta.period">Zeitraum</dt><dd data-i18n="cs.syntegon.period">März bis Juli 2026</dd></div>
+      </dl>
+    </div>
+    <div class="cs__over">
+      <div>
         <span class="cs__kicker" data-i18n="cs.syntegon.kicker">Industrial UX · Bachelorarbeit · 2026</span>
         <h2 class="cs__title">Syntegon</h2>
         <p class="cs__sub" data-i18n="cs.syntegon.sub">Visualisierungssystem für die Pharmaproduktion</p>
         <p class="cs__pitch" data-i18n="cs.syntegon.pitch">In meiner Bachelorarbeit in Zusammenarbeit mit <strong>Syntegon</strong> habe ich ein Visualisierungssystem konzipiert und als interaktiven Prototyp umgesetzt. Es führt Bedienende in der pharmazeutischen Produktion Schritt für Schritt durch manuelle Arbeitsschritte und sorgt dafür, dass Fehler keine Folgen haben.</p>
       </div>
-      <div class="cs__heroMeta">
-        <dl>
-          <div><dt data-i18n="cs.meta.role">Rolle</dt><dd data-i18n="cs.syntegon.role">Research · Konzeption · UX/UI · Prototyp</dd></div>
-          <div><dt data-i18n="cs.meta.methods">Methoden</dt><dd data-i18n="cs.syntegon.methods">Literatur- und Dokumentenanalyse · Experteninterviews · Qualitative Inhaltsanalyse · Expertenevaluation</dd></div>
-          <div><dt>Tools</dt><dd>Figma · Claude / Generative AI · Miro</dd></div>
-          <div><dt data-i18n="cs.syntegon.meta.period">Zeitraum</dt><dd data-i18n="cs.syntegon.period">März bis Juli 2026</dd></div>
-        </dl>
-      </div>
+      <figure class="cs__overQuote">
+        <span data-i18n="cs.syntegon.s1.title">Fragestellung</span>
+        <p data-i18n="cs.syntegon.s1.pull">Wie muss ein Visualisierungssystem konzipiert sein, damit es Bedienende bei manuellen Arbeitsschritten sicher führt und Fehler verhindert?</p>
+      </figure>
     </div>
+    <div class="cs__glance">
+      <div><span data-i18n="cs.glance.start">Ausgangslage</span><p data-i18n="cs.syntegon.g1">In der Pharmaproduktion gelten strenge regulatorische Anforderungen. Wo Menschen manuell eingreifen, können Verwechslungen weitreichende Folgen haben.</p></div>
+      <div><span data-i18n="cs.glance.approach">Vorgehen</span><p data-i18n="cs.syntegon.g2">Literatur- und Dokumentenanalyse, drei Experteninterviews und eine qualitative Inhaltsanalyse. Daraus entstand ein interaktiver Hi-Fi-Prototyp in Figma mit dem Designsystem des Unternehmens.</p></div>
+      <div><span data-i18n="cs.glance.result">Ergebnis</span><p data-i18n="cs.syntegon.g3">Die Fachleute bewerteten Feedback, Systemreaktion und die Fail-safe-Wirkung besonders positiv. Ein Schritt, der sich nur manuell bestätigen ließ, schließt nun ausschließlich eine Prüfung durch das System ab.</p></div>
+    </div>
+    <p class="cs__hinweis" data-i18n="cs.syntegon.note">Die Arbeit enthält vertrauliche Informationen des Unternehmens. Screens und projektspezifische Details werden deshalb nicht gezeigt.</p>
+   </div>
 
+   <div class="cs__chapter" data-label="Vorgehen" data-label-en="Approach">
     <section class="cs__sec">
-      <h3 data-i18n="cs.syntegon.s1.title">Fragestellung</h3>
-      <p class="cs__pull" data-i18n="cs.syntegon.s1.pull">Wie muss ein Visualisierungssystem konzipiert sein, damit es Bedienende bei manuellen Arbeitsschritten sicher führt und Fehler verhindert?</p>
+      <h3 data-i18n="cs.glance.start">Ausgangslage</h3>
       <p data-i18n="cs.syntegon.s1.p1">In der Pharmaproduktion gelten strenge regulatorische Anforderungen wie der EU-GMP-Leitfaden. Wo Menschen manuell eingreifen, können Verwechslungen weitreichende Folgen haben. Die Arbeit untersucht, wie Informationsarchitektur, Schrittführung und Rückmeldung in diesem Umfeld zusammenspielen müssen.</p>
     </section>
 
@@ -1178,6 +1297,9 @@
       </ol>
     </section>
 
+   </div>
+
+   <div class="cs__chapter" data-label="Konzept" data-label-en="Concept">
     <section class="cs__sec">
       <h3 data-i18n="cs.syntegon.s3.title">Leitidee: Fail-safe</h3>
       <p data-i18n="cs.syntegon.s3.p1">Offenheit und eine möglichst freie Bedienung treten in diesem Umfeld zurück. Das System übernimmt die Verantwortung, die in sicherheitskritischen Abläufen nicht allein beim Menschen liegen kann.</p>
@@ -1201,6 +1323,9 @@
       </div>
     </section>
 
+   </div>
+
+   <div class="cs__chapter" data-label="Evaluation" data-label-en="Evaluation">
     <section class="cs__sec">
       <h3 data-i18n="cs.syntegon.s4.title">Evaluation und Iteration</h3>
       <p data-i18n="cs.syntegon.s4.p1">Da reale Bedienende im Projektzeitraum nicht zur Verfügung standen, bewerteten die drei interviewten Fachleute den Prototyp. Sie verbinden Fachwissen mit Kenntnis der Anforderungen und gelten damit als besonders wirksame Prüfende. Zugleich wurden die abgeleiteten Anforderungen so mit denselben Personen rückgekoppelt.</p>
@@ -1211,29 +1336,38 @@
     <section class="cs__sec">
       <h3 data-i18n="cs.syntegon.s5.title">Persönliches Learning</h3>
       <p data-i18n="cs.syntegon.s5.p1">Besonders wertvoll war die Arbeit an einem industriellen Produkt mit Menschen aus Mechanical Engineering, Pharma Engineering, UX und Forschung und Entwicklung. In diesem Umfeld zählt keine möglichst freie Bedienung, sondern verlässliche Führung. Gute Gestaltung heißt hier, Verantwortung vom Menschen auf das System zu verlagern.</p>
-      <p class="cs__hinweis" data-i18n="cs.syntegon.note">Die Arbeit enthält vertrauliche Informationen des Unternehmens. Screens und projektspezifische Details werden deshalb nicht gezeigt.</p>
     </section>
+   </div>
   </article>
 
   <!-- ===== FORWERTS ===== -->
   <article data-case="forwerts">
-    <div class="cs__hero">
-      <div class="cs__heroText">
+   <div class="cs__chapter" data-label="Überblick" data-label-en="Overview">
+    <div class="cs__heroMeta cs__metaStrip">
+      <dl>
+        <div><dt data-i18n="cs.forwerts.meta.role">Rolle</dt><dd>UX Expert Intern</dd></div>
+        <div><dt data-i18n="cs.forwerts.meta.period">Zeitraum</dt><dd data-i18n="cs.forwerts.period">September 2024 bis Februar 2025</dd></div>
+        <div><dt data-i18n="cs.forwerts.meta.clients">Kunden</dt><dd>1&amp;1 · Vattenfall</dd></div>
+        <div><dt>Studio</dt><dd><a href="https://www.forwerts.com/" target="_blank" rel="noopener">forwerts interactive ↗</a></dd></div>
+      </dl>
+    </div>
+    <div class="cs__over">
+      <div>
         <span class="cs__kicker" data-i18n="cs.forwerts.kicker">UX DESIGN · 2024/25</span>
         <h2 class="cs__title">forwerts interactive</h2>
         <p class="cs__sub" data-i18n="cs.forwerts.sub">UX Design in Kundenprojekten</p>
         <p class="cs__pitch" data-i18n="cs.forwerts.pitch">Bei <strong>forwerts interactive</strong> arbeitete ich im UX-Team an Online-Shops, Kundenportalen und Websites für Konzerne aus der Telekommunikations- und Energiebranche.</p>
       </div>
-      <div class="cs__heroMeta">
-        <dl>
-          <div><dt data-i18n="cs.forwerts.meta.role">Rolle</dt><dd>UX Expert Intern</dd></div>
-          <div><dt data-i18n="cs.forwerts.meta.period">Zeitraum</dt><dd data-i18n="cs.forwerts.period">September 2024 bis Februar 2025</dd></div>
-          <div><dt data-i18n="cs.forwerts.meta.clients">Kunden</dt><dd>1&amp;1 · Vattenfall</dd></div>
-          <div><dt>Studio</dt><dd><a href="https://www.forwerts.com/" target="_blank" rel="noopener">forwerts interactive ↗</a></dd></div>
-        </dl>
-      </div>
+      <figure class="cs__overMedia"><img src="assets/img/covers/forwerts.png" alt="Screens aus Projekten für 1&amp;1 und Vattenfall" /></figure>
     </div>
+    <div class="cs__glance cs__glance--links">
+      <button type="button" data-goto="2" data-goto-sel="#cs-shop-title"><span>01 / E-COMMERCE</span><strong>1&amp;1 Online-Shop</strong><p data-i18n="cs.forwerts.shop.context">Bestellprozess und Zubehör</p></button>
+      <button type="button" data-goto="2" data-goto-sel="#cs-help-title"><span>02 / KUNDENSERVICE</span><strong>1&amp;1 Hilfe-Center</strong><p data-i18n="cs.forwerts.help.context">Seiten und Unterseiten</p></button>
+      <button type="button" data-goto="2" data-goto-sel="#cs-vattenfall-title"><span>03 / WEBSITE</span><strong>Vattenfall</strong><p data-i18n="cs.forwerts.vattenfall.context">Webseitenstruktur und Seitenaufbau</p></button>
+    </div>
+   </div>
 
+   <div class="cs__chapter" data-label="Tätigkeitsfelder" data-label-en="Areas of work">
     <section class="cs__tasks" aria-labelledby="cs-tasks-title">
       <div class="cs__partHead"><span data-i18n="cs.forwerts.tasks.label">AUFGABEN</span><h3 id="cs-tasks-title" data-i18n="cs.forwerts.tasks.title">Tätigkeitsfelder</h3></div>
       <ol class="cs__taskGrid">
@@ -1246,6 +1380,9 @@
       </ol>
     </section>
 
+   </div>
+
+   <div class="cs__chapter" data-label="Kundenprojekte" data-label-en="Client projects">
     <div class="cs__partHead cs__partHead--projects"><span data-i18n="cs.forwerts.excerpts.label">PROJEKTE</span><h3 data-i18n="cs.forwerts.excerpts.title">Auszüge aus Kundenprojekten</h3></div>
 
     <section class="cs__sec cs__showcase" aria-labelledby="cs-shop-title">
@@ -1286,6 +1423,7 @@
         <figure class="cs__screen"><a href="assets/img/case-studies/vattenfall-detail.jpg" target="_blank" rel="noopener"><img src="assets/img/case-studies/vattenfall-detail.jpg" alt="Vattenfall Servicedetailseite zum Zählerstand" loading="lazy"></a><figcaption><span>04</span><strong data-i18n="cs.forwerts.vattenfall.4">Servicedetail</strong></figcaption></figure>
       </div>
     </section>
+   </div>
   </article>
 
 </div>

@@ -1,6 +1,6 @@
 # Projekt-Status und Übergabe
 
-_Stand: 26.09.2026. Einstieg für Claude Code, Codex und beide Geräte._
+_Stand: 27.09.2026. Einstieg für Claude Code, Codex und beide Geräte._
 
 ## Direkt weiterarbeiten
 
@@ -16,7 +16,7 @@ _Stand: 26.09.2026. Einstieg für Claude Code, Codex und beide Geräte._
 
 Navigation, Projekte mit Case-Study-Modals, Arbeitsweise und Werkzeugband, Profil und Psychologie-Themen, Kontakt und Footer. Das bestehende dunkle und helle Design, Fraunces, Inter und Space Grotesk bleiben die Grundlage.
 
-Die Inhalte der Case Studies liegen als versteckte `<article data-case="…">` in `index.html` und werden beim Öffnen nach `#modalContent` kopiert. Deutsche Texte stehen im HTML, englische `data-i18n`-Texte im `EN`-Dictionary von `js/main.js`.
+Die Inhalte der Case Studies liegen als versteckte `<article data-case="…">` in `index.html`. Seit 27.09.2026 öffnen sie in einem zentrierten Fenster (Variante B aus `case-study-fenster-preview.html`) statt im Panel von rechts. Jeder Artikel ist in `.cs__chapter`-Blöcke mit `data-label`/`data-label-en` gegliedert; `openProject()` in `js/main.js` macht daraus Tabs mit eigenen Scrollbereichen. Das erste Kapitel ist der Überblick: oben eine dezente Leiste mit Rolle, Methoden, Tools und Rahmen, darunter Einleitung und Titelbild (bei Syntegon die Fragestellung) sowie drei Spalten Ausgangslage, Vorgehen, Ergebnis (bei forwerts Links zu den drei Kundenprojekten). Jedes Kapitel endet mit Weiter-Buttons, das letzte mit „Nächstes Projekt“. Im Fenster stehen Text und zugehörige Abbildung wo sinnvoll nebeneinander (`.cs__cols`). Deutsche Texte stehen im HTML, englische `data-i18n`-Texte im `EN`-Dictionary von `js/main.js`.
 
 Das Werkzeugband unter „Wie ich arbeite“ zeigt Figma, Adobe CC, Microsoft Office, Claude Code, v0, Codex und GitHub als stilisierte, einfarbige Zeichen (Adobe XD, Photoshop und Dyad wurden am 26.09.2026 entfernt).
 
@@ -44,6 +44,8 @@ Henri möchte einen gesamtheitlichen Projektüberblick. Keine erzählerischen Ü
 Die Tätigkeiten beruhen auf Henris Angaben und dem privat gelesenen Zeugnis. Das Zeugnis selbst bleibt außerhalb des Repos. Die Screens in `assets/img/case-studies/` zeigen öffentliche Website-Ansichten vom 25.09.2026, keine damaligen Originalentwürfe. Die Vattenfall-Tarifaufnahme wurde ohne Cookie-Dialog neu erstellt. Quellen und Dateizuordnung: `docs/FORWERTS-CASE-STUDY-MATERIAL.md`.
 
 ### Weitere Entwürfe
+
+- `case-study-fenster-preview.html` (27.09.2026): drei klickbare Varianten für die Case-Study-Ansicht anstelle des 960-px-Panels von rechts, gezeigt an Cognify. A Case-Study-Seite (Vollbild, Kapitelnavigation links, nächstes Projekt am Ende), B Fenster mit Kapiteln (zentriert, Überblick zuerst, fünf Kapitel als Tabs), C Geteilte Ansicht (Text links, rechts eine feste Bühne, die mitwechselt). Nutzt `css/styles.css`, aber nicht `js/main.js`; Auswahl über `#a`, `#b`, `#c`. Henri hat B gewählt; sie ist seit 27.09.2026 live für alle fünf Case Studies. Die Vorschau bleibt als Vergleich.
 
 - `preview-farben.html` mit `css/preview-farben.css` (26.09.2026): Kopie der Live-Seite mit Umschalter für drei Farb- und Stilkonzepte plus „0 Aktuell“. Aufruf ohne `.html`, z. B. `/preview-farben?stil=b#about` (der lokale Server verliert den Parameter sonst beim Weiterleiten). Anlass: Henri findet die Verläufe in Hintergrund und Schrift gut, aber billig und studentisch.
   - Gemeinsam: Aurora, treibende Blobs, Glow unter Verlaufsschrift und Schimmer-Sweeps entfallen.
