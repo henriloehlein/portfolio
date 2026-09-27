@@ -1,0 +1,44 @@
+/* =========================================================
+   Einstieg-Animation · Band über den Projekten
+   Transparent: nur Canvas und weiche Kanten. Links und rechts
+   blendet der Inhalt aus (Maske) und wird zugleich unscharf
+   (drei gestaffelte backdrop-filter-Ebenen).
+   ========================================================= */
+.ia{position:relative;z-index:1;width:100%;max-width:1680px;margin:clamp(8px,2vw,28px) auto 0;
+  height:clamp(250px,25vw,370px);--ia-fade:clamp(40px,11vw,190px)}
+.ia__canvas{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;transition:opacity 1.4s var(--ease);
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 var(--ia-fade),#000 calc(100% - var(--ia-fade)),transparent 100%);
+          mask-image:linear-gradient(90deg,transparent 0,#000 var(--ia-fade),#000 calc(100% - var(--ia-fade)),transparent 100%)}
+.ia.is-ready .ia__canvas{opacity:1}
+
+.ia__blur{position:absolute;top:0;bottom:0;width:var(--ia-fade);z-index:1;pointer-events:none}
+.ia__blur--l{left:0;--d:90deg}
+.ia__blur--r{right:0;--d:270deg}
+.ia__blur i{position:absolute;inset:0}
+.ia__blur i:nth-child(1){-webkit-backdrop-filter:blur(1.5px);backdrop-filter:blur(1.5px);
+  -webkit-mask-image:linear-gradient(var(--d),#000 0%,#000 45%,transparent 100%);mask-image:linear-gradient(var(--d),#000 0%,#000 45%,transparent 100%)}
+.ia__blur i:nth-child(2){-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
+  -webkit-mask-image:linear-gradient(var(--d),#000 0%,#000 20%,transparent 65%);mask-image:linear-gradient(var(--d),#000 0%,#000 20%,transparent 65%)}
+.ia__blur i:nth-child(3){-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  -webkit-mask-image:linear-gradient(var(--d),#000 0%,transparent 38%);mask-image:linear-gradient(var(--d),#000 0%,transparent 38%)}
+
+/* Live-Einbau: die Person läuft auf der oberen Linie der Projektliste, rechts neben
+   „Projekte“. Das Canvas endet genau an der Listenlinie (Abstand = margin-bottom von
+   .work__head); sichtbar ist nur ein weicher Ausschnitt, der mit der Person wandert. */
+.work__head--intro{position:relative}
+.ia--linie{position:absolute;right:0;bottom:calc(-1 * clamp(30px,4vw,50px));width:min(64%,820px);height:clamp(96px,10.5vw,146px);margin:0;max-width:none}
+@media (max-width:760px){.ia--linie{width:56%}}
+.ia--linie .ia__canvas{-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.ia--linie .ia__toggle{width:24px;height:24px;right:0;bottom:auto;top:0;opacity:0}
+.ia--linie:hover .ia__toggle,.ia--linie .ia__toggle:focus-visible,.ia--linie .ia__toggle.is-paused{opacity:.7}
+.ia--linie .ia__toggle svg{width:9px;height:9px}
+
+/* Pause: Bewegung über fünf Sekunden braucht eine Bedienung (WCAG 2.2.2) */
+.ia__toggle{position:absolute;right:max(var(--pad),16px);bottom:4px;z-index:2;width:30px;height:30px;border-radius:50%;
+  display:grid;place-items:center;color:var(--muted);border:1px solid var(--line);
+  background:color-mix(in srgb,var(--bg) 40%,transparent);opacity:.5;transition:opacity .3s,color .3s,border-color .3s}
+.ia__toggle:hover,.ia__toggle:focus-visible{opacity:1;color:var(--text);border-color:var(--line-2)}
+.ia__toggle:focus-visible{outline:2px solid var(--warm-1);outline-offset:3px}
+.ia__toggle svg{width:11px;height:11px;fill:currentColor}
+.ia__toggle .ia__play,.ia__toggle.is-paused .ia__pause{display:none}
+.ia__toggle.is-paused .ia__play{display:block}

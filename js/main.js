@@ -911,6 +911,23 @@
   });
   document.addEventListener('hl:lang', () => { if (chapters.length) labelChapters(); });
 
+  /* ---------- Einstieg-Animation auf der Linie der Projektliste ----------
+     Engine: js/einstieg-szene.js, js/einstieg-zeichnen.js, js/einstieg-animation.js.
+     Stil H (Linie leise): Stil A mit halber Deckkraft, damit die Projekte im Vordergrund bleiben.
+     Sichtbar ist nur ein weicher Ausschnitt, der mit der Person über die Breite wandert. */
+  const intro = $('#intro');
+  if (intro && window.EinstiegAnimation) {
+    const stage = EinstiegAnimation.mount(intro, { style: 'h', layout: 'window', frame: 'line', ground: false, winW: 520 });
+    const labelIntro = () => {
+      intro.setAttribute('aria-label', lang === 'en'
+        ? 'Animation: talking with users, sorting the insights, designing a screen from them and testing it.'
+        : 'Animation: Gespräche mit Nutzenden, Erkenntnisse ordnen, daraus einen Screen gestalten und testen.');
+      stage.sync();
+    };
+    labelIntro();
+    document.addEventListener('hl:lang', labelIntro);
+  }
+
   /* ---------- Year safety + console sign ---------- */
   console.log('%cHenri Löhlein — UX/UI Design', 'font-size:14px;font-weight:600;color:#ff6b5e');
 })();

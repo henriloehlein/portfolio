@@ -327,7 +327,7 @@ html.has-custom-cursor,html.has-custom-cursor *{cursor:none}
 section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);max-width:var(--maxw);margin:0 auto}
 .sectionTag{display:flex;align-items:center;gap:12px;font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:34px}
 /* one accent for every section tag, it already follows the live scroll gradient via --warm-1 */
-.sectionTag span:first-child{color:var(--warm-1)}
+.sectionTag > span:first-child{color:var(--warm-1)}
 
 /* ---------- Reveal ---------- */
 .reveal{opacity:0;transform:translateY(34px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
