@@ -371,11 +371,11 @@
      rotating through instead of sitting permanently next to the name. */
   const STRIP_WORDS = {
     de: [
-      { text: 'User Experience Design · Product Design · Interfacedesign · User Research · Interaktionsdesign', hold: 4200 },
+      { text: 'User Experience Design · Product Design · Interfacedesign · Usability Design · User Research · Interaktionsdesign', hold: 4200 },
       { text: 'Hochschule Ansbach · Syntegon · forwerts', hold: 3000 }
     ],
     en: [
-      { text: 'User Experience Design · Product Design · Interface Design · User Research · Interaction Design', hold: 4200 },
+      { text: 'User Experience Design · Product Design · Interface Design · Usability Design · User Research · Interaction Design', hold: 4200 },
       { text: 'Ansbach University · Syntegon · forwerts', hold: 3000 }
     ]
   };
@@ -482,68 +482,56 @@
     startStripType();
   }
 
-  /* ---------- Custom cursor: smooth spring-follow arrow, rotates to face travel ---------- */
-  /* Port of MagicUI's SmoothCursor (position/rotation/scale as damped springs instead of a
-     Framer Motion useSpring) since this project has no build step / React runtime. */
+  /* ---------- Custom cursor: dot follower ----------
+     A small dot that trails the pointer with a short exponential ease, stretches slightly along
+     fast movement, grows over anything clickable and becomes a labelled circle on [data-cursor].
+     Size states live in CSS (.is-hover/.is-label/.is-down/.is-hidden). */
   const cursor = $('#cursor');
+  const cDot = $('#cursorDot');
   const cLabel = $('#cursorLabel');
-  if (cursor && !reduce && matchMedia('(any-hover:hover) and (any-pointer:fine)').matches) {
-    const spring = (stiffness, damping, mass, v0) => {
-      let value = v0, vel = 0, target = v0;
-      return { set: t => { target = t; }, tick: dt => {
-        const accel = (-stiffness * (value - target) - damping * vel) / mass;
-        vel += accel * dt; value += vel * dt; return value;
-      } };
-    };
-    const sx = spring(400, 45, 1, innerWidth / 2);
-    const sy = spring(400, 45, 1, innerHeight / 2);
-    const srot = spring(300, 60, 1, 0);
-    const sscale = spring(500, 35, 1, 1);
-
-    let lastPos = { x: innerWidth / 2, y: innerHeight / 2 }, lastTime = Date.now();
-    let prevAngle = 0, accRotation = 0, squishTimer = null;
+  if (cursor && cDot && !reduce && matchMedia('(any-hover:hover) and (any-pointer:fine)').matches) {
+    let tx = innerWidth / 2, ty = innerHeight / 2, x = tx, y = ty, started = false;
+    let stretch = 0, angle = 0;
 
     addEventListener('pointermove', e => {
       if (e.pointerType === 'touch') return;
-      cursor.style.opacity = '1';
-      const pos = { x: e.clientX, y: e.clientY };
-      const now = Date.now(), dt = now - lastTime || 1;
-      const vx = (pos.x - lastPos.x) / dt, vy = (pos.y - lastPos.y) / dt;
-      lastTime = now; lastPos = pos;
-      sx.set(pos.x); sy.set(pos.y);
-      if (Math.hypot(vx, vy) > 0.1) {
-        const angle = Math.atan2(vy, vx) * (180 / Math.PI) + 90;
-        let diff = angle - prevAngle;
-        if (diff > 180) diff -= 360; if (diff < -180) diff += 360;
-        accRotation += diff; prevAngle = angle;
-        srot.set(accRotation);
-        sscale.set(0.95);
-        clearTimeout(squishTimer);
-        squishTimer = setTimeout(() => sscale.set(1), 150);
-      }
+      tx = e.clientX; ty = e.clientY;
+      if (!started) { x = tx; y = ty; started = true; }
+      cursor.classList.add('is-visible');
+      cursor.classList.remove('is-hidden');
     }, { passive: true });
+    document.addEventListener('mouseleave', () => cursor.classList.add('is-hidden'));
+    document.addEventListener('mouseenter', () => cursor.classList.remove('is-hidden'));
+    addEventListener('pointerdown', e => { if (e.pointerType !== 'touch') cursor.classList.add('is-down'); });
+    addEventListener('pointerup', () => cursor.classList.remove('is-down'));
+    addEventListener('blur', () => cursor.classList.remove('is-down'));
 
     let last = performance.now();
     (function loop(now) {
-      const dt = Math.min(0.032, (now - last) / 1000);
+      const dt = Math.min(0.05, (now - last) / 1000);
       last = now;
-      const x = sx.tick(dt), y = sy.tick(dt), rot = srot.tick(dt), sc = sscale.tick(dt);
-      cursor.style.transform = `translate(${x}px,${y}px) translate(-50%,-50%) rotate(${rot}deg) scale(${sc})`;
+      const k = 1 - Math.exp(-dt * 24);           // frame-rate independent ease, ~40ms lag
+      const dx = tx - x, dy = ty - y;
+      x += dx * k; y += dy * k;
+      // stretch only the resting dot; a grown circle wobbling would look loose
+      const speed = Math.hypot(dx, dy);
+      const plain = !cursor.classList.contains('is-hover') && !cursor.classList.contains('is-label');
+      stretch += ((plain ? Math.min(speed / 90, 0.35) : 0) - stretch) * 0.25;
+      if (speed > 0.5) angle = Math.atan2(dy, dx) * 180 / Math.PI;
+      cursor.style.transform = `translate3d(${x}px,${y}px,0)`;
+      cDot.style.transform = `rotate(${angle}deg) scale(${1 + stretch},${1 - stretch * 0.5})`;
       requestAnimationFrame(loop);
     })(last);
 
     document.documentElement.classList.add('has-custom-cursor');
-    const hoverSel = 'a,button,[data-cursor],.project,.fcard';
-    document.addEventListener('mouseover', e => {
-      const t = e.target.closest(hoverSel);
-      if (!t) return;
-      const label = t.getAttribute('data-cursor');
-      if (label) { cursor.classList.add('is-label'); cLabel.textContent = label; }
-      else cursor.classList.add('is-hover');
-    });
-    document.addEventListener('mouseout', e => {
-      if (e.target.closest(hoverSel)) { cursor.classList.remove('is-hover', 'is-label'); cLabel.textContent = ''; }
-    });
+    const hoverSel = 'a,button,[data-cursor],.project,.fcard,label,summary,[role="button"]';
+    const setState = t => {
+      const label = t && t.closest('[data-cursor]') && t.closest('[data-cursor]').getAttribute('data-cursor');
+      cursor.classList.toggle('is-label', !!label);
+      cursor.classList.toggle('is-hover', !label && !!t);
+      if (label) cLabel.textContent = label;
+    };
+    document.addEventListener('mouseover', e => setState(e.target.closest(hoverSel)));
   }
 
   /* ---------- Nav scroll state + active link ---------- */

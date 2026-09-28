@@ -200,15 +200,25 @@ h1,h2,h3{text-wrap:balance}
    whole line as it appears, a visible micro-jump on every render frame */
 .preloader__count{font-variant-numeric:tabular-nums}
 
-/* ---------- Cursor · smooth spring-follow arrow (white), rotates to face travel ---------- */
-/* Position/rotation/scale are driven per-frame from JS (spring physics in initSmoothCursor),
-   this rule only owns the fade-in and the two interaction states. */
-.cursor{position:fixed;top:0;left:0;z-index:150;pointer-events:none;display:grid;place-items:center;opacity:0;transition:opacity .15s;will-change:transform}
-.cursor__arrow{display:block;filter:drop-shadow(0 2px 3px rgba(0,0,0,.35));transition:transform .3s var(--ease)}
-.cursor.is-hover .cursor__arrow{transform:scale(1.2)}
-.cursor.is-label .cursor__arrow{transform:scale(.85)}
-.cursor__label{position:absolute;top:100%;left:50%;margin-top:8px;white-space:nowrap;font-family:var(--f-mono);font-size:11px;font-weight:600;letter-spacing:.03em;color:var(--bg);background:#fff;border-radius:999px;padding:6px 13px;opacity:0;transform:translate(-50%,4px) scale(.85);transition:opacity .25s,transform .25s}
-.cursor.is-label .cursor__label{opacity:1;transform:translate(-50%,0) scale(1)}
+/* ---------- Cursor · dot follower (after Cuberto's mouse-follower) ----------
+   One 88px circle drawn at scale .12 (~10px dot). Position and a subtle velocity stretch come from
+   JS (initDotCursor); the size states are pure CSS so they ease independently of the movement.
+   The root blends with 'difference', so the white dot reads on dark and light surfaces alike and
+   inverts what it covers when it grows over a link. Labelled targets switch to a solid pill-circle
+   with readable text, where inverting would only hurt legibility. */
+.cursor{position:fixed;top:0;left:0;z-index:150;pointer-events:none;width:0;height:0;opacity:0;transition:opacity .3s;mix-blend-mode:difference;will-change:transform}
+.cursor.is-visible{opacity:1}
+.cursor__dot{position:absolute;top:-44px;left:-44px;width:88px;height:88px;will-change:transform}
+.cursor__dot::before{content:"";position:absolute;inset:0;border-radius:50%;background:#fff;transform:scale(.12);transition:transform .45s cubic-bezier(.22,1,.36,1),background-color .3s}
+.cursor.is-hover .cursor__dot::before{transform:scale(.5)}
+.cursor.is-down .cursor__dot::before{transform:scale(.09)}
+.cursor.is-hover.is-down .cursor__dot::before{transform:scale(.42)}
+.cursor.is-label{mix-blend-mode:normal}
+.cursor.is-label .cursor__dot::before{transform:scale(1);background:var(--text)}
+.cursor.is-label.is-down .cursor__dot::before{transform:scale(.92)}
+.cursor.is-hidden .cursor__dot::before{transform:scale(0)}
+.cursor__label{position:absolute;top:0;left:0;width:84px;text-align:center;white-space:nowrap;font-family:var(--f-mono);font-size:11px;font-weight:600;letter-spacing:.04em;line-height:1.2;color:var(--bg);opacity:0;transform:translate(-50%,-50%) scale(.6);transition:opacity .2s,transform .35s cubic-bezier(.22,1,.36,1)}
+.cursor.is-label .cursor__label{opacity:1;transform:translate(-50%,-50%) scale(1);transition-delay:.06s}
 @media (hover:none),(max-width:860px){.cursor{display:none}}
 /* While the custom cursor is running, kill the native cursor everywhere (buttons/links ship their
    own explicit cursor:pointer, and browsers hand-cursor <a> by default, so body{cursor:none} alone
