@@ -10,20 +10,18 @@
   /* ---------- i18n dictionary (EN overrides; DE lives in HTML) ---------- */
   const EN = {
     'pre.role':'UX / UI & Product Designer',
-    'nav.work':'Projects','nav.how':'How I work','nav.about':'About','nav.contact':'Contact',
-    'hero.avail':'Open to working-student & junior roles 2026','hero.loc':'Ansbach University · Germany',
-    'hero.t1':'Design','hero.t2':'on the edge',
-    'hero.lede':'I am Henri Löhlein, UX/UI & product designer. I work at the intersection of <em>psychology and technology</em>: how AI, LLMs and adaptive systems change the way people decide, trust and act. My focus is psychology-based mechanics, from research to a tested prototype.',
-    'hero.cta':'Get in touch','hero.scroll':'Scroll',
-    'subnav.meta':'Bachelor candidate at Syntegon · Ansbach University',
-    'tag.approach':'Stance','tag.how':'How I work','tag.work':'Case studies','tag.about':'About','tag.contact':'Contact',
-    'chain.1a':'Solutions follow','chain.1b':'needs.','chain.2a':'Needs follow','chain.2b':'empathy.','chain.3a':'And empathy follows','chain.3b':'genuine interest.',
-    'approach.note':'Purposeful design only emerges where challenges are met with empathy and functional thinking. That is exactly where my approach begins.',
-    'focus.title':'The interplay of <em>psychology</em> and <em>design.</em>',
-    'focus.c1.t':'Nudging','focus.c1.d':'Guiding behaviour without pressure or force, at the right time in the right context.',
-    'focus.c2.t':'Dark Patterns','focus.c2.d':'Mechanisms that steer users against their own interests. Understood in order to avoid them.',
-    'focus.c3.t':'Persuasive Design','focus.c3.d':'Translating models like the Fogg Behavior Model and Self-Determination Theory into real mechanics.',
-    'focus.c4.t':'Adaptive AI','focus.c4.d':'How LLMs, generative and adaptive systems shape perception and trust, and how these tools can be used within the design process itself.',
+    'tag.work':'Case studies','tag.tools':'Tools I use','tag.how':'Approach','tag.focus':'Focus','tag.contact':'Contact',
+    'how.title':'I create digital products that get people to their goal <em>intuitively</em> and <em>effectively</em>.',
+    'how.lede':'Solution-oriented thinking guides every phase, from the first conversation to the last test. Always with an eye on different perspectives, the product and above all: the people using it.',
+    'how.s1.l':'Understand','how.s1.m':'Interviews, surveys, market analysis, personas, user journeys, cognitive walkthroughs&nbsp;…',
+    'how.s2.l':'Structure','how.s2.m':'Information architecture, card sorting, user flows, use cases&nbsp;…',
+    'how.s3.l':'Design','how.s3.m':'Low&#8209;fi wireframes &amp; mockups, prototyping, design systems, AI&#8209;assisted methods &amp; rapid prototyping&nbsp;…',
+    'how.s4.l':'Test','how.s4.m':'Usability tests, A/B tests, surveys, user interviews, expert reviews &amp;&nbsp;interviews&nbsp;…',
+    'focus.title':'Why do people <em>struggle</em> with some products while others <span class="nw"><em>delight</em> them?</span>',
+    'focus.lede':'This question drives me. To me, a problem is an opportunity, and my aim is to use every chance for intuitive and innovative approaches on the way to a solution.',
+    'focus.psy.t':'Psychology in design','focus.psy.p':'Whether a product delights or repels is often decided unconsciously. Mechanics like nudging, persuasive design or dark patterns shape our digital everyday life more than we realise, and that is exactly what fascinates me.',
+    'focus.tech.t':'Innovative technologies','focus.tech.p':'Artificial intelligence and automation, adaptive systems, robotics: technology is evolving faster than people can understand it. That makes it all the more important to always keep the people using it at the centre.',
+    'contact.title':'The best solutions are found <em>together</em>.',
     'work.title':'Projects',
     'p.steady.role':'Adaptive planning & organisation tool · Concept, UX/UI, Prototype',
     'p.steady.tease':'An app that asks <em>why</em> people fail, and uses psychological mechanics to help them stick to their routines with empathy.',
@@ -354,11 +352,6 @@
     'cs.syntegon.s5.title':'Personal learning',
     'cs.syntegon.s5.p1':'Working on an industrial product with people from mechanical engineering, pharma engineering, UX and research and development was especially valuable. In this environment, reliable guidance matters more than freedom of interaction. Good design here means shifting responsibility from people to the system.',
     'cs.syntegon.note':'The thesis contains confidential company information. Screens and project-specific details are therefore not shown.',
-    'about.h1':'Psychology & design','about.p1':'Digital interactions shape decisions, habits and emotions. I am interested in the subtle mechanisms behind them, nudging, dark patterns, persuasive design, and the question of where responsible design draws the line between support and manipulation.',
-    'about.h2':'Looking ahead','about.p2':'New technologies like AI and adaptive systems shape perception, trust and interaction. I want to understand how, and help shape that movement. My work addresses real problems, grounded in an understanding of how users think, act and feel.',
-    'about.h3method':'Method','about.pmethod':'My projects begin with genuine interest in the problem, not with a finished solution. From research and empathy, such as personas, journey maps, interviews and card sortings, I derive psychologically grounded mechanics. They take shape in Figma as modular, clearly hierarchised systems and are sharpened in usability testing with real people.',
-    'about.passions':'Passions & interests',
-    'contact.t1':'Open to projects that','contact.t2':'solve real','contact.t3':'problems.',
     'footer.rights':'All rights reserved','footer.made':'Rothenburg ob der Tauber, Bavaria','footer.top':'Back to top'
   };
   const DEstore = new Map();
@@ -476,9 +469,6 @@
     if (counter) counter.textContent = '100';
     pre && pre.classList.add('is-done');
     document.body.classList.add('loaded');
-    const hero = $('#how');
-    hero && hero.classList.add('is-ready');
-    startRotator();
     startStripType();
   }
 
@@ -524,7 +514,7 @@
     })(last);
 
     document.documentElement.classList.add('has-custom-cursor');
-    const hoverSel = 'a,button,[data-cursor],.project,.fcard,label,summary,[role="button"]';
+    const hoverSel = 'a,button,[data-cursor],.project,label,summary,[role="button"]';
     const setState = t => {
       const label = t && t.closest('[data-cursor]') && t.closest('[data-cursor]').getAttribute('data-cursor');
       cursor.classList.toggle('is-label', !!label);
@@ -534,38 +524,14 @@
     document.addEventListener('mouseover', e => setState(e.target.closest(hoverSel)));
   }
 
-  /* ---------- Nav scroll state + active link ---------- */
+  /* ---------- Nav scroll state ---------- */
   const nav = $('#nav');
-  const subnav = $('#subnav');
-  const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 60;
-  const sections = $$('main section[id]');
-  const navLinks = $$('.subnav__link');
-  // Nothing reads as "active" while still in the first viewport. currentSectionId tracks whatever
-  // the IntersectionObserver last saw regardless of scroll position, applyActive gates it on scrollY
-  // so the link lights up the moment the visitor crosses that first screen, without waiting for the
-  // next section change to re-fire the observer.
-  let currentSectionId = null;
-  const applyActive = () => {
-    const useId = scrollY < innerHeight ? null : currentSectionId;
-    navLinks.forEach(l => l.classList.toggle('is-active', !!useId && l.getAttribute('href') === '#' + useId));
-  };
-  addEventListener('scroll', () => {
-    nav.classList.toggle('is-stuck', scrollY > 30);
-    if (subnav) subnav.classList.toggle('is-stuck', subnav.getBoundingClientRect().top <= navH + 2);
-    applyActive();
-  }, { passive: true });
-
-  const spy = new IntersectionObserver(entries => {
-    entries.forEach(en => { if (en.isIntersecting) currentSectionId = en.target.id; });
-    applyActive();
-  }, { rootMargin: '-45% 0px -50% 0px' });
-  sections.forEach(s => spy.observe(s));
+  addEventListener('scroll', () => { nav.classList.toggle('is-stuck', scrollY > 30); }, { passive: true });
 
   /* ---------- Word-Blur-In (gezielt: Überschriften/kurze Zeilen, siehe [data-split] im HTML) ----------
      Läuft rekursiv durch Text-Knoten, lässt verschachtelte <em>/<b> (Gradient-Wörter) unangetastet
      stehen und umhüllt jedes Wort mit einem .bw-Span; --i treibt die gestaffelte Verzögerung in
-     css/styles.css. approach__line nutzt zusätzlich data-stagger: der Basis-Index versetzt die
-     drei Zeilen zueinander, obendrauf zur bestehenden transitionDelay-Staffelung des Blocks unten. */
+     css/styles.css. Mit data-stagger versetzt ein Basis-Index mehrere Zeilen eines Blocks zueinander. */
   function splitWords(root, base) {
     let i = base || 0;
     (function walk(node) {
@@ -611,56 +577,7 @@
       }
     });
   }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
-  $$('.reveal').forEach((el, i) => {
-    if (el.parentElement && el.parentElement.classList.contains('approach__chain')) {
-      el.style.transitionDelay = (i % 3) * 0.12 + 's';
-    }
-    revObs.observe(el);
-  });
-
-  /* ---------- Rotator (hero accent word) ---------- */
-  const words = ['Unterstützung', 'Begleitung', 'Empathie', 'Vertrauen'];
-  const wordsEn = ['support', 'guidance', 'empathy', 'trust'];
-  function startRotator() {
-    const el = $('#rotator');
-    if (!el) return;
-    let i = 0;
-    const set = () => { el.textContent = (lang === 'en' ? wordsEn : words)[i]; };
-    set();
-    if (reduce) return;
-    setInterval(() => {
-      el.style.transition = 'opacity .35s, transform .35s';
-      el.style.opacity = '0'; el.style.transform = 'translateY(-30%)';
-      setTimeout(() => {
-        i = (i + 1) % words.length; set();
-        el.style.transition = 'none'; el.style.transform = 'translateY(30%)';
-        requestAnimationFrame(() => {
-          el.style.transition = 'opacity .4s, transform .4s';
-          el.style.opacity = '1'; el.style.transform = 'translateY(0)';
-        });
-      }, 360);
-    }, 2600);
-  }
-
-  /* ---------- Magnetic buttons ---------- */
-  if (matchMedia('(hover:hover)').matches && !reduce) {
-    $$('.magnetic').forEach(el => {
-      // Subnav pills get a stronger pull than other magnetic elements (contact links), and carry
-      // their own scale along so the mousemove-driven inline transform doesn't wipe out the
-      // hover/is-active zoom from CSS (inline style always beats the stylesheet rule).
-      const isNavPill = el.classList.contains('subnav__link');
-      const pullX = isNavPill ? 0.4 : 0.25;
-      const pullY = isNavPill ? 0.5 : 0.35;
-      el.addEventListener('mousemove', e => {
-        const r = el.getBoundingClientRect();
-        const mx = e.clientX - r.left - r.width / 2;
-        const my = e.clientY - r.top - r.height / 2;
-        const scale = isNavPill ? 1.08 : 1;
-        el.style.transform = `translate(${mx * pullX}px,${my * pullY}px) scale(${scale})`;
-      });
-      el.addEventListener('mouseleave', () => { el.style.transform = ''; });
-    });
-  }
+  $$('.reveal').forEach(el => revObs.observe(el));
 
   /* ---------- Parallax blobs ---------- */
   const blobs = $$('.field__blob');
@@ -677,22 +594,22 @@
      One warm->cool arc for the entire scroll, not a different hue per section: --warm-1, --cool-1,
      --pink and --violet (plus --bg-tint, which drives every --head-grad headline) all interpolate
      together from the ember palette at the top to the slate palette further down. The transition
-     is a long, slow drift anchored to section 02 (#how): it begins in the project list, is about
-     halfway when 02 scrolls into view and completes towards the end of 02, before 03 (#about). */
+     is a long, slow drift from the tools band to the contact section: it begins in the project list
+     and completes as the contact section comes into view. */
   (function initScrollGradient() {
     const root = document.documentElement;
     const EMBER = { '--warm-1': [169, 80, 63], '--cool-1': [91, 87, 84], '--pink': [114, 109, 105], '--violet': [64, 61, 59] };
     const SLATE = { '--warm-1': [63, 90, 134], '--cool-1': [92, 95, 102], '--pink': [109, 112, 121], '--violet': [60, 62, 68] };
-    const how = document.getElementById('how'), about = document.getElementById('about');
+    const tools = document.getElementById('tools'), contact = document.getElementById('contact');
     const smooth = t => t * t * (3 - 2 * t);
     const lerp = (a, b, t) => a.map((v, i) => Math.round(v + (b[i] - v) * t));
     const toHex = c => '#' + c.map(v => Math.max(0, Math.min(255, v)).toString(16).padStart(2, '0')).join('');
     let ticking = false;
     function apply() {
       let p;
-      if (how && about) {
+      if (tools && contact) {
         const docTop = el => el.getBoundingClientRect().top + scrollY;
-        const start = docTop(how) - innerHeight * 1.8, end = docTop(about) - innerHeight * 0.3;
+        const start = docTop(tools) - innerHeight * 1.8, end = docTop(contact) - innerHeight * 0.3;
         p = (scrollY - start) / Math.max(1, end - start);
       } else {
         p = scrollY / Math.max(1, document.documentElement.scrollHeight - innerHeight);
@@ -728,15 +645,55 @@
   /* ---------- Language toggle ---------- */
   $('#langToggle') && $('#langToggle').addEventListener('click', () => applyLang(lang === 'de' ? 'en' : 'de'));
 
-  /* ---------- Interest flip-cards (tap toggle for touch / no-hover) ---------- */
-  $$('.fcard').forEach(c => {
-    c.addEventListener('click', () => c.classList.toggle('is-flipped'));
-    c.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        c.classList.toggle('is-flipped');
+  /* ---------- Vorgehen: Linienzug aus den echten Positionen der Stationen ----------
+     Nebeneinander: Schleife zwischen je zwei Phasen, Rückweg als U unter den Stationen.
+     Untereinander (Tablet, Mobil): Schleife seitlich, Rückweg links neben den Stationen.
+     Die Stationen spart eine Maske aus, so bleiben die Symbole frei. */
+  const NS = 'http://www.w3.org/2000/svg';
+  function drawCycle(box) {
+    const svg = box.querySelector('.cy-line');
+    const R = box.getBoundingClientRect();
+    const nodes = [...box.querySelectorAll('.cy-node')];
+    if (!svg || !R.width || nodes.length < 2) return;
+    const c = nodes.map(n => { const b = n.getBoundingClientRect(); return { x: b.left - R.left + b.width / 2, y: b.top - R.top + b.height / 2 }; });
+    const g = nodes[0].getBoundingClientRect().width / 2, n = c.length - 1, rr = 22;
+    const row = c.every(p => Math.abs(p.y - c[0].y) < 2), col = c.every(p => Math.abs(p.x - c[0].x) < 2);
+    svg.style.display = row || col ? '' : 'none';
+    if (!row && !col) return;
+    let d, holes;
+    if (row) {
+      const y = c[0].y, lp = 22, yb = y + g + 26;
+      d = `M${c[0].x + g} ${y}`;
+      for (let i = 0; i < n; i++) {
+        const a = c[i].x + g, b = c[i + 1].x - g, m = (a + b) / 2;
+        d += ` L${m - 18} ${y} C${m + 13} ${y} ${m + 13} ${y - lp} ${m} ${y - lp} C${m - 13} ${y - lp} ${m - 13} ${y} ${m + 18} ${y} L${b} ${y}`;
+        if (i < n - 1) d += ` L${c[i + 1].x + g} ${y}`;
       }
-    });
+      d += ` L${c[n].x} ${y} L${c[n].x} ${yb - rr} A${rr} ${rr} 0 0 1 ${c[n].x - rr} ${yb} L${c[0].x + rr} ${yb} A${rr} ${rr} 0 0 1 ${c[0].x} ${yb - rr} L${c[0].x} ${y} L${c[0].x + g} ${y}`;
+      holes = c.map(p => [p.x - g + 1, p.y - g + 6, 2 * g - 2, 2 * g - 4]);
+    } else {
+      const x = c[0].x, lp = 20, xb = x - g - 24;
+      d = `M${x} ${c[0].y + g}`;
+      for (let i = 0; i < n; i++) {
+        const a = c[i].y + g, b = c[i + 1].y - g, m = (a + b) / 2;
+        d += ` L${x} ${m - 18} C${x} ${m + 13} ${x + lp} ${m + 13} ${x + lp} ${m} C${x + lp} ${m - 13} ${x} ${m - 13} ${x} ${m + 18} L${x} ${b}`;
+        if (i < n - 1) d += ` L${x} ${c[i + 1].y + g}`;
+      }
+      d += ` L${x} ${c[n].y} L${xb + rr} ${c[n].y} A${rr} ${rr} 0 0 1 ${xb} ${c[n].y - rr} L${xb} ${c[0].y + rr} A${rr} ${rr} 0 0 1 ${xb + rr} ${c[0].y} L${x} ${c[0].y} L${x} ${c[0].y + g}`;
+      holes = c.map(p => [p.x - g + 6, p.y - g + 1, 2 * g - 4, 2 * g - 2]);
+    }
+    svg.setAttribute('viewBox', `0 0 ${R.width} ${R.height}`);
+    svg.querySelectorAll('path').forEach(p => p.setAttribute('d', d));
+    const mask = svg.querySelector('mask'), P = 200;
+    Object.entries({ x: -P, y: -P, width: R.width + 2 * P, height: R.height + 2 * P }).forEach(([k, v]) => mask.setAttribute(k, v));
+    const rect = (x, y, w, h, fill) => { const e = document.createElementNS(NS, 'rect'); Object.entries({ x, y, width: w, height: h, fill }).forEach(([k, v]) => e.setAttribute(k, v)); return e; };
+    mask.replaceChildren(rect(-P, -P, R.width + 2 * P, R.height + 2 * P, '#fff'), ...holes.map(h => rect(...h, '#000')));
+  }
+  $$('[data-cycle]').forEach(box => {
+    // Die Reveal-Einblendung verschiebt die Box per transform; getBoundingClientRect misst
+    // Box und Stationen gleich verschoben, die Differenzen bleiben also korrekt.
+    new ResizeObserver(() => drawCycle(box)).observe(box);
+    document.fonts && document.fonts.ready.then(() => drawCycle(box));
   });
 
   /* ---------- Project modal ----------

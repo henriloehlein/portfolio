@@ -2,7 +2,7 @@
    Henri Löhlein — Portfolio
    Design system · dark-first · warm/cool gradient signature
 
-   Glass surfaces (subnav pill, toolband, modal bar) share one --glass-blur/
+   Glass surfaces (toolband, modal bar) share one --glass-blur/
    --glass-sat recipe. Elevation runs on a 3-step shadow scale (--shadow-sm/md,
    plus the pre-existing --shadow as the "lg" tier).
    ========================================================= */
@@ -43,13 +43,13 @@
 
   --maxw:1320px;
   --pad:clamp(20px,5vw,80px);
-  --nav-h:20px; /* gap the sticky subnav keeps from the viewport's top edge once stuck */
+  --nav-h:20px; /* offset for the stuck state of the top bar (read by main.js) */
 
   --f-display:'Fraunces',Georgia,serif;
   --f-sans:'Inter',system-ui,-apple-system,sans-serif;
   --f-mono:'Space Grotesk','Inter',sans-serif;
 
-  /* One glass recipe for every translucent surface (subnav pill, toolband, modal
+  /* One glass recipe for every translucent surface (toolband, modal
      bar) instead of each picking its own blur/saturation. */
   --glass-blur:18px;
   --glass-sat:175%;
@@ -264,83 +264,11 @@ html.has-custom-cursor,html.has-custom-cursor *{cursor:none}
 .burger{display:none;flex-direction:column;gap:5px;width:38px;height:38px;align-items:center;justify-content:center}
 .burger i{width:20px;height:2px;background:var(--text);transition:transform .3s,opacity .3s}
 
-/* ---------- Subnav · borderless, stretched across width ---------- */
-.subnav{position:sticky;top:var(--nav-h);z-index:90;max-width:var(--maxw);margin:clamp(4px,1.6vw,26px) auto 0}
-.subnav__edge{display:block;height:0}
-/* No bar-wide shield: legibility comes from each link's own glass pill (see .subnav__link::before/
-   ::after), scoped to the word itself, and it only exists on hover/active. */
-.subnav__bg{display:none}
-.subnav__inner{display:flex;margin:0 var(--pad);padding:14px 6px}
-.subnav__links{display:flex;flex:1;justify-content:space-between;align-items:center;gap:clamp(10px,2vw,28px)}
-.subnav__link{position:relative;font-family:var(--f-mono);font-size:clamp(14px,1.4vw,17px);letter-spacing:.01em;color:var(--muted);white-space:nowrap;
-  padding:8px 16px;margin:-8px 0;border-radius:999px;display:inline-block;
-  transition:color .35s,transform .7s cubic-bezier(.22,1,.36,.98),letter-spacing .45s var(--ease),text-shadow .45s var(--ease)}
-/* Glass body (::before): backdrop-filter sits at blur(0)/no saturation at rest, a true no-op, so an
-   idle word never smudges whatever text or image scrolls behind it, only hover/active turn the
-   filter on. Rim (::after): a hairline conic gradient masked down to just the outline (content-box/
-   border-box xor trick), so the edge reads as an actual lit rim, not another soft fill. Both fade by
-   opacity, not by animating the gradients themselves. Blur/saturation come from the shared
-   --glass-blur/--glass-sat pair (see toolband/modal bar below) instead of a value picked just for
-   this element. */
-.subnav__link::before{content:"";position:absolute;inset:0;z-index:-2;border-radius:inherit;pointer-events:none;
-  backdrop-filter:blur(0) saturate(100%);-webkit-backdrop-filter:blur(0) saturate(100%);
-  background:
-    radial-gradient(65% 85% at 26% -20%,color-mix(in srgb,#fff 70%,transparent),transparent 55%),
-    radial-gradient(90% 110% at 80% 130%,color-mix(in srgb,var(--cool-1) 32%,transparent),transparent 70%),
-    linear-gradient(120deg,color-mix(in srgb,var(--warm-1) 14%,transparent),color-mix(in srgb,var(--cool-1) 14%,transparent)),
-    color-mix(in srgb,var(--surface) 55%,transparent);
-  box-shadow:
-    inset 0 1px 0 color-mix(in srgb,#fff 55%,transparent),
-    inset 0 -8px 12px -8px color-mix(in srgb,#000 40%,transparent),
-    0 12px 28px -14px color-mix(in srgb,var(--warm-1) 45%,transparent),
-    0 2px 6px -2px rgba(0,0,0,.28);
-  opacity:0;transition:opacity .4s var(--ease),backdrop-filter .4s var(--ease)}
-/* Neutral hairline rim, no hue: a plain top-lit-to-dim white fade reads as light catching a glass
-   edge without turning the pill into a colourful outline. */
-.subnav__link::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;padding:.5px;
-  background:linear-gradient(180deg,color-mix(in srgb,#fff 40%,transparent),color-mix(in srgb,#fff 6%,transparent));
-  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-  -webkit-mask-composite:xor;mask-composite:exclude;
-  opacity:0;transition:opacity .4s var(--ease)}
-.subnav__link:hover::before,.subnav__link.is-active::before{backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-sat));-webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-sat));opacity:1}
-.subnav__link:hover::after,.subnav__link.is-active::after{opacity:.5}
-/* Chrome/silver shine sweep through the word itself, tokenised so it reads white-on-dark and
-   near-black-on-light. Resting words keep the plain flat --muted colour, no pill, no shine. */
-.subnav__link:hover,.subnav__link.is-active{
-  letter-spacing:.03em;
-  text-shadow:0 0 20px color-mix(in srgb,var(--warm-1) 35%,transparent);
-  --shiny-width:60px;
-  color:color-mix(in srgb,var(--text) 88%,transparent);
-  background-image:linear-gradient(90deg,transparent,var(--text) 55%,transparent);
-  background-size:var(--shiny-width) 100%;background-repeat:no-repeat;
-  background-position:calc(-100% - var(--shiny-width)) 0;
-  -webkit-background-clip:text;background-clip:text;
-  animation:shiny-text 2.4s infinite}
-.subnav__link:hover,.subnav__link.is-active{transform:scale(1.08)}
-@keyframes shiny-text{
-  0%,85%,100%{background-position:calc(-100% - var(--shiny-width)) 0}
-  35%,55%{background-position:calc(100% + var(--shiny-width)) 0}
-}
-@media (max-width:620px){
-  .subnav__inner{padding:12px 2px}
-  .subnav__links{gap:6px;justify-content:space-between}
-  .subnav__link{font-size:12.5px}
-}
-/* At phone width the four pills were ~60px wider than the viewport, which widened the layout
-   viewport and pushed the fixed case-study panel partly off-screen. */
-@media (max-width:400px){
-  .subnav__links{gap:4px}
-  .subnav__link{font-size:12px;padding:8px 8px}
-}
-
 /* ---------- Layout helpers ---------- */
 section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);max-width:var(--maxw);margin:0 auto}
 .sectionTag{display:flex;align-items:center;gap:12px;font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:34px}
-/* one accent for every section tag, it already follows the live scroll gradient via --warm-1 */
-.sectionTag > span:first-child{color:var(--warm-1)}
-/* quieter heading for equal parts inside a section (Haltung, Methode): no number, short accent rule */
-.subTag{display:flex;align-items:center;gap:14px;font-family:var(--f-mono);font-size:12px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 28px}
-.subTag::before{content:"";width:28px;height:1px;background:var(--warm-1);flex:none}
+/* one accent for every section tag: a short rule that follows the live scroll gradient via --warm-1 */
+.sectionTag::before{content:"";width:28px;height:1px;background:var(--warm-1);flex:none}
 
 /* ---------- Reveal ---------- */
 .reveal{opacity:0;transform:translateY(34px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
@@ -355,77 +283,111 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
   transition:opacity .4s var(--ease),filter .32s var(--ease),transform .32s var(--ease);
   transition-delay:calc(var(--i) * 36ms)}
 .is-in .bw{opacity:1;filter:blur(0);transform:translateY(0)}
-/* Gradient-Text (em in .focus__title/.contact__title, b in .approach__line) clippt seinen
+/* Verlaufs-Text (z. B. .work__title) clippt seinen
    Farbverlauf über background-clip:text, das vererbt sich nicht von selbst. Jedes Wort braucht
    das explizit, sonst rendert -webkit-text-fill-color:transparent ohne eigenes Gradient und das
    Wort verschwindet. Für Wörter ohne Gradient-Elternteil ist das ein harmloses No-op. */
 .bw{background:inherit;-webkit-background-clip:inherit;background-clip:inherit;-webkit-text-fill-color:inherit}
 
-/* ---------- Hero · text only ---------- */
-.hero{position:relative;padding-top:clamp(36px,5vw,60px);padding-bottom:clamp(40px,6vw,80px)}
-.hero__text{position:relative;z-index:3;max-width:min(100%,920px)}
-@keyframes pulse{70%{box-shadow:0 0 0 8px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
-.hero__title{font-family:var(--f-display);font-weight:380;font-size:clamp(40px,6.6vw,104px);line-height:.97;letter-spacing:-.035em}
-.hero__title .line{display:block;overflow:hidden}
-.hero__title .word{display:inline-block;transform:translateY(115%);transition:transform 1s var(--ease)}
-.hero.is-ready .word{transform:translateY(0)}
-.hero__title .line:nth-child(2) .word{transition-delay:.08s}
-.hero__title .line:nth-child(3) .word{transition-delay:.16s}
-.line--accent{font-style:italic}
-/* shared gradient-text treatment — consistent technique, varied hue + motion per heading.
-   Two motion idioms keep it lively but calm: `pan/breathe` slides the colour ramp,
-   `angShift` tilts the gradient angle (smooth thanks to the @property below). */
-@property --ang{syntax:"<angle>";inherits:false;initial-value:96deg}
-.gradtext{-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;background-size:130% 100%;background-position:0% 50%}
-/* helper used on every gradient headline */
-.gtxt{-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+/* ---------- Abschnittsüberschriften: poliertes Metall (angelehnt an sreedesigns.com) ----------
+   Senkrechter Verlauf mit hellem Rand, dunklem Band in der Mitte und Rückstrahlung unten. Er
+   wiederholt sich pro Zeile (background-size = Zeilenhöhe), dazu eine Lichtkante aus dem
+   SVG-Filter #dkChrome im Symbol-Sprite. Farben folgen dem Scroll-Ton (--bg-tint). */
+.dk{--lh:1.03;
+  --c1:color-mix(in srgb,var(--bg-tint) 6%,#fbf8f5);
+  --c2:color-mix(in srgb,var(--bg-tint) 14%,#ded6d0);
+  --c3:color-mix(in srgb,var(--bg-tint) 32%,#766b67);
+  --c4:color-mix(in srgb,var(--bg-tint) 18%,#cfc5bf);
+  --c5:color-mix(in srgb,var(--bg-tint) 8%,#f1ebe6);
+  --rim:rgba(255,255,255,.10);--shade:rgba(0,0,0,.45);
+  --sheen:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.16) 44%,transparent 60%);
+  --thread:#dc9f85}
+[data-theme="light"] .dk{
+  --c1:color-mix(in srgb,var(--bg-tint) 22%,#5d5552);
+  --c2:color-mix(in srgb,var(--bg-tint) 18%,#302a28);
+  --c3:color-mix(in srgb,var(--bg-tint) 10%,#0f0c0c);
+  --c4:color-mix(in srgb,var(--bg-tint) 20%,#3f3734);
+  --c5:color-mix(in srgb,var(--bg-tint) 16%,#2a2422);
+  --rim:rgba(255,255,255,.75);--shade:rgba(40,24,16,.10);
+  --sheen:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.22) 44%,transparent 60%);
+  --thread:#a34e37}
+.dk-sec{padding-top:clamp(100px,12vw,170px);padding-bottom:0}
+.dk-sec--last{padding-bottom:clamp(110px,13vw,190px)}
+.dk-title{position:relative;font-family:var(--f-display);font-weight:380;font-variation-settings:"opsz" 60;
+  font-size:clamp(38px,5.6vw,80px);line-height:var(--lh);letter-spacing:-.03em;max-width:19ch;text-wrap:balance;
+  padding:0 .06em .14em 0;color:var(--c2);
+  --chrome:linear-gradient(180deg,var(--c1) 18%,var(--c2) 38%,var(--c3) 58%,var(--c4) 76%,var(--c5) 90%);
+  background:var(--sheen),var(--chrome);background-size:100% 100%,100% calc(var(--lh) * 1em);background-repeat:no-repeat,repeat-y;
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  filter:url(#dkChrome) drop-shadow(0 1px 0 var(--rim)) drop-shadow(0 14px 30px var(--shade))}
+/* Schlüsselwörter: kursiv mit leicht wärmerem Band, eigene Fläche in exakt Zeilenhöhe,
+   damit die Bänder deckungsgleich mit dem Satz bleiben */
+.dk-title em{display:inline-block;font-style:italic;font-weight:360;line-height:var(--lh);padding:0 .05em 0 .02em;margin:0 -.02em 0 -.01em;
+  --chrome:linear-gradient(180deg,var(--c1) 18%,color-mix(in srgb,var(--warm-1) 38%,var(--c2)) 38%,color-mix(in srgb,var(--warm-1) 48%,var(--c3)) 58%,color-mix(in srgb,var(--warm-1) 32%,var(--c4)) 76%,var(--c5) 90%);
+  background:var(--chrome);background-size:100% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.nw{white-space:nowrap}
+.dk-lede{margin-top:clamp(24px,2.6vw,36px);max-width:54ch;font-size:clamp(17px,1.35vw,19.5px);line-height:1.62;color:var(--muted);text-wrap:pretty}
+.dk h3{font-family:var(--f-display);font-weight:400;letter-spacing:-.015em;color:var(--text);text-wrap:balance}
+.dk-label{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.dk-ico{display:block;width:44px;height:44px;color:var(--text);--acc:color-mix(in srgb,var(--warm-1) 72%,var(--text))}
 
-@keyframes gradPan{from{background-position:0% 50%}to{background-position:-200% 50%}}        /* seamless, for looping ramps */
-@keyframes gradBreathe{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}} /* ping-pong, no seam */
-@keyframes angShift{0%,100%{--ang:82deg}50%{--ang:116deg}}                                   /* living angle shimmer */
+/* ---------- Vorgehen: vier Stationen, ein Linienzug mit Schleifen und Rückweg ----------
+   Vier gleich breite Spalten, alles mittig auf einer Achse. Jede Station ist ein Subgrid über
+   vier Zeilen (Symbol, Phase, Titel, Methoden), so stehen Titel und Texte aller Spalten auf
+   gleicher Höhe. Den Linienzug zeichnet js/main.js aus den echten Positionen der Symbole. */
+.cy{position:relative;margin-top:clamp(84px,9.5vw,132px);--ico:clamp(92px,8.6vw,120px)}
+.cy-steps{list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:auto auto auto 1fr;column-gap:clamp(20px,2.6vw,40px);position:relative;text-align:center}
+.cy-steps > li{display:grid;grid-row:span 4;grid-template-rows:subgrid;justify-items:center;align-content:start}
+/* Symbole: frei stehend, Metallverlauf im Strich (#icoMetal), ein Kupferakzent (--thread) */
+[data-theme="dark"]{--i1:#fbf6f1;--i2:#c2b4ab;--i3:#e7ddd6;--i4:#b1a39b}
+[data-theme="light"]{--i1:#51463f;--i2:#1a1514;--i3:#3c3330;--i4:#241e1c}
+.cy-node{position:relative;display:grid;place-items:center;width:var(--ico);aspect-ratio:1;margin-bottom:clamp(44px,4.6vw,64px)}
+.cy-node .dk-ico{width:100%;height:100%;overflow:visible;fill:none;stroke:url(#icoMetal);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+#ico-research *,#ico-konzept *,#ico-ui *,#ico-test *{vector-effect:non-scaling-stroke}
+.cy-steps .dk-label{margin-bottom:12px}
+.cy-steps h3{font-size:clamp(20px,1.6vw,24px);line-height:1.14;margin-bottom:14px;align-self:start}
+.cy-steps li > p:not(.dk-label){max-width:28ch;font-size:15.5px;line-height:1.62;color:var(--muted);text-wrap:balance}
+.cy-line{position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.cy-line path{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.cy-base{stroke:var(--line-2);stroke-width:1}
+.cy-lit{stroke:color-mix(in srgb,var(--warm-1) 70%,#fff);stroke-width:1.6;stroke-dasharray:46 954;stroke-dashoffset:1000;
+  filter:drop-shadow(0 0 5px color-mix(in srgb,var(--warm-1) 60%,transparent));animation:cyRun 20s linear infinite}
+@keyframes cyRun{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.cy-lit{display:none}}
+@media (max-width:1040px){
+  .cy-steps{grid-template-columns:1fr;grid-template-rows:none;row-gap:clamp(44px,7vw,60px);padding-left:30px;text-align:left}
+  .cy-steps > li{grid-row:auto;grid-template-rows:none;grid-template-columns:88px minmax(0,1fr);column-gap:clamp(20px,4vw,34px);align-items:start;justify-items:start}
+  .cy-node{grid-row:1 / span 3;width:88px;margin:0}
+  .cy-steps > li > :not(.cy-node){grid-column:2}
+  .cy-steps .dk-label{margin-top:6px}
+  .cy-steps li > p:not(.dk-label){max-width:52ch}
+}
+@media (max-width:520px){
+  .cy-steps{padding-left:24px}
+  .cy-steps > li{grid-template-columns:64px minmax(0,1fr)}
+  .cy-node{width:64px}
+}
 
-.rotator{background:var(--head-grad);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;min-height:1em;
-  filter:drop-shadow(0 8px 28px var(--head-glow));
-  animation:gradBreathe 14s ease-in-out infinite}
-.hero__base{display:flex;flex-direction:column;align-items:flex-start;gap:24px;margin-top:clamp(26px,3.5vw,42px)}
-.hero__lede{max-width:54ch;margin-top:clamp(26px,3.5vw,42px);font-size:clamp(16px,1.5vw,20px);color:var(--muted);line-height:1.62}
-.hero__lede strong{color:var(--text);font-weight:600}
-.hero__text .hero__cta{margin-top:clamp(26px,3vw,36px)}
-.hero .approach{margin-top:clamp(52px,8vw,104px);text-align:left}
-.hero .toolband{margin-bottom:clamp(44px,6vw,76px)}
-.hero .about__method{margin-top:clamp(52px,8vw,104px)}
-.hero__lede em{font-style:italic;color:var(--text)}
-/* Interactive hover button (MagicUI mechanic, ported to our tokens): the dot previews the
-   signature gradient at rest, then balloons in place on hover, clipped by overflow:hidden, to
-   become the pill's new fill. The resting label slides out right and fades as the dot grows;
-   a second, absolutely-positioned label + arrow slides in from the right to replace it. Dot and
-   label are independent siblings (not nested) so the dot expands from its own centre instead of
-   travelling with the label. */
-.hero__cta{position:relative;overflow:hidden;display:inline-flex;align-items:center;
-  padding:16px 26px;border-radius:50px;background:var(--text);white-space:nowrap}
-.hero__ctaInner{display:inline-flex;align-items:center;gap:11px}
-.hero__ctaDot{width:9px;height:9px;border-radius:50%;flex:none;background:var(--grad);
-  transition:transform .6s var(--ease)}
-.hero__ctaLabel{color:var(--bg);font-weight:600;font-size:15px;
-  transition:transform .5s var(--ease),opacity .35s var(--ease)}
-.hero__ctaReveal{position:absolute;inset:0;z-index:1;display:inline-flex;align-items:center;
-  justify-content:center;gap:11px;color:#fff;font-weight:600;font-size:15px;
-  opacity:0;transform:translateX(20px);pointer-events:none;
-  transition:transform .5s var(--ease),opacity .4s var(--ease)}
-.hero__ctaReveal svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.hero__cta:hover .hero__ctaDot{transform:scale(60)}
-.hero__cta:hover .hero__ctaLabel{transform:translateX(20px);opacity:0}
-.hero__cta:hover .hero__ctaReveal{transform:translateX(0);opacity:1}
+/* ---------- Schwerpunkte ---------- */
+.dk-focus{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(28px,5vw,80px);margin-top:clamp(72px,9vw,120px)}
+.dk-focus article{border-top:1px solid var(--line-2);padding-top:clamp(28px,3vw,40px)}
+.dk-focus .dk-ico{width:60px;height:60px;margin:0 0 22px -6px}
+.dk-focus h3{font-size:clamp(26px,2.4vw,34px);line-height:1.1;margin-bottom:16px}
+.dk-focus p{font-size:16.5px;line-height:1.66;color:var(--muted);max-width:46ch;text-wrap:pretty}
+@media (max-width:760px){.dk-focus{grid-template-columns:1fr}}
+
+/* ---------- Tools ---------- */
+.tools{padding-top:clamp(70px,9vw,130px);padding-bottom:0}
 
 /* ---------- Toolband · quiet glass band, tools in a slow marquee ---------- */
-/* Same glass DNA as .subnav__link (blur+saturate, hairline rim, soft outer lift), tuned flatter
+/* Glass surface (blur+saturate, hairline rim, soft outer lift), tuned flat
    and quieter: single hairline ring instead of dual radial highlights, no colour wash. Content is
-   duplicated once in the HTML and travels exactly -50%, same technique as .marquee below.
+   duplicated once in the HTML and travels exactly -50%.
    Same width as the rest of the section's content (no full-bleed), open at both sides through a
    single mask-image that fades the *entire* surface (glass + border + shadow + icons together, not
    just the marquee content) into the page at each edge, so it reads as an open channel rather than
    a framed card, without spilling past the page's own margins. Blur/saturation: shared
-   --glass-blur/--glass-sat, same recipe as the subnav pill and modal bar. */
+   --glass-blur/--glass-sat, same recipe as the modal bar. */
 .toolband{position:relative;isolation:isolate;
   backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-sat));-webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-sat));
   background:
@@ -461,38 +423,6 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
   .toolband__item span{font-size:17px}
 }
 
-/* ---------- Approach ---------- */
-.approach{text-align:left}
-.approach__chain{font-family:var(--f-display);font-weight:340;font-size:clamp(30px,6vw,82px);line-height:1.04;letter-spacing:-.03em}
-.approach__line{margin:.04em 0;color:var(--muted-2)}
-.approach__line span{color:var(--muted)}
-.approach__line b{font-weight:340;font-style:italic;color:var(--text);background:var(--head-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-  filter:drop-shadow(0 4px 18px var(--head-glow))}
-.approach__note{margin-top:clamp(34px,5vw,64px);max-width:60ch;font-size:clamp(16px,1.5vw,19px);color:var(--muted)}
-
-/* ---------- Interests / Focus (flip cards) ---------- */
-.focus__head{max-width:920px;margin-bottom:clamp(40px,6vw,72px)}
-.focus__title{font-family:var(--f-display);font-weight:360;font-size:clamp(30px,5vw,64px);line-height:1.05;letter-spacing:-.025em}
-.focus__title em{font-style:italic;background:var(--head-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-  filter:drop-shadow(0 5px 22px var(--head-glow))}
-.focus__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-.fcard{perspective:1400px;min-height:262px;border-radius:18px;cursor:pointer;outline:none}
-/* Keyboard focus needs its own visible ring: the flip on :focus-visible (below) tells you
-   *something* happened, not *which* card has focus. Mouse clicks stay ring-free. */
-.fcard:focus-visible{outline:2px solid var(--warm-1);outline-offset:6px;border-radius:22px}
-.fcard__inner{position:relative;width:100%;min-height:262px;transition:transform .7s var(--ease);transform-style:preserve-3d}
-.fcard:hover .fcard__inner,.fcard:focus-visible .fcard__inner,.fcard.is-flipped .fcard__inner{transform:rotateY(180deg)}
-.fcard__face{position:absolute;inset:0;min-height:262px;border:1px solid var(--line);border-radius:18px;padding:28px 26px;display:flex;flex-direction:column;-webkit-backface-visibility:hidden;backface-visibility:hidden;overflow:hidden;background:color-mix(in srgb,var(--surface) 55%,transparent);box-shadow:var(--shadow-sm)}
-.fcard__front{justify-content:flex-end}
-.fcard__icon{position:absolute;top:-14px;right:-14px;width:124px;height:124px;fill:none;stroke:var(--text);stroke-width:1;stroke-linecap:round;stroke-linejoin:round;opacity:.12;transition:opacity .5s var(--ease),transform .7s var(--ease)}
-.fcard:hover .fcard__icon{opacity:.2;transform:scale(1.06) rotate(-4deg)}
-.fcard__num{font-family:var(--f-mono);font-size:13px;color:var(--warm-1);margin-bottom:10px}
-.fcard__front h3{font-family:var(--f-display);font-weight:420;font-size:clamp(22px,2vw,26px);letter-spacing:-.01em;line-height:1.08}
-.fcard__back{transform:rotateY(180deg);justify-content:center;border-color:transparent;background:var(--surface)}
-.fcard__back::before{content:"";position:absolute;inset:0;background:var(--grad-soft);opacity:.16}
-.fcard__back::after{content:"↩";position:absolute;top:18px;right:20px;font-size:14px;color:var(--text);opacity:.5}
-.fcard__back p{position:relative;z-index:1;font-size:15px;color:var(--text);line-height:1.62}
-
 /* ---------- Work / Projects ---------- */
 .work__head{margin-bottom:clamp(30px,4vw,50px)}
 .work__title{font-family:var(--f-display);font-weight:360;font-size:clamp(40px,8vw,110px);letter-spacing:-.035em;line-height:1;
@@ -500,11 +430,10 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
   filter:drop-shadow(0 10px 38px var(--head-glow))}
 .work__hint{margin-top:16px;font-family:var(--f-mono);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-2)}
 .projects{list-style:none;border-top:1px solid var(--line)}
-.project{position:relative;display:grid;grid-template-columns:64px 1fr 300px;gap:34px;align-items:center;padding:40px 8px;border-bottom:1px solid var(--line);cursor:pointer;transition:padding .5s var(--ease)}
+.project{position:relative;display:grid;grid-template-columns:1fr 300px;gap:34px;align-items:center;padding:40px 8px;border-bottom:1px solid var(--line);cursor:pointer;transition:padding .5s var(--ease)}
 .project::after{content:"";position:absolute;inset:0;background:var(--grad-soft);opacity:0;z-index:-1;transition:opacity .5s;border-radius:14px}
 .project:hover{padding-left:26px;padding-right:26px}
 .project:hover::after{opacity:.07}
-.project__index{font-family:var(--f-mono);font-size:14px;color:var(--muted-2)}
 .project__name{font-family:var(--f-display);font-weight:380;font-size:clamp(30px,4.4vw,58px);letter-spacing:-.025em;line-height:1;margin-bottom:12px;transition:transform .5s var(--ease)}
 .project:hover .project__name{transform:translateX(8px)}
 .project__role{font-family:var(--f-mono);font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--warm-1);margin-bottom:14px}
@@ -532,32 +461,26 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 .project:hover .project__open{opacity:1;transform:scale(1)}
 .project__open svg{width:16px;height:16px;fill:none;stroke:var(--text);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 
-/* ---------- About ---------- */
-.about__grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,80px);margin-bottom:clamp(40px,6vw,70px)}
-.about__col h3{font-family:var(--f-mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--warm-1);margin-bottom:20px}
-.about__col p{font-size:clamp(17px,1.8vw,22px);line-height:1.6;color:var(--text);font-weight:300;letter-spacing:-.01em}
-.about__method{max-width:900px;margin:0 0 clamp(40px,6vw,70px)}
-.about__method p{font-size:clamp(17px,1.8vw,22px);line-height:1.6;color:var(--text);font-weight:300;letter-spacing:-.01em}
-.about .focus__grid{margin-bottom:clamp(40px,6vw,70px)}
-.about__passionsLabel{display:block;font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
-.marquee{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:18px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-.marquee__track{display:flex;gap:24px;white-space:nowrap;width:max-content;animation:marquee 38s linear infinite;font-family:var(--f-display);font-size:clamp(22px,3vw,40px);font-style:italic;font-weight:340}
-.marquee__track span{color:var(--text)}
-.marquee:hover .marquee__track{animation-play-state:paused}
-@keyframes marquee{to{transform:translateX(-50%)}}
-
-/* ---------- Contact ---------- */
+/* ---------- Kontakt ----------
+   Offene Zeilen mit Haarlinie oben, in derselben Flucht wie die Schwerpunkte. Beim Hover und
+   Fokus zieht ein Kupferfaden über die Linie, der Pfeil rückt nach. */
 .contact{text-align:left}
-.contact__title{font-family:var(--f-display);font-weight:360;font-size:clamp(40px,8.5vw,118px);line-height:1;letter-spacing:-.035em;margin-bottom:clamp(40px,6vw,70px)}
-.contact__title em{font-style:italic;background:var(--head-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-  filter:drop-shadow(0 8px 30px var(--head-glow))}
-.contact__links{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-/* Everything else on the page carries elevation (plates, cards, popups); these two links were the
-   one flat exception (border only). Resting shadow + a stronger one on hover matches the lift. */
-.contact__link{display:flex;flex-direction:column;gap:10px;padding:34px;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-sm);transition:border-color .4s,transform .4s var(--ease),background .4s,box-shadow .4s var(--ease)}
-.contact__link:hover{transform:translateY(-5px);border-color:var(--line-2);background:color-mix(in srgb,var(--surface) 60%,transparent);box-shadow:var(--shadow-md)}
-.contact__linkLabel{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.contact__linkVal{font-family:var(--f-display);font-size:clamp(22px,3vw,38px);font-weight:380;letter-spacing:-.02em}
+.contact .dk-title{margin-bottom:clamp(40px,6vw,70px)}
+.contact__links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(28px,5vw,80px)}
+.contact__link{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;row-gap:14px;column-gap:20px;
+  padding:clamp(24px,2.6vw,34px) 0 6px;border-top:1px solid var(--line-2)}
+.contact__link::before{content:"";position:absolute;left:0;right:0;top:-1px;height:1px;transform:scaleX(0);transform-origin:left;
+  background:linear-gradient(90deg,var(--thread),color-mix(in srgb,var(--thread) 20%,transparent));transition:transform .7s var(--ease)}
+.contact__link:hover::before,.contact__link:focus-visible::before{transform:scaleX(1)}
+.contact__link:focus-visible{outline:none}
+.contact__link:focus-visible .contact__linkVal{text-decoration:underline;text-decoration-color:var(--thread);text-decoration-thickness:1px;text-underline-offset:.18em}
+.contact__linkLabel{grid-column:1 / -1;font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.contact__linkVal{min-width:0;overflow-wrap:anywhere;font-family:var(--f-display);font-size:clamp(24px,2.6vw,36px);line-height:1.1;font-weight:380;letter-spacing:-.02em;color:var(--text)}
+.contact__arrow{width:clamp(28px,2.6vw,36px);height:clamp(28px,2.6vw,36px);margin:0 -6px .1em 0;fill:none;stroke:var(--muted);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;
+  transition:transform .5s var(--ease),stroke .3s}
+.contact__link:hover .contact__arrow,.contact__link:focus-visible .contact__arrow{transform:translate(3px,-3px);stroke:var(--thread)}
+@media (max-width:760px){.contact__links{grid-template-columns:1fr;gap:12px}}
+@media (prefers-reduced-motion:reduce){.contact__link::before,.contact__arrow{transition:none}}
 
 /* ---------- Footer ---------- */
 .footer{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto;padding:40px var(--pad) 50px;border-top:1px solid var(--line)}
@@ -1039,9 +962,7 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 
 /* ---------- Responsive ---------- */
 @media (max-width:1040px){
-  .focus__grid{grid-template-columns:1fr 1fr}
-  .fcard__num{margin-bottom:34px}
-  .project{grid-template-columns:48px 1fr 200px;gap:22px}
+  .project{grid-template-columns:1fr 200px;gap:22px}
   .project__visual{height:170px}
   .phone{width:92px}
   .cs__taskGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -1054,17 +975,11 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
   .cs__flowLabel{font-size:10px;flex-wrap:wrap}
 }
 @media (max-width:760px){
-  .subnav__inner{gap:9px;border-radius:16px;padding:11px 16px}
-  .subnav__meta{font-size:10px}
-  .focus__grid{grid-template-columns:1fr}
   .project{grid-template-columns:1fr;gap:18px}
-  .project__index{position:absolute;top:32px;right:8px}
   .project__visual{justify-self:start;max-width:100%;height:auto;margin-top:6px}
   .phone{width:120px;transform:none}
   .plate{height:160px}
   .project__open{display:none}
-  .about__grid{grid-template-columns:1fr}
-  .contact__links{grid-template-columns:1fr}
   .cs__shots--2,.cs__grid2{grid-template-columns:1fr}
 }
 @media (max-width:760px){

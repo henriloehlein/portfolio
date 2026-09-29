@@ -11,6 +11,20 @@ Oder gezielt eine Stelle ansehen: `git show <hash>:<pfad>` mit dem Hash aus dem 
 
 ---
 
+## Abschnitte „Wie ich arbeite“ und „Über mich“, Subnav, Abschnitts- und Projektnummern
+- **Entfernt:** 2026-09-29
+- **Letzter Stand vor Entfernung:** Commit `7e61800`
+- **War:** `nav.subnav#subnav` mit vier Links (JS: Sticky-Zustand und aktiver Link, Magnet-Effekt `.magnetic`); die Nummern `01`–`04` in den `.sectionTag` und `.project__index` `01`–`05` in der Projektliste. `section.hero#how` („Wie ich arbeite“) mit Toolband, dreizeiliger `.hero__title` samt Rotator `#rotator`, `.hero__lede`, `.hero__cta`, der Haltungs-Kette `.approach` und dem Absatz `.about__method`. `section.about#about` („Über mich“) mit `.about__grid` (Psychologie & Design, Blick nach vorn), `.focus__title` mit vier Flip-Karten `.fcard` und dem Interessen-Marquee. Dazu die Kontaktkarten als Boxen mit Anheben beim Hover und die Überschrift „Offen für Projekte, die echte Probleme lösen.“
+- **Fundstelle für vollen Code:** `git show 7e61800:index.html`, `git show 7e61800:css/styles.css` (Blöcke „Subnav“, „Hero · text only“, „Approach“, „Interests / Focus“, „About“, „Contact“), `git show 7e61800:js/main.js` (Blöcke „Nav scroll state + active link“, „Rotator“, „Magnetic buttons“, „Interest flip-cards“).
+- **Warum entfernt:** Neuaufbau nach der Vorschau `denkweise-preview.html`: eigener Abschnitt Tools, danach Vorgehen (Metall-Überschrift, vier Phasen mit Linienzug) und Schwerpunkte (Psychologie im Design, Innovative Technologien), Kontakt als offene Zeilen. Die Toolband-Markup und ihr CSS leben im Abschnitt `#tools` weiter.
+
+## Anekdoten-Karten „Woher mein Interesse kommt“ (nur Preview)
+- **Entfernt:** 2026-09-29
+- **Letzter Stand vor Entfernung:** nie im Git, stand nur in der lokalen `denkweise-preview.html` (per `.gitignore` ausgeschlossen)
+- **War:** zwei Flip-Karten unter den Schwerpunkten („Warum das Kreuz oben in der Ecke sitzt“ zum ersten UX-Kurs, „Warum kaum jemand wechselt“ zum Apple-Ökosystem), `.an`/`.an-grid`/`.acard*`, Symbole `ico-ad`, `ico-eco`, `ico-turn`, dazu ein kleiner Klick- und Tastatur-Handler.
+- **Fundstelle für vollen Code:** [`docs/archiv/anekdoten-karten.md`](archiv/anekdoten-karten.md) mit HTML, Symbolen, CSS und JS.
+- **Warum entfernt:** auf Wunsch; die Geschichten bleiben als möglicher Einstieg für die Schwerpunkte oder eine Case Study vorgemerkt.
+
 ## Preloader (Namens-Animation mit 0→100-Zähler)
 - **Entfernt:** 2026-09-18
 - **Letzter Stand vor Entfernung:** Commit `3282087`

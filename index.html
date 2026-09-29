@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
 
-<link rel="stylesheet" href="css/styles.css?v=2026-09-28a" />
+<link rel="stylesheet" href="css/styles.css?v=2026-09-29a" />
 <link rel="stylesheet" href="css/einstieg-animation.css?v=2026-09-27b" />
 </head>
 <body>
@@ -84,24 +84,10 @@
 
 <main id="top">
 
-<!-- ============ SUBNAV · Sektionsübersicht, unter dem Bild / über dem Intro ============ -->
-<nav class="subnav" id="subnav" aria-label="Sektionen">
-  <span class="subnav__edge" id="subnavSentinel" aria-hidden="true"></span>
-  <div class="subnav__bg" aria-hidden="true"></div>
-  <div class="subnav__inner">
-    <div class="subnav__links" id="subnavLinks">
-      <a href="#work" class="subnav__link magnetic" data-i18n="nav.work">Projekte</a>
-      <a href="#how" class="subnav__link magnetic" data-i18n="nav.how">Wie ich arbeite</a>
-      <a href="#about" class="subnav__link magnetic" data-i18n="nav.about">Über mich</a>
-      <a href="#contact" class="subnav__link magnetic" data-i18n="nav.contact">Kontakt</a>
-    </div>
-  </div>
-</nav>
-
 <!-- ============ PROJEKTE / CASE STUDIES ============ -->
 <section class="work" id="work">
   <header class="work__head work__head--intro">
-    <p class="sectionTag reveal" data-split><span>01</span> <span data-i18n="tag.work">Case Studies</span></p>
+    <p class="sectionTag reveal" data-split><span data-i18n="tag.work">Case Studies</span></p>
     <h2 class="work__title reveal" data-split data-i18n="work.title">Projekte</h2>
     <!-- Einstieg: Arbeitsweise als leise Animation auf der Linie der Projektliste -->
     <div class="ia ia--linie" id="intro" role="img" aria-label="Animation: Gespräche mit Nutzenden, Erkenntnisse ordnen, daraus einen Screen gestalten und testen.">
@@ -113,7 +99,6 @@
   <ul class="projects" id="projects">
 
     <li class="project" data-project="steady" data-cursor="Case Study">
-      <div class="project__index">01</div>
       <div class="project__body">
         <h3 class="project__name reveal" data-split>steady</h3>
         <p class="project__role reveal" data-i18n="p.steady.role">Adaptives Planungs- & Organisationstool · Konzept, UX/UI, Prototyp</p>
@@ -132,7 +117,6 @@
     </li>
 
     <li class="project" data-project="milo" data-cursor="Case Study">
-      <div class="project__index">02</div>
       <div class="project__body">
         <h3 class="project__name reveal" data-split>Milo</h3>
         <p class="project__role reveal" data-i18n="p.milo.role">KI-Assistenz für ältere Menschen · Konzept, UX/UI, Prototyp</p>
@@ -151,7 +135,6 @@
     </li>
 
     <li class="project" data-project="cognify" data-cursor="Case Study">
-      <div class="project__index">03</div>
       <div class="project__body">
         <h3 class="project__name reveal" data-split>Cognify</h3>
         <p class="project__role reveal" data-i18n="p.cognify.role">Augmented-Reality-Lernplattform · Konzept, UX/UI, AR-Prototyp</p>
@@ -170,7 +153,6 @@
     </li>
 
     <li class="project" data-project="syntegon" data-cursor="Case Study">
-      <div class="project__index">04</div>
       <div class="project__body">
         <h3 class="project__name reveal" data-split data-i18n="p.syntegon.name">Bachelorarbeit · Syntegon</h3>
         <p class="project__role reveal" data-i18n="p.syntegon.role">Visualisierungssystem für die Pharmaproduktion · Research & Development</p>
@@ -189,7 +171,6 @@
     </li>
 
     <li class="project" data-project="forwerts" data-cursor="Case Study">
-      <div class="project__index">05</div>
       <div class="project__body">
         <h3 class="project__name reveal" data-split data-i18n="p.forwerts.name">forwerts interactive</h3>
         <p class="project__role reveal" data-i18n="p.forwerts.role">Kundenprojekte für 1&amp;1 und Vattenfall · UX Design</p>
@@ -209,9 +190,9 @@
   </ul>
 </section>
 
-<!-- ============ WIE ICH ARBEITE (Werkzeugband + Haltung + Methode) ============ -->
-<section class="hero" id="how">
-  <p class="sectionTag reveal" data-split><span>02</span> <span data-i18n="tag.how">Wie ich arbeite</span></p>
+<!-- ============ TOOLS ============ -->
+<section class="tools" id="tools">
+  <p class="sectionTag reveal" data-split><span data-i18n="tag.tools">Tools, die ich nutze</span></p>
 
   <div class="toolband reveal">
     <span class="sr-only">Werkzeuge: Figma, Adobe CC, Microsoft Office, Claude Code, v0, Codex, GitHub</span>
@@ -333,177 +314,130 @@
       </ul>
     </div>
   </div>
-
-  <div class="hero__text">
-    <h1 class="hero__title">
-      <span class="line"><span class="word" data-i18n="hero.t1">Design</span></span>
-      <span class="line"><span class="word" data-i18n="hero.t2">an der Grenze</span></span>
-      <span class="line line--accent">
-        <span class="word rotator" id="rotator" aria-hidden="true"></span>
-        <span class="sr-only">zwischen Unterstützung und Manipulation</span>
-      </span>
-    </h1>
-
-    <p class="hero__lede reveal" data-i18n="hero.lede">
-      Ich bin Henri Löhlein, UX/UI &amp; Product&nbsp;Designer. Ich arbeite an der Schnittstelle von
-      <em>Psychologie und Technologie</em>: wie KI, LLMs und adaptive Systeme verändern, wie
-      Menschen entscheiden, vertrauen und handeln. Mein Fokus liegt auf psychologisch
-      fundierten Mechaniken, von der Research bis zum getesteten Prototyp.
-    </p>
-
-    <a href="#contact" class="hero__cta" data-cursor="Kontakt">
-      <span class="hero__ctaInner">
-        <span class="hero__ctaDot" aria-hidden="true"></span>
-        <span class="hero__ctaLabel" data-i18n="hero.cta">Zum Kontakt</span>
-      </span>
-      <span class="hero__ctaReveal" aria-hidden="true">
-        <span data-i18n="hero.cta">Zum Kontakt</span>
-        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </span>
-    </a>
-  </div>
-
-  <div class="approach">
-    <h3 class="subTag reveal" data-i18n="tag.approach">Haltung</h3>
-    <div class="approach__chain">
-      <p class="approach__line reveal" data-split data-stagger>
-        <span data-i18n="chain.1a">Lösungen folgen</span> <b data-i18n="chain.1b">Bedürfnissen.</b>
-      </p>
-      <p class="approach__line reveal" data-split data-stagger>
-        <span data-i18n="chain.2a">Bedürfnisse folgen</span> <b data-i18n="chain.2b">Empathie.</b>
-      </p>
-      <p class="approach__line reveal" data-split data-stagger>
-        <span data-i18n="chain.3a">Und Empathie folgt</span> <b data-i18n="chain.3b">echtem Interesse.</b>
-      </p>
-    </div>
-    <p class="approach__note reveal" data-i18n="approach.note">
-      Zielgerichtetes Design entsteht nur, wo Herausforderungen mit Empathie und
-      funktionalem Denken angegangen werden. Genau dort liegt mein Ansatz.
-    </p>
-  </div>
-
-  <div class="about__method reveal">
-    <h3 class="subTag" data-i18n="about.h3method">Methode</h3>
-    <p data-i18n="about.pmethod">
-      Meine Projekte beginnen mit echtem Interesse am Problem, nicht mit einer fertigen Lösung.
-      Aus Research und Empathie, etwa Personas, Journey Maps, Interviews und Card Sortings, leite
-      ich psychologisch fundierte Mechaniken ab. Sie entstehen in Figma als modulare, klar
-      hierarchisierte Systeme und werden im Usability-Testing mit echten Menschen geschärft.
-    </p>
-  </div>
 </section>
 
-<!-- ============ ÜBER MICH (inkl. Interessen) ============ -->
-<section class="about" id="about">
-  <p class="sectionTag reveal" data-split><span>03</span> <span data-i18n="tag.about">Über mich</span></p>
-  <div class="about__grid">
-    <div class="about__col reveal">
-      <h3 data-split data-i18n="about.h1">Psychologie & Design</h3>
-      <p data-i18n="about.p1">
-        Digitale Interaktionen formen Entscheidungen, Gewohnheiten und Emotionen. Mich
-        interessieren die subtilen Mechanismen dahinter, Nudging, Dark Patterns, Persuasive
-        Design, und die Frage, wo verantwortungsvolle Gestaltung die Grenze zwischen
-        Unterstützung und Manipulation zieht.
-      </p>
+<!-- Symbole: Lichtfilter der Metall-Überschriften, Metallverlauf und Piktogramme für Vorgehen und Schwerpunkte -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- Lichtkante für die Metall-Überschriften, nach dem Prinzip von sreedesigns.com -->
+    <filter id="dkChrome" x="-10%" y="-30%" width="120%" height="160%" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2.2" result="bump"/>
+      <feSpecularLighting in="bump" surfaceScale="6" specularConstant=".7" specularExponent="24" lighting-color="#fff" result="key"><feDistantLight azimuth="300" elevation="50"/></feSpecularLighting>
+      <feComposite in="key" in2="SourceAlpha" operator="in" result="keyClip"/>
+      <feComponentTransfer in="keyClip" result="keySoft"><feFuncA type="linear" slope=".42"/></feComponentTransfer>
+      <feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="keySoft"/></feMerge>
+    </filter>
+    <!-- Ablauf-Symbole: Strichfarbe, -stärke und Akzent kommen aus .cy-node .dk-ico -->
+    <linearGradient id="icoMetal" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="48">
+      <stop offset="0" style="stop-color:var(--i1)"/><stop offset=".5" style="stop-color:var(--i2)"/><stop offset=".78" style="stop-color:var(--i3)"/><stop offset="1" style="stop-color:var(--i4)"/>
+    </linearGradient>
+    <!-- Verstehen: zwei Sprechblasen, Frage und Antwort -->
+    <symbol id="ico-research" viewBox="0 0 48 48"><g transform="translate(24 24) scale(1.08) translate(-24 -24)">
+      <path d="M10 8h16a4 4 0 0 1 4 4v7a4 4 0 0 1-4 4h-9l-5 4.5V23h-2a4 4 0 0 1-4-4v-7a4 4 0 0 1 4-4z"/>
+      <path d="M15.6 13.4a2.5 2.5 0 1 1 3.3 2.4c-.6.2-.9.7-.9 1.3v.3M18 19.6v.1"/>
+      <path style="stroke:var(--thread)" d="M24 26h14a4 4 0 0 1 4 4v5a4 4 0 0 1-4 4h-1v4.5L32 39h-8a4 4 0 0 1-4-4v-5a4 4 0 0 1 4-4z"/>
+      <path style="stroke:var(--thread);stroke-width:4.2px" d="M26.5 32.5h.01M31 32.5h.01M35.5 32.5h.01"/>
+    </g></symbol>
+    <!-- Strukturieren: Tafel mit Struktur -->
+    <symbol id="ico-konzept" viewBox="0 0 48 48"><g transform="translate(24 24) scale(1.06) translate(-24 -24)">
+      <rect x="5" y="6" width="38" height="26" rx="2"/>
+      <path d="M13 32l-3 9M35 32l3 9"/>
+      <rect style="stroke:var(--thread)" x="20.5" y="10.5" width="7" height="4.5" rx="1"/>
+      <path d="M24 15v3M13.5 18h21M13.5 18v3M24 18v3M34.5 18v3"/>
+      <rect x="10" y="21" width="7" height="4.5" rx="1"/><rect style="stroke:var(--thread)" x="20.5" y="21" width="7" height="4.5" rx="1"/><rect x="31" y="21" width="7" height="4.5" rx="1"/>
+    </g></symbol>
+    <!-- Gestalten: Screen im Gestaltungsrahmen mit Aufziehpunkten -->
+    <symbol id="ico-ui" viewBox="0 0 48 48"><g>
+      <rect x="7" y="9" width="34" height="30" rx="1.5"/>
+      <rect x="11.5" y="14" width="13" height="11" rx="1.5"/>
+      <path d="M29 15h7.5M29 19.5h7.5M29 24h4.5"/>
+      <rect style="stroke:var(--thread)" x="11.5" y="29" width="11" height="5.5" rx="2.75"/>
+      <rect style="stroke:var(--thread)" x="4.6" y="6.6" width="4.8" height="4.8" rx=".8"/><rect style="stroke:var(--thread)" x="38.6" y="6.6" width="4.8" height="4.8" rx=".8"/>
+      <rect style="stroke:var(--thread)" x="4.6" y="36.6" width="4.8" height="4.8" rx=".8"/><rect style="stroke:var(--thread)" x="38.6" y="36.6" width="4.8" height="4.8" rx=".8"/>
+    </g></symbol>
+    <!-- Prüfen: Smartphone und Bestätigung -->
+    <symbol id="ico-test" viewBox="0 0 48 48"><g>
+      <rect x="4" y="4" width="19" height="40" rx="4"/>
+      <path d="M10.5 8h6"/>
+      <path d="M9 32h9M9 36.5h6"/>
+      <circle style="stroke:var(--thread)" cx="34.5" cy="21" r="9.5"/>
+      <path style="stroke:var(--thread)" d="M30.2 21.4l3.1 3.1 5.6-6.2"/>
+      <path d="M28.5 37h13M31.5 41.5h7"/>
+    </g></symbol>
+    <symbol id="ico-psy" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M24 44V31"/>
+      <path d="M24 31c0-8-5.5-13-14-14"/><path d="M13.5 13.2 10 17l3.9 3.3"/>
+      <path style="stroke:var(--acc)" d="M24 31c0-8 5.5-13 14-14"/><path style="stroke:var(--acc)" d="M34.5 13.2 38 17l-3.9 3.3"/>
+      <circle cx="24" cy="31" r="2.2"/>
+    </g></symbol>
+    <symbol id="ico-ai" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="4" y="14" width="30" height="25" rx="3"/>
+      <path d="M10 22h13M10 27h17M10 32h9"/>
+      <path style="stroke:var(--acc)" d="M39 4c.8 5.2 1.8 6.2 7 7-5.2.8-6.2 1.8-7 7-.8-5.2-1.8-6.2-7-7 5.2-.8 6.2-1.8 7-7z"/>
+    </g></symbol>
+  </defs>
+</svg>
+
+<div class="dk">
+  <!-- ============ VORGEHEN ============ -->
+  <section class="dk-sec" id="vorgehen">
+    <p class="sectionTag reveal" data-split><span data-i18n="tag.how">Vorgehen</span></p>
+    <h2 class="dk-title reveal" data-i18n="how.title">Ich schaffe digitale Produkte, die Menschen <em>intuitiv</em> und <em>effektiv</em> ans Ziel bringen.</h2>
+    <p class="dk-lede reveal" data-i18n="how.lede">Lösungsorientiertes Denken leitet dabei jede Phase, vom ersten Gespräch bis zum letzten Test. Stets mit Blick auf verschiedene Perspektiven, das Produkt und vor allem: die Nutzenden.</p>
+
+    <div class="cy reveal" data-cycle>
+      <svg class="cy-line" aria-hidden="true">
+        <defs><mask id="cyMask" maskUnits="userSpaceOnUse"></mask></defs>
+        <g mask="url(#cyMask)"><path class="cy-base"/><path class="cy-lit" pathLength="1000"/></g>
+      </svg>
+      <ol class="cy-steps">
+        <li><span class="cy-node"><svg class="dk-ico" aria-hidden="true"><use href="#ico-research"/></svg></span>
+          <p class="dk-label" data-i18n="how.s1.l">Verstehen</p><h3>User Research</h3><p data-i18n="how.s1.m">Interviews, Umfragen, Marktanalyse, Personas, User Journeys, Cognitive Walkthroughs&nbsp;…</p></li>
+        <li><span class="cy-node"><svg class="dk-ico" aria-hidden="true"><use href="#ico-konzept"/></svg></span>
+          <p class="dk-label" data-i18n="how.s2.l">Strukturieren</p><h3>Interaction Design</h3><p data-i18n="how.s2.m">Informationsarchitektur, Card Sorting, User Flows, Use Cases&nbsp;…</p></li>
+        <li><span class="cy-node"><svg class="dk-ico" aria-hidden="true"><use href="#ico-ui"/></svg></span>
+          <p class="dk-label" data-i18n="how.s3.l">Gestalten</p><h3>UI Design &amp; Prototyping</h3><p data-i18n="how.s3.m">Low&#8209;Fi&#8209;Wireframing &amp;&nbsp;&#8209;Mockups, Prototyping, Design Systems, KI&#8209;gestützte Methoden &amp; Rapid Prototyping&nbsp;…</p></li>
+        <li><span class="cy-node"><svg class="dk-ico" aria-hidden="true"><use href="#ico-test"/></svg></span>
+          <p class="dk-label" data-i18n="how.s4.l">Prüfen</p><h3>Testing &amp; Evaluation</h3><p data-i18n="how.s4.m">Usability-Tests, A/B-Tests, Befragungen, Nutzerinterviews, Expertenanalysen &amp;&nbsp;‑interviews&nbsp;…</p></li>
+      </ol>
     </div>
-    <div class="about__col reveal">
-      <h3 data-split data-i18n="about.h2">Blick nach vorn</h3>
-      <p data-i18n="about.p2">
-        Neue Technologien wie KI und adaptive Systeme prägen Wahrnehmung, Vertrauen und
-        Interaktion. Ich will verstehen, wie, und diese Bewegung mitgestalten. Meine Arbeit
-        adressiert reale Probleme, fundiert in einem Verständnis dafür, wie Nutzer denken,
-        handeln und fühlen.
-      </p>
+  </section>
+
+  <!-- ============ SCHWERPUNKTE ============ -->
+  <section class="dk-sec dk-sec--last" id="schwerpunkte">
+    <p class="sectionTag reveal" data-split><span data-i18n="tag.focus">Schwerpunkte</span></p>
+    <h2 class="dk-title reveal" data-i18n="focus.title">Warum <em>scheitern</em> Menschen an manchen Produkten, während andere sie <span class="nw"><em>begeistern</em>?</span></h2>
+    <p class="dk-lede reveal" data-i18n="focus.lede">Diese Frage treibt mich an. Ein Problem ist für mich eine Chance, und mein Anspruch ist, auf dem Weg zur Lösung jede Möglichkeit für intuitive und innovative Ansätze zu nutzen.</p>
+
+    <div class="dk-focus">
+      <article class="reveal">
+        <svg class="dk-ico" aria-hidden="true"><use href="#ico-psy"/></svg>
+        <h3 data-i18n="focus.psy.t">Psychologie im Design</h3>
+        <p data-i18n="focus.psy.p">Ob ein Produkt begeistert oder abstößt, entscheidet sich oft unbewusst. Mechaniken wie Nudging, Persuasive Design oder Dark Patterns prägen unseren digitalen Alltag mehr, als wir begreifen, und genau das fasziniert mich.</p>
+      </article>
+      <article class="reveal">
+        <svg class="dk-ico" aria-hidden="true"><use href="#ico-ai"/></svg>
+        <h3 data-i18n="focus.tech.t">Innovative Technologien</h3>
+        <p data-i18n="focus.tech.p">Künstliche Intelligenz und Automatisierung, adaptive Systeme, Robotik: Technologie entwickelt sich schneller weiter, als Menschen sie verstehen können. Umso wichtiger ist es, die Nutzenden stets ins Zentrum zu stellen.</p>
+      </article>
     </div>
-  </div>
-
-  <header class="focus__head">
-    <h2 class="focus__title reveal" data-split data-i18n="focus.title">
-      Das Zusammenspiel von <em>Psychologie</em> und <em>Design.</em>
-    </h2>
-  </header>
-
-  <div class="focus__grid" id="focusGrid">
-    <article class="fcard reveal" tabindex="0">
-      <div class="fcard__inner">
-        <div class="fcard__face fcard__front">
-          <svg class="fcard__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="16" cy="12" r="4"/><path d="M3 12h7M7 8l4 4-4 4"/></svg>
-          <span class="fcard__num">01</span>
-          <h3 data-split data-i18n="focus.c1.t">Nudging</h3>
-        </div>
-        <div class="fcard__face fcard__back">
-          <p data-i18n="focus.c1.d">Verhalten lenken ohne Druck oder Zwang, zur richtigen Zeit im richtigen Kontext.</p>
-        </div>
-      </div>
-    </article>
-
-    <article class="fcard reveal" tabindex="0">
-      <div class="fcard__inner">
-        <div class="fcard__face fcard__front">
-          <svg class="fcard__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20C5 20 1 12 1 12a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><path d="M2 2l20 20"/></svg>
-          <span class="fcard__num">02</span>
-          <h3 data-split data-i18n="focus.c2.t">Dark Patterns</h3>
-        </div>
-        <div class="fcard__face fcard__back">
-          <p data-i18n="focus.c2.d">Mechanismen, die Nutzer gegen ihre eigenen Interessen lenken. Verstehen, um sie zu vermeiden.</p>
-        </div>
-      </div>
-    </article>
-
-    <article class="fcard reveal" tabindex="0">
-      <div class="fcard__inner">
-        <div class="fcard__face fcard__front">
-          <svg class="fcard__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>
-          <span class="fcard__num">03</span>
-          <h3 data-split data-i18n="focus.c3.t">Persuasive Design</h3>
-        </div>
-        <div class="fcard__face fcard__back">
-          <p data-i18n="focus.c3.d">Modelle wie das Fogg Behavior Model und die Self-Determination Theory in echte Mechaniken übersetzen.</p>
-        </div>
-      </div>
-    </article>
-
-    <article class="fcard reveal" tabindex="0">
-      <div class="fcard__inner">
-        <div class="fcard__face fcard__front">
-          <svg class="fcard__icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="1.5"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></svg>
-          <span class="fcard__num">04</span>
-          <h3 data-split data-i18n="focus.c4.t">Adaptive KI</h3>
-        </div>
-        <div class="fcard__face fcard__back">
-          <p data-i18n="focus.c4.d">Wie LLMs, generative und adaptive Systeme Wahrnehmung und Vertrauen prägen, und wie sich diese Werkzeuge im Designprozess selbst nutzen lassen.</p>
-        </div>
-      </div>
-    </article>
-  </div>
-
-  <div class="about__passions reveal">
-    <span class="about__passionsLabel" data-split data-i18n="about.passions">Leidenschaften & Interessen</span>
-    <div class="marquee" aria-hidden="true">
-      <div class="marquee__track">
-        <span>Verhaltenspsychologie</span><span>·</span><span>Künstliche Intelligenz</span><span>·</span><span>Persuasive Design</span><span>·</span><span>Typografie</span><span>·</span><span>Prototyping</span><span>·</span><span>Mensch-Maschine-Interaktion</span><span>·</span><span>Ethik im Design</span><span>·</span><span>Gamification</span><span>·</span>
-        <span>Verhaltenspsychologie</span><span>·</span><span>Künstliche Intelligenz</span><span>·</span><span>Persuasive Design</span><span>·</span><span>Typografie</span><span>·</span><span>Prototyping</span><span>·</span><span>Mensch-Maschine-Interaktion</span><span>·</span><span>Ethik im Design</span><span>·</span><span>Gamification</span><span>·</span>
-      </div>
-    </div>
-  </div>
-</section>
+  </section>
+</div>
 
 <!-- ============ CONTACT ============ -->
-<section class="contact" id="contact">
-  <p class="sectionTag reveal" data-split><span>04</span> <span data-i18n="tag.contact">Kontakt</span></p>
-  <h2 class="contact__title reveal" data-split>
-    <span data-i18n="contact.t1">Offen für Projekte, die</span>
-    <em data-i18n="contact.t2">echte Probleme</em>
-    <span data-i18n="contact.t3">lösen.</span>
-  </h2>
-  <div class="contact__links">
-    <a href="mailto:henriloehlein@gmail.com" class="contact__link magnetic" data-cursor="Mail">
+<section class="contact dk" id="contact">
+  <p class="sectionTag reveal" data-split><span data-i18n="tag.contact">Kontakt</span></p>
+  <h2 class="dk-title reveal" data-i18n="contact.title">Die besten Lösungen finden sich <em>gemeinsam</em>.</h2>
+  <div class="contact__links reveal">
+    <a href="mailto:henriloehlein@gmail.com" class="contact__link" data-cursor="Mail">
       <span class="contact__linkLabel">Mail</span>
       <span class="contact__linkVal">henriloehlein@gmail.com</span>
+      <svg class="contact__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
     </a>
-    <a href="https://linkedin.com/in/henriloehlein" target="_blank" rel="noopener" class="contact__link magnetic" data-cursor="Öffnen">
+    <a href="https://linkedin.com/in/henriloehlein" target="_blank" rel="noopener" class="contact__link" data-cursor="Öffnen">
       <span class="contact__linkLabel">LinkedIn</span>
       <span class="contact__linkVal">in/henriloehlein</span>
+      <svg class="contact__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
     </a>
   </div>
 </section>
@@ -1434,6 +1368,6 @@
 <script src="js/einstieg-szene.js?v=2026-09-27b"></script>
 <script src="js/einstieg-zeichnen.js?v=2026-09-27b"></script>
 <script src="js/einstieg-animation.js?v=2026-09-27b"></script>
-<script src="js/main.js?v=2026-09-28b"></script>
+<script src="js/main.js?v=2026-09-29a"></script>
 </body>
 </html>
