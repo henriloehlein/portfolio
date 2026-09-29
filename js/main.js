@@ -10,7 +10,7 @@
   /* ---------- i18n dictionary (EN overrides; DE lives in HTML) ---------- */
   const EN = {
     'pre.role':'UX / UI & Product Designer',
-    'tag.work':'Case studies','tag.tools':'Tools I use','tag.how':'Approach','tag.focus':'Focus','tag.contact':'Contact',
+    'tag.work':'Projects &amp; case studies','tag.tools':'Tools I use','tag.how':'Approach','tag.focus':'Focus','tag.contact':'Contact',
     'how.title':'I create digital products that get people to their goal <em>intuitively</em> and <em>effectively</em>.',
     'how.lede':'Solution-oriented thinking guides every phase, from the first conversation to the last test. Always with an eye on different perspectives, the product and above all: the people using it.',
     'how.s1.l':'Understand','how.s1.m':'Interviews, surveys, market analysis, personas, user journeys, cognitive walkthroughs&nbsp;…',
@@ -22,7 +22,6 @@
     'focus.psy.t':'Psychology in design','focus.psy.p':'Whether a product delights or repels is often decided unconsciously. Mechanics like nudging, persuasive design or dark patterns shape our digital everyday life more than we realise, and that is exactly what fascinates me.',
     'focus.tech.t':'Innovative technologies','focus.tech.p':'Artificial intelligence and automation, adaptive systems, robotics: technology is evolving faster than people can understand it. That makes it all the more important to always keep the people using it at the centre.',
     'contact.title':'The best solutions are found <em>together</em>.',
-    'work.title':'Projects',
     'p.steady.role':'Adaptive planning & organisation tool · Concept, UX/UI, Prototype',
     'p.steady.tease':'An app that asks <em>why</em> people fail, and uses psychological mechanics to help them stick to their routines with empathy.',
     'p.milo.role':'AI assistance for older adults · Concept, UX/UI, Prototype',
@@ -579,27 +578,16 @@
   }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
   $$('.reveal').forEach(el => revObs.observe(el));
 
-  /* ---------- Parallax blobs ---------- */
-  const blobs = $$('.field__blob');
-  if (!reduce) {
-    addEventListener('scroll', () => {
-      const y = scrollY;
-      blobs[0] && (blobs[0].style.transform = `translateY(${y * 0.06}px)`);
-      blobs[1] && (blobs[1].style.transform = `translateY(${y * -0.05}px)`);
-      blobs[2] && (blobs[2].style.transform = `translate(-50%,${y * 0.04}px)`);
-    }, { passive: true });
-  }
-
   /* ---------- Scroll-linked signature gradient (ember -> slate across the whole page) ----------
-     One warm->cool arc for the entire scroll, not a different hue per section: --warm-1, --cool-1,
-     --pink and --violet (plus --bg-tint, which drives every --head-grad headline) all interpolate
+     One warm->cool arc for the entire scroll, not a different hue per section: --warm-1 and --cool-1
+     (plus --bg-tint, which drives every --head-grad headline and the background tone) all interpolate
      together from the ember palette at the top to the slate palette further down. The transition
      is a long, slow drift from the tools band to the contact section: it begins in the project list
      and completes as the contact section comes into view. */
   (function initScrollGradient() {
     const root = document.documentElement;
-    const EMBER = { '--warm-1': [169, 80, 63], '--cool-1': [91, 87, 84], '--pink': [114, 109, 105], '--violet': [64, 61, 59] };
-    const SLATE = { '--warm-1': [63, 90, 134], '--cool-1': [92, 95, 102], '--pink': [109, 112, 121], '--violet': [60, 62, 68] };
+    const EMBER = { '--warm-1': [169, 80, 63], '--cool-1': [91, 87, 84] };
+    const SLATE = { '--warm-1': [63, 90, 134], '--cool-1': [92, 95, 102] };
     const tools = document.getElementById('tools'), contact = document.getElementById('contact');
     const smooth = t => t * t * (3 - 2 * t);
     const lerp = (a, b, t) => a.map((v, i) => Math.round(v + (b[i] - v) * t));
@@ -868,7 +856,7 @@
      Sichtbar ist nur ein weicher Ausschnitt, der mit der Person über die Breite wandert. */
   const intro = $('#intro');
   if (intro && window.EinstiegAnimation) {
-    const stage = EinstiegAnimation.mount(intro, { style: 'h', layout: 'window', frame: 'line', ground: false, winW: 520 });
+    const stage = EinstiegAnimation.mount(intro, { style: 'h', layout: 'window', frame: 'line', ground: false, winW: 520, shine: 9 });
     const labelIntro = () => {
       intro.setAttribute('aria-label', lang === 'en'
         ? 'Animation: talking with users, sorting the insights, designing a screen from them and testing it.'

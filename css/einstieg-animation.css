@@ -22,13 +22,22 @@
 .ia__blur i:nth-child(3){-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
   -webkit-mask-image:linear-gradient(var(--d),#000 0%,transparent 38%);mask-image:linear-gradient(var(--d),#000 0%,transparent 38%)}
 
-/* Live-Einbau: die Person läuft auf der oberen Linie der Projektliste, rechts neben
-   „Projekte“. Das Canvas endet genau an der Listenlinie (Abstand = margin-bottom von
-   .work__head); sichtbar ist nur ein weicher Ausschnitt, der mit der Person wandert. */
-.work__head--intro{position:relative}
-.ia--linie{position:absolute;right:0;bottom:calc(-1 * clamp(30px,4vw,50px));width:min(64%,820px);height:clamp(96px,10.5vw,146px);margin:0;max-width:none}
-@media (max-width:760px){.ia--linie{width:56%}}
+/* Live-Einbau: die Person läuft auf der oberen Linie der Projektliste, direkt rechts neben
+   der Abschnittsmarke „Projekte & Case Studies“. Kopf als Zeile: die Marke hat ihre Breite, die
+   Animation nimmt den Rest. Der negative Außenabstand unten (= margin-bottom von .work__head)
+   setzt die Fußlinie genau auf die Listenlinie. Schmal: Animation in eigener Zeile darunter. */
+.work__head--intro{display:flex;align-items:flex-end;gap:clamp(12px,2vw,28px)}
+.work__head--intro .sectionTag{flex:none;margin-bottom:0}
+.ia--linie{flex:1;min-width:0;width:auto;height:clamp(96px,10.5vw,146px);margin:0 0 calc(-1 * clamp(30px,4vw,50px));max-width:none}
+@media (max-width:640px){.work__head--intro{flex-wrap:wrap}.ia--linie{flex-basis:100%;margin-top:calc(clamp(30px,4vw,50px) - 8px)}}
 .ia--linie .ia__canvas{-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+/* Vor dem Chrom-Hintergrund: kräftiger als die leise Grundfassung (Inline-Deckkraft 0,5), mit sanftem
+   Leuchten; alle 9 s gleitet ein Lichtband über Figuren und Linie (.ia__shine, aus einstieg-animation.js). */
+.ia--linie .ia__canvas{opacity:.78!important;filter:drop-shadow(0 0 7px color-mix(in srgb,var(--text) 22%,transparent))}
+[data-theme="light"] .ia--linie .ia__canvas{filter:drop-shadow(0 0 7px rgba(255,255,255,.9))}
+.ia__shine{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none;mix-blend-mode:screen;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+[data-theme="light"] .ia__shine{mix-blend-mode:soft-light}
 .ia--linie .ia__toggle{width:24px;height:24px;right:0;bottom:auto;top:0;opacity:0}
 .ia--linie:hover .ia__toggle,.ia--linie .ia__toggle:focus-visible,.ia--linie .ia__toggle.is-paused{opacity:.7}
 .ia--linie .ia__toggle svg{width:9px;height:9px}

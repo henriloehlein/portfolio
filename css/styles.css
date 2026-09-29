@@ -11,15 +11,13 @@
 /* Signature is a single warm→cool arc (ember → slate), not a multi-hue rainbow.
    --warm-1/--cool-1 are the two live poles: JS interpolates both, plus --bg-tint,
    from ember at the top of the page to slate at the bottom as the user scrolls
-   (see initScrollGradient in main.js). --pink/--violet stay quiet neutral bridge
-   tones for the ambient blobs, they are not accent colours. */
+   (see initScrollGradient in main.js). The background shader (js/hintergrund.js)
+   reads --bg-tint for its faint scroll tone. */
 :root{
   --warm-1:#a9503f;   /* ember — pole A, top-of-page fallback (JS drifts this to slate on scroll) */
   --warm-2:#c9a89a;   /* soft ember tint */
   --cool-1:#5b5754;   /* neutral bridge — top-of-page fallback, JS drifts this toward slate-grey */
   --cool-2:#7c8ba3;   /* soft slate tint */
-  --pink:#726d69;     /* neutral warm-grey bridge (ambient blob only) */
-  --violet:#403d3b;   /* neutral dark bridge (ambient blob only) */
 
   --grad: linear-gradient(110deg,var(--warm-1),var(--cool-1));
   --grad-soft: linear-gradient(120deg,var(--warm-1),var(--cool-1));
@@ -114,74 +112,15 @@ p{text-wrap:pretty}
 h1,h2,h3{text-wrap:balance}
 
 /* ---------- Background field ---------- */
-/* Layered for depth: a vertical base wash, a slowly-rotating aurora, drifting
-   colour blobs, a soft colour-pool mesh + vignette, the scroll tint and grain. */
-.field{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
-  background:linear-gradient(180deg,
-    color-mix(in srgb,var(--cool-1) 7%,var(--bg)) 0%,
-    var(--bg) 34%,
-    var(--bg-2) 78%,
-    color-mix(in srgb,var(--warm-1) 6%,var(--bg-2)) 100%)}
-[data-theme="light"] .field{background:linear-gradient(180deg,
-    color-mix(in srgb,var(--cool-1) 7%,var(--bg)) 0%,
-    var(--bg) 38%,
-    var(--bg-2) 80%,
-    color-mix(in srgb,var(--warm-2) 9%,var(--bg-2)) 100%)}
-
-/* aurora — wide, heavily-blurred conic ribbons that drift + rotate very slowly
-   behind everything, giving the background organic glowing depth */
-.field__aurora{position:absolute;top:-25%;left:-25%;width:150%;height:150%;z-index:-2;
-  background:
-    conic-gradient(from 120deg at 32% 36%, transparent 0deg, color-mix(in srgb,var(--warm-1) 60%,transparent) 40deg, transparent 130deg),
-    conic-gradient(from 250deg at 70% 64%, transparent 0deg, color-mix(in srgb,var(--cool-1) 60%,transparent) 50deg, transparent 150deg),
-    conic-gradient(from 20deg at 60% 20%, transparent 0deg, color-mix(in srgb,var(--violet) 50%,transparent) 36deg, transparent 120deg);
-  filter:blur(90px) saturate(125%);opacity:.5;will-change:transform;
-  animation:auroraDrift 64s linear infinite}
-[data-theme="light"] .field__aurora{opacity:.34;filter:blur(100px) saturate(130%)}
-
-.field__blob{position:absolute;border-radius:50%;filter:blur(64px);opacity:.42;will-change:transform}
-.field__blob--1{width:34vw;height:34vw;max-width:560px;max-height:560px;background:radial-gradient(circle,var(--warm-1),transparent 62%);top:-8vw;left:-5vw;animation:blobA 38s ease-in-out infinite}
-.field__blob--2{width:30vw;height:30vw;max-width:520px;max-height:520px;background:radial-gradient(circle,var(--cool-1),transparent 62%);bottom:-8vw;right:-4vw;opacity:.4;animation:blobB 46s ease-in-out infinite}
-.field__blob--3{width:24vw;height:24vw;max-width:420px;max-height:420px;background:radial-gradient(circle,var(--pink),transparent 62%);top:40%;left:48%;opacity:.26;animation:blobC 52s ease-in-out infinite}
-.field__blob--4{width:21vw;height:21vw;max-width:380px;max-height:380px;background:radial-gradient(circle,var(--violet),transparent 64%);top:8%;right:14%;opacity:.22;animation:blobD 58s ease-in-out infinite}
-[data-theme="light"] .field__blob{opacity:.3;filter:blur(74px)}
-[data-theme="light"] .field__blob--4{opacity:.18}
-@keyframes auroraDrift{to{transform:rotate(360deg) scale(1.05)}}
-@keyframes blobA{0%,100%{transform:translate(0,0)}50%{transform:translate(6vw,4vw)}}
-@keyframes blobB{0%,100%{transform:translate(0,0)}50%{transform:translate(-5vw,-3vw)}}
-@keyframes blobC{0%,100%{transform:translate(0,0)}33%{transform:translate(-4vw,3vw)}66%{transform:translate(3vw,-4vw)}}
-@keyframes blobD{0%,100%{transform:translate(0,0)}50%{transform:translate(-4vw,5vw)}}
-@media (prefers-reduced-motion:reduce){.field__aurora,.field__blob{animation:none!important}}
-
-/* depth layer — soft colour pools, top studio light and a framing vignette
-   layered behind the blobs so the background reads dimensional, not flat */
-.field::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;
-  background:
-    radial-gradient(120% 58% at 50% -6%, color-mix(in srgb,#fff 8%,transparent), transparent 60%),
-    radial-gradient(40% 48% at 84% 14%, color-mix(in srgb,var(--warm-2) 26%,transparent), transparent 62%),
-    radial-gradient(46% 56% at 11% 70%, color-mix(in srgb,var(--cool-1) 28%,transparent), transparent 62%),
-    radial-gradient(34% 44% at 64% 92%, color-mix(in srgb,var(--violet) 20%,transparent), transparent 60%),
-    radial-gradient(30% 40% at 26% 22%, color-mix(in srgb,var(--pink) 16%,transparent), transparent 60%),
-    radial-gradient(140% 130% at 50% -16%, transparent 32%, rgba(0,0,0,.42) 78%, rgba(0,0,0,.72) 100%);
-  animation:meshBreathe 28s ease-in-out infinite}
-[data-theme="light"] .field::before{
-  background:
-    radial-gradient(120% 58% at 50% -6%, color-mix(in srgb,#fff 60%,transparent), transparent 60%),
-    radial-gradient(40% 48% at 84% 14%, color-mix(in srgb,var(--warm-2) 18%,transparent), transparent 62%),
-    radial-gradient(46% 56% at 11% 70%, color-mix(in srgb,var(--cool-1) 16%,transparent), transparent 62%),
-    radial-gradient(34% 44% at 64% 92%, color-mix(in srgb,var(--violet) 13%,transparent), transparent 60%),
-    radial-gradient(30% 40% at 26% 22%, color-mix(in srgb,var(--pink) 12%,transparent), transparent 60%),
-    radial-gradient(140% 130% at 50% -16%, transparent 40%, color-mix(in srgb,#6b5a4a 24%,transparent) 100%);}
-@keyframes meshBreathe{0%,100%{opacity:.9;transform:scale(1)}50%{opacity:1;transform:scale(1.04)}}
-@media (prefers-reduced-motion:reduce){.field::before{animation:none!important}}
-/* scroll-linked tint wash — hue follows the section headings (set from JS) */
-.field::after{content:"";position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(110% 75% at 50% 0%, var(--bg-tint) 0%, transparent 62%);
-  opacity:.20;mix-blend-mode:screen;transition:background .3s linear}
-[data-theme="light"] .field::after{opacity:.26;mix-blend-mode:multiply}
-.field__grain{position:absolute;inset:0;opacity:.035;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size:100px 100px}
+/* Flüssiges Graphit mit Wasserlicht als WebGL-Fläche (js/hintergrund.js), darüber feines Korn.
+   Die Fläche blendet nach dem ersten Bild weich ein; ohne WebGL2 bleibt ein ruhiger Lichtschein oben rechts. */
+.field{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:var(--bg)}
+.field__gl{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;transition:opacity 1.2s var(--ease)}
+.field.is-ready .field__gl{opacity:1}
+.field--flat .field__gl{display:none}
+.field--flat{background:radial-gradient(70% 60% at 88% -6%, color-mix(in srgb,var(--text) 9%,transparent), transparent 70%),var(--bg)}
+.field__grain{position:absolute;inset:-200px;background-image:var(--grain);background-size:180px 180px;opacity:.05;mix-blend-mode:screen}
+[data-theme="light"] .field__grain{opacity:.07;mix-blend-mode:multiply}
 
 /* ---------- Preloader ---------- */
 .preloader{position:fixed;inset:0;z-index:200;background:var(--bg);display:grid;place-items:center;transition:opacity .8s var(--ease),visibility .8s}
@@ -283,7 +222,7 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
   transition:opacity .4s var(--ease),filter .32s var(--ease),transform .32s var(--ease);
   transition-delay:calc(var(--i) * 36ms)}
 .is-in .bw{opacity:1;filter:blur(0);transform:translateY(0)}
-/* Verlaufs-Text (z. B. .work__title) clippt seinen
+/* Verlaufs-Text clippt seinen
    Farbverlauf über background-clip:text, das vererbt sich nicht von selbst. Jedes Wort braucht
    das explizit, sonst rendert -webkit-text-fill-color:transparent ohne eigenes Gradient und das
    Wort verschwindet. Für Wörter ohne Gradient-Elternteil ist das ein harmloses No-op. */
@@ -425,9 +364,6 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 
 /* ---------- Work / Projects ---------- */
 .work__head{margin-bottom:clamp(30px,4vw,50px)}
-.work__title{font-family:var(--f-display);font-weight:360;font-size:clamp(40px,8vw,110px);letter-spacing:-.035em;line-height:1;
-  background:var(--head-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
-  filter:drop-shadow(0 10px 38px var(--head-glow))}
 .work__hint{margin-top:16px;font-family:var(--f-mono);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-2)}
 .projects{list-style:none;border-top:1px solid var(--line)}
 .project{position:relative;display:grid;grid-template-columns:1fr 300px;gap:34px;align-items:center;padding:40px 8px;border-bottom:1px solid var(--line);cursor:pointer;transition:padding .5s var(--ease)}

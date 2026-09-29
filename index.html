@@ -24,8 +24,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
 
-<link rel="stylesheet" href="css/styles.css?v=2026-09-29a" />
-<link rel="stylesheet" href="css/einstieg-animation.css?v=2026-09-27b" />
+<link rel="stylesheet" href="css/styles.css?v=2026-09-29c" />
+<link rel="stylesheet" href="css/einstieg-animation.css?v=2026-09-29c" />
 </head>
 <body>
 
@@ -53,11 +53,7 @@
 
 <!-- ============ GRADIENT FIELD (background) ============ -->
 <div class="field" aria-hidden="true">
-  <div class="field__aurora"></div>
-  <div class="field__blob field__blob--1"></div>
-  <div class="field__blob field__blob--2"></div>
-  <div class="field__blob field__blob--3"></div>
-  <div class="field__blob field__blob--4"></div>
+  <canvas class="field__gl"></canvas>
   <div class="field__grain"></div>
 </div>
 
@@ -87,8 +83,7 @@
 <!-- ============ PROJEKTE / CASE STUDIES ============ -->
 <section class="work" id="work">
   <header class="work__head work__head--intro">
-    <p class="sectionTag reveal" data-split><span data-i18n="tag.work">Case Studies</span></p>
-    <h2 class="work__title reveal" data-split data-i18n="work.title">Projekte</h2>
+    <p class="sectionTag reveal" data-split><span data-i18n="tag.work">Projekte &amp; Case Studies</span></p>
     <!-- Einstieg: Arbeitsweise als leise Animation auf der Linie der Projektliste -->
     <div class="ia ia--linie" id="intro" role="img" aria-label="Animation: Gespräche mit Nutzenden, Erkenntnisse ordnen, daraus einen Screen gestalten und testen.">
       <canvas class="ia__canvas" aria-hidden="true"></canvas>
@@ -1367,7 +1362,8 @@
 
 <script src="js/einstieg-szene.js?v=2026-09-27b"></script>
 <script src="js/einstieg-zeichnen.js?v=2026-09-27b"></script>
-<script src="js/einstieg-animation.js?v=2026-09-27b"></script>
-<script src="js/main.js?v=2026-09-29a"></script>
+<script src="js/einstieg-animation.js?v=2026-09-29c"></script>
+<script src="js/hintergrund.js?v=2026-09-29c"></script>
+<script src="js/main.js?v=2026-09-29c"></script>
 </body>
 </html>

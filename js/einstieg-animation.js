@@ -39,6 +39,11 @@
       this.lctx = this.layer.getContext('2d');
       this.grid = document.createElement('canvas');
       this.gctx = this.grid.getContext('2d', { willReadFrequently: true });
+      // Schein: eigene Ebene, auf der ab und zu ein Lichtband über Figuren und Linie gleitet
+      if (this.o.shine && !this.reduced) {
+        this.shine = document.createElement('canvas'); this.shine.className = 'ia__shine'; this.shine.setAttribute('aria-hidden', 'true');
+        this.sctx = this.shine.getContext('2d'); this.canvas.after(this.shine);
+      }
       this.btn = root.querySelector('.ia__toggle');
       this.blurs = root.querySelectorAll('.ia__blur');
       this.T = null; this.visible = true; this.raf = 0;
@@ -73,7 +78,7 @@
       const dpr = Math.min(2, window.devicePixelRatio || 1);
       if (frac == null && this.S) frac = wrap(this.T, this.S.P) / this.S.P;
       this.cssW = w; this.cssH = h; this.dpr = dpr;
-      for (const c of [this.canvas, this.layer]) { c.width = Math.round(w * dpr); c.height = Math.round(h * dpr); }
+      for (const c of [this.canvas, this.layer, this.shine].filter(Boolean)) { c.width = Math.round(w * dpr); c.height = Math.round(h * dpr); }
       const f = FRAME[this.o.frame || (this.o.layout === 'full' ? 'full' : 'tight')];
       this.viewH = f.h; this.scale = h / this.viewH; this.ground = f.g - (this.o.liftPx || 0) / this.scale;
       this.scale = h / this.viewH; this.viewW = w / this.scale;
@@ -200,6 +205,22 @@
       }
       if (this.o.layout !== 'full') this.feather();
       if (this.o.stroke) this.drawStroke();
+      if (this.shine) this.drawShine();
+    }
+
+    // Alle o.shine Sekunden gleitet in 3,2 s ein schräges, warmes Lichtband über die Szene.
+    // Es liegt nur auf gezeichneten Pixeln (source-in) und wird per mix-blend-mode aufgelegt.
+    drawShine() {
+      const c = this.sctx, W = this.shine.width, H = this.shine.height;
+      c.globalCompositeOperation = 'source-over'; c.clearRect(0, 0, W, H);
+      const k = wrap(this.T, this.o.shine) / 3.2;
+      if (k >= 1) return;
+      const e = sm(k), x = -W * .25 + W * 1.5 * e, band = W * .12, a = Math.sin(Math.PI * k) * .85;
+      c.drawImage(this.canvas, 0, 0);
+      c.globalCompositeOperation = 'source-in';
+      const g = c.createLinearGradient(x - band, 0, x + band * .6, H * .4);
+      g.addColorStop(0, 'rgba(255,246,236,0)'); g.addColorStop(.5, `rgba(255,246,236,${a})`); g.addColorStop(1, 'rgba(255,246,236,0)');
+      c.fillStyle = g; c.fillRect(0, 0, W, H);
     }
 
     // Weicher Ausschnitt: innen scharf, zum Rand hin zunehmend unscharf und

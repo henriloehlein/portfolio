@@ -7,6 +7,7 @@ Statisches UX/UI-Portfolio mit HTML, CSS und JavaScript, ohne Build-Schritt oder
 - `index.html`, `css/styles.css` und `js/main.js` bilden die Live-Seite auf GitHub Pages.
 - `preview-neu.html`, `css/preview-neu-base.css`, `css/preview-neu.css`, `js/preview-neu-main.js` und `js/preview-neu.js` enthalten einen zurückgestellten Redesign-Entwurf. Aktuelle Arbeitsbasis ist die Live-Seite.
 - Deployment-Details stehen in `docs/DEPLOY.md`, visuelle Referenzen in `docs/REFERENZEN.md`, die Vorgeschichte entfernter Komponenten in `docs/KOMPONENTEN-ARCHIV.md`.
+- Der Hintergrund ist eine WebGL2-Fläche in `js/hintergrund.js` (vor `js/main.js` eingebunden, liest `--bg-tint`); `.field` in `css/styles.css` enthält nur Canvas und Korn.
 - Die Einstiegs-Animation auf der Projektlinie nutzt zusätzlich `css/einstieg-animation.css` und `js/einstieg-szene.js`, `js/einstieg-zeichnen.js`, `js/einstieg-animation.js` (vor `js/main.js` eingebunden). Vergleichsvorschauen `einstieg-*-preview.html` sind wie alle `*-preview*.html` per `.gitignore` nur lokal.
 - `css/liquid-glass.css` enthält optionale Glas-Bausteine und ist nicht in `styles.css` eingebunden.
 - Aktuelle Übergabe: Die ausgewählte forwerts-Variante C ist in `index.html` übernommen. Projektprofile, horizontale Screenfolgen und die Auswahl aus Henris Kundenprojekten sind der aktuelle Stand. Die ausführliche Cognify-Case-Study ist veröffentlicht; ihre Quellen stehen in `docs/COGNIFY-CASE-STUDY-MATERIAL.md`. Details und inhaltliche Grenzen stehen in `docs/PROJEKT-STATUS.md`.
