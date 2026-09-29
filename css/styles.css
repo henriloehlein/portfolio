@@ -2,7 +2,7 @@
    Henri Löhlein — Portfolio
    Design system · dark-first · warm/cool gradient signature
 
-   Glass surfaces (toolband, modal bar) share one --glass-blur/
+   Glass surfaces (modal bar, cover chips) share one --glass-blur/
    --glass-sat recipe. Elevation runs on a 3-step shadow scale (--shadow-sm/md,
    plus the pre-existing --shadow as the "lg" tier).
    ========================================================= */
@@ -47,7 +47,7 @@
   --f-sans:'Inter',system-ui,-apple-system,sans-serif;
   --f-mono:'Space Grotesk','Inter',sans-serif;
 
-  /* One glass recipe for every translucent surface (toolband, modal
+  /* One glass recipe for every translucent surface (modal bar, cover chips
      bar) instead of each picking its own blur/saturation. */
   --glass-blur:18px;
   --glass-sat:175%;
@@ -317,48 +317,31 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 /* ---------- Tools ---------- */
 .tools{padding-top:clamp(70px,9vw,130px);padding-bottom:0}
 
-/* ---------- Toolband · quiet glass band, tools in a slow marquee ---------- */
-/* Glass surface (blur+saturate, hairline rim, soft outer lift), tuned flat
-   and quieter: single hairline ring instead of dual radial highlights, no colour wash. Content is
-   duplicated once in the HTML and travels exactly -50%.
-   Same width as the rest of the section's content (no full-bleed), open at both sides through a
-   single mask-image that fades the *entire* surface (glass + border + shadow + icons together, not
-   just the marquee content) into the page at each edge, so it reads as an open channel rather than
-   a framed card, without spilling past the page's own margins. Blur/saturation: shared
-   --glass-blur/--glass-sat, same recipe as the modal bar. */
-.toolband{position:relative;isolation:isolate;
-  backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-sat));-webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-sat));
-  background:
-    linear-gradient(180deg,color-mix(in srgb,#fff 7%,transparent),transparent 65%),
-    color-mix(in srgb,var(--surface) 12%,transparent);
-  box-shadow:
-    inset 0 0 0 1px color-mix(in srgb,#fff 16%,transparent),
-    0 10px 22px -16px rgba(0,0,0,.3);
+/* ---------- Toolband · offenes Band, Werkzeuge im langsamen Lauf ---------- */
+/* Keine Glasfläche: nur je eine Haarlinie oben und unten, die Einträge stehen groß und frei
+   auf dem Hintergrund. Der Inhalt steht im HTML zweimal und läuft genau -50%. Eine Maske
+   blendet Linien und Einträge an beiden Rändern weich in die Seite aus. Das Band pausiert
+   beim Überfahren und außerhalb des Sichtbereichs (.is-off, gesetzt in main.js). */
+.toolband{position:relative;border-block:1px solid var(--line);
   mask-image:linear-gradient(to right,transparent,#000 10%,#000 90%,transparent);
   -webkit-mask-image:linear-gradient(to right,transparent,#000 10%,#000 90%,transparent)}
-.toolband::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;opacity:.5;
-  background:linear-gradient(115deg,transparent 35%,color-mix(in srgb,#fff 22%,transparent) 48%,transparent 62%);
-  background-size:220% 100%;background-repeat:no-repeat;background-position:130% 0;
-  animation:toolbandSheen 9s ease-in-out infinite}
-.toolband:hover::after,.toolband:focus-within::after{animation-play-state:paused}
-@keyframes toolbandSheen{0%,60%,100%{background-position:130% 0}80%{background-position:-30% 0}}
-.toolband__sicht{position:relative;overflow:hidden;padding:44px 0}
-.toolband__track{list-style:none;display:flex;width:max-content;align-items:center;gap:84px;padding:0 clamp(28px,6vw,90px);
-  animation:toolbandRun 42s linear infinite}
-.toolband:hover .toolband__track,.toolband:focus-within .toolband__track{animation-play-state:paused}
+.toolband__sicht{position:relative;overflow:hidden;padding:72px 0}
+.toolband__track{list-style:none;display:flex;width:max-content;align-items:center;gap:132px;padding:0 clamp(28px,6vw,90px);
+  animation:toolbandRun 60s linear infinite;will-change:transform}
+.toolband:hover .toolband__track,.toolband:focus-within .toolband__track,.toolband.is-off .toolband__track{animation-play-state:paused}
 @keyframes toolbandRun{to{transform:translateX(-50%)}}
-.toolband__item{display:flex;align-items:center;flex:none;gap:20px}
-.toolband__item svg{flex:none;display:block;width:42px;height:42px}
-.toolband__item span{font-family:var(--f-mono);font-size:23px;font-weight:500;white-space:nowrap;color:var(--text)}
+.toolband__item{display:flex;align-items:center;flex:none;gap:28px}
+.toolband__item svg{flex:none;display:block;width:64px;height:64px}
+.toolband__item span{font-family:var(--f-mono);font-size:38px;font-weight:500;line-height:1;letter-spacing:-.01em;white-space:nowrap;color:var(--text)}
 @media (prefers-reduced-motion:reduce){
   .toolband__track{animation:none!important;flex-wrap:wrap;width:100%!important;justify-content:center}
-  .toolband::after{animation:none!important}
 }
 @media (max-width:620px){
-  .toolband__sicht{padding:30px 0}
-  .toolband__track{gap:50px;padding:0 22px}
-  .toolband__item svg{width:29px;height:29px}
-  .toolband__item span{font-size:17px}
+  .toolband__sicht{padding:40px 0}
+  .toolband__track{gap:64px;padding:0 22px}
+  .toolband__item{gap:18px}
+  .toolband__item svg{width:38px;height:38px}
+  .toolband__item span{font-size:22px}
 }
 
 /* ---------- Work / Projects ---------- */

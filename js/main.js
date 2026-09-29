@@ -862,6 +862,10 @@
     list.addEventListener('pointerleave', hide);
     list.addEventListener('click', hide);
   })();
+
+  /* Werkzeugband läuft nur, solange es sichtbar ist */
+  const toolband = $('.toolband');
+  if (toolband) new IntersectionObserver(e => toolband.classList.toggle('is-off', !e[0].isIntersecting)).observe(toolband);
   $$('[data-close]', modal).forEach(b => b.addEventListener('click', closeProject));
   mTabs.addEventListener('keydown', e => {
     const d = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
