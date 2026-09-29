@@ -473,11 +473,10 @@
 
   /* ---------- Custom cursor: dot follower ----------
      A small dot that trails the pointer with a short exponential ease, stretches slightly along
-     fast movement, grows over anything clickable and becomes a labelled circle on [data-cursor].
-     Size states live in CSS (.is-hover/.is-label/.is-down/.is-hidden). */
+     fast movement and grows a little, with a soft halo, over anything clickable.
+     Size states live in CSS (.is-hover/.is-down/.is-hidden). */
   const cursor = $('#cursor');
   const cDot = $('#cursorDot');
-  const cLabel = $('#cursorLabel');
   if (cursor && cDot && !reduce && matchMedia('(any-hover:hover) and (any-pointer:fine)').matches) {
     let tx = innerWidth / 2, ty = innerHeight / 2, x = tx, y = ty, started = false;
     let stretch = 0, angle = 0;
@@ -504,7 +503,7 @@
       x += dx * k; y += dy * k;
       // stretch only the resting dot; a grown circle wobbling would look loose
       const speed = Math.hypot(dx, dy);
-      const plain = !cursor.classList.contains('is-hover') && !cursor.classList.contains('is-label');
+      const plain = !cursor.classList.contains('is-hover');
       stretch += ((plain ? Math.min(speed / 90, 0.35) : 0) - stretch) * 0.25;
       if (speed > 0.5) angle = Math.atan2(dy, dx) * 180 / Math.PI;
       cursor.style.transform = `translate3d(${x}px,${y}px,0)`;
@@ -514,13 +513,7 @@
 
     document.documentElement.classList.add('has-custom-cursor');
     const hoverSel = 'a,button,[data-cursor],.project,label,summary,[role="button"]';
-    const setState = t => {
-      const label = t && t.closest('[data-cursor]') && t.closest('[data-cursor]').getAttribute('data-cursor');
-      cursor.classList.toggle('is-label', !!label);
-      cursor.classList.toggle('is-hover', !label && !!t);
-      if (label) cLabel.textContent = label;
-    };
-    document.addEventListener('mouseover', e => setState(e.target.closest(hoverSel)));
+    document.addEventListener('mouseover', e => cursor.classList.toggle('is-hover', !!e.target.closest(hoverSel)));
   }
 
   /* ---------- Nav scroll state ---------- */

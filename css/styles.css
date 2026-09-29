@@ -143,21 +143,20 @@ h1,h2,h3{text-wrap:balance}
    One 88px circle drawn at scale .12 (~10px dot). Position and a subtle velocity stretch come from
    JS (initDotCursor); the size states are pure CSS so they ease independently of the movement.
    The root blends with 'difference', so the white dot reads on dark and light surfaces alike and
-   inverts what it covers when it grows over a link. Labelled targets switch to a solid pill-circle
-   with readable text, where inverting would only hurt legibility. */
+   inverts what it covers. Over anything clickable the core grows a little and a soft halo fades in
+   around it; the halo is a radial gradient that thins out towards its edge, so it has no hard rim. */
 .cursor{position:fixed;top:0;left:0;z-index:150;pointer-events:none;width:0;height:0;opacity:0;transition:opacity .3s;mix-blend-mode:difference;will-change:transform}
 .cursor.is-visible{opacity:1}
-.cursor__dot{position:absolute;top:-44px;left:-44px;width:88px;height:88px;will-change:transform}
-.cursor__dot::before{content:"";position:absolute;inset:0;border-radius:50%;background:#fff;transform:scale(.12);transition:transform .45s cubic-bezier(.22,1,.36,1),background-color .3s}
-.cursor.is-hover .cursor__dot::before{transform:scale(.5)}
-.cursor.is-down .cursor__dot::before{transform:scale(.09)}
-.cursor.is-hover.is-down .cursor__dot::before{transform:scale(.42)}
-.cursor.is-label{mix-blend-mode:normal}
-.cursor.is-label .cursor__dot::before{transform:scale(1);background:var(--text)}
-.cursor.is-label.is-down .cursor__dot::before{transform:scale(.92)}
-.cursor.is-hidden .cursor__dot::before{transform:scale(0)}
-.cursor__label{position:absolute;top:0;left:0;width:84px;text-align:center;white-space:nowrap;font-family:var(--f-mono);font-size:11px;font-weight:600;letter-spacing:.04em;line-height:1.2;color:var(--bg);opacity:0;transform:translate(-50%,-50%) scale(.6);transition:opacity .2s,transform .35s cubic-bezier(.22,1,.36,1)}
-.cursor.is-label .cursor__label{opacity:1;transform:translate(-50%,-50%) scale(1);transition-delay:.06s}
+.cursor__dot{position:absolute;top:-22px;left:-22px;width:44px;height:44px;will-change:transform}
+.cursor__dot::before,.cursor__dot::after{content:"";position:absolute;inset:0;border-radius:50%;transition:transform .5s cubic-bezier(.22,1,.36,1),opacity .4s}
+.cursor__dot::before{background:#fff;transform:scale(.24)}
+.cursor__dot::after{background:radial-gradient(circle,rgba(255,255,255,.34) 0,rgba(255,255,255,.2) 34%,rgba(255,255,255,.06) 56%,transparent 70%);opacity:0;transform:scale(.3)}
+.cursor.is-hover .cursor__dot::before{transform:scale(.36)}
+.cursor.is-hover .cursor__dot::after{opacity:1;transform:scale(1)}
+.cursor.is-down .cursor__dot::before{transform:scale(.18)}
+.cursor.is-hover.is-down .cursor__dot::before{transform:scale(.3)}
+.cursor.is-hover.is-down .cursor__dot::after{transform:scale(.86)}
+.cursor.is-hidden .cursor__dot::before,.cursor.is-hidden .cursor__dot::after{transform:scale(0)}
 @media (hover:none),(max-width:860px){.cursor{display:none}}
 /* While the custom cursor is running, kill the native cursor everywhere (buttons/links ship their
    own explicit cursor:pointer, and browsers hand-cursor <a> by default, so body{cursor:none} alone
@@ -363,6 +362,7 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 }
 
 /* ---------- Work / Projects ---------- */
+.work{padding-top:clamp(52px,8.5vw,118px)}
 .work__head{margin-bottom:clamp(30px,4vw,50px)}
 .work__hint{margin-top:16px;font-family:var(--f-mono);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-2)}
 .projects{list-style:none;border-top:1px solid var(--line)}
