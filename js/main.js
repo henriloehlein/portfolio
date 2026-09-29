@@ -799,8 +799,9 @@
 
   /* ---------- Projekt-Cover schweben am Desktop ----------
      Mit Zeiger ab 1000 px bleibt die Liste typografisch. Beim ersten Überfahren wandern die
-     Cover in eine feste Fläche (erst dann laden ihre Bilder); sie steht rechts in der freien
-     Fläche, nur die Höhe folgt weich dem Zeiger. Sonst stehen die Cover fest in der Zeile. */
+     Cover in eine feste Fläche (erst dann laden ihre Bilder); sie steht rechts an der Kante
+     der Liste auf Höhe der überfahrenen Zeile und gleitet beim Zeilenwechsel weich weiter.
+     Sonst stehen die Cover fest in der Zeile. */
   (function projectCovers() {
     const list = $('#projects');
     if (!list) return;
@@ -808,7 +809,7 @@
     const float = document.createElement('div');
     float.className = 'pfloat'; float.setAttribute('aria-hidden', 'true');
     document.body.appendChild(float);
-    let moved = false, on = false, cur = null, x = 0, y = 0, ty = 0, raf = 0, last = 0, offT = 0;
+    let moved = false, on = false, cur = null, row = null, x = 0, y = 0, ty = 0, raf = 0, last = 0, offT = 0;
 
     function hide() {
       on = false; cur = null; float.classList.remove('is-on');
@@ -837,15 +838,15 @@
     }
     function loop(now) {
       const dt = Math.min(.05, (now - last) / 1000); last = now;
-      y += (ty - y) * (1 - Math.exp(-dt * 12));
+      y += (ty - y) * (1 - Math.exp(-dt * 7));
       if (Math.abs(ty - y) < .3) y = ty;
       float.style.transform = `translate3d(${x}px,${y}px,0)`;
       raf = on && y !== ty ? requestAnimationFrame(loop) : 0;
     }
-    function place(e, snap) {
-      const r = list.getBoundingClientRect(), W = float.offsetWidth, H = float.offsetHeight;
-      x = Math.min(innerWidth - W - 16, r.left + r.width * .75 - W / 2);
-      ty = Math.max(16, Math.min(innerHeight - H - 16, e.clientY - H / 2));
+    function place(snap) {
+      const r = list.getBoundingClientRect(), rr = row.getBoundingClientRect(), W = float.offsetWidth, H = float.offsetHeight;
+      x = Math.min(innerWidth - W - 16, r.right - W - 12);
+      ty = Math.max(16, Math.min(innerHeight - H - 16, rr.top + rr.height / 2 - H / 2));
       if (snap || reduce) { y = ty; float.style.transform = `translate3d(${x}px,${y}px,0)`; }
       else if (!raf) { last = performance.now(); raf = requestAnimationFrame(loop); }
     }
@@ -854,10 +855,10 @@
         if (!mq.matches || e.pointerType === 'touch') return;
         if (!moved) { $$('.project__visual .pcover', list).forEach(c => float.appendChild(c)); moved = true; }
         const first = !on;
-        on = true; show(li.dataset.project); place(e, first); float.classList.add('is-on');
+        row = li; on = true; show(li.dataset.project); place(first); float.classList.add('is-on');
       });
-      li.addEventListener('pointermove', e => { if (on) place(e); });
     });
+    addEventListener('scroll', () => { if (on) place(); }, { passive: true });
     list.addEventListener('pointerleave', hide);
     list.addEventListener('click', hide);
   })();
