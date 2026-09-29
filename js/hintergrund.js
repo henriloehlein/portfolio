@@ -85,7 +85,8 @@ void main(){
   env += beam * (.12 + .14 * dot(n.xy, vec2(sin(th), cos(th))));
   /* Wasserlicht: nur oben rechts und im Kegel */
   float corner = smoothstep(1.5, .2, length(sp - vec2(asp * .85, -.05)));
-  env += caustic(r.xy * 1.5 + p * .85, T * .032) * .3 * smoothstep(.15, .65, env) * smoothstep(-.4, .4, r.y) * max(corner * .35, beam);
+  float cw = .3 * smoothstep(.15, .65, env) * smoothstep(-.4, .4, r.y) * max(corner * .35, beam);
+  if (cw > .002) env += caustic(r.xy * 1.5 + p * .85, T * .032) * cw;   // Kaustik nur, wo sie sichtbar ist
   vec3 col = mix(C3, C1, clamp(env, 0., 1.));
   col = mix(col, C2, clamp((env - .62) * 1.8, 0., 1.));
   float corner2 = smoothstep(2.3, .1, length(sp - vec2(asp * .9, -.1)));
@@ -115,13 +116,24 @@ in vec2 a; void main(){ gl_Position = vec4(a, 0., 1.); }`;
                  : [C('#0a0a0f'), mix(C('#2e2e35'), tint, .06), mix(C('#fff1e4'), tint, .12), C('#060608')];
   }
 
-  // Schmale Bildschirme: etwas gröber und mit etwa 30 statt 60 Bildern pro Sekunde
+  /* Sparsam rechnen: Die Fläche bewegt sich sehr langsam, im Ruhezustand reichen etwa 30 Bilder
+     pro Sekunde; nur solange das Licht der Scrollposition nachgleitet, etwa 60. Schmale
+     Bildschirme immer etwa 30. Große Monitore bekommen höchstens ~0,7 Megapixel. Liefert ein
+     Gerät dauerhaft langsame Bilder, sinkt erst die Auflösung, danach bleibt ein Standbild,
+     das nur nach dem Scrollen neu gezeichnet wird. */
   const small = matchMedia('(max-width: 760px)');
   const ease = (a, dt) => 1 - Math.pow(1 - a, dt / 33);
-  let lag = scrollY / innerHeight, last = 0, prev = 0;
+  const MAX_PX = 700000;
+  let lag = scrollY / innerHeight, last = 0, prev = 0, level = 0;   // level: 0 normal, 1 gröber, 2 Standbild
+
+  function scale() {
+    let s = small.matches ? .5 : .6;
+    s = Math.min(s, Math.sqrt(MAX_PX / (innerWidth * innerHeight)));
+    return level ? s * .7 : s;
+  }
 
   function draw(now) {
-    const s = small.matches ? .5 : .6;
+    const s = scale();
     const w = Math.round(innerWidth * s), h = Math.round(innerHeight * s);
     if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; gl.viewport(0, 0, w, h); }
     const dt = Math.min(100, prev ? now - prev : 33); prev = now;
@@ -136,13 +148,40 @@ in vec2 a; void main(){ gl_Position = vec4(a, 0., 1.); }`;
     palette(light).forEach((c, i) => gl.uniform3fv(u['C' + i], c));
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   }
+  /* Leistungswächter: gleitender Mittelwert des Bildabstands. Die ersten 2,5 s (Laden) und
+     verdeckte Tabs zählen nicht. Über ~3 s dauerhaft mehr als 45 ms pro Bild gilt als zu langsam. */
+  let avg = 16, slowFor = 0, rafPrev = 0;
+  const born = performance.now();
+  function watch(now) {
+    const d = rafPrev ? now - rafPrev : 16; rafPrev = now;
+    if (document.hidden || d > 250 || now - born < 2500) { slowFor = 0; return; }
+    avg += (d - avg) * .1;
+    slowFor = avg > 45 ? slowFor + d : 0;
+    if (slowFor > 3000) { level++; slowFor = 0; avg = 16; }
+  }
+
   function frame(now) {
+    if (level >= 2) { still(); return; }
     requestAnimationFrame(frame);
-    if (document.hidden || now - last < (small.matches ? 33 : 15)) return;
+    watch(now);
+    const moving = Math.abs(scrollY / innerHeight - lag) > .002;
+    const gap = small.matches || !moving ? 32 : 15;
+    if (document.hidden || now - last < gap) return;
     last = now;
     draw(now);
   }
   const once = () => draw(performance.now());
+
+  /* Standbild für langsame Geräte: nach dem Scrollen einmal neu, sonst nichts */
+  let stillT = 0;
+  function still() {
+    lag = scrollY / innerHeight; once();
+    const redraw = () => { clearTimeout(stillT); stillT = setTimeout(() => { lag = scrollY / innerHeight; once(); }, 180); };
+    addEventListener('scroll', redraw, { passive: true });
+    addEventListener('resize', redraw, { passive: true });
+    new MutationObserver(redraw).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+  }
+
   if (reduce) {
     addEventListener('scroll', () => requestAnimationFrame(once), { passive: true });
     addEventListener('resize', once, { passive: true });

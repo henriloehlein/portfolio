@@ -494,8 +494,11 @@
     addEventListener('pointerup', () => cursor.classList.remove('is-down'));
     addEventListener('blur', () => cursor.classList.remove('is-down'));
 
-    let last = performance.now();
-    (function loop(now) {
+    // The loop only runs while the dot is still catching up; a resting pointer costs nothing.
+    let last = 0, running = false;
+    const wake = () => { if (!running) { running = true; last = performance.now(); requestAnimationFrame(loop); } };
+    addEventListener('pointermove', wake, { passive: true });
+    function loop(now) {
       const dt = Math.min(0.05, (now - last) / 1000);
       last = now;
       const k = 1 - Math.exp(-dt * 24);           // frame-rate independent ease, ~40ms lag
@@ -508,8 +511,15 @@
       if (speed > 0.5) angle = Math.atan2(dy, dx) * 180 / Math.PI;
       cursor.style.transform = `translate3d(${x}px,${y}px,0)`;
       cDot.style.transform = `rotate(${angle}deg) scale(${1 + stretch},${1 - stretch * 0.5})`;
+      if (speed < 0.1 && stretch < 0.002) {
+        x = tx; y = ty;
+        cursor.style.transform = `translate3d(${x}px,${y}px,0)`;
+        running = false;
+        return;
+      }
       requestAnimationFrame(loop);
-    })(last);
+    }
+    wake();
 
     document.documentElement.classList.add('has-custom-cursor');
     const hoverSel = 'a,button,[data-cursor],.project,label,summary,[role="button"]';
