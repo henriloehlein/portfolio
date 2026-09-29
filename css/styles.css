@@ -366,7 +366,7 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 .work__head{margin-bottom:clamp(30px,4vw,50px)}
 .work__hint{margin-top:16px;font-family:var(--f-mono);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-2)}
 .projects{list-style:none;border-top:1px solid var(--line)}
-.project{position:relative;display:grid;grid-template-columns:1fr 300px;gap:34px;align-items:center;padding:40px 8px;border-bottom:1px solid var(--line);cursor:pointer;transition:padding .5s var(--ease)}
+.project{position:relative;display:grid;grid-template-columns:1fr minmax(0,340px);gap:34px;align-items:center;padding:40px 8px;border-bottom:1px solid var(--line);cursor:pointer;transition:padding .5s var(--ease)}
 .project::after{content:"";position:absolute;inset:0;background:var(--grad-soft);opacity:0;z-index:-1;transition:opacity .5s;border-radius:14px}
 .project:hover{padding-left:26px;padding-right:26px}
 .project:hover::after{opacity:.07}
@@ -378,21 +378,79 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 .project__tags{display:flex;flex-wrap:wrap;align-items:baseline;row-gap:2px;margin-top:16px;font-family:var(--f-display);font-style:italic;font-weight:360;font-size:14px;color:color-mix(in srgb,var(--warm-1) 38%,var(--text))}
 .project__tags span:not(:last-child)::after{content:"/";display:inline-block;margin:0 9px;font:400 11px var(--f-mono);font-style:normal;color:var(--muted-2)}
 .project__tags .project__status{font:500 10px var(--f-mono);font-style:normal;letter-spacing:.08em;text-transform:uppercase;color:var(--warm-1)}
-.project__visual{justify-self:end;width:100%;max-width:300px;height:210px;display:grid;place-items:center;overflow:hidden}
-.phone{width:118px;border-radius:22px;overflow:hidden;border:5px solid #14141c;box-shadow:var(--shadow);transform:translateY(6px) rotate(-3deg);transition:transform .6s var(--ease)}
-[data-theme="light"] .phone{border-color:#26242c}
-.project:hover .phone{transform:translateY(0) rotate(0)}
-.phone img{width:100%;display:block}
-.plate{width:100%;height:200px;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);display:grid;place-items:center;transition:transform .6s var(--ease)}
-.project:hover .plate{transform:translateY(-4px)}
-.plate img{width:100%;height:100%;object-fit:cover}
-.plate--cover{padding:0;background:var(--surface)}
-.plate--dark{background:#0b1018}
-.plate--logo{background:#fff;padding:clamp(20px,3vw,34px)}
-.plate--logo img{object-fit:contain;height:auto;max-height:100%}
-.plate--syntegon{background:linear-gradient(135deg,#1b2230,#0e1622);position:relative}
-.plate--syntegon span{font-family:var(--f-mono);font-size:42px;font-weight:600;letter-spacing:.04em;background:linear-gradient(100deg,var(--warm-1),var(--cool-1));-webkit-background-clip:text;background-clip:text;color:transparent}
-.plate--syntegon::after{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:26px 26px;opacity:.5}
+/* ---------- Projekt-Cover: freigestellte Geräte in einem dezenten Lichthof ----------
+   Am Desktop (Zeiger, ab 1000 px) steht die Liste rein typografisch; beim Überfahren einer Zeile
+   schwebt ihr Cover rechts in der freien Fläche (.pfloat, gesteuert in main.js). Auf Touch-Geräten
+   und schmalen Fenstern steht dasselbe Cover fest neben bzw. unter dem Text. Die Geräte sind
+   schlanke CSS-Rahmen um die flachen Original-Screens; Syntegon zeigt wegen des Sperrvermerks
+   nur ein abstraktes Bedienpanel mit dem Hinweis Vertraulich. */
+.project__visual{justify-self:end;width:100%;max-width:340px}
+.pcover{position:relative;width:100%;aspect-ratio:470/400;
+  --glow:#d9793f;--glow-2:#b8583a;--halo:22%;--rim:26%;--bezel:#0b0b0f;--bezel-ring:rgba(255,255,255,.14);
+  --dev-shadow:0 0 46px -12px color-mix(in srgb,var(--glow) var(--rim),transparent),0 50px 80px -30px rgba(0,0,0,.8),0 16px 30px -14px rgba(0,0,0,.55)}
+[data-theme="light"] .pcover{--halo:16%;--rim:20%;--bezel:#17161b;--bezel-ring:rgba(255,255,255,.18);
+  --dev-shadow:0 0 40px -12px color-mix(in srgb,var(--glow) var(--rim),transparent),0 44px 70px -30px rgba(60,40,30,.45),0 14px 26px -14px rgba(60,40,30,.28)}
+.pcover .frei{position:absolute;inset:0}
+.pcover .frei>*{position:absolute}
+.pcover .halo{inset:-26% -24% -18%;z-index:0;pointer-events:none;border-radius:50%;mix-blend-mode:screen;
+  background:
+    radial-gradient(closest-side at 50% 46%,color-mix(in srgb,var(--glow) var(--halo),transparent) 0%,color-mix(in srgb,var(--glow) calc(var(--halo) * .5),transparent) 42%,color-mix(in srgb,var(--glow) calc(var(--halo) * .16),transparent) 70%,transparent 100%),
+    radial-gradient(closest-side at 70% 64%,color-mix(in srgb,var(--glow-2) calc(var(--halo) * .6),transparent) 0%,transparent 100%)}
+[data-theme="light"] .pcover .halo{mix-blend-mode:normal}
+.pcover .floor{left:8%;right:8%;bottom:1%;height:14%;z-index:0;pointer-events:none;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.55),transparent)}
+[data-theme="light"] .pcover .floor{background:radial-gradient(closest-side,rgba(60,40,30,.22),transparent)}
+/* Smartphone */
+.pcover .ph{z-index:1;width:30%;aspect-ratio:390/844;border:4px solid var(--bezel);border-radius:15%/6.9%;background:var(--bezel);
+  box-shadow:0 0 0 1px var(--bezel-ring),var(--dev-shadow);transform:rotate(var(--r,0deg))}
+.pcover .ph::before{content:"";position:absolute;inset:0;z-index:2;border-radius:inherit;pointer-events:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06),inset 0 1px 1px rgba(255,255,255,.12)}
+.pcover .ph__scr{position:relative;width:100%;height:100%;overflow:hidden;border-radius:12.8%/5.9%;background:#1c1c22}
+.pcover .ph__scr img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
+.pcover .ph:nth-of-type(1){left:3%;top:20%;--r:-5deg}
+.pcover .ph:nth-of-type(2){left:35%;top:6%;z-index:2}
+.pcover .ph:nth-of-type(3){left:67%;top:20%;--r:5deg}
+/* Browserfenster */
+.pcover .br{z-index:1;width:74%;aspect-ratio:1250/920;border-radius:9px;overflow:hidden;background:#f4f4f6;box-shadow:0 0 0 1px rgba(0,0,0,.18),var(--dev-shadow)}
+.pcover .br:nth-of-type(1){left:0;top:4%}
+.pcover .br:nth-of-type(2){left:13%;top:25%;z-index:2}
+.pcover .br:nth-of-type(3){left:26%;top:46%;z-index:3}
+.pcover .br__bar{height:5.5%;min-height:10px;display:flex;align-items:center;gap:1.1%;padding:0 2.2%;background:#e7e7ea;border-bottom:1px solid rgba(0,0,0,.07)}
+.pcover .br__bar i{width:1.1%;aspect-ratio:1;border-radius:50%;background:#c9c9ce}
+.pcover .br__bar b{margin-left:3%;height:48%;width:34%;border-radius:99px;background:#fff}
+[data-theme="dark"] .pcover .br{background:#1b1b22}
+[data-theme="dark"] .pcover .br__bar{background:#26262e;border-color:rgba(255,255,255,.06)}
+[data-theme="dark"] .pcover .br__bar i{background:#44444e}
+[data-theme="dark"] .pcover .br__bar b{background:#34343d}
+.pcover .br__scr{position:relative;height:94.5%;overflow:hidden;background:#fff}
+.pcover .br__scr img{position:absolute;top:0;left:0;width:101.3%;max-width:none;height:auto}  /* schneidet die Scrollleiste der Aufnahmen ab */
+/* Bedienpanel (Syntegon) */
+.pcover .hmi{z-index:1;width:96%;left:2%;top:18%;aspect-ratio:16/10;padding:1.4%;border-radius:12px;background:#1a1d22;box-shadow:0 0 0 1px rgba(255,255,255,.08),var(--dev-shadow)}
+[data-theme="light"] .pcover .hmi{background:#23262c}
+.pcover .hmi svg{display:block;width:100%;height:100%;border-radius:7px}
+.pcover .frei--lock .hmi{filter:blur(1.4px) brightness(.72) saturate(.8)}
+.pcover .lock{left:50%;top:50%;z-index:3;transform:translate(-50%,-50%);display:inline-flex;align-items:center;gap:9px;padding:9px 16px 9px 13px;border-radius:99px;white-space:nowrap;
+  font:500 11px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:#ecebf0;
+  background:rgba(14,15,19,.62);border:1px solid rgba(255,255,255,.14);box-shadow:0 12px 30px -12px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.08);
+  -webkit-backdrop-filter:blur(10px) saturate(140%);backdrop-filter:blur(10px) saturate(140%)}
+.pcover .lock svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;opacity:.85}
+/* Schwebende Fläche am Desktop */
+.pfloat{position:fixed;left:0;top:0;z-index:40;width:470px;height:400px;pointer-events:none;opacity:0;visibility:hidden;
+  transition:opacity .2s ease-out,visibility 0s .2s;will-change:transform,opacity}
+.pfloat.is-on{opacity:1;visibility:visible;transition:opacity .4s var(--ease),visibility 0s}
+.pfloat .pcover{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .35s var(--ease),visibility 0s .35s}
+.pfloat .pcover.is-cur{opacity:1;visibility:visible;transition:opacity .35s var(--ease),visibility 0s}
+.pfloat .pcover.is-play :is(.ph,.br,.hmi,.lock){animation:pcRise .7s var(--ease) both;animation-delay:calc(var(--d,0) * 70ms)}
+.pfloat .pcover.is-play .lock{--d:3}
+.pfloat .pcover.is-play .halo{animation:pcHalo 1s var(--ease) both,pcBreathe 7s 1s ease-in-out infinite alternate}
+.pfloat .pcover.is-play .floor{animation:pcFade .8s var(--ease) both}
+@keyframes pcRise{from{opacity:0;translate:0 40px;scale:.96}}
+@keyframes pcHalo{from{opacity:0;scale:.72}}
+@keyframes pcBreathe{to{opacity:.8;scale:1.05}}
+@keyframes pcFade{from{opacity:0}}
+.has-pfloat .project{grid-template-columns:1fr}
+.has-pfloat .project__visual{display:none}
+.has-pfloat .project__body{max-width:min(620px,52%)}
+@media (max-width:1200px){.pfloat{width:400px;height:340px}}
+@media (prefers-reduced-motion:reduce){.pfloat .pcover.is-play *{animation:none!important}}
 .project__open{position:absolute;top:40px;right:8px;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;opacity:0;transform:scale(.8);transition:opacity .4s,transform .4s,background .3s}
 .project:hover .project__open{opacity:1;transform:scale(1)}
 .project__open svg{width:16px;height:16px;fill:none;stroke:var(--text);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
@@ -898,9 +956,7 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 
 /* ---------- Responsive ---------- */
 @media (max-width:1040px){
-  .project{grid-template-columns:1fr 200px;gap:22px}
-  .project__visual{height:170px}
-  .phone{width:92px}
+  .project{grid-template-columns:1fr minmax(0,240px);gap:22px}
   .cs__taskGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (max-width:760px){
@@ -912,9 +968,7 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 }
 @media (max-width:760px){
   .project{grid-template-columns:1fr;gap:18px}
-  .project__visual{justify-self:start;max-width:100%;height:auto;margin-top:6px}
-  .phone{width:120px;transform:none}
-  .plate{height:160px}
+  .project__visual{justify-self:start;max-width:420px;margin-top:6px}
   .project__open{display:none}
   .cs__shots--2,.cs__grid2{grid-template-columns:1fr}
 }

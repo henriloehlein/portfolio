@@ -35,7 +35,7 @@
     'p.cognify.tag1':'Augmented reality','p.cognify.tag2':'Gamification','p.cognify.tag3':'Microlearning','p.cognify.tag4':'Social learning','p.forwerts.tag1':'E-commerce','p.forwerts.tag2':'Self-service portals','p.forwerts.tag3':'Design structures',
     'p.steady.tag1':'Behavioral design','p.steady.tag2':'Nudging','p.steady.tag3':'Adaptive systems','p.steady.tag4':'AI assistance',
     'p.milo.tag1':'Inclusive design','p.milo.tag2':'Accessibility','p.milo.tag3':'Conversational UI','p.milo.tag4':'Trust & control',
-    'p.syntegon.tag1':'Industrial UX','p.syntegon.tag2':'HMI design','p.syntegon.tag3':'Error prevention',
+    'p.syntegon.lock':'Confidential','p.syntegon.tag1':'Industrial UX','p.syntegon.tag2':'HMI design','p.syntegon.tag3':'Error prevention',
     'cs.forwerts.kicker':'UX DESIGN · 2024/25',
     'cs.forwerts.sub':'UX Design across client projects',
     'cs.forwerts.pitch':'At <strong>forwerts interactive</strong>, I worked in the UX team on online shops, customer portals and websites for major corporations in the telecommunications and energy sectors.',
@@ -796,6 +796,71 @@
   $$('.project').forEach(p => {
     p.addEventListener('click', () => openProject(p.dataset.project));
   });
+
+  /* ---------- Projekt-Cover schweben am Desktop ----------
+     Mit Zeiger ab 1000 px bleibt die Liste typografisch. Beim ersten Überfahren wandern die
+     Cover in eine feste Fläche (erst dann laden ihre Bilder); sie steht rechts in der freien
+     Fläche, nur die Höhe folgt weich dem Zeiger. Sonst stehen die Cover fest in der Zeile. */
+  (function projectCovers() {
+    const list = $('#projects');
+    if (!list) return;
+    const mq = matchMedia('(hover:hover) and (pointer:fine) and (min-width:1000px)');
+    const float = document.createElement('div');
+    float.className = 'pfloat'; float.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(float);
+    let moved = false, on = false, cur = null, x = 0, y = 0, ty = 0, raf = 0, last = 0, offT = 0;
+
+    function hide() {
+      on = false; cur = null; float.classList.remove('is-on');
+      clearTimeout(offT);
+      offT = setTimeout(() => { if (!on) $$('.pcover', float).forEach(c => c.classList.remove('is-cur', 'is-play')); }, 220);
+    }
+    function mode() {
+      document.documentElement.classList.toggle('has-pfloat', mq.matches);
+      if (!mq.matches && moved) {
+        $$('.pcover', float).forEach(c => {
+          c.classList.remove('is-cur', 'is-play');
+          const v = $(`.project[data-project="${c.dataset.k}"] .project__visual`, list);
+          if (v) v.appendChild(c);
+        });
+        moved = false; hide();
+      }
+    }
+    mq.addEventListener('change', mode); mode();
+
+    function show(k) {
+      if (cur === k) return;
+      cur = k; clearTimeout(offT);
+      $$('.pcover', float).forEach(c => { c.classList.remove('is-play'); c.classList.toggle('is-cur', c.dataset.k === k); });
+      const c = $(`.pcover[data-k="${k}"]`, float);
+      if (c) { void c.offsetWidth; c.classList.add('is-play'); }
+    }
+    function loop(now) {
+      const dt = Math.min(.05, (now - last) / 1000); last = now;
+      y += (ty - y) * (1 - Math.exp(-dt * 12));
+      if (Math.abs(ty - y) < .3) y = ty;
+      float.style.transform = `translate3d(${x}px,${y}px,0)`;
+      raf = on && y !== ty ? requestAnimationFrame(loop) : 0;
+    }
+    function place(e, snap) {
+      const r = list.getBoundingClientRect(), W = float.offsetWidth, H = float.offsetHeight;
+      x = Math.min(innerWidth - W - 16, r.left + r.width * .75 - W / 2);
+      ty = Math.max(16, Math.min(innerHeight - H - 16, e.clientY - H / 2));
+      if (snap || reduce) { y = ty; float.style.transform = `translate3d(${x}px,${y}px,0)`; }
+      else if (!raf) { last = performance.now(); raf = requestAnimationFrame(loop); }
+    }
+    $$('.project', list).forEach(li => {
+      li.addEventListener('pointerenter', e => {
+        if (!mq.matches || e.pointerType === 'touch') return;
+        if (!moved) { $$('.project__visual .pcover', list).forEach(c => float.appendChild(c)); moved = true; }
+        const first = !on;
+        on = true; show(li.dataset.project); place(e, first); float.classList.add('is-on');
+      });
+      li.addEventListener('pointermove', e => { if (on) place(e); });
+    });
+    list.addEventListener('pointerleave', hide);
+    list.addEventListener('click', hide);
+  })();
   $$('[data-close]', modal).forEach(b => b.addEventListener('click', closeProject));
   mTabs.addEventListener('keydown', e => {
     const d = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
