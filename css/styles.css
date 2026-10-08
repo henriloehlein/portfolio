@@ -163,20 +163,20 @@ h1,h2,h3{text-wrap:balance}
    doesn't reach them). Keeps the arrow the only pointer indicator, buttons keep their own hover state. */
 html.has-custom-cursor,html.has-custom-cursor *{cursor:none}
 
-/* ---------- Nav (identity left: portrait + name + typing line · tools right: DE/EN + theme) ---------- */
+/* ---------- Nav (identity left: name + typing line · tools right: DE/EN + theme) ---------- */
 /* Normal document flow on purpose, not fixed: this bar lives only at the very top of the page
    and scrolls away with everything else once the user scrolls past it. It is not a persistent
    sticky header. */
-.nav{position:relative;width:100%;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:clamp(18px,2.4vw,34px) var(--pad);transition:padding .4s var(--ease)}
-.nav--minimal.is-stuck{padding:10px var(--pad)}
-.nav__id{display:flex;align-items:center;gap:clamp(12px,1.2vw,18px);flex:1 1 auto;min-width:0}
+.nav{position:relative;width:100%;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:clamp(18px,2.4vw,34px) max(var(--pad),calc((100% - var(--maxw)) / 2 + var(--pad)));transition:padding .4s var(--ease)}
+.nav--minimal.is-stuck{padding-block:10px}
+.nav__id{display:flex;align-items:center;gap:clamp(16px,1.6vw,24px);flex:1 1 auto;min-width:0}
 .nav__name{font-family:var(--f-display);font-weight:400;font-size:clamp(22px,2.1vw,31px);letter-spacing:-.015em;color:var(--text);white-space:nowrap}
 /* Single line that never wraps, so the bar keeps its height while the loop types. Fills the
    space up to the tools; on narrower viewports the overflowing tail fades out under the mask
    instead of pushing the tools or breaking the line. */
-.nav__skills{display:flex;align-items:center;flex:1 1 auto;min-width:0;font-family:var(--f-mono);font-size:clamp(13.5px,1.2vw,17px);line-height:1.4;letter-spacing:.04em;color:var(--muted);white-space:nowrap;overflow:hidden;
+.nav__skills{display:flex;align-items:center;flex:1 1 auto;min-width:0;font-family:var(--f-mono);font-size:clamp(12px,.92vw,14px);line-height:1.4;letter-spacing:.04em;color:var(--muted);white-space:nowrap;overflow:hidden;
   -webkit-mask-image:linear-gradient(to right,#000 calc(100% - 40px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 40px),transparent)}
-.nav__skills::before{content:"";flex:none;width:1px;height:1.2em;background:var(--line-2);margin-right:clamp(12px,1.2vw,18px)}
+.nav__skills::before{content:"";flex:none;width:1px;height:1.2em;background:var(--line-2);margin-right:clamp(16px,1.6vw,24px)}
 /* typing-cursor caret: blinks continuously through typing, the hold, and the delete, never
    fades, since it is mid-animation for as long as the loop runs. */
 .typeCursor{display:inline-block;margin-left:2px;animation:typeBlink 1s step-end infinite}
@@ -449,16 +449,17 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
    Offene Zeilen mit Haarlinie oben, in derselben Flucht wie die Schwerpunkte. Beim Hover und
    Fokus zieht ein Kupferfaden über die Linie, der Pfeil rückt nach. */
 .contact{text-align:left}
-/* Text links, Porträt rechts; die Unterkanten von Links und Bild liegen auf einer Linie */
-.contact__grid{display:grid;grid-template-columns:minmax(0,1fr) clamp(260px,27vw,380px);gap:clamp(40px,6vw,96px);align-items:end}
-.contact__main{min-width:0}
-.contact__grid .contact__links{grid-template-columns:1fr;gap:clamp(22px,2.4vw,34px)}
-.contact__portrait{margin:0;border-radius:18px;overflow:hidden;aspect-ratio:4/5;background:var(--surface);box-shadow:var(--shadow-md)}
+/* Porträt rechts neben der Überschrift: Text vertikal zur Bildmitte, das Bild folgt dicht auf den Text
+   und sitzt etwas höher (margin-bottom hebt die Mitte an); die Links bleiben darunter */
+.contact__head{display:flex;align-items:center;gap:clamp(48px,7vw,112px);margin-bottom:clamp(40px,6vw,70px)}
+.contact .contact__head .dk-title{margin-bottom:0;flex:0 1 auto;width:auto;max-width:9.6em}  /* Block so breit wie der Text, damit das Bild direkt folgt */
+.contact__portrait{flex:none;width:clamp(150px,17vw,250px);margin:0 0 clamp(16px,2.4vw,40px);border-radius:16px;overflow:hidden;aspect-ratio:4/5;background:var(--surface);box-shadow:var(--shadow-md)}
 .contact__portrait img{width:100%;height:100%;object-fit:cover;outline:1px solid rgba(255,255,255,.08);outline-offset:-1px}
 [data-theme="light"] .contact__portrait img{outline-color:rgba(0,0,0,.08)}
-@media (max-width:900px){
-  .contact__grid{grid-template-columns:1fr;gap:40px}
-  .contact__portrait{grid-row:1;width:min(300px,70vw)}
+@media (max-width:620px){
+  .contact__head{flex-direction:column-reverse;align-items:flex-start;gap:28px}
+  .contact__portrait{margin:0}
+  .contact__portrait{width:150px}
 }
 .contact .dk-title{margin-bottom:clamp(40px,6vw,70px)}
 .contact__links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(28px,5vw,80px)}
