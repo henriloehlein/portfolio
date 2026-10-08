@@ -170,13 +170,11 @@ html.has-custom-cursor,html.has-custom-cursor *{cursor:none}
 .nav{position:relative;width:100%;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:clamp(18px,2.4vw,34px) var(--pad);transition:padding .4s var(--ease)}
 .nav--minimal.is-stuck{padding:10px var(--pad)}
 .nav__id{display:flex;align-items:center;gap:clamp(12px,1.2vw,18px);flex:1 1 auto;min-width:0}
-.nav__portrait{width:clamp(40px,3.6vw,54px);aspect-ratio:1;flex:none;border-radius:50%;overflow:hidden;outline:1px solid color-mix(in srgb,var(--text) 12%,transparent);outline-offset:2px}
-.nav__portrait img{width:100%;height:100%;object-fit:cover;filter:brightness(.9) contrast(1.03)}
-.nav__name{font-family:var(--f-display);font-weight:400;font-size:clamp(19px,1.7vw,25px);letter-spacing:-.015em;color:var(--text);white-space:nowrap}
+.nav__name{font-family:var(--f-display);font-weight:400;font-size:clamp(22px,2.1vw,31px);letter-spacing:-.015em;color:var(--text);white-space:nowrap}
 /* Single line that never wraps, so the bar keeps its height while the loop types. Fills the
    space up to the tools; on narrower viewports the overflowing tail fades out under the mask
    instead of pushing the tools or breaking the line. */
-.nav__skills{display:flex;align-items:center;flex:1 1 auto;min-width:0;font-family:var(--f-mono);font-size:clamp(12.5px,1vw,14.5px);line-height:1.4;letter-spacing:.04em;color:var(--muted);white-space:nowrap;overflow:hidden;
+.nav__skills{display:flex;align-items:center;flex:1 1 auto;min-width:0;font-family:var(--f-mono);font-size:clamp(13.5px,1.2vw,17px);line-height:1.4;letter-spacing:.04em;color:var(--muted);white-space:nowrap;overflow:hidden;
   -webkit-mask-image:linear-gradient(to right,#000 calc(100% - 40px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 40px),transparent)}
 .nav__skills::before{content:"";flex:none;width:1px;height:1.2em;background:var(--line-2);margin-right:clamp(12px,1.2vw,18px)}
 /* typing-cursor caret: blinks continuously through typing, the hold, and the delete, never
@@ -451,6 +449,17 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
    Offene Zeilen mit Haarlinie oben, in derselben Flucht wie die Schwerpunkte. Beim Hover und
    Fokus zieht ein Kupferfaden über die Linie, der Pfeil rückt nach. */
 .contact{text-align:left}
+/* Text links, Porträt rechts; die Unterkanten von Links und Bild liegen auf einer Linie */
+.contact__grid{display:grid;grid-template-columns:minmax(0,1fr) clamp(260px,27vw,380px);gap:clamp(40px,6vw,96px);align-items:end}
+.contact__main{min-width:0}
+.contact__grid .contact__links{grid-template-columns:1fr;gap:clamp(22px,2.4vw,34px)}
+.contact__portrait{margin:0;border-radius:18px;overflow:hidden;aspect-ratio:4/5;background:var(--surface);box-shadow:var(--shadow-md)}
+.contact__portrait img{width:100%;height:100%;object-fit:cover;outline:1px solid rgba(255,255,255,.08);outline-offset:-1px}
+[data-theme="light"] .contact__portrait img{outline-color:rgba(0,0,0,.08)}
+@media (max-width:900px){
+  .contact__grid{grid-template-columns:1fr;gap:40px}
+  .contact__portrait{grid-row:1;width:min(300px,70vw)}
+}
 .contact .dk-title{margin-bottom:clamp(40px,6vw,70px)}
 .contact__links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(28px,5vw,80px)}
 .contact__link{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;row-gap:14px;column-gap:20px;

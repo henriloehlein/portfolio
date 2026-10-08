@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
 
-<link rel="stylesheet" href="css/styles.css?v=2026-09-29j" />
+<link rel="stylesheet" href="css/styles.css?v=2026-10-08b" />
 <link rel="stylesheet" href="css/einstieg-animation.css?v=2026-09-29c" />
 </head>
 <body>
@@ -59,7 +59,6 @@
 <!-- ============ TOP BAR · identity left (portrait + name + typing line), DE/EN + theme right ============ -->
 <header class="nav nav--minimal" id="nav">
   <div class="nav__id">
-    <div class="nav__portrait"><img src="assets/img/covers/portrait-160.webp" alt="Henri Löhlein" width="160" height="160" decoding="async" /></div>
     <span class="nav__name">Henri Löhlein</span>
     <span class="nav__skills" id="typeSkills" aria-hidden="true"></span>
     <span class="sr-only" id="typeSkillsSr"></span>
@@ -421,6 +420,8 @@
 <!-- ============ CONTACT ============ -->
 <section class="contact dk" id="contact">
   <p class="sectionTag reveal" data-split><span data-i18n="tag.contact">Kontakt</span></p>
+  <div class="contact__grid">
+  <div class="contact__main">
   <h2 class="dk-title reveal" data-i18n="contact.title">Die besten Lösungen finden sich <em>gemeinsam</em>.</h2>
   <div class="contact__links reveal">
     <a href="mailto:henriloehlein@gmail.com" class="contact__link" data-cursor="Mail">
@@ -433,6 +434,11 @@
       <span class="contact__linkVal">in/henriloehlein</span>
       <svg class="contact__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
     </a>
+  </div>
+  </div>
+  <figure class="contact__portrait reveal">
+    <img src="assets/img/covers/henri-900.webp" srcset="assets/img/covers/henri-480.webp 480w, assets/img/covers/henri-900.webp 900w" sizes="(max-width: 900px) 300px, 380px" width="900" height="1125" alt="Henri Löhlein" loading="lazy" decoding="async" />
+  </figure>
   </div>
 </section>
 
