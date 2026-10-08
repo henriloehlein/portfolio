@@ -170,11 +170,11 @@ html.has-custom-cursor,html.has-custom-cursor *{cursor:none}
 .nav{position:relative;width:100%;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:clamp(18px,2.4vw,34px) var(--pad);transition:padding .4s var(--ease)}
 .nav--minimal.is-stuck{padding-block:10px}
 .nav__id{display:flex;align-items:center;gap:clamp(14px,1.3vw,20px);flex:1 1 auto;min-width:0}
-.nav__name{font-family:var(--f-display);font-weight:400;font-size:clamp(20px,1.6vw,26px);letter-spacing:-.015em;color:var(--text);white-space:nowrap}
+.nav__name{font-family:var(--f-display);font-weight:400;font-size:clamp(21px,1.68vw,27.5px);letter-spacing:-.015em;color:var(--text);white-space:nowrap}
 /* Single line that never wraps, so the bar keeps its height while the loop types. Fills the
    space up to the tools; on narrower viewports the overflowing tail fades out under the mask
    instead of pushing the tools or breaking the line. */
-.nav__skills{display:flex;align-items:center;flex:1 1 auto;min-width:0;font-family:var(--f-mono);font-size:clamp(12px,.86vw,13.5px);line-height:1.4;letter-spacing:.04em;color:var(--muted);white-space:nowrap;overflow:hidden;
+.nav__skills{display:flex;align-items:center;flex:1 1 auto;min-width:0;font-family:var(--f-mono);font-size:clamp(12.5px,.9vw,14px);line-height:1.4;letter-spacing:.04em;color:var(--muted);white-space:nowrap;overflow:hidden;
   -webkit-mask-image:linear-gradient(to right,#000 calc(100% - 40px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 40px),transparent)}
 .nav__skills::before{content:"";flex:none;width:1px;height:1.2em;background:var(--line-2);margin-right:clamp(14px,1.3vw,20px)}
 /* typing-cursor caret: blinks continuously through typing, the hold, and the delete, never
