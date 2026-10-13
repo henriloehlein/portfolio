@@ -787,6 +787,7 @@
       modal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
     }
+    if (window.hlCount) hlCount('case-study/' + id, mTitle.textContent);
     setTimeout(() => mWin.focus({ preventScroll: true }), 60);
   }
   function closeProject() {
