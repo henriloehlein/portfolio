@@ -343,7 +343,8 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 }
 
 /* ---------- Work / Projects ---------- */
-.work{padding-top:clamp(52px,8.5vw,118px)}
+/* Cover glows reach past the column; clip them at the screen edge so phones get no sideways scroll */
+.work{padding-top:clamp(52px,8.5vw,118px);overflow-x:clip}
 .work__head{margin-bottom:clamp(30px,4vw,50px)}
 .work__hint{margin-top:16px;font-family:var(--f-mono);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-2)}
 .projects{list-style:none;border-top:1px solid var(--line)}
@@ -487,6 +488,9 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 .footer__top{display:inline-flex;align-items:center;gap:8px;padding:10px 4px;transition:color .3s}
 .footer__top:hover{color:var(--text)}
 .footer__top svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.footer__legal{display:inline-flex;align-items:center;gap:10px}
+.footer__legal button{padding:10px 0;font:inherit;letter-spacing:inherit;text-transform:inherit;color:inherit;transition:color .3s}
+.footer__legal button:hover{color:var(--text)}
 
 /* ---------- Modal / Case study ----------
    A centred window instead of a side panel. Every case study opens on an overview that fits
@@ -518,6 +522,22 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 .modal__close:hover{background:var(--warm-1);border-color:var(--warm-1);transform:rotate(90deg)}
 .modal__close:hover svg{stroke:#0a0a0f}
 .modal__close svg{width:18px;height:18px;fill:none;stroke:var(--text);stroke-width:1.8;stroke-linecap:round}
+/* Impressum & Datenschutz: the case-study window, narrowed to a reading column */
+.legal__win{width:min(760px,calc(100% - 24px));height:min(820px,calc(100% - 48px))}
+.legal__head{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px 16px 14px 30px;border-bottom:1px solid var(--line);flex-shrink:0}
+.legal__head strong{font-family:var(--f-mono);font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.legal__body{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:clamp(28px,4vw,48px) clamp(24px,5vw,56px) 56px;font-size:15px;line-height:1.65;color:var(--muted)}
+.legal__sec{padding:0;margin:0;max-width:none;scroll-margin-top:24px}
+.legal__sec + .legal__sec{margin-top:56px;padding-top:48px;border-top:1px solid var(--line)}
+.legal__body h2{margin:0 0 20px;font-family:var(--f-display);font-size:clamp(28px,3vw,36px);font-weight:400;letter-spacing:-.015em;line-height:1.1;color:var(--text)}
+.legal__body h3{margin:32px 0 8px;font-size:15px;font-weight:600;color:var(--text)}
+.legal__body p{margin:0 0 12px;max-width:62ch}
+.legal__body a{color:var(--text);text-decoration:underline;text-decoration-color:var(--line-2);text-underline-offset:3px;transition:text-decoration-color .3s}
+.legal__body a:hover{text-decoration-color:currentColor}
+.legal__note{margin-bottom:32px!important;padding:12px 16px;border:1px solid var(--line);border-radius:12px;font-size:14px}
+.legal__note:empty{display:none}
+.legal__date{margin-top:32px!important;font-family:var(--f-mono);font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted-2)}
+@media (max-width:600px){.legal__head{padding-left:24px}}
 .modal__progress{height:2px;background:var(--line);flex-shrink:0}
 .modal__progress i{display:block;height:100%;width:0;background:var(--grad);transition:width .5s var(--ease)}
 .modal__content{position:relative;flex:1;min-height:0}

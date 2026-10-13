@@ -351,7 +351,9 @@
     'cs.syntegon.s5.title':'Personal learning',
     'cs.syntegon.s5.p1':'Working on an industrial product with people from mechanical engineering, pharma engineering, UX and research and development was especially valuable. In this environment, reliable guidance matters more than freedom of interaction. Good design here means shifting responsibility from people to the system.',
     'cs.syntegon.note':'The thesis contains confidential company information. Screens and project-specific details are therefore not shown.',
-    'footer.rights':'All rights reserved','footer.made':'Rothenburg ob der Tauber, Bavaria','footer.top':'Back to top'
+    'footer.rights':'All rights reserved','footer.made':'Rothenburg ob der Tauber, Bavaria','footer.top':'Back to top',
+    'footer.imprint':'Legal notice','footer.privacy':'Privacy','legal.title':'Legal notice &amp; privacy',
+    'legal.note':'The legal notice and privacy policy are provided in German, which is the legally binding version.'
   };
   const DEstore = new Map();
   let lang = 'de';
@@ -922,6 +924,39 @@
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
   document.addEventListener('hl:lang', () => { if (chapters.length) labelChapters(); });
+
+  /* ---------- Impressum & Datenschutz ----------
+     Same window as the case studies, opened at the requested section from the footer. */
+  const legal = $('#legal');
+  const legalWin = $('.legal__win', legal);
+  const legalBody = $('.legal__body', legal);
+  let legalFocus = null;
+  function openLegal(id) {
+    legalFocus = document.activeElement;
+    legal.classList.add('is-open');
+    legal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    const target = $('#' + id, legal);
+    legalBody.scrollTop = id === 'impressum' || !target ? 0 : target.offsetTop - legalBody.offsetTop - 24;
+    setTimeout(() => legalWin.focus({ preventScroll: true }), 60);
+  }
+  function closeLegal() {
+    legal.classList.remove('is-open');
+    legal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    legalFocus && legalFocus.focus && legalFocus.focus();
+  }
+  $$('[data-legal]').forEach(b => b.addEventListener('click', () => openLegal(b.dataset.legal)));
+  $$('[data-legal-close]', legal).forEach(b => b.addEventListener('click', closeLegal));
+  addEventListener('keydown', e => {
+    if (!legal.classList.contains('is-open')) return;
+    if (e.key === 'Escape') { closeLegal(); return; }
+    if (e.key !== 'Tab') return;
+    const focusable = $$('a[href],button', legalWin);
+    const first = focusable[0], last = focusable[focusable.length - 1];
+    if (e.shiftKey && (document.activeElement === first || document.activeElement === legalWin)) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
 
   /* ---------- Einstieg-Animation auf der Linie der Projektliste ----------
      Engine: js/einstieg-szene.js, js/einstieg-zeichnen.js, js/einstieg-animation.js.

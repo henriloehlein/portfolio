@@ -25,3 +25,7 @@ Bilder/
 
 # Older local HTML experiments; the tracked preview-neu.html remains available
 *-preview*.html
+
+# Older style drafts that load Google Fonts; kept local only so the public site makes no third-party requests
+preview-stil-b.html
+preview-stil-c*.html

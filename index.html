@@ -20,11 +20,10 @@
 <meta property="og:locale" content="de_DE" />
 <meta name="twitter:card" content="summary_large_image" />
 
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="preload" href="assets/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="css/fonts.css?v=2026-10-13" />
 
-<link rel="stylesheet" href="css/styles.css?v=2026-10-08j" />
+<link rel="stylesheet" href="css/styles.css?v=2026-10-13" />
 <link rel="stylesheet" href="css/einstieg-animation.css?v=2026-09-29c" />
 </head>
 <body>
@@ -450,12 +449,69 @@
   </div>
   <div class="footer__row footer__row--meta">
     <span data-i18n="footer.made">Rothenburg ob der Tauber, Bayern</span>
+    <span class="footer__legal">
+      <button type="button" data-legal="impressum" data-i18n="footer.imprint">Impressum</button>
+      <span aria-hidden="true">·</span>
+      <button type="button" data-legal="datenschutz" data-i18n="footer.privacy">Datenschutz</button>
+    </span>
     <a href="#top" class="footer__top" data-cursor="Hoch">
       <span data-i18n="footer.top">Nach oben</span>
       <svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
     </a>
   </div>
 </footer>
+
+<!-- ============ IMPRESSUM & DATENSCHUTZ · opened from the footer, same window as the case studies ============ -->
+<div class="modal legal" id="legal" aria-hidden="true">
+  <div class="modal__scrim" data-legal-close></div>
+  <div class="modal__win legal__win" role="dialog" aria-modal="true" aria-labelledby="legalTitle" tabindex="-1">
+    <div class="legal__head">
+      <strong id="legalTitle" data-i18n="legal.title">Impressum &amp; Datenschutz</strong>
+      <button class="modal__close" data-legal-close aria-label="Schließen" data-cursor="Schließen">
+        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="legal__body" lang="de">
+      <p class="legal__note" data-i18n="legal.note"></p>
+
+      <section class="legal__sec" id="impressum">
+        <h2>Impressum</h2>
+        <p>Angaben gemäß § 5 Digitale-Dienste-Gesetz (DDG)</p>
+        <p>Henri Löhlein<br />Wachsenberg 18<br />91616 Neusitz<br />Deutschland</p>
+        <p>E-Mail: <a href="mailto:henriloehlein@gmail.com">henriloehlein@gmail.com</a></p>
+      </section>
+
+      <section class="legal__sec" id="datenschutz">
+        <h2>Datenschutzerklärung</h2>
+
+        <h3>1. Verantwortlicher</h3>
+        <p>Verantwortlich für die Verarbeitung personenbezogener Daten auf dieser Website ist Henri Löhlein, Anschrift wie im Impressum, E-Mail: <a href="mailto:henriloehlein@gmail.com">henriloehlein@gmail.com</a>.</p>
+
+        <h3>2. Hosting und Server-Logfiles</h3>
+        <p>Diese Website wird über GitHub Pages bereitgestellt, einen Dienst der GitHub Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA. Beim Aufruf der Website verarbeitet GitHub technisch notwendige Daten, insbesondere Ihre IP-Adresse, Datum und Uhrzeit des Abrufs, die abgerufene Datei, die zuvor besuchte Seite (Referrer) sowie Angaben zu Browser und Betriebssystem. Das dient der Auslieferung der Website sowie der Sicherheit und Stabilität des Dienstes. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO; mein berechtigtes Interesse liegt in einer sicheren und zuverlässigen Bereitstellung dieser Website.</p>
+        <p>Dabei können Daten in die USA übermittelt werden. GitHub Inc. ist nach dem EU-U.S. Data Privacy Framework zertifiziert; die Übermittlung stützt sich auf den Angemessenheitsbeschluss der Europäischen Kommission (Art. 45 DSGVO). Die Speicherdauer legt GitHub fest. Einzelheiten enthält die <a href="https://docs.github.com/de/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">Datenschutzerklärung von GitHub</a>.</p>
+
+        <h3>3. Keine Cookies, kein Tracking</h3>
+        <p>Diese Website setzt keine Cookies und verwendet keine Analyse- oder Tracking-Werkzeuge. Die Schriftarten werden von diesem Server geladen; eine Verbindung zu Google oder anderen Drittanbietern entsteht dabei nicht.</p>
+
+        <h3>4. Lokale Speicherung im Browser</h3>
+        <p>Die gewählte Sprache und das Farbschema werden im lokalen Speicher Ihres Browsers (Local Storage) abgelegt, damit sie beim nächsten Besuch erhalten bleiben. Diese Angaben verlassen Ihr Gerät nicht. Die Speicherung ist für die von Ihnen gewünschte Funktion unbedingt erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG). Sie können die Angaben jederzeit über die Einstellungen Ihres Browsers löschen.</p>
+
+        <h3>5. Kontakt per E-Mail</h3>
+        <p>Wenn Sie mir eine E-Mail schreiben, verarbeite ich Ihre Angaben (etwa Name, E-Mail-Adresse und Inhalt der Nachricht), um Ihre Anfrage zu beantworten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO, soweit Ihre Anfrage auf einen Vertrag oder ein Beschäftigungsverhältnis gerichtet ist, im Übrigen Art. 6 Abs. 1 lit. f DSGVO. Ich lösche die Daten, sobald sie für die Bearbeitung nicht mehr erforderlich sind und keine gesetzlichen Aufbewahrungspflichten entgegenstehen.</p>
+
+        <h3>6. Links zu anderen Websites</h3>
+        <p>Diese Website enthält Links zu externen Angeboten, etwa LinkedIn. Daten werden an diese Anbieter erst übertragen, wenn Sie einen Link anklicken; ab dann gilt die Datenschutzerklärung des jeweiligen Anbieters.</p>
+
+        <h3>7. Ihre Rechte</h3>
+        <p>Sie haben das Recht auf Auskunft (Art. 15 DSGVO), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18) und Datenübertragbarkeit (Art. 20). Einer Verarbeitung auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO können Sie aus Gründen, die sich aus Ihrer besonderen Situation ergeben, jederzeit widersprechen (Art. 21). Eine formlose E-Mail an mich genügt.</p>
+        <p>Außerdem können Sie sich bei einer Datenschutz-Aufsichtsbehörde beschweren (Art. 77 DSGVO), zum Beispiel beim Bayerischen Landesamt für Datenschutzaufsicht, Promenade 18, 91522 Ansbach.</p>
+
+        <p class="legal__date">Stand: Oktober 2026</p>
+      </section>
+    </div>
+  </div>
+</div>
 
 <!-- ============ PROJECT MODAL ============ -->
 <div class="modal" id="modal" aria-hidden="true">
@@ -1367,6 +1423,6 @@
 <script src="js/einstieg-zeichnen.js?v=2026-09-27b"></script>
 <script src="js/einstieg-animation.js?v=2026-09-29c"></script>
 <script src="js/hintergrund.js?v=2026-09-29e"></script>
-<script src="js/main.js?v=2026-09-29j"></script>
+<script src="js/main.js?v=2026-10-13"></script>
 </body>
 </html>
