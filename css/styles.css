@@ -695,6 +695,7 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 .cs__screen--focus>a{border-color:var(--warm-1);box-shadow:0 0 0 1px color-mix(in srgb,var(--warm-1) 35%,transparent)}
 .cs__screen--focus figcaption strong{color:var(--warm-1)}
 /* Cognify: portrait phone flows and data figures */
+.cs__screenFlow--phone{padding:6px 4px 40px}
 .cs__screenFlow--phone .cs__screen{flex:0 0 220px}
 .cs__screenFlow--phone .cs__screen:not(:last-child)::after{top:44%}
 .cs__screenFlow--phone .cs__screen>a{border-radius:24px;background:transparent}
@@ -790,6 +791,22 @@ section{position:relative;z-index:1;padding:clamp(70px,11vw,150px) var(--pad);ma
 .cs__phoneShot{margin:0}
 .cs__phoneShot img{display:block;width:100%;aspect-ratio:390/844;object-fit:cover;border-radius:26px;border:1px solid var(--line);background:var(--surface);box-shadow:var(--shadow-md)}
 .cs__phoneShot figcaption{padding-top:12px;font:400 11.5px/1.5 var(--f-mono);letter-spacing:.03em;color:var(--muted)}
+/* Phone screens as devices. The Figma exports already carry the screen's rounded corners and the
+   notch in black; a black bezel drawn as padding around them closes both into one phone body, so
+   corners and notch no longer float on the page. 1000/2093 keeps the 393/852 screen undistorted
+   inside a 3.2 % bezel. */
+.cs__lineup img,.cs__fiImgs img,.cs__phoneShot img,.cs__screenFlow--phone .cs__screen img{
+  --dev-edge:rgba(255,255,255,.13);--dev-rim:rgba(255,255,255,.07);
+  --dev-drop:0 2px 4px -1px rgba(0,0,0,.35),0 14px 28px -14px rgba(0,0,0,.55),0 40px 70px -36px rgba(0,0,0,.7);
+  aspect-ratio:1000/2093;padding:3.2%;object-fit:cover;object-position:top;background:#0b0b0e;border:0;border-radius:12.3%/5.9%;
+  box-shadow:inset 0 0 0 1.5px var(--dev-rim),0 0 0 1px var(--dev-edge),var(--dev-drop)}
+[data-theme="light"] :is(.cs__lineup img,.cs__fiImgs img,.cs__phoneShot img,.cs__screenFlow--phone .cs__screen img){
+  --dev-edge:rgba(20,16,12,.28);--dev-rim:rgba(255,255,255,.12);
+  --dev-drop:0 2px 4px -1px rgba(60,40,30,.22),0 14px 28px -14px rgba(60,40,30,.32),0 40px 70px -36px rgba(60,40,30,.42)}
+.cs__lineup a{border-radius:12.3%/5.9%}
+.cs__lineup .is-focus img{box-shadow:inset 0 0 0 1.5px var(--dev-rim),0 0 0 2px var(--warm-1),var(--dev-drop)}
+.cs__screenFlow--phone .cs__screen>a,.cs__screenFlow--phone .cs__screen>a:hover{border:0;border-radius:12.3%/5.9%;overflow:visible;background:transparent}
+.cs__screenFlow--phone .cs__screen--focus>a img{box-shadow:inset 0 0 0 1.5px var(--dev-rim),0 0 0 2px var(--warm-1),var(--dev-drop)}
 .cs__subhead--flush{margin-top:0}
 
 /* Card sorting: entry types merge */
