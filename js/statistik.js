@@ -8,6 +8,8 @@
   var host = location.hostname;
   if (location.protocol === 'file:' || host === 'localhost' || /^(127\.|10\.|192\.168\.|\[)/.test(host)) return;
   if ('visibilityState' in document && document.visibilityState === 'prerender') return;
+  // Own visits: open the site as …/portfolio/?intern (e.g. from a bookmark) and nothing is counted
+  if (/[?&]intern\b/.test(location.search)) return;
 
   function send(vars) {
     vars.rnd = Math.random().toString(36).slice(2, 7); // defeats caching of the request
