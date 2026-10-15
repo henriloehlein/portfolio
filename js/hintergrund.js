@@ -127,9 +127,9 @@ in vec2 a; void main(){ gl_Position = vec4(a, 0., 1.); }`;
                    : [C('#0a0a0f'), mix(C('#2e2e35'), tint, .06), mix(C('#fff1e4'), tint, .12), C('#060608')];
     }
 
-    /* Sparsam rechnen: Die Fläche bewegt sich sehr langsam, es reichen immer etwa 30 Bilder
-       pro Sekunde, auch während das Licht der Scrollposition nachgleitet.
-       Große Monitore bekommen höchstens ~0,7 Megapixel. Liefert ein
+    /* Sparsam rechnen: Die Fläche bewegt sich sehr langsam, im Ruhezustand reichen etwa 30 Bilder
+       pro Sekunde; nur solange das Licht der Scrollposition nachgleitet, etwa 60. Schmale
+       Bildschirme immer etwa 30. Große Monitore bekommen höchstens ~0,7 Megapixel. Liefert ein
        Gerät dauerhaft langsame Bilder, sinkt erst die Auflösung, danach bleibt ein Standbild,
        das nur nach dem Scrollen neu gezeichnet wird. */
     const small = matchMedia('(max-width: 760px)');
@@ -175,7 +175,9 @@ in vec2 a; void main(){ gl_Position = vec4(a, 0., 1.); }`;
       if (level >= 2) { still(); return; }
       requestAnimationFrame(frame);
       watch(now);
-      if (document.hidden || now - last < 32) return;
+      const moving = Math.abs(scrollY / innerHeight - lag) > .002;
+      const gap = small.matches || !moving ? 32 : 15;
+      if (document.hidden || now - last < gap) return;
       last = now;
       draw(now);
     }

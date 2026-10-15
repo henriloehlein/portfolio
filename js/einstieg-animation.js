@@ -141,7 +141,6 @@
     }
     tick(now) {
       this.raf = requestAnimationFrame(this.tick);
-      if (this.last && now - this.last < 32) return;   // etwa 30 Bilder pro Sekunde reichen und sparen die Hälfte
       const dt = this.last ? Math.min(.05, (now - this.last) / 1000) : 1 / 60;
       this.last = now;
       this.T += dt;
