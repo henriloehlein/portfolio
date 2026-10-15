@@ -597,25 +597,35 @@
     const smooth = t => t * t * (3 - 2 * t);
     const lerp = (a, b, t) => a.map((v, i) => Math.round(v + (b[i] - v) * t));
     const toHex = c => '#' + c.map(v => Math.max(0, Math.min(255, v)).toString(16).padStart(2, '0')).join('');
-    let ticking = false;
-    function apply() {
-      let p;
+    // Jede Änderung an :root berechnet die Stile der ganzen Seite neu. Deshalb wird nur geschrieben,
+    // wenn sich der Farbton sichtbar ändert (80 Stufen), und die Strecke wird nur bei Größenänderung
+    // gemessen statt bei jedem Scroll-Bild.
+    const STEPS = 80;
+    let ticking = false, start = 0, end = 1, lastStep = -1;
+    function measure() {
       if (tools && contact) {
         const docTop = el => el.getBoundingClientRect().top + scrollY;
-        const start = docTop(tools) - innerHeight * 1.8, end = docTop(contact) - innerHeight * 0.3;
-        p = (scrollY - start) / Math.max(1, end - start);
+        start = docTop(tools) - innerHeight * 1.8; end = docTop(contact) - innerHeight * 0.3;
       } else {
-        p = scrollY / Math.max(1, document.documentElement.scrollHeight - innerHeight);
+        start = 0; end = document.documentElement.scrollHeight - innerHeight;
       }
-      const f = smooth(Math.min(1, Math.max(0, p)));
+    }
+    function apply() {
+      ticking = false;
+      const p = (scrollY - start) / Math.max(1, end - start);
+      const step = Math.round(Math.min(1, Math.max(0, p)) * STEPS);
+      if (step === lastStep) return;
+      lastStep = step;
+      const f = smooth(step / STEPS);
       Object.keys(EMBER).forEach(k => root.style.setProperty(k, toHex(lerp(EMBER[k], SLATE[k], f))));
       root.style.setProperty('--bg-tint', toHex(lerp(EMBER['--warm-1'], SLATE['--warm-1'], f)));
-      ticking = false;
     }
     function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(apply); } }
     addEventListener('scroll', onScroll, { passive: true });
-    addEventListener('resize', onScroll, { passive: true });
-    apply();
+    addEventListener('resize', () => { measure(); onScroll(); }, { passive: true });
+    // Bilder und Schriften verschieben die Abschnitte nach dem ersten Messen noch.
+    if (window.ResizeObserver) new ResizeObserver(() => { measure(); onScroll(); }).observe(document.body);
+    measure(); apply();
   })();
 
   /* ---------- Theme toggle ---------- */

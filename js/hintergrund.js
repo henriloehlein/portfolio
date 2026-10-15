@@ -99,95 +99,107 @@ in vec2 a; void main(){ gl_Position = vec4(a, 0., 1.); }`;
   const prog = gl.createProgram();
   gl.attachShader(prog, sh(gl.VERTEX_SHADER, VERT)); gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FRAG));
   gl.bindAttribLocation(prog, 0, 'a'); gl.linkProgram(prog);
-  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { field.classList.add('field--flat'); return; }
-  gl.useProgram(prog);
-  const u = {}; ['R', 'T', 'S', 'P', 'L', 'C0', 'C1', 'C2', 'C3'].forEach(k => u[k] = gl.getUniformLocation(prog, k));
-  gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
-  gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
 
-  /* Farben (sRGB 0..1): Grund, Metall, Glanz, Tiefe; im Dunkeln leicht im Scroll-Ton */
-  const C = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16) / 255);
-  const mix = (a, b, t) => a.map((v, i) => v + (b[i] - v) * t);
-  function palette(light) {
-    const t = (root.style.getPropertyValue('--bg-tint') || '').trim();
-    const tint = C(/^#[0-9a-f]{6}$/i.test(t) ? t : '#a9503f');
-    return light ? [C('#f6f4f1'), C('#ebe8e4'), C('#ffffff'), C('#cdc6bf')]
-                 : [C('#0a0a0f'), mix(C('#2e2e35'), tint, .06), mix(C('#fff1e4'), tint, .12), C('#060608')];
+  /* Der Shader braucht beim Übersetzen einige hundert Millisekunden. Mit KHR_parallel_shader_compile
+     läuft das im Hintergrund, und erst danach wird der Status abgefragt; sonst blockiert die
+     Abfrage den Seitenaufbau. */
+  const par = gl.getExtension('KHR_parallel_shader_compile');
+  (function ready() {
+    if (par && !gl.getProgramParameter(prog, par.COMPLETION_STATUS_KHR)) { setTimeout(ready, 50); return; }
+    start();
+  })();
+
+  function start() {
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { field.classList.add('field--flat'); return; }
+    gl.useProgram(prog);
+    const u = {}; ['R', 'T', 'S', 'P', 'L', 'C0', 'C1', 'C2', 'C3'].forEach(k => u[k] = gl.getUniformLocation(prog, k));
+    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+    gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+
+    /* Farben (sRGB 0..1): Grund, Metall, Glanz, Tiefe; im Dunkeln leicht im Scroll-Ton */
+    const C = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16) / 255);
+    const mix = (a, b, t) => a.map((v, i) => v + (b[i] - v) * t);
+    function palette(light) {
+      const t = (root.style.getPropertyValue('--bg-tint') || '').trim();
+      const tint = C(/^#[0-9a-f]{6}$/i.test(t) ? t : '#a9503f');
+      return light ? [C('#f6f4f1'), C('#ebe8e4'), C('#ffffff'), C('#cdc6bf')]
+                   : [C('#0a0a0f'), mix(C('#2e2e35'), tint, .06), mix(C('#fff1e4'), tint, .12), C('#060608')];
+    }
+
+    /* Sparsam rechnen: Die Fläche bewegt sich sehr langsam, im Ruhezustand reichen etwa 30 Bilder
+       pro Sekunde; nur solange das Licht der Scrollposition nachgleitet, etwa 60. Schmale
+       Bildschirme immer etwa 30. Große Monitore bekommen höchstens ~0,7 Megapixel. Liefert ein
+       Gerät dauerhaft langsame Bilder, sinkt erst die Auflösung, danach bleibt ein Standbild,
+       das nur nach dem Scrollen neu gezeichnet wird. */
+    const small = matchMedia('(max-width: 760px)');
+    const ease = (a, dt) => 1 - Math.pow(1 - a, dt / 33);
+    const MAX_PX = 700000;
+    let lag = scrollY / innerHeight, last = 0, prev = 0, level = 0;   // level: 0 normal, 1 gröber, 2 Standbild
+
+    function scale() {
+      let s = small.matches ? .5 : .6;
+      s = Math.min(s, Math.sqrt(MAX_PX / (innerWidth * innerHeight)));
+      return level ? s * .7 : s;
+    }
+
+    function draw(now) {
+      const s = scale();
+      const w = Math.round(innerWidth * s), h = Math.round(innerHeight * s);
+      if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; gl.viewport(0, 0, w, h); }
+      const dt = Math.min(100, prev ? now - prev : 33); prev = now;
+      const sNow = scrollY / innerHeight;
+      lag = reduce ? sNow : lag + (sNow - lag) * ease(.045, dt);  // das Licht gleitet der Position weich nach
+      const light = root.getAttribute('data-theme') === 'light';
+      gl.uniform2f(u.R, w, h);
+      gl.uniform1f(u.T, reduce ? 40 : now / 1000);
+      gl.uniform1f(u.S, sNow);
+      gl.uniform1f(u.P, lag);
+      gl.uniform1f(u.L, light ? 1 : 0);
+      palette(light).forEach((c, i) => gl.uniform3fv(u['C' + i], c));
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+    }
+    /* Leistungswächter: gleitender Mittelwert des Bildabstands. Die ersten 2,5 s (Laden) und
+       verdeckte Tabs zählen nicht. Über ~3 s dauerhaft mehr als 45 ms pro Bild gilt als zu langsam. */
+    let avg = 16, slowFor = 0, rafPrev = 0;
+    const born = performance.now();
+    function watch(now) {
+      const d = rafPrev ? now - rafPrev : 16; rafPrev = now;
+      if (document.hidden || d > 250 || now - born < 2500) { slowFor = 0; return; }
+      avg += (d - avg) * .1;
+      slowFor = avg > 45 ? slowFor + d : 0;
+      if (slowFor > 3000) { level++; slowFor = 0; avg = 16; }
+    }
+
+    function frame(now) {
+      if (level >= 2) { still(); return; }
+      requestAnimationFrame(frame);
+      watch(now);
+      const moving = Math.abs(scrollY / innerHeight - lag) > .002;
+      const gap = small.matches || !moving ? 32 : 15;
+      if (document.hidden || now - last < gap) return;
+      last = now;
+      draw(now);
+    }
+    const once = () => draw(performance.now());
+
+    /* Standbild für langsame Geräte: nach dem Scrollen einmal neu, sonst nichts */
+    let stillT = 0;
+    function still() {
+      lag = scrollY / innerHeight; once();
+      const redraw = () => { clearTimeout(stillT); stillT = setTimeout(() => { lag = scrollY / innerHeight; once(); }, 180); };
+      addEventListener('scroll', redraw, { passive: true });
+      addEventListener('resize', redraw, { passive: true });
+      new MutationObserver(redraw).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+    }
+
+    if (reduce) {
+      addEventListener('scroll', () => requestAnimationFrame(once), { passive: true });
+      addEventListener('resize', once, { passive: true });
+      new MutationObserver(once).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+    } else requestAnimationFrame(frame);
+    once(); // erstes Bild sofort, damit die Fläche nicht leer einblendet
+    canvas.addEventListener('webglcontextlost', () => field.classList.add('field--flat'));
+    setTimeout(() => field.classList.add('is-ready'), 60);
   }
-
-  /* Sparsam rechnen: Die Fläche bewegt sich sehr langsam, im Ruhezustand reichen etwa 30 Bilder
-     pro Sekunde; nur solange das Licht der Scrollposition nachgleitet, etwa 60. Schmale
-     Bildschirme immer etwa 30. Große Monitore bekommen höchstens ~0,7 Megapixel. Liefert ein
-     Gerät dauerhaft langsame Bilder, sinkt erst die Auflösung, danach bleibt ein Standbild,
-     das nur nach dem Scrollen neu gezeichnet wird. */
-  const small = matchMedia('(max-width: 760px)');
-  const ease = (a, dt) => 1 - Math.pow(1 - a, dt / 33);
-  const MAX_PX = 700000;
-  let lag = scrollY / innerHeight, last = 0, prev = 0, level = 0;   // level: 0 normal, 1 gröber, 2 Standbild
-
-  function scale() {
-    let s = small.matches ? .5 : .6;
-    s = Math.min(s, Math.sqrt(MAX_PX / (innerWidth * innerHeight)));
-    return level ? s * .7 : s;
-  }
-
-  function draw(now) {
-    const s = scale();
-    const w = Math.round(innerWidth * s), h = Math.round(innerHeight * s);
-    if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; gl.viewport(0, 0, w, h); }
-    const dt = Math.min(100, prev ? now - prev : 33); prev = now;
-    const sNow = scrollY / innerHeight;
-    lag = reduce ? sNow : lag + (sNow - lag) * ease(.045, dt);  // das Licht gleitet der Position weich nach
-    const light = root.getAttribute('data-theme') === 'light';
-    gl.uniform2f(u.R, w, h);
-    gl.uniform1f(u.T, reduce ? 40 : now / 1000);
-    gl.uniform1f(u.S, sNow);
-    gl.uniform1f(u.P, lag);
-    gl.uniform1f(u.L, light ? 1 : 0);
-    palette(light).forEach((c, i) => gl.uniform3fv(u['C' + i], c));
-    gl.drawArrays(gl.TRIANGLES, 0, 3);
-  }
-  /* Leistungswächter: gleitender Mittelwert des Bildabstands. Die ersten 2,5 s (Laden) und
-     verdeckte Tabs zählen nicht. Über ~3 s dauerhaft mehr als 45 ms pro Bild gilt als zu langsam. */
-  let avg = 16, slowFor = 0, rafPrev = 0;
-  const born = performance.now();
-  function watch(now) {
-    const d = rafPrev ? now - rafPrev : 16; rafPrev = now;
-    if (document.hidden || d > 250 || now - born < 2500) { slowFor = 0; return; }
-    avg += (d - avg) * .1;
-    slowFor = avg > 45 ? slowFor + d : 0;
-    if (slowFor > 3000) { level++; slowFor = 0; avg = 16; }
-  }
-
-  function frame(now) {
-    if (level >= 2) { still(); return; }
-    requestAnimationFrame(frame);
-    watch(now);
-    const moving = Math.abs(scrollY / innerHeight - lag) > .002;
-    const gap = small.matches || !moving ? 32 : 15;
-    if (document.hidden || now - last < gap) return;
-    last = now;
-    draw(now);
-  }
-  const once = () => draw(performance.now());
-
-  /* Standbild für langsame Geräte: nach dem Scrollen einmal neu, sonst nichts */
-  let stillT = 0;
-  function still() {
-    lag = scrollY / innerHeight; once();
-    const redraw = () => { clearTimeout(stillT); stillT = setTimeout(() => { lag = scrollY / innerHeight; once(); }, 180); };
-    addEventListener('scroll', redraw, { passive: true });
-    addEventListener('resize', redraw, { passive: true });
-    new MutationObserver(redraw).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
-  }
-
-  if (reduce) {
-    addEventListener('scroll', () => requestAnimationFrame(once), { passive: true });
-    addEventListener('resize', once, { passive: true });
-    new MutationObserver(once).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
-  } else requestAnimationFrame(frame);
-  once(); // erstes Bild sofort, damit die Fläche nicht leer einblendet
-  canvas.addEventListener('webglcontextlost', () => field.classList.add('field--flat'));
-  setTimeout(() => field.classList.add('is-ready'), 60);
 })();
